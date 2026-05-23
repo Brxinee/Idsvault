@@ -3,11 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IDsvault | Premium Digital Name & Username Brokerage</title>
-    <meta name="description" content="Secure, broker-assisted premium digital handle and username brokerage marketplace. Trade high-value namespaces safely." />
+    <title>IDsvault | Premium Digital Identity & Username Brokerage</title>
+    
+    <!-- SEO & Crawl Optimization Guidelines (Google, ChatGPT, Gemini, Perplexity) -->
+    <meta name="description" content="Secure, broker-assisted premium digital handle and username brokerage marketplace. Hyderabad-based human-guided verification and structured payment workflow." />
+    <meta name="keywords" content="premium usernames, digital identity escrow, instagram usernames, telegram handles, x usernames, secure brokerage india, Hyderabad desk" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://idsvault.com" />
+
+    <!-- Open Graph / Facebook Social Identity -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="IDsvault | Premium Digital Identity & Username Brokerage" />
+    <meta property="og:description" content="Trade high-value Instagram, X, and Telegram namespaces under Hyderabad broker-assisted supervision with a structured payment workflow." />
+    <meta property="og:url" content="https://idsvault.com" />
+    <meta property="og:site_name" content="IDsvault" />
+    <meta property="og:image" content="https://idsvault.com/cover.png" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="IDsvault - Digital Identity Brokerage" />
+    <meta name="twitter:description" content="Secure premium username brokerage marketplace under human-assisted Hyderabad desk supervision." />
+    <meta name="twitter:image" content="https://idsvault.com/cover.png" />
+
+    <!-- Google Fonts Pairings -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Global GA4 Production Analytics implementation -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8L9EQTY2P3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8L9EQTY2P3', { 'send_page_view': true });
+
+      // Custom Event emitter for IDsVault interactions tracking
+      window.trackIDsVaultEvent = function(eventName, eventParams) {
+        if (typeof gtag === 'function') {
+          gtag('event', eventName, eventParams || {});
+          console.log(`[GA4 Event Logged: ${eventName}]`, eventParams || {});
+        }
+      };
+    </script>
+
+    <!-- Structured JSON-LD Organization Schema for Rich Search Result Embeds -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FinancialService",
+        "name": "IDsvault",
+        "url": "https://idsvault.com",
+        "logo": "https://idsvault.com/logo.png",
+        "description": "Secure premium digital identity brokerage and username marketplace with structured, supervised escrow transfers and human-assisted validation checking.",
+        "areaServed": {
+          "@type": "Country",
+          "name": "India"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Hyderabad",
+          "addressRegion": "Telangana",
+          "addressCountry": "India"
+        },
+        "email": "support@idsvault.com",
+        "telephone": "+919392974031",
+        "serviceType": "Digital Identity Brokerage Escrow",
+        "sameAs": [
+          "https://wa.me/919392974031"
+        ]
+      }
+    </script>
   </head>
   <body class="bg-[#050505] text-[#F3F4F6] selection:bg-blue-500/20 selection:text-white">
     <div id="root"></div>

@@ -22,31 +22,35 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
   const faqItems = [
     {
       q: "How are sellers verified?",
-      a: "Our Bengaluru coordination desk operates extensive pre-listing verification audits. Sellers must resolve ownership bio hash or screenshot validations before any database approval is posted in our publicly searchable catalog index, eliminating anonymous speculation risks."
+      a: "Our Hyderabad coordination desk operates extensive pre-listing verification audits, manual ownership checks, profile verification, and strict listing moderation. Sellers must resolve ownership token hashes or custom screenshot proof reviews before any database approval is posted in our publicly searchable index catalog, reducing anonymous speculation risks entirely."
     },
     {
-      q: "What if a transfer fails?",
-      a: "If coordinate release fails validation checks or a coordinate is determined legacy-locked, the transaction is gracefully halted and cancelled. Held INR deposits are fully reversed and refunded back to the originating bank coordinate account within three (3) business hours."
+      q: "What if transfer fails?",
+      a: "If coordinate release fails validation checks or a handle is determined permanently locked, the transaction is gracefully cancelled. Held INR deposits are fully reversed and refunded back to the originating bank coordinate account within three (3) business hours under our structured payment workflow."
     },
     {
-      q: "Why pay IDsvault?",
-      a: "Paying our supervised brokerage ensures absolute security. Our structured payment workflow acts as a complete protective shield, isolating intermediate funds securely. Capital is only released to the seller upon validated, manual buyer coordinate possession."
+      q: "Why pay IDsvault instead of seller?",
+      a: "Paying our supervised brokerage ensures absolute security. Our structured payment workflow acts as a complete protective shield, isolating intermediate funds. Capital is only released to the seller upon validated, manual buyer coordinate possession, eliminating direct-deal chargebacks or hijackings entirely."
     },
     {
       q: "Are you affiliated with Instagram/X/Telegram?",
-      a: "No. IDsvault is a strictly independent premium digital identity brokerage consultancy. We are NOT an official partner, associate, or affiliate of Meta, Instagram, X (Twitter), or Telegram, nor are we licensed by them. All trademarks belong to their respective owners."
+      a: "No. IDsvault is a strictly independent, premium digital identity brokerage coordination desk. We are NOT an official partner, associate, or affiliate of Meta, Instagram, X Corp, or Telegram, nor are we licensed by them. All trademarks belong to their respective corporate trademark holders."
+    },
+    {
+      q: "Do you guarantee future access?",
+      a: "No. Independent coordination desks can guarantee future access or indefinitely override host platform policies. We supervise and verify the immediate transaction handshake, but post-transfer account security is subject to platform Terms of Service, which prohibit identity transfers. Buyers acknowledge this host risk before starting deals."
     },
     {
       q: "How long do deals take?",
-      a: "Standard brokered transfers resolve in 4 to 24 hours under the active manual supervision of our India-based coordination staff."
+      a: "Standard, human-brokered transfers resolve in 4 to 24 hours under the active manual supervision of our Hyderabad-based coordination staff."
     },
     {
-      q: "What if a seller is fake?",
+      q: "What qualifies as premium?",
+      a: "An identifier is considered premium if it consists of a single dictionary word, is under 5 characters (short handle), contains historical brand equity, or represents a prominent industry niche. Our Hyderabad curation desk manually checks trademark databases and platform age before listing approval."
+    },
+    {
+      q: "What if seller is fake?",
       a: "All listed usernames are publicly masked. Direct bypass attempts are actively screened out. We check and confirm actual coordinate control before listing approval, completely mitigating fake listings before they are indexed."
-    },
-    {
-      q: "Does IDsvault guarantee future access?",
-      a: "No corporate consulting desk can guarantee future access or indefinitely override host platform regulations. We guarantee the safe execution of the immediate transaction handshake, but the post-transfer security is subject to platform Terms of Service policies, which prohibit identity transfers. Buyers acknowledge this host risk disclaimer before initiating deals."
     }
   ];
 
@@ -125,7 +129,7 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
 
             <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Submission Minimum Requirements</h3>
             <p className="text-gray-400 font-normal">
-              All legal IP communications must be routed to <strong className="text-white">desk@idsvault.com</strong> and contain the following certified coordinates:
+              All legal IP communications must be routed to <strong className="text-white">support@idsvault.com</strong> and contain the following certified coordinates:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-400 font-mono text-[10.5px]">
               <li>Subject heading: [TRADEMARK AUDIT REQUEST - SV-LEDGER]</li>

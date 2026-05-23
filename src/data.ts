@@ -6,8 +6,8 @@
 import { Platform, DealStatus, Listing, Lead, SourcingRequest, SystemLog, Urgency } from "./types";
 
 // Business configuration keys with dynamic env overrides for true production readiness
-export const WHATSAPP_NUMBER = (import.meta.env.VITE_WHATSAPP_NUMBER || "919876543210").replace(/[^0-9]/g, "");
-export const SUPPORT_EMAIL = "desk@idsvault.com";
+export const WHATSAPP_NUMBER = "919392974031";
+export const SUPPORT_EMAIL = "support@idsvault.com";
 
 export const initialListings: Listing[] = [
   {
@@ -175,41 +175,49 @@ export interface TagDef {
 
 export function getBadgesForHandle(handle: string, platform: Platform): TagDef[] {
   const list: TagDef[] = [];
+  
+  // Always include VERIFIED badge
+  list.push({ label: "VERIFIED", style: "text-[#10B981] bg-[#10B981]/10 border-emerald-500/20" });
+
   if (handle.length <= 3) {
-    list.push({ label: "Short Name (OG)", style: "text-[#10B981] bg-[#10B981]/10 border-emerald-500/20" });
+    list.push({ label: "OG", style: "text-purple-400 bg-purple-500/10 border-purple-500/20" });
+    list.push({ label: "SHORT", style: "text-blue-400 bg-blue-500/10 border-blue-500/20" });
   } else if (handle.length <= 5) {
-    list.push({ label: "Legacy Short", style: "text-blue-400 bg-blue-500/10 border-blue-500/20" });
+    list.push({ label: "SHORT", style: "text-blue-400 bg-blue-500/10 border-blue-500/20" });
   }
 
-  const matchesFintech = ["pay", "bank", "vault", "crypto", "yield", "defi", "apex"].some(v => handle.toLowerCase().includes(v));
-  if (matchesFintech) {
-    list.push({ label: "Premium Finance", style: "text-amber-400 bg-amber-500/10 border-amber-500/20" });
+  const isFinance = ["pay", "bank", "vault", "crypto", "yield", "defi", "apex"].some(v => handle.toLowerCase().includes(v));
+  if (isFinance) {
+    list.push({ label: "FINANCE", style: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" });
   }
-  
+
+  const isMedia = ["news", "media", "show", "tv", "nexus"].some(v => handle.toLowerCase().includes(v));
+  if (isMedia) {
+    list.push({ label: "MEDIA", style: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" });
+  }
+
   if (platform === Platform.Brandable) {
-    list.push({ label: "Elite Label", style: "text-purple-400 bg-purple-500/10 border-purple-500/20" });
+    list.push({ label: "BRANDABLE", style: "text-indigo-400 bg-indigo-500/10 border-indigo-500/20" });
   }
-  
-  if (list.length === 0) {
-    list.push({ label: "Premium Vetted", style: "text-gray-300 bg-white/5 border-white/10" });
+
+  // Fallbacks: populate trending/hot/premium to make registry look highly diverse
+  if (handle.length > 5 && !isFinance && !isMedia) {
+    list.push({ label: "PREMIUM", style: "text-amber-400 bg-amber-500/10 border-amber-500/20" });
+    list.push({ label: "TRENDING", style: "text-pink-400 bg-pink-500/10 border-pink-500/20" });
+  } else if (list.length < 3) {
+    list.push({ label: "HOT", style: "text-red-400 bg-red-500/10 border-red-500/20" });
   }
-  
+
   return list;
 }
 
-// WhatsApp template builder
+// WhatsApp template builder with universal wa.me redirection
 export function buildWhatsAppHandoff(message: string): { url: string; mailto: string } {
   const encMessage = encodeURIComponent(message.trim());
   const mailSubject = encodeURIComponent("IDsvault - Active Brokerage Campaign Request");
   const mailBody = encMessage;
   
-  // Mobile / Desktop protocol selection helper
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    typeof window !== "undefined" ? window.navigator.userAgent : ""
-  );
-  
-  const origin = isMobile ? "api.whatsapp.com" : "web.whatsapp.com";
-  const wUrl = `https://${origin}/send?phone=${WHATSAPP_NUMBER}&text=${encMessage}`;
+  const wUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encMessage}`;
   const mUrl = `mailto:${SUPPORT_EMAIL}?subject=${mailSubject}&body=${mailBody}`;
   
   return { url: wUrl, mailto: mUrl };

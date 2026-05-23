@@ -25,6 +25,7 @@ import { SellApplication } from "./components/SellApplication";
 import { SourcingRequest as SourcingRequestView } from "./components/SourcingRequest";
 import { AdminDashboard } from "./components/AdminDashboard";
 import { RegulatoryInfo } from "./components/RegulatoryInfo";
+import { ContactView } from "./components/ContactView";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
@@ -69,6 +70,14 @@ export default function App() {
     setSelectedSlug(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
     addLog("NAVIGATION_EVENT", `Client navigated to segment layout: [${view.toUpperCase()}]`);
+    
+    // GA4 Page View Tracking Link
+    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
+      (window as any).trackIDsVaultEvent("page_view", { 
+        page_title: view.toUpperCase(), 
+        page_location: window.location.href 
+      });
+    }
   };
 
   const handleSelectListing = (slug: string) => {
@@ -76,6 +85,14 @@ export default function App() {
     setCurrentView("listing-detail");
     window.scrollTo({ top: 0, behavior: "smooth" });
     addLog("ASSET_VIEW", `Client examined vetted platform ledger coordinates for tag: @${slug}`);
+
+    // GA4 View Item Tracking Link
+    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
+      (window as any).trackIDsVaultEvent("view_item", { 
+        item_id: slug, 
+        item_category: "username" 
+      });
+    }
   };
 
   // Pushes proposal from client side
@@ -105,6 +122,15 @@ export default function App() {
         item.slug === selectedSlug ? { ...item, status: DealStatus.OfferPending } : item
       )
     );
+
+    // GA4 Lead Submission Tracking Link
+    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
+      (window as any).trackIDsVaultEvent("generate_lead", { 
+        item_id: selectedSlug,
+        value: offer,
+        currency: "INR"
+      });
+    }
   };
 
   // Regists brand new seller list application
@@ -125,6 +151,15 @@ export default function App() {
 
     setListings((prev) => [newListing, ...prev]);
     addLog("LISTING_APPLICATION", `Application to list high-value identifier @${username} on ${platform.toUpperCase()} with ${formatINR(asking)} target recorded.`);
+
+    // GA4 Register Listing event tracking
+    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
+      (window as any).trackIDsVaultEvent("submit_listing", { 
+        username, 
+        platform, 
+        asking_price: asking 
+      });
+    }
   };
 
   // Regists a discrete off-market sourcing request demand
@@ -149,6 +184,15 @@ export default function App() {
 
     setRequests((prev) => [newReq, ...prev]);
     addLog("SOURCING_CAMPAIGN", `Discrete sourcing outreach commissioned for @${desiredUsername} on ${platform.toUpperCase()} with limit budget of ${formatINR(budget)}.`);
+
+    // GA4 Submit Sourcing event tracking
+    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
+      (window as any).trackIDsVaultEvent("submit_sourcing", { 
+        username: desiredUsername, 
+        platform, 
+        budget 
+      });
+    }
   };
 
   // Status transitions
@@ -160,10 +204,17 @@ export default function App() {
 
   // Quick WhatsApp sticky click
   const handleDialBroker = () => {
-    const phrase = "Hello IDsvault Bengaluru desk. Sourcing representative is looking to coordinate private off-market transaction handovers.";
+    const phrase = "Hello IDsvault Hyderabad desk. Sourcing representative is looking to coordinate private off-market transaction handovers.";
     const launch = buildWhatsAppHandoff(phrase);
     window.open(launch.url, "_blank");
     addLog("STICKY_BROKER_TAP", "Direct WhatsApp hotline triggered from mobile sticky panel.");
+
+    // GA4 Dialog event tracking
+    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
+      (window as any).trackIDsVaultEvent("contact_whatsapp", { 
+        context: "sticky_mobile_cta" 
+      });
+    }
   };
 
   // Find listing for detail
@@ -229,6 +280,10 @@ export default function App() {
             {currentView === "faq" && (
               <RegulatoryInfo segment="faq" />
             )}
+
+            {currentView === "contact" && (
+              <ContactView onBackToHome={() => setCurrentView("home")} />
+            )}
           </motion.div>
         </AnimatePresence>
       </main>
@@ -246,7 +301,7 @@ export default function App() {
             </span>
             <div className="text-left leading-tight gap-0.5 font-sans">
               <p className="text-[8px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Operations Live</p>
-              <p className="text-xs text-white font-bold font-mono">BENGALURU DESK</p>
+              <p className="text-xs text-white font-bold font-mono">HYDERABAD DESK</p>
             </div>
           </div>
           <button

@@ -82,16 +82,13 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
     setTimeout(() => {
       setIsSubmitting(false);
       
-      const customMessage = `Hello IDsvault Desk,
- 
-I would like to initiate a secure transaction for:
-• Handle Slug: @${listing.slug}
-• Proposed Price Offer: ${formatINR(numericOffer)}
-• Buyer Name: ${name}
-• Email: ${email}
-• WhatsApp Contact: ${whatsapp}
+      const customMessage = `Hi IDsvault, I want to start a secure deal.
 
-Please allocate a coordinator and assist with manual ownership verify sequence.`;
+Handle: @${listing.username}
+Platform: ${listing.platform.toUpperCase()}
+Offer: ${formatINR(numericOffer)}
+Name: ${name}
+Urgency: Standard`;
 
       const coords = buildWhatsAppHandoff(customMessage);
       
@@ -358,7 +355,7 @@ Please allocate a coordinator and assist with manual ownership verify sequence.`
             {/* Support Message */}
             <div className="pt-2 border-t border-white/[0.06] text-center select-none">
               <p className="text-[10px] text-gray-500">
-                Need bespoke corporate legal contracts? Direct secure liaison with our Bengaluru Desk consultancy hotline is online.
+                Need bespoke corporate legal contracts? Direct secure liaison with our Hyderabad Desk consultancy hotline is online.
               </p>
             </div>
 

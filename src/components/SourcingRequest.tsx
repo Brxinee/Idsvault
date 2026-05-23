@@ -68,19 +68,12 @@ export const SourcingRequest: React.FC<SourcingRequestProps> = ({ onRegisterRequ
       // Save to logs/state
       onRegisterRequest(desiredUsername, platform, budgetValue, urgency, alternatives);
 
-      const template = `Hello IDsvault Desk,
+      const template = `Hi IDsvault, I want help sourcing a premium digital identity.
 
-I would like to commission a custom off-market sourcing campaign:
-• Target Username: @${desiredUsername}
-• Platform: ${platform.toUpperCase()}
-• Campaign Budget: ${formatINR(budgetValue)}
-• Urgency Level: ${urgency}
-• Alternative Options: ${alternatives || "None proposed"}
-• Contact Name Code: Sourcing inquirer
-• Coordinate Mail: ${email}
-• Coordinate WhatsApp: ${whatsapp}
-
-Please allocate an outreach coordinator to contact the current owner discretely.`;
+Desired Handle: @${desiredUsername}
+Platform: ${platform.toUpperCase()}
+Budget: ${formatINR(budgetValue)}
+Urgency: ${urgency}`;
 
       const coords = buildWhatsAppHandoff(template);
 

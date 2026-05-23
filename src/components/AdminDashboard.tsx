@@ -57,7 +57,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === "admin@idsvault.com" && password === "admin123") {
+    if (email === "brxinee@gmail.com" && password === "Jogdhande08@") {
       setIsAuthenticated(true);
       setLoginError("");
       onAddLog("ADMIN_AUTHENTICATED", "Authorized administrative console accessed by session credentials.");
@@ -147,7 +147,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <input
                 type="email"
                 required
-                placeholder="admin@idsvault.com"
+                placeholder="brxinee@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
@@ -183,8 +183,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </button>
           </form>
 
-          <footer className="pt-2 text-center text-[9px] text-gray-650 font-mono">
-            Demo credentials: admin@idsvault.com / admin123
+          <footer className="pt-2 text-center text-[9px] text-gray-655 font-mono">
+            Demo credentials: brxinee@gmail.com / Jogdhande08@
           </footer>
         </motion.article>
       </div>

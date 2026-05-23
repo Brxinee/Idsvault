@@ -47,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
     {
       step: "03",
       title: "Buyer Pays Broker",
-      desc: "Buyer routes the designated ledger amount directly to our supervised Bengaluru brokerage balance coordinates.",
+      desc: "Buyer routes the designated ledger amount directly to our supervised Hyderabad brokerage balance coordinates.",
       icon: <FileCheck2 className="h-5 w-5 text-purple-400" />
     },
     {
@@ -93,7 +93,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-405 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span>Premium Broker-Assisted Network • Bengaluru Hub Desk</span>
+            <span>Premium Broker-Assisted Network • Hyderabad Hub Desk</span>
           </motion.div>
 
           <div className="space-y-4">
@@ -234,8 +234,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                   BK
                 </div>
                 <div className="text-left leading-none gap-1">
-                  <h5 className="text-[11px] font-bold text-white">Bengaluru Desk Broker</h5>
-                  <p className="text-[9px] text-gray-500 font-mono">Ref id: ID-DESK-BANGALORE</p>
+                  <h5 className="text-[11px] font-bold text-white">Hyderabad Desk Broker</h5>
+                  <p className="text-[9px] text-gray-500 font-mono">Ref id: ID-DESK-HYDERABAD</p>
                 </div>
               </div>
               {/* Fake message bubble */}
@@ -325,7 +325,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 Human Broker Supervision
               </h4>
               <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                Dedicated Bengaluru brokers supervise every single step, ensuring coordinates match standard security instructions.
+                Dedicated Hyderabad brokers supervise every single step, ensuring coordinates match standard security instructions.
               </p>
             </div>
 
@@ -392,7 +392,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             </div>
             <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#0F0F10] border border-white/[0.04]">
               <span className="h-2 w-2 rounded-full bg-[#10B981]" />
-              <span> Bengaluru Desks Assigned: ONLINE</span>
+              <span> Hyderabad Desks Assigned: ONLINE</span>
             </div>
             <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#0F0F10] border border-white/[0.04]">
               <span className="h-2 w-2 rounded-full bg-purple-400" />

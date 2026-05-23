@@ -154,17 +154,13 @@ export const SellApplication: React.FC<SellApplicationProps> = ({ onRegisterList
     setTimeout(() => {
       setIsSubmitting(false);
 
-      const msg = `Hello IDsvault Desk,
+      const msg = `Hi IDsvault, I want to list my premium digital identity.
 
-I would like to apply to list my username handle:
-• Handle Username: @${username}
-• Target Platform: ${platform.toUpperCase()}
-• Asking Price: ${formatINR(askValue)}
-• Minimum Floor: ${formatINR(minValue)}
-• Custody Holder Name: ${fullName}
-• Coordinate WhatsApp: ${whatsapp}
-
-I am prepared for bio token verification and manual custody coordinate audit.`;
+Handle: @${username}
+Platform: ${platform.toUpperCase()}
+Price: ${formatINR(askValue)}
+Name: ${fullName}
+WhatsApp: ${whatsapp}`;
 
       const coordinates = buildWhatsAppHandoff(msg);
       onRegisterListing(username, platform, askValue, minValue);
@@ -431,7 +427,7 @@ I am prepared for bio token verification and manual custody coordinate audit.`;
       <div className="mt-6 p-4 rounded-xl bg-blue-500/[0.012] border border-blue-500/10 text-xs text-gray-400 flex items-start gap-3 select-none leading-relaxed">
         <HelpCircle className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
         <p>
-          IDsvault operates in complete compliance with corporate trademark parameters. Before listed handles go public, our Bengaluru hub verified coordinate properties, access locks, and active ownership hashes.
+          IDsvault operates in complete compliance with corporate trademark parameters. Before listed handles go public, our Hyderabad hub verified coordinate properties, access locks, and active ownership hashes.
         </p>
       </div>
 
@@ -465,7 +461,7 @@ I am prepared for bio token verification and manual custody coordinate audit.`;
                   className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   onClick={() => setSuccessHandoff(null)}
                 >
-                  Connect to Bengaluru Desk Sourcing
+                  Connect to Hyderabad Desk Sourcing
                 </a>
                 <a
                   href={successHandoff.mailto}
