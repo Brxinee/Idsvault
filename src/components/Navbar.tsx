@@ -17,11 +17,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: "Browse Registry", value: "browse" },
-    { label: "Sell Your Handle", value: "sell" },
-    { label: "Acquisition Sourcing", value: "request" },
-    { label: "Trust FAQ", value: "faq" },
-    { label: "Admin Console", value: "admin" }
+    { label: "Home", value: "home" },
+    { label: "Browse IDs", value: "browse" },
+    { label: "Sell Your ID", value: "sell" },
+    { label: "Request ID", value: "request" },
+    { label: "Blog", value: "blog" },
+    { label: "FAQ", value: "faq" },
+    { label: "Contact", value: "contact" }
   ];
 
   const handleNavClick = (view: string) => {

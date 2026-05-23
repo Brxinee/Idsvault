@@ -26,7 +26,9 @@ import { SourcingRequest as SourcingRequestView } from "./components/SourcingReq
 import { AdminDashboard } from "./components/AdminDashboard";
 import { RegulatoryInfo } from "./components/RegulatoryInfo";
 import { ContactView } from "./components/ContactView";
+import { BlogView } from "./components/BlogView";
 import { motion, AnimatePresence } from "motion/react";
+import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
 export default function App() {
   const [currentView, setCurrentView] = useState<string>("home");
@@ -40,6 +42,58 @@ export default function App() {
 
   // Consent shield state
   const [showConsent, setShowConsent] = useState<boolean>(false);
+
+  // Admin global login state
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("idsvault_mock_admin_unlocked") === "true";
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (isSupabaseConfigured && supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          supabase
+            .from("users")
+            .select("role")
+            .eq("id", session.user.id)
+            .single()
+            .then(({ data }) => {
+              if (data && data.role === "admin") {
+                setIsAdminLoggedIn(true);
+              } else {
+                setIsAdminLoggedIn(false);
+              }
+            });
+        }
+      });
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (session) {
+          supabase
+            .from("users")
+            .select("role")
+            .eq("id", session.user.id)
+            .single()
+            .then(({ data }) => {
+              if (data && data.role === "admin") {
+                setIsAdminLoggedIn(true);
+              } else {
+                setIsAdminLoggedIn(false);
+              }
+            });
+        } else {
+          setIsAdminLoggedIn(localStorage.getItem("idsvault_mock_admin_unlocked") === "true");
+        }
+      });
+
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
+  }, []);
 
   useEffect(() => {
     const consent = localStorage.getItem("idsvault_consent_shield");
@@ -270,6 +324,15 @@ export default function App() {
                 logs={logs}
                 onUpdateListingStatus={handleUpdateListingStatus}
                 onAddLog={addLog}
+                onAuthChange={setIsAdminLoggedIn}
+              />
+            )}
+
+            {currentView === "blog" && (
+              <BlogView 
+                onNavigate={handleNavigate} 
+                onBrowseListing={(slug) => { setSelectedSlug(slug); setCurrentView("listing-detail"); }} 
+                isAdmin={isAdminLoggedIn}
               />
             )}
 

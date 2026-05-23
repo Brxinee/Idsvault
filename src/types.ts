@@ -61,8 +61,47 @@ export interface SourcingRequest {
   createdTime: string;
 }
 
+export interface BlogSection {
+  type: "heading2" | "heading3" | "paragraph" | "list" | "quote" | "table" | "cta";
+  content?: string;
+  items?: string[]; // for list
+  columns?: string[]; // for table
+  rows?: string[][]; // for table
+  subtitle?: string; // for CTA or heading
+}
+
+export interface BlogFAQ {
+  question: string;
+  answer: string;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  metaTitle: string;
+  metaDescription: string;
+  publishedAt: string;
+  readTime: string;
+  author: {
+    name: string;
+    role: string;
+    avatar: string;
+  };
+  featured: boolean;
+  status: "published" | "draft";
+  introduction: string;
+  directAnswer: string;
+  sections: BlogSection[];
+  faqs: BlogFAQ[];
+  relatedSlugs: string[];
+}
+
 export interface SystemLog {
   timestamp: string;
   action: string;
   detail: string;
 }
+
+

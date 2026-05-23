@@ -20,6 +20,7 @@ import {
 import { Platform } from "../types";
 import { buildWhatsAppHandoff, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import { TurnstileWidget } from "./TurnstileWidget";
 
 interface SellApplicationProps {
   onRegisterListing: (username: string, platform: Platform, asking: number, min: number) => void;
@@ -35,6 +36,7 @@ export const SellApplication: React.FC<SellApplicationProps> = ({ onRegisterList
   const [minPrice, setMinPrice] = useState("");
   const [fullName, setFullName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   
   // Drag and Drop File States
   const [file, setFile] = useState<File | null>(null);
@@ -143,6 +145,11 @@ export const SellApplication: React.FC<SellApplicationProps> = ({ onRegisterList
     e.preventDefault();
     const askValue = parseFloat(askingPrice);
     const minValue = parseFloat(minPrice);
+
+    if (!turnstileToken) {
+      alert("Please solve the Cloudflare security validation gate before submitting.");
+      return;
+    }
 
     if (!fullName.trim() || !whatsapp.trim()) {
       alert("Please provide your contact name and active WhatsApp credentials.");
@@ -394,20 +401,23 @@ WhatsApp: ${whatsapp}`;
                 )}
               </div>
 
+              {/* Cloudflare Turnstile anti-bot panel */}
+              <TurnstileWidget onVerify={setTurnstileToken} actionName="sell_registration" />
+
               {/* Wizard Nav Handles */}
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="py-3 px-4 border border-white/[0.08] hover:border-white/[0.15] text-gray-300 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1 cursor-pointer select-none"
+                  className="py-3 px-4 border border-white/[0.08] hover:border-white/[0.15] text-gray-300 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1 cursor-pointer select-none font-mono"
                 >
                   <ChevronLeft className="h-4 w-4" />
                   <span>Back</span>
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1 cursor-pointer select-none"
+                  disabled={isSubmitting || !turnstileToken}
+                  className="py-3 px-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer select-none active:scale-95 text-center font-sans"
                 >
                   {isSubmitting ? (
                     <Loader2 className="h-4 w-4 animate-spin text-white" />

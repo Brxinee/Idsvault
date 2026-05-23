@@ -54,8 +54,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </button>
             </li>
             <li>
-              <button onClick={() => onNavigate("contact")} className="hover:text-white font-semibold text-blue-400 transition-colors cursor-pointer text-left">
+              <button onClick={() => onNavigate("blog")} className="hover:text-white transition-colors cursor-pointer text-left font-semibold text-emerald-400">
+                📖 Editorial Blog Strategy
+              </button>
+            </li>
+            <li>
+              <button onClick={() => onNavigate("contact")} className="hover:text-white transition-colors cursor-pointer text-left">
                 📞 Contact page
+              </button>
+            </li>
+            <li className="pt-1.5 border-t border-white/[0.04]">
+              <button onClick={() => onNavigate("admin")} className="hover:text-white text-[10px] text-gray-650 transition-colors cursor-pointer text-left">
+                🔐 Admin Console Gate
               </button>
             </li>
           </ul>

@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { buildWhatsAppHandoff, WHATSAPP_NUMBER, SUPPORT_EMAIL } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import { TurnstileWidget } from "./TurnstileWidget";
 
 interface ContactViewProps {
   onBackToHome: () => void;
@@ -30,10 +31,17 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBackToHome }) => {
   const [whatsapp, setWhatsapp] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [successHandoff, setSuccessHandoff] = useState<{ url: string; mailto: string } | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!turnstileToken) {
+      alert("Please solve the Cloudflare security validation gate before submitting.");
+      return;
+    }
+
     if (!name.trim() || !email.trim() || !whatsapp.trim() || !message.trim()) {
       alert("Please populate all contact requirements securely.");
       return;
@@ -221,13 +229,16 @@ Message Details: ${message}`;
                 </div>
               </div>
 
+              {/* Cloudflare Turnstile Verification Gate */}
+              <TurnstileWidget onVerify={setTurnstileToken} actionName="contact_consultation" />
+
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer select-none"
+                disabled={isSubmitting || !turnstileToken}
+                className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer select-none active:scale-95 text-center"
               >
                 {isSubmitting ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin text-white" />
                 ) : (
                   <>
                     <Send className="h-3.5 w-3.5" />
