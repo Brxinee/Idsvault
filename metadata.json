@@ -1,0 +1,6 @@
+{
+  "name": "IDsvault",
+  "description": "Premium Digital ID and Social Username Brokerage",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

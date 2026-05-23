@@ -1,0 +1,17 @@
+# IDsvault Model Context & Business Posture Information
+
+IDsvault is an independent, premium digital identity brokerage marketplace coordinating human-assisted transfers of high-value social media handles (@usernames) and brandable digital names.
+
+## Core Business Identity & Posture
+- **Independence:** IDsvault is NOT an official partner, agent, or affiliate of Instagram (Meta), X (Twitter), Discord, or Telegram.
+- **Escrow Operations:** IDsvault is NOT a licensed escrow bank or guaranteed automated transfer service. Instead, it provides human broker-supervised custody and step-by-step transaction workflow coordination.
+- **Service Offering:** Direct concierge brokering, off-market identifier sourcing campaigns, digital custody validation, and custom secure handovers.
+
+## Legal & Compliance Guidelines
+- **Anti-Bypass Asset Shielding:** Public listings on IDsvault are strictly masked to prevent listing hijackings, speculative buyouts, and security extortion tactics. Real handles are only disclosed under secured broker-monitored environments.
+- **Risk Disclosures:** Digital namespace transaction operations run contrary to standard platforms' direct Terms of Service. IDsvault offers zero warranties against subsequent host platform reset campaigns, account de-activations, or subsequent recovery updates.
+- **Prohibited Actions:** Strictly excludes identifiers sourced from phishing, extortion, trademarks infringement, or unauthorized security breaches.
+
+## API & Marketplace Access Rules
+- Sourcing campaigns are conducted discretely.
+- Live brokers coordinate secure handshakes on WhatsApp or secure alternative channels (+91 98765 43210 / desk@idsvault.com).
