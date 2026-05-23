@@ -7,8 +7,8 @@ import { createClient } from "@supabase/supabase-js";
 import { Listing, Lead, SourcingRequest, SystemLog, Platform, DealStatus } from "../types";
 
 // Check environment variables for Supabase database connection
-const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || "").trim();
-const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || "").trim();
+const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || "").trim();
+const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "").trim();
 
 // True production validation flag
 export const isSupabaseConfigured =

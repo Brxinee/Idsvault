@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { 
   ShieldCheck, 
   ShieldAlert, 
@@ -27,6 +27,7 @@ import {
 import { Listing, Lead, SourcingRequest, SystemLog, DealStatus } from "../types";
 import { formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import { supabase, isSupabaseConfigured } from "../lib/supabase";
 
 interface AdminDashboardProps {
   listings: Listing[];
@@ -46,25 +47,122 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onAddLog
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [sessionUser, setSessionUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [roleError, setRoleError] = useState("");
 
   // Search and filter inside tables
   const [inventorySearch, setInventorySearch] = useState("");
   const [proposalsSearch, setProposalsSearch] = useState("");
   const [kanbanPlatformFilter, setKanbanPlatformFilter] = useState<string>("all");
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email === "brxinee@gmail.com" && password === "Jogdhande08@") {
-      setIsAuthenticated(true);
-      setLoginError("");
-      onAddLog("ADMIN_AUTHENTICATED", "Authorized administrative console accessed by session credentials.");
-    } else {
-      setLoginError("Invalid cryptographic representative credentials entered.");
-      onAddLog("LOGIN_FAILURE", `Unauthenticated admin credential query: ${email}`);
+  // Load and subscribe to authentication sessions on mount
+  useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) {
+      setIsLoading(false);
+      return;
     }
+
+    // Hydrate current session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setSessionUser(session.user);
+        checkAdminRole(session.user.id);
+      } else {
+        setIsLoading(false);
+      }
+    });
+
+    // Listen to changes in session tokens
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        setSessionUser(session.user);
+        checkAdminRole(session.user.id);
+      } else {
+        setSessionUser(null);
+        setIsAuthenticated(false);
+        setIsLoading(false);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  // Secure role checker querying database
+  const checkAdminRole = async (userId: string) => {
+    try {
+      setIsLoading(true);
+      setRoleError("");
+      const { data, error } = await supabase!
+        .from("users")
+        .select("role")
+        .eq("id", userId)
+        .single();
+
+      if (error) {
+        console.error("Profile security audit error:", error);
+        setRoleError("Access Denied: Your account does not have administrator privileges.");
+        setIsAuthenticated(false);
+      } else if (data && data.role === "admin") {
+        setIsAuthenticated(true);
+        setRoleError("");
+      } else {
+        setRoleError("Access Denied: Your account does not have administrator privileges.");
+        setIsAuthenticated(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setRoleError("Security verification failed. Please refresh and try again.");
+      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isSupabaseConfigured || !supabase) {
+      setLoginError("Database auth client is disconnected. Check environment variables.");
+      return;
+    }
+
+    setIsLoading(true);
+    setLoginError("");
+    setRoleError("");
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setLoginError(error.message);
+        onAddLog("LOGIN_FAILURE", `Unauthenticated admin query: ${email} - Error: ${error.message}`);
+        setIsLoading(false);
+      } else {
+        onAddLog("ADMIN_AUTHENTICATED", "Authorized administrative console accessed by session credentials.");
+      }
+    } catch (err) {
+      setLoginError("An unexpected system exception occurred during authentication.");
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    setSessionUser(null);
+    setIsAuthenticated(false);
+    onAddLog("ADMIN_SESSION_CLOSED", "Lead controller session closed voluntarily.");
+    setIsLoading(false);
   };
 
   const triggerCSVDownload = (type: "listings" | "proposals" | "requests") => {
@@ -121,6 +219,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     );
   }, [leads, proposalsSearch]);
 
+  if (isLoading) {
+    return (
+      <div className="max-w-md mx-auto px-6 py-32 flex flex-col items-center justify-center space-y-4 text-center">
+        <div className="w-8 h-8 rounded-full border-2 border-t-blue-500 border-white/10 animate-spin" />
+        <p className="text-xs text-gray-400 font-sans">Verifying security credentials...</p>
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <div className="max-w-md mx-auto px-6 py-24 select-none">
@@ -135,28 +242,28 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <span className="p-3 rounded-xl bg-blue-500/10 text-blue-500 inline-block mb-1 border border-blue-500/20">
               <Key className="h-5 w-5" />
             </span>
-            <h1 className="text-xl font-bold text-white tracking-tight">Executive CRM Entrance</h1>
-            <p className="text-[10px] text-gray-400 font-medium">Verify system ledger indexes, adjust deal statuses, and audit live logs.</p>
+            <h1 className="text-xl font-bold text-white tracking-tight">Admin Login</h1>
+            <p className="text-[10px] text-gray-400 font-medium">Verify credentials and manage transactions securely.</p>
           </header>
 
-          <form onSubmit={handleLoginSubmit} className="space-y-4">
+          <form onSubmit={handleLoginSubmit} className="space-y-4 font-sans">
             <div>
               <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                Corporate Email Node
+                Email
               </label>
               <input
                 type="email"
                 required
-                placeholder="brxinee@gmail.com"
+                placeholder="Enter admin email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
               />
             </div>
 
             <div>
               <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                Encrypted Credentials Key
+                Password
               </label>
               <input
                 type="password"
@@ -164,28 +271,46 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
               />
             </div>
 
             {loginError && (
-              <div className="p-3 rounded bg-red-500/5 border border-red-500/10 text-[10px] text-red-400 font-medium flex items-center gap-1.5">
-                <AlertTriangle className="h-4 w-4 text-red-500" />
+              <div className="p-3 rounded bg-red-500/5 border border-red-500/10 text-[10px] text-red-400 font-medium flex items-center gap-1.5 leading-relaxed">
+                <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />
                 <span>{loginError}</span>
+              </div>
+            )}
+
+            {roleError && (
+              <div className="p-3 rounded bg-yellow-500/5 border border-yellow-500/10 text-[10px] text-yellow-400 font-medium flex items-center gap-1.5 leading-relaxed">
+                <ShieldAlert className="h-4 w-4 text-yellow-500 shrink-0" />
+                <span>{roleError}</span>
+              </div>
+            )}
+
+            {!isSupabaseConfigured && (
+              <div className="p-3.5 rounded bg-amber-500/5 border border-amber-500/15 text-[10px] text-amber-400 font-medium flex flex-col gap-1 text-left leading-relaxed font-sans">
+                <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[9px] mb-1">
+                  <ShieldAlert className="h-4 w-4 text-amber-500 shrink-0" />
+                  <span>SUPABASE OFFLINE</span>
+                </div>
+                <span>To switch from client state to real authentication, define <strong>VITE_SUPABASE_URL</strong> and <strong>VITE_SUPABASE_ANON_KEY</strong> environment secrets.</span>
               </div>
             )}
 
             <button
               type="submit"
-              className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all cursor-pointer select-none text-center hover:shadow-[0_0_15px_rgba(59,130,246,0.25)] active:scale-95"
+              disabled={!isSupabaseConfigured}
+              className={`w-full py-3 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all cursor-pointer select-none text-center active:scale-95 ${
+                isSupabaseConfigured 
+                  ? "bg-blue-600 hover:bg-blue-500 hover:shadow-[0_0_15px_rgba(59,130,246,0.25)]" 
+                  : "bg-gray-800 text-gray-500 cursor-not-allowed border border-white/[0.04]"
+              }`}
             >
-              Unlock Secure Terminal
+              Sign In
             </button>
           </form>
-
-          <footer className="pt-2 text-center text-[9px] text-gray-655 font-mono">
-            Demo credentials: brxinee@gmail.com / Jogdhande08@
-          </footer>
         </motion.article>
       </div>
     );
@@ -200,10 +325,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-8 text-left">
       
       {/* Executive Header */}
-      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/[0.06] pb-6">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/[0.06] pb-6 font-sans">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight font-sans animate-in">Registry CRM Terminal</h1>
-          <p className="text-xs text-[#9CA3AF] mt-1 font-sans">Manual operations pipeline control, asset validation, and secure CSV logs export.</p>
+          <h1 className="text-2xl font-extrabold text-white tracking-tight animate-in">Registry CRM Terminal</h1>
+          <p className="text-xs text-[#9CA3AF] mt-1">Manual operations pipeline control, asset validation, and secure CSV logs export.</p>
         </div>
         <div className="flex items-center gap-3 select-none">
           <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/20 text-[10px] font-mono font-bold uppercase text-emerald-400">
@@ -211,10 +336,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             Session Audit Active
           </span>
           <button
-            onClick={() => {
-              setIsAuthenticated(false);
-              onAddLog("ADMIN_SESSION_CLOSED", "Lead controller session closed voluntarily.");
-            }}
+            onClick={handleLogout}
             className="h-8 px-4 rounded-lg border border-white/[0.08] text-[10px] text-gray-300 hover:text-white uppercase font-bold transition-all cursor-pointer select-none active:scale-95 text-center"
           >
             Lock Vault Console
