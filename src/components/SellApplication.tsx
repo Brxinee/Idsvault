@@ -4,8 +4,6 @@
  */
 
 import React, { useState, useRef, useEffect } from "react";
-import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO } from "./SEO";
 import { 
   Upload, 
   HelpCircle, 
@@ -22,14 +20,13 @@ import {
 import { Platform } from "../types";
 import { buildWhatsAppHandoff, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import { TurnstileWidget } from "./TurnstileWidget";
 
 interface SellApplicationProps {
   onRegisterListing: (username: string, platform: Platform, asking: number, min: number) => void;
 }
 
 export const SellApplication: React.FC<SellApplicationProps> = ({ onRegisterListing }) => {
-  usePageTitle("Sell Your Handle");
-  // SEO handled via <SEO> component below
   // Wizard steps: 1 or 2
   const [step, setStep] = useState(1);
 
@@ -39,7 +36,8 @@ export const SellApplication: React.FC<SellApplicationProps> = ({ onRegisterList
   const [minPrice, setMinPrice] = useState("");
   const [fullName, setFullName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  
   // Drag and Drop File States
   const [file, setFile] = useState<File | null>(null);
   const [isDoneCompressing, setIsDoneCompressing] = useState(false);
@@ -148,6 +146,11 @@ export const SellApplication: React.FC<SellApplicationProps> = ({ onRegisterList
     const askValue = parseFloat(askingPrice);
     const minValue = parseFloat(minPrice);
 
+    if (!turnstileToken) {
+      alert("Please solve the Cloudflare security validation gate before submitting.");
+      return;
+    }
+
     if (!fullName.trim() || !whatsapp.trim()) {
       alert("Please provide your contact name and active WhatsApp credentials.");
       return;
@@ -177,14 +180,8 @@ WhatsApp: ${whatsapp}`;
   };
 
   return (
-    <>
-    <SEO
-      title="Sell Your Username"
-      description="List your premium Instagram handle, X username, or Telegram channel for sale through IDsvault. Broker-verified, secure escrow, Hyderabad desk."
-      canonical="/sell"
-    />
     <div className="max-w-xl mx-auto px-6 py-12 text-left">
-
+      
       <div className="mb-10 text-center space-y-3">
         <h1 className="text-3xl font-extrabold tracking-tight text-white leading-tight">Sell Premium Identifier</h1>
         <p className="text-xs text-[#9CA3AF] max-w-sm mx-auto">
@@ -222,7 +219,7 @@ WhatsApp: ${whatsapp}`;
                     Username / Handle
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs font-mono">@</span>
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-650 text-xs font-mono">@</span>
                     <input
                       type="text"
                       required
@@ -404,6 +401,9 @@ WhatsApp: ${whatsapp}`;
                 )}
               </div>
 
+              {/* Cloudflare Turnstile anti-bot panel */}
+              <TurnstileWidget onVerify={setTurnstileToken} actionName="sell_registration" />
+
               {/* Wizard Nav Handles */}
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <button
@@ -416,7 +416,7 @@ WhatsApp: ${whatsapp}`;
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !turnstileToken}
                   className="py-3 px-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer select-none active:scale-95 text-center font-sans"
                 >
                   {isSubmitting ? (
@@ -488,6 +488,5 @@ WhatsApp: ${whatsapp}`;
       </AnimatePresence>
 
     </div>
-    </>
   );
 };

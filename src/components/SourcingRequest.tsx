@@ -4,8 +4,6 @@
  */
 
 import React, { useState } from "react";
-import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO } from "./SEO";
 import { 
   Send, 
   AlertCircle, 
@@ -21,13 +19,13 @@ import {
 import { Platform, Urgency } from "../types";
 import { buildWhatsAppHandoff, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import { TurnstileWidget } from "./TurnstileWidget";
 
 interface SourcingRequestProps {
   onRegisterRequest: (desiredUsername: string, platform: Platform, budget: number, urgency: Urgency, alternatives: string) => void;
 }
 
 export const SourcingRequest: React.FC<SourcingRequestProps> = ({ onRegisterRequest }) => {
-  usePageTitle("Custom Sourcing");
   const [step, setStep] = useState(1);
 
   const [desiredUsername, setDesiredUsername] = useState("");
@@ -37,6 +35,8 @@ export const SourcingRequest: React.FC<SourcingRequestProps> = ({ onRegisterRequ
   const [alternatives, setAlternatives] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [email, setEmail] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successCoords, setSuccessCoords] = useState<{ url: string; mailto: string } | null>(null);
 
@@ -56,6 +56,11 @@ export const SourcingRequest: React.FC<SourcingRequestProps> = ({ onRegisterRequ
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const budgetValue = parseFloat(budget);
+
+    if (!turnstileToken) {
+      alert("Please solve the Cloudflare security validation gate before commissioning.");
+      return;
+    }
 
     if (!whatsapp.trim() || !email.trim()) {
       alert("Please provide active communications coordinates.");
@@ -87,14 +92,8 @@ Urgency: ${urgency}`;
   };
 
   return (
-    <>
-    <SEO
-      title="Private Advisory"
-      description="Need a specific Telegram username, domain, or Discord community? Describe what you need and our Hyderabad desk will source it for you."
-      canonical="/advisory"
-    />
     <div className="max-w-xl mx-auto px-6 py-12 text-left">
-
+      
       <div className="mb-10 text-center space-y-3">
         <h1 className="text-3xl font-extrabold tracking-tight text-white leading-tight animate-in">Private Commission Sourcing</h1>
         <p className="text-xs text-[#9CA3AF] max-w-sm mx-auto">
@@ -250,6 +249,9 @@ Urgency: ${urgency}`;
                 </div>
               </div>
 
+              {/* Cloudflare Turnstile anti-bot gates */}
+              <TurnstileWidget onVerify={setTurnstileToken} actionName="sourcing_commission" />
+
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <button
                   type="button"
@@ -261,7 +263,7 @@ Urgency: ${urgency}`;
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !turnstileToken}
                   className="py-3 px-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer select-none active:scale-95"
                 >
                   {isSubmitting ? (
@@ -336,6 +338,5 @@ Urgency: ${urgency}`;
       </AnimatePresence>
 
     </div>
-    </>
   );
 };

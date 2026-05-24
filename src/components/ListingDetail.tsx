@@ -4,16 +4,16 @@
  */
 
 import React, { useState, useEffect } from "react";
-import {
-  ShieldCheck,
-  MessageCircle,
-  Mail,
-  AlertTriangle,
-  BadgePercent,
-  Lock,
-  Landmark,
-  Check,
-  Loader2,
+import { 
+  ShieldCheck, 
+  MessageCircle, 
+  Mail, 
+  AlertTriangle, 
+  BadgePercent, 
+  Lock, 
+  Landmark, 
+  Check, 
+  Loader2, 
   ChevronLeft,
   Calendar,
   Globe,
@@ -23,7 +23,7 @@ import {
 import { Listing, Urgency } from "../types";
 import { maskUsername, buildWhatsAppHandoff, WHATSAPP_NUMBER, formatINR, getEstimatedRange } from "../data";
 import { motion, AnimatePresence } from "motion/react";
-import { SEO } from "./SEO";
+import { TurnstileWidget } from "./TurnstileWidget";
 
 interface ListingDetailProps {
   listing: Listing;
@@ -36,7 +36,8 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  
   // Bot Honeypot state
   const [honeypot, setHoneypot] = useState("");
 
@@ -58,7 +59,13 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 1. Anti-Bot Honeypot Defense
+    // 1. Interactive Turnstile verification
+    if (!turnstileToken) {
+      alert("Please solve the Cloudflare security validation gate before submitting.");
+      return;
+    }
+
+    // 2. Anti-Bot Honeypot Defense Triggered
     if (honeypot) {
       console.warn("Anti-bot defense triggered: Honeypot check detected input.");
       alert("Submission blocked. Automated request signature detected.");
@@ -110,39 +117,7 @@ Urgency: Standard`;
 
   const maskedTitle = maskUsername(listing.username);
 
-  const listingSchema = listing.askingPrice > 0
-    ? {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": `@${listing.username} — Premium ${listing.platform} Handle`,
-        "description": listing.description || `Premium ${listing.platform} username available via IDsvault broker-assisted transfer.`,
-        "url": `https://idsvault.com/asset/${listing.slug}`,
-        "brand": {
-          "@type": "Organization",
-          "name": "IDsvault",
-          "url": "https://idsvault.com"
-        },
-        "offers": {
-          "@type": "Offer",
-          "priceCurrency": "INR",
-          "price": listing.askingPrice,
-          "availability": "https://schema.org/InStock",
-          "seller": {
-            "@type": "Organization",
-            "name": "IDsvault"
-          }
-        }
-      }
-    : undefined;
-
   return (
-    <>
-    <SEO
-      title={`Buy @${listing.username} on ${listing.platform}`}
-      description={`Premium @${listing.username} ${listing.platform} handle — ${listing.askingPrice > 0 ? `${formatINR(listing.askingPrice)} asking price. ` : ""}Broker-verified, payment in escrow. IDsvault Hyderabad.`}
-      canonical={`/asset/${listing.slug}`}
-      structuredData={listingSchema}
-    />
     <div className="max-w-7xl mx-auto px-6 py-12 text-left">
       
       {/* Premium Back Trigger */}
@@ -255,7 +230,7 @@ Urgency: Standard`;
 
             <div className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.04] space-y-1.5">
               <span className="text-[9px] text-gray-500 uppercase font-mono block">Estimated Range</span>
-              <p className="text-sm font-bold font-mono text-emerald-400">
+              <p className="text-sm font-bold font-mono text-emerald-450">
                 {getEstimatedRange(listing.askingPrice)}
               </p>
             </div>
@@ -343,6 +318,9 @@ Urgency: Standard`;
                 />
               </div>
 
+              {/* Active Cloudflare Turnstile Verification */}
+              <TurnstileWidget onVerify={setTurnstileToken} actionName="proposal_submission" />
+
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
@@ -357,7 +335,7 @@ Urgency: Standard`;
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !turnstileToken}
                   className="py-3 px-2 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-1 active:scale-95"
                   id="detail_submit_cta"
                 >
@@ -443,6 +421,5 @@ Urgency: Standard`;
       </AnimatePresence>
 
     </div>
-    </>
   );
 };

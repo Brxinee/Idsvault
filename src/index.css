@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "./tokens.css";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -8,25 +7,23 @@
 
 @layer base {
   body {
-    background-color: var(--color-bg);
+    background-color: #050505;
     font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Scrollbar — neutral, no brand colour */
+/* Custom premium scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-bg);
+  background: #050505;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface);
+  background: #151517;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-raised);
+  background: #3B82F6;
 }

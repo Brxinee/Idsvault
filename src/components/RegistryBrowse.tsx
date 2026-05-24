@@ -4,8 +4,6 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO } from "./SEO";
 import { 
   Search, 
   ShieldAlert, 
@@ -30,21 +28,7 @@ interface RegistryBrowseProps {
 }
 
 export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSelectListing }) => {
-  usePageTitle("Browse Handles");
   const [search, setSearch] = useState("");
-
-  const collectionSchema = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Browse Premium Handles — IDsvault",
-    "description": "Broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Payment in escrow on every deal.",
-    "url": "https://idsvault.com/inventory",
-    "provider": {
-      "@type": "Organization",
-      "name": "IDsvault",
-      "url": "https://idsvault.com"
-    }
-  };
   const [selectedPlatform, setSelectedPlatform] = useState<string>("all");
   const [selectedRarity, setSelectedRarity] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("price-asc");
@@ -129,18 +113,12 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-8 text-left">
-      <SEO
-        title="Browse Handles"
-        description="Browse broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Payment in escrow on every deal. Hyderabad broker-assisted."
-        canonical="/inventory"
-        structuredData={collectionSchema}
-      />
-
+      
       {/* Visual Header */}
       <div className="space-y-2 border-b border-white/[0.06] pb-6">
-        <h1 className="text-3xl font-extrabold text-white tracking-tight">Available Handles</h1>
+        <h1 className="text-3xl font-extrabold text-white tracking-tight">Vetted Namespace Registry</h1>
         <p className="text-xs text-gray-400">
-          Browse broker-verified Instagram, X, and Telegram handles available for sale. Ownership confirmed on every listing.
+          Discover premium, short, and brandable digital usernames audited manually for absolute custody access.
         </p>
       </div>
 
@@ -183,7 +161,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                   onClick={() => handlePlatformChange(p)}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all duration-200 cursor-pointer select-none border ${
                     isActive
-                      ? "bg-blue-600 border-blue-500 text-white"
+                      ? "bg-blue-600 border-blue-500 text-white shadow-[0_2px_10px_rgba(59,130,246,0.2)]"
                       : "bg-[#151517] text-gray-400 border-white/[0.06] hover:text-white hover:border-white/[0.12]"
                   }`}
                   id={`chip_platform_${p}`}
@@ -229,7 +207,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
               <SlidersHorizontal className="h-3.5 w-3.5" />
               <span>Filters</span>
               {selectedRarity !== "all" && (
-                <span className="h-2 w-2 rounded-full bg-blue-500" />
+                <span className="h-2 w-2 rounded-full bg-blue-550" />
               )}
             </button>
 
@@ -250,7 +228,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-2">
                 <div className="space-y-2">
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Handle Type</h4>
+                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Rarity Badge Segment</h4>
                   <div className="flex flex-wrap gap-1.5">
                     {uniqueRarities.map((r) => {
                       const isMatch = selectedRarity === r;
@@ -275,9 +253,9 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                 </div>
 
                 <div className="space-y-2">
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500 font-mono">About Filtering</h4>
+                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500 font-mono">Operations Audit Rules</h4>
                   <p className="text-[10px] text-gray-500 leading-relaxed">
-                    All filters run in your browser. No search queries are sent to any server.
+                    Filters are processed locally inside our securely isolated workspace sandbox to keep search queries secure.
                   </p>
                 </div>
 
@@ -346,16 +324,16 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                   <ShieldAlert className="h-6 w-6 stroke-1.5" />
                 </div>
                 <div className="space-y-2 max-w-sm">
-                  <h3 className="text-white font-bold text-sm">No Handles Found</h3>
+                  <h3 className="text-white font-bold text-sm">No Namespace Listings Found</h3>
                   <p className="text-[#9CA3AF] text-[11px] leading-relaxed">
-                    No listings match your current filters. Try clearing your search or changing the platform filter. If you're looking for a specific handle, use our sourcing service.
+                    We couldn't locate any active vetted assets matching your search metrics. You can clear current filters or commission a custom sourcing task below.
                   </p>
                 </div>
                 <button
                   onClick={clearFormFilters}
                   className="px-4 py-2 text-[10px] font-bold uppercase rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-white transition-colors cursor-pointer"
                 >
-                  Clear All Filters
+                  Clear Dynamic Criteria
                 </button>
               </div>
             ) : (
@@ -388,7 +366,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
 
                       {/* Username Title & Badge list */}
                       <div className="space-y-2.5">
-                                <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors">
+                        <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors">
                           @{masked}
                         </h3>
                         <div className="flex flex-wrap gap-1.5">
@@ -409,9 +387,9 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                     <div className="flex items-end justify-between pt-4 border-t border-white/[0.06] mt-4 z-10">
                       <div>
                         <span className="text-[8px] font-bold uppercase tracking-widest text-[#9CA3AF] block mb-0.5">
-                          Asking Price
+                          Broker Valuation
                         </span>
-                        <span className="text-xl font-extrabold text-emerald-400 font-mono">
+                        <span className="text-xl font-extrabold text-emerald-450 font-mono">
                           {formatINR(item.askingPrice)}
                         </span>
                       </div>
@@ -420,7 +398,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                         onClick={() => onSelectListing(item.slug)}
                         className="h-8 px-4 rounded-lg bg-white hover:bg-gray-200 text-black transition-colors text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer select-none"
                       >
-                        <span>View &amp; Offer</span>
+                        <span>Negotiate Deal</span>
                         <ArrowRight className="h-3 w-3" />
                       </button>
                     </div>
@@ -443,7 +421,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             Prev Page
           </button>
           
-          <span className="text-xs font-mono font-medium text-gray-400 uppercase tracking-widest">
+          <span className="text-xs font-mono font-medium text-gray-450 uppercase tracking-widest">
             Page {page} of {totalPages}
           </span>
           

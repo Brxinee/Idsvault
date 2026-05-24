@@ -4,36 +4,43 @@
  */
 
 import React, { useState } from "react";
-import {
-  Mail,
-  MessageSquare,
-  MapPin,
-  Clock,
+import { 
+  Mail, 
+  MessageSquare, 
+  MapPin, 
+  Clock, 
   ArrowLeft,
+  ChevronRight,
   ShieldCheck,
   Send,
   Loader2,
   CheckCircle2
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { buildWhatsAppHandoff, SUPPORT_EMAIL } from "../data";
+import { buildWhatsAppHandoff, WHATSAPP_NUMBER, SUPPORT_EMAIL } from "../data";
 import { motion, AnimatePresence } from "motion/react";
-import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO } from "./SEO";
+import { TurnstileWidget } from "./TurnstileWidget";
 
-export const ContactView: React.FC = () => {
-  const navigate = useNavigate();
-  usePageTitle("Contact Desk");
+interface ContactViewProps {
+  onBackToHome: () => void;
+}
+
+export const ContactView: React.FC<ContactViewProps> = ({ onBackToHome }) => {
   const [inquiryType, setInquiryType] = useState("buy");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [successHandoff, setSuccessHandoff] = useState<{ url: string; mailto: string } | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!turnstileToken) {
+      alert("Please solve the Cloudflare security validation gate before submitting.");
+      return;
+    }
 
     if (!name.trim() || !email.trim() || !whatsapp.trim() || !message.trim()) {
       alert("Please populate all contact requirements securely.");
@@ -71,18 +78,12 @@ Message Details: ${message}`;
   };
 
   return (
-    <>
-    <SEO
-      title="Contact Our Desk"
-      description="Get in touch with IDsvault's Hyderabad broker desk. WhatsApp, email, or phone — we respond quickly to buying and selling enquiries."
-      canonical="/contact"
-    />
     <div className="max-w-4xl mx-auto px-6 py-12 text-left space-y-10">
-
+      
       {/* Back button header */}
       <div className="flex items-center justify-between select-none">
         <button
-          onClick={() => navigate("/")}
+          onClick={onBackToHome}
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition-colors cursor-pointer group"
         >
           <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
@@ -228,9 +229,12 @@ Message Details: ${message}`;
                 </div>
               </div>
 
+              {/* Cloudflare Turnstile Verification Gate */}
+              <TurnstileWidget onVerify={setTurnstileToken} actionName="contact_consultation" />
+
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !turnstileToken}
                 className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer select-none active:scale-95 text-center"
               >
                 {isSubmitting ? (
@@ -305,6 +309,5 @@ Message Details: ${message}`;
       </AnimatePresence>
 
     </div>
-    </>
   );
 };
