@@ -57,8 +57,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onSelectListing }) => {
       a: "Our Refund Policy guarantees full protection. In the highly unlikely event that a credentials transition fails or gets blocked during the swap window, our desk cancels the deal sequence immediately. Since we hold the funds directly in our designated broker account, we issue a 100% refund back to the buyer's payment coordinates within 24 business hours."
     },
     {
-      q: "Why pay IDsvault?",
-      a: "Direct peer-to-peer bank wires or crypto transfers to raw sellers carry immense scam risk. By paying into IDsvault's designated business broker account, your funds remain frozen and isolated in custody from our working corporate capital. The seller receives no payout until both parties confirm full administrative login and update crucial 2FA ties. (Note: We are an independent boutique clearing broker, not a registered financial institution)."
+      q: "Why pay IDsvault instead of the seller?",
+      a: "Paying sellers directly is extremely risky; they can take the money and delete their accounts. By funding IDsvault's designated business broker account, your money stays frozen in safe custody. The seller is only paid after you log in, claim full ownership, and activate 2FA under our live, supervised transfer session."
     },
     {
       q: "Are you affiliated with Instagram/X/Telegram?",
@@ -71,6 +71,14 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onSelectListing }) => {
     {
       q: "What if seller is fake?",
       a: "If a seller fails our bio challenges, refuses to sign standard intellectual property assignment contracts, or backs out from our live supervised call, we instantly terminate the deal and return 100% of the holds to the buyer cleanly without fees."
+    },
+    {
+      q: "How long do deals take?",
+      a: "Most micro-transactions or simple handle handovers require 1 to 3 business days for complete buyer routing, account audits, and ledger confirmation. More complex multi-asset or high-AOV acquisitions requiring legal trademark reviews may take 5 to 7 business days under customized contracts."
+    },
+    {
+      q: "What qualifies as premium?",
+      a: "We exclusively catalog short, high-prestige, and brandable digital assets. This includes single-word dictionary terms, 2-3 letter short acronyms, highly active first-generation handles (OG), and authoritative category identifiers that simplify digital trademarking and brand discoverability."
     }
   ];
 
@@ -436,6 +444,93 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onSelectListing }) => {
               <span>Immediate release after 2FA credentials transition completes.</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 3.8 HOW SELLER VERIFICATION WORKS (TRUST PROOF) */}
+      <section className="bg-gradient-to-b from-[#121214] to-[#0A0A0B] py-20 px-6 relative" id="seller_verification_works">
+        <div className="max-w-7xl mx-auto space-y-12">
+          
+          <div className="text-left space-y-3 max-w-2xl">
+            <span className="text-[10px] font-mono text-[#D4AF37] uppercase font-bold tracking-widest leading-none">
+              DUE DILIGENCE BLUEPRINT
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              How Seller Verification Works
+            </h2>
+            <p className="text-xs sm:text-sm text-[#8E8E93] leading-relaxed">
+              Vague promises do not build real financial trust. We enforce a granular, strictly audited verification process on every social media resource and seller profile prior to inclusion in our marketplace database.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
+            
+            {/* Step 1 */}
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#141416] to-[#0E0E10] border border-[#2A2A2E] hover:border-[#D4AF37]/30 transition-all duration-300 space-y-4 text-left group">
+              <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] group-hover:scale-105 transition-transform duration-300">
+                <Fingerprint className="h-4.5 w-4.5" />
+              </div>
+              <div className="space-y-2">
+                <span className="text-[9px] font-mono text-[#D4AF37] tracking-widest font-bold">STAGE 01</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-sans">
+                  Ownership Proof Audit
+                </h3>
+                <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+                  Sellers must verify active operational custody by submitting to real-time biography-challenge checks. We issue a dynamic broker token string that must be inserted into the handle's profile bio within a 15-minute window for automated scanning.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#141416] to-[#0E0E10] border border-[#2A2A2E] hover:border-blue-500/30 transition-all duration-300 space-y-4 text-left group">
+              <div className="h-10 w-10 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform duration-300">
+                <FileCheck2 className="h-4.5 w-4.5" />
+              </div>
+              <div className="space-y-2">
+                <span className="text-[9px] font-mono text-blue-400 tracking-widest font-bold">STAGE 02</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-sans">
+                  Manual Desk Moderation
+                </h3>
+                <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+                  Our professional desk brokers in Hyderabad inspect the handle's historic data. Any sign of bot-manipulated reach, artificial follower inflation, or inactive content drops leads to instant application rejection without appeal.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#141416] to-[#0E0E10] border border-[#2A2A2E] hover:border-[#30D158]/30 transition-all duration-300 space-y-4 text-left group">
+              <div className="h-10 w-10 rounded-xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-center text-[#30D158] group-hover:scale-105 transition-transform duration-300">
+                <BadgeCheck className="h-4.5 w-4.5" />
+              </div>
+              <div className="space-y-2">
+                <span className="text-[9px] font-mono text-[#30D158] tracking-widest font-bold">STAGE 03</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-sans">
+                  Transition Validation
+                </h3>
+                <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+                  Before any deal is presented to premium corporate buyers, we audit original creation details. We map the OGE (Original Email address) registry timeline, verify the presence of phone linkages, and establish a secure, multi-party handover plan.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#141416] to-[#0E0E10] border border-[#2A2A2E] hover:border-red-500/30 transition-all duration-300 space-y-4 text-left group">
+              <div className="h-10 w-10 rounded-xl bg-red-500/5 border border-red-500/10 flex items-center justify-center text-red-400 group-hover:scale-105 transition-transform duration-300">
+                <ShieldCheck className="h-4.5 w-4.5" />
+              </div>
+              <div className="space-y-2">
+                <span className="text-[9px] font-mono text-red-400 tracking-widest font-bold">STAGE 04</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-sans">
+                  Active Fraud Screening
+                </h3>
+                <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+                  We check each handle against public and private blacklists, tracking reports of theft, social engineering hijackings, or trademark challenges. This ensures buyers only purchase assets with pristine legal standing.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
