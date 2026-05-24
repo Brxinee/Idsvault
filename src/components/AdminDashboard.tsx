@@ -448,7 +448,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {/* Column 1: LIVE */}
           <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
-              <span className="text-[10px] font-bold text-emerald-450 uppercase tracking-widest font-mono">● LIVE INDEX</span>
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">● LIVE INDEX</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
                 ({listings.filter(v => v.status === DealStatus.Live && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter)).length})
               </span>
@@ -541,7 +541,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {/* Column 4: QUARANTINED */}
           <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
-              <span className="text-[10px] font-bold text-red-405 uppercase tracking-widest font-mono">● QUARANTINED</span>
+              <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest font-mono">● QUARANTINED</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
                 ({listings.filter(v => v.status === DealStatus.Quarantined && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter)).length})
               </span>
@@ -551,7 +551,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 .filter(v => v.status === DealStatus.Quarantined && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
                   <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs space-y-1">
-                    <span className="font-bold text-red-550">@{item.username}</span>
+                    <span className="font-bold text-red-500">@{item.username}</span>
                     <p className="text-[9px] text-gray-505">Auditing Infractions</p>
                     <button 
                       onClick={() => handleStatusShift(item.slug, DealStatus.Live)}
@@ -611,7 +611,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/[0.04] font-normal font-mono">
                 {filteredInventoryTable.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-6 text-center text-gray-650 text-[11px]">
+                    <td colSpan={5} className="py-6 text-center text-gray-500 text-[11px]">
                       No matching namespaces located in our tables database cache files.
                     </td>
                   </tr>
@@ -735,7 +735,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/[0.04] font-normal font-mono text-[11px]">
                 {filteredProposalsTable.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="py-6 text-center text-gray-650">
+                    <td colSpan={4} className="py-6 text-center text-gray-500">
                       No proposals index found matching search coordinates.
                     </td>
                   </tr>

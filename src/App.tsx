@@ -101,7 +101,7 @@ export default function App() {
   const handleConsentAnswer = (granted: boolean) => {
     localStorage.setItem("idsvault_consent_shield", granted ? "granted" : "denied");
     setShowConsent(false);
-    addLog("SHIELD_CONSENT", `Privacy Shield preferences configured by client: [${granted ? "GRANTED" : "DECLINED"}]`);
+    addLog("CONSENT", `Analytics consent: ${granted ? "granted" : "declined"}`);
   };
 
   // Helper logger
@@ -119,7 +119,7 @@ export default function App() {
     setCurrentView(view);
     setSelectedSlug(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
-    addLog("NAVIGATION_EVENT", `Client navigated to segment layout: [${view.toUpperCase()}]`);
+    addLog("NAVIGATION", `Navigated to: ${view}`);
     
     // GA4 Page View Tracking Link
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
@@ -134,7 +134,7 @@ export default function App() {
     setSelectedSlug(slug);
     setCurrentView("listing-detail");
     window.scrollTo({ top: 0, behavior: "smooth" });
-    addLog("ASSET_VIEW", `Client examined vetted platform ledger coordinates for tag: @${slug}`);
+    addLog("LISTING_VIEW", `Viewed listing: @${slug}`);
 
     // GA4 View Item Tracking Link
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
@@ -164,7 +164,7 @@ export default function App() {
     };
 
     setLeads((prev) => [newLead, ...prev]);
-    addLog("PROPOSAL_LOGGED", `Proposal bid of ${formatINR(offer)} logged for @${selectedSlug} by representative: ${name}`);
+    addLog("OFFER_SUBMITTED", `Offer of ${formatINR(offer)} for @${selectedSlug} from: ${name}`);
 
     // Update listing status to offer pending
     setListings((prev) =>
@@ -200,7 +200,7 @@ export default function App() {
     };
 
     setListings((prev) => [newListing, ...prev]);
-    addLog("LISTING_APPLICATION", `Application to list high-value identifier @${username} on ${platform.toUpperCase()} with ${formatINR(asking)} target recorded.`);
+    addLog("LISTING_SUBMITTED", `Listing application: @${username} on ${platform.toUpperCase()} asking ${formatINR(asking)}`);
 
     // GA4 Register Listing event tracking
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
@@ -233,7 +233,7 @@ export default function App() {
     };
 
     setRequests((prev) => [newReq, ...prev]);
-    addLog("SOURCING_CAMPAIGN", `Discrete sourcing outreach commissioned for @${desiredUsername} on ${platform.toUpperCase()} with limit budget of ${formatINR(budget)}.`);
+    addLog("SOURCING_SUBMITTED", `Sourcing request: @${desiredUsername} on ${platform.toUpperCase()}, budget ${formatINR(budget)}`);
 
     // GA4 Submit Sourcing event tracking
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
@@ -254,10 +254,10 @@ export default function App() {
 
   // Quick WhatsApp sticky click
   const handleDialBroker = () => {
-    const phrase = "Hello IDsvault Hyderabad desk. Sourcing representative is looking to coordinate private off-market transaction handovers.";
+    const phrase = "Hi IDsvault, I'd like to discuss buying or selling a username. Please contact me.";
     const launch = buildWhatsAppHandoff(phrase);
     window.open(launch.url, "_blank");
-    addLog("STICKY_BROKER_TAP", "Direct WhatsApp hotline triggered from mobile sticky panel.");
+    addLog("WHATSAPP_CTA", "WhatsApp CTA tapped from mobile sticky bar.");
 
     // GA4 Dialog event tracking
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
@@ -359,16 +359,16 @@ export default function App() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <div className="text-left leading-tight gap-0.5 font-sans">
-              <p className="text-[8px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Operations Live</p>
-              <p className="text-xs text-white font-bold font-mono">HYDERABAD DESK</p>
+              <p className="text-[8px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Desk Online</p>
+              <p className="text-xs text-white font-bold font-mono">HYDERABAD</p>
             </div>
           </div>
           <button
             onClick={handleDialBroker}
-            className="flex-grow max-w-[200px] h-10 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-bold uppercase tracking-wider text-white transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-blue-500/10 active:scale-95 text-center"
+            className="flex-grow max-w-[200px] h-10 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-bold uppercase tracking-wider text-white transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 text-center"
           >
             <MessageSquare className="h-4 w-4" />
-            <span>Connect Desk</span>
+            <span>WhatsApp Broker</span>
           </button>
         </div>
       </div>
@@ -383,7 +383,7 @@ export default function App() {
                 <span>Privacy Shield Guidelines</span>
               </h4>
               <p className="text-[10px] text-[#9CA3AF] leading-relaxed font-normal">
-                IDsVault uses strictly isolated, in-memory logs to manage live re-linking sessions. No browser files are aggregated or sent to third-party ad registries.
+                We use Google Analytics to understand how visitors use this site. No personal data is sold or shared with advertisers. You can decline and the site works fully.
               </p>
             </div>
             <div className="flex items-center justify-end gap-3 pt-1 select-none">

@@ -222,7 +222,7 @@ Urgency: Standard`;
 
             <div className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.04] space-y-1.5">
               <span className="text-[9px] text-gray-500 uppercase font-mono block">Estimated Range</span>
-              <p className="text-sm font-bold font-mono text-emerald-450">
+              <p className="text-sm font-bold font-mono text-emerald-400">
                 {getEstimatedRange(listing.askingPrice)}
               </p>
             </div>

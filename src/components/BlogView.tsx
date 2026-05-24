@@ -843,12 +843,12 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
               </div>
 
               <div className="flex items-center gap-1.5 text-[10px] text-gray-500 font-mono">
-                <Calendar className="h-3.5 w-3.5 text-gray-650" />
+                <Calendar className="h-3.5 w-3.5 text-gray-500" />
                 <span>{activePost.publishedAt}</span>
               </div>
 
               <div className="flex items-center gap-1.5 text-[10px] text-gray-500 font-mono">
-                <Clock className="h-3.5 w-3.5 text-gray-650" />
+                <Clock className="h-3.5 w-3.5 text-gray-500" />
                 <span>{activePost.readTime}</span>
               </div>
 
@@ -1105,7 +1105,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                 <div className="pt-4 border-t border-white/[0.05] space-y-3">
                   <h4 className="text-[9px] font-bold text-[#10B981] uppercase tracking-widest font-mono flex items-center gap-1">
                     <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
                     </span>
                     <span>Broker Desk Live</span>
@@ -1160,7 +1160,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                     </div>
                     <div className="flex items-center justify-between text-[9px] text-[#9CA3AF] font-mono select-none pt-2 border-t border-white/[0.04]">
                       <span>{post.publishedAt}</span>
-                      <span className="flex items-center gap-1 text-blue-440 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-wider">
+                      <span className="flex items-center gap-1 text-blue-400 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-wider">
                         Read Guide <ChevronRight className="h-3 w-3" />
                       </span>
                     </div>
@@ -1238,7 +1238,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                     </span>
                     <span className="text-[10px] font-mono text-gray-500">{featuredPost.category}</span>
                   </div>
-                  <h2 className="text-xl md:text-2.5xl font-extrabold text-white group-hover:text-blue-400 transition-colors tracking-tight leading-tight font-sans">
+                  <h2 className="text-xl md:text-2xl font-extrabold text-white group-hover:text-blue-400 transition-colors tracking-tight leading-tight font-sans">
                     {featuredPost.title}
                   </h2>
                   <p className="text-gray-400 text-xs mt-2.5 max-w-3xl leading-relaxed font-sans font-normal line-clamp-3">

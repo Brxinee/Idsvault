@@ -138,7 +138,7 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
             </ul>
 
             <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">3. Disposition Response Times</h3>
-            <p className="text-gray-450 font-normal">
+            <p className="text-gray-400 font-normal">
               Vetted infracting listings are quarantined from the public database index within twelve (12) business hours and held in administrative arbitration pending legal resolution or coordinate release.
             </p>
           </div>
