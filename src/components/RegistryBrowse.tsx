@@ -5,6 +5,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { usePageTitle } from "../hooks/usePageTitle";
+import { SEO } from "./SEO";
 import { 
   Search, 
   ShieldAlert, 
@@ -31,6 +32,19 @@ interface RegistryBrowseProps {
 export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSelectListing }) => {
   usePageTitle("Browse Handles");
   const [search, setSearch] = useState("");
+
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Browse Premium Handles — IDsvault",
+    "description": "Broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Payment in escrow on every deal.",
+    "url": "https://idsvault.com/browse",
+    "provider": {
+      "@type": "Organization",
+      "name": "IDsvault",
+      "url": "https://idsvault.com"
+    }
+  };
   const [selectedPlatform, setSelectedPlatform] = useState<string>("all");
   const [selectedRarity, setSelectedRarity] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("price-asc");
@@ -115,7 +129,13 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-8 text-left">
-      
+      <SEO
+        title="Browse Handles"
+        description="Browse broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Payment in escrow on every deal. Hyderabad broker-assisted."
+        canonical="/browse"
+        structuredData={collectionSchema}
+      />
+
       {/* Visual Header */}
       <div className="space-y-2 border-b border-white/[0.06] pb-6">
         <h1 className="text-3xl font-extrabold text-white tracking-tight">Available Handles</h1>

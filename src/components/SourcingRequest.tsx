@@ -5,6 +5,7 @@
 
 import React, { useState } from "react";
 import { usePageTitle } from "../hooks/usePageTitle";
+import { SEO } from "./SEO";
 import { 
   Send, 
   AlertCircle, 
@@ -86,8 +87,14 @@ Urgency: ${urgency}`;
   };
 
   return (
+    <>
+    <SEO
+      title="Custom Handle Sourcing"
+      description="Can't find the username you want? Tell our Hyderabad broker desk what you need — we'll source your ideal Instagram handle, X username, or Telegram channel."
+      canonical="/source"
+    />
     <div className="max-w-xl mx-auto px-6 py-12 text-left">
-      
+
       <div className="mb-10 text-center space-y-3">
         <h1 className="text-3xl font-extrabold tracking-tight text-white leading-tight animate-in">Private Commission Sourcing</h1>
         <p className="text-xs text-[#9CA3AF] max-w-sm mx-auto">
@@ -329,5 +336,6 @@ Urgency: ${urgency}`;
       </AnimatePresence>
 
     </div>
+    </>
   );
 };

@@ -6,6 +6,7 @@
 import React, { useState } from "react";
 import { Scale, ShieldAlert, Sparkles, AlertTriangle, HelpCircle, FileText, ChevronDown, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { SEO } from "./SEO";
 
 interface RegulatoryInfoProps {
   segment: "policy-acceptable" | "policy-trademark" | "policy-refund" | "policy-terms" | "policy-privacy" | "faq";
@@ -22,41 +23,100 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
   const faqItems = [
     {
       q: "How are sellers verified?",
-      a: "Our Hyderabad coordination desk operates extensive pre-listing verification audits, manual ownership checks, profile verification, and strict listing moderation. Sellers must resolve ownership token hashes or custom screenshot proof reviews before any database approval is posted in our publicly searchable index catalog, reducing anonymous speculation risks entirely."
+      a: "Our Hyderabad broker desk manually reviews every listing before it goes live. Sellers must prove active ownership — typically by making a temporary bio change or sending a screenshot from inside the account settings. We reject any listing we cannot independently confirm. No unverified handles are published."
     },
     {
-      q: "What if transfer fails?",
-      a: "If coordinate release fails validation checks or a handle is determined permanently locked, the transaction is gracefully cancelled. Held INR deposits are fully reversed and refunded back to the originating bank coordinate account within three (3) business hours under our structured payment workflow."
+      q: "What if the transfer fails?",
+      a: "If a transfer cannot be completed — because the seller loses access, the platform blocks it, or we find the listing was inaccurate — the deal is cancelled and your full payment is returned within 3 business hours. You lose nothing except the time spent."
     },
     {
-      q: "Why pay IDsvault instead of seller?",
-      a: "Paying our supervised brokerage ensures absolute security. Our structured payment workflow acts as a complete protective shield, isolating intermediate funds. Capital is only released to the seller upon validated, manual buyer coordinate possession, eliminating direct-deal chargebacks or hijackings entirely."
+      q: "Why pay IDsvault instead of the seller directly?",
+      a: "Paying us directly keeps you safe. Your money is held until the handle is in your hands — we confirm you have full access before the seller receives anything. Direct deals have no such protection: sellers can disappear after payment. Our broker-held model eliminates that risk entirely."
     },
     {
-      q: "Are you affiliated with Instagram/X/Telegram?",
-      a: "No. IDsvault is a strictly independent, premium digital identity brokerage coordination desk. We are NOT an official partner, associate, or affiliate of Meta, Instagram, X Corp, or Telegram, nor are we licensed by them. All trademarks belong to their respective corporate trademark holders."
+      q: "Are you affiliated with Instagram, X, or Telegram?",
+      a: "No. IDsvault is a fully independent brokerage. We are not a partner, affiliate, or representative of Meta, X Corp, or Telegram. All platform trademarks belong to their respective owners. We operate as a neutral third-party intermediary."
     },
     {
-      q: "Do you guarantee future access?",
-      a: "No. Independent coordination desks can guarantee future access or indefinitely override host platform policies. We supervise and verify the immediate transaction handshake, but post-transfer account security is subject to platform Terms of Service, which prohibit identity transfers. Buyers acknowledge this host risk before starting deals."
+      q: "Do you guarantee I keep the handle forever?",
+      a: "No. We guarantee the transfer itself — you receive the handle with full login access. However, all social platforms prohibit account name transfers in their Terms of Service, which means they can reclaim or freeze accounts at their discretion. We are transparent about this risk upfront, and buyers accept it before proceeding."
     },
     {
-      q: "How long do deals take?",
-      a: "Standard, human-brokered transfers resolve in 4 to 24 hours under the active manual supervision of our Hyderabad-based coordination staff."
+      q: "How long does a deal take?",
+      a: "Most transfers complete in 4 to 24 hours. Our broker in Hyderabad supervises every step — from escrow receipt through to final handover confirmation."
     },
     {
-      q: "What qualifies as premium?",
-      a: "An identifier is considered premium if it consists of a single dictionary word, is under 5 characters (short handle), contains historical brand equity, or represents a prominent industry niche. Our Hyderabad curation desk manually checks trademark databases and platform age before listing approval."
+      q: "What makes a handle 'premium'?",
+      a: "A handle is premium if it is a single dictionary word, under 5 characters, tied to a recognisable brand or niche, or has historical follower equity. Our desk checks trademark databases and platform account age before approving any listing."
     },
     {
-      q: "What if seller is fake?",
-      a: "All listed usernames are publicly masked. Direct bypass attempts are actively screened out. We check and confirm actual coordinate control before listing approval, completely mitigating fake listings before they are indexed."
+      q: "What if a listing turns out to be fake?",
+      a: "All listed handles are partially masked in our public directory to protect against bypass attempts. Before any listing is approved, we verify that the seller actually controls the account. If a listing ever passes that check incorrectly and a deal cannot proceed, your payment is fully refunded."
     }
   ];
 
+  const faqSchema = segment === "faq"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqItems.map(item => ({
+          "@type": "Question",
+          "name": item.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": item.a
+          }
+        }))
+      }
+    : undefined;
+
+  const segmentMeta: Record<string, { title: string; description: string; canonical: string }> = {
+    "policy-acceptable": {
+      title: "Acceptable Use Policy",
+      description: "IDsvault acceptable use policy — what is permitted and prohibited on our username brokerage marketplace.",
+      canonical: "/policy/acceptable"
+    },
+    "policy-trademark": {
+      title: "Trademark Policy",
+      description: "IDsvault trademark and intellectual property policy. How to file a trademark complaint for a listed username.",
+      canonical: "/policy/trademark"
+    },
+    "policy-refund": {
+      title: "Refund & Reversal Policy",
+      description: "IDsvault refund policy — full refund if transfer fails. Payment held in escrow until handle transfer is confirmed.",
+      canonical: "/policy/refund"
+    },
+    "policy-terms": {
+      title: "Terms of Service",
+      description: "IDsvault terms of service. Broker-assisted username transfers. Independent intermediary — not affiliated with Meta, X Corp, or Telegram.",
+      canonical: "/policy/terms"
+    },
+    "policy-privacy": {
+      title: "Privacy Policy",
+      description: "IDsvault privacy policy — how we collect, use, and protect your personal information.",
+      canonical: "/policy/privacy"
+    },
+    "faq": {
+      title: "FAQ — Frequently Asked Questions",
+      description: "Answers to common questions about buying and selling premium Instagram handles, X usernames, and Telegram channels through IDsvault.",
+      canonical: "/faq"
+    }
+  };
+
+  const meta = segmentMeta[segment];
+
   return (
+    <>
+    {meta && (
+      <SEO
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
+        structuredData={faqSchema}
+      />
+    )}
     <div className="max-w-4xl mx-auto px-6 py-12 space-y-8 text-left">
-      
+
       {segment === "policy-acceptable" && (
         <motion.section 
           initial={{ opacity: 0, y: 10 }}
@@ -314,5 +374,6 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
       )}
 
     </div>
+    </>
   );
 };

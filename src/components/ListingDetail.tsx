@@ -4,16 +4,16 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { 
-  ShieldCheck, 
-  MessageCircle, 
-  Mail, 
-  AlertTriangle, 
-  BadgePercent, 
-  Lock, 
-  Landmark, 
-  Check, 
-  Loader2, 
+import {
+  ShieldCheck,
+  MessageCircle,
+  Mail,
+  AlertTriangle,
+  BadgePercent,
+  Lock,
+  Landmark,
+  Check,
+  Loader2,
   ChevronLeft,
   Calendar,
   Globe,
@@ -23,6 +23,7 @@ import {
 import { Listing, Urgency } from "../types";
 import { maskUsername, buildWhatsAppHandoff, WHATSAPP_NUMBER, formatINR, getEstimatedRange } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import { SEO } from "./SEO";
 
 interface ListingDetailProps {
   listing: Listing;
@@ -109,7 +110,39 @@ Urgency: Standard`;
 
   const maskedTitle = maskUsername(listing.username);
 
+  const listingSchema = listing.askingPrice > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": `@${listing.username} — Premium ${listing.platform} Handle`,
+        "description": listing.description || `Premium ${listing.platform} username available via IDsvault broker-assisted transfer.`,
+        "url": `https://idsvault.com/listing/${listing.slug}`,
+        "brand": {
+          "@type": "Organization",
+          "name": "IDsvault",
+          "url": "https://idsvault.com"
+        },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": listing.askingPrice,
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "IDsvault"
+          }
+        }
+      }
+    : undefined;
+
   return (
+    <>
+    <SEO
+      title={`Buy @${listing.username} on ${listing.platform}`}
+      description={`Premium @${listing.username} ${listing.platform} handle — ${listing.askingPrice > 0 ? `${formatINR(listing.askingPrice)} asking price. ` : ""}Broker-verified, payment in escrow. IDsvault Hyderabad.`}
+      canonical={`/listing/${listing.slug}`}
+      structuredData={listingSchema}
+    />
     <div className="max-w-7xl mx-auto px-6 py-12 text-left">
       
       {/* Premium Back Trigger */}
@@ -410,5 +443,6 @@ Urgency: Standard`;
       </AnimatePresence>
 
     </div>
+    </>
   );
 };

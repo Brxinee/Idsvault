@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { buildWhatsAppHandoff, SUPPORT_EMAIL } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { usePageTitle } from "../hooks/usePageTitle";
+import { SEO } from "./SEO";
 
 export const ContactView: React.FC = () => {
   const navigate = useNavigate();
@@ -70,8 +71,14 @@ Message Details: ${message}`;
   };
 
   return (
+    <>
+    <SEO
+      title="Contact Our Desk"
+      description="Get in touch with IDsvault's Hyderabad broker desk. WhatsApp, email, or phone — we respond quickly to buying and selling enquiries."
+      canonical="/contact"
+    />
     <div className="max-w-4xl mx-auto px-6 py-12 text-left space-y-10">
-      
+
       {/* Back button header */}
       <div className="flex items-center justify-between select-none">
         <button
@@ -298,5 +305,6 @@ Message Details: ${message}`;
       </AnimatePresence>
 
     </div>
+    </>
   );
 };
