@@ -39,15 +39,15 @@ const homepageSchema = [
     "name": "IDsvault",
     "url": "https://idsvault.com",
     "logo": "https://idsvault.com/logo.png",
-    "description": "India's broker-assisted marketplace for buying and selling premium Instagram handles, X usernames, and Telegram channels. Payment held in escrow until transfer is confirmed.",
-    "areaServed": { "@type": "Country", "name": "India" },
+    "description": "Global broker-assisted digital identity desk for Telegram usernames, domain names, Discord communities, and YouTube channels. Escrow-protected transfers with named-broker accountability. Headquartered in Hyderabad.",
+    "areaServed": "Worldwide",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Hyderabad",
       "addressRegion": "Telangana",
       "addressCountry": "IN"
     },
-    "email": "support@idsvault.com",
+    "email": "broker@idsvault.com",
     "telephone": "+919392974031",
     "sameAs": ["https://wa.me/919392974031"]
   },
@@ -58,7 +58,7 @@ const homepageSchema = [
     "url": "https://idsvault.com",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": { "@type": "EntryPoint", "urlTemplate": "https://idsvault.com/browse?q={search_term_string}" },
+      "target": { "@type": "EntryPoint", "urlTemplate": "https://idsvault.com/inventory?q={search_term_string}" },
       "query-input": "required name=search_term_string"
     }
   }
@@ -126,25 +126,25 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/[0.06] bg-[#0F0F10] text-[#10B981] font-mono text-[10px] font-bold uppercase tracking-wider"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/[0.06] bg-[#131316] text-[#6E6E78] font-mono text-[10px] font-medium uppercase tracking-wider"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span>Broker-Assisted Marketplace · Hyderabad Desk</span>
+            <span>Global Digital Identity Desk · Hyderabad HQ</span>
           </motion.div>
 
-          <div className="space-y-4">
+          <div className="space-y-5">
             <motion.h1
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.05]"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.08]"
             >
-              Buy the username<br />
-              <span className="text-[#D4AF37]">
-                you actually want.
+              A quiet desk for<br />
+              <span className="text-[#C9A961]">
+                premium digital handles.
               </span>
             </motion.h1>
 
@@ -152,35 +152,39 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-[#9CA3AF] text-sm sm:text-base leading-relaxed max-w-xl"
+              className="text-[#A1A1A9] text-base leading-relaxed max-w-lg"
             >
-              Broker-verified Instagram handles, X usernames, and Telegram channels.
-              Your payment is held in escrow until the transfer is done — neither side can be scammed.
+              Telegram, domains, Discord, and select advisory work.
+              Brokered with escrow, identity verification, and named accountability.
             </motion.p>
           </div>
 
-          {/* Trust chips */}
+          {/* Trust strip */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-x-6 gap-y-3 pt-1 text-xs text-gray-400 font-medium"
+            className="flex flex-wrap gap-x-6 gap-y-3 pt-1 text-xs text-[#6E6E78]"
           >
             <div className="flex items-center gap-2">
-              <BadgeCheck className="h-4 w-4 text-blue-500 shrink-0" />
-              <span>Seller verified before listing</span>
+              <BadgeCheck className="h-4 w-4 text-[#C9A961] shrink-0" />
+              <span>Verified sellers only</span>
             </div>
             <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-emerald-500 shrink-0" />
-              <span>Human broker on every deal</span>
+              <Users className="h-4 w-4 text-[#C9A961] shrink-0" />
+              <span>Named broker on every deal</span>
             </div>
             <div className="flex items-center gap-2">
-              <Lock className="h-4 w-4 text-purple-400 shrink-0" />
-              <span>Payment held in escrow</span>
+              <Lock className="h-4 w-4 text-[#C9A961] shrink-0" />
+              <span>Escrow until transfer confirmed</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-[#C9A961] shrink-0" />
+              <span>Global service · Hyderabad HQ</span>
             </div>
           </motion.div>
 
-          {/* CTA Buttons */}
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -188,20 +192,20 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             className="flex flex-col sm:flex-row items-center gap-4"
           >
             <Link
-              to="/browse"
-              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+              to="/inventory"
+              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
               id="hero_primary_cta"
             >
-              <span>Browse Available Handles</span>
-              <ArrowRight className="h-4 w-4 text-white/80 group-hover:translate-x-1 transition-transform" />
+              <span>View Inventory</span>
+              <ArrowRight className="h-4 w-4 opacity-70 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               to="/sell"
-              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#0F0F10] hover:bg-[#151517] border border-white/[0.08] hover:border-white/[0.15] text-gray-200 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
+              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#131316] hover:bg-[#1C1C20] border border-[#26262B] hover:border-[#3A3A42] text-[#A1A1A9] hover:text-white text-xs font-medium uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
               id="hero_secondary_cta"
             >
-              <span>List Your Handle for Sale</span>
-              <ArrowUpRight className="h-4 w-4 text-gray-500" />
+              <span>Submit an Asset</span>
+              <ArrowUpRight className="h-4 w-4 opacity-50" />
             </Link>
           </motion.div>
 
@@ -231,11 +235,11 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-xl font-extrabold text-white tracking-tight font-mono">@apex</h4>
-                  <p className="text-[9px] text-gray-500 font-bold uppercase">Instagram Legacy Handle</p>
+                  <p className="text-[9px] text-gray-500 font-bold uppercase">Telegram Premium Handle</p>
                 </div>
                 <div className="text-right">
                   <p className="text-[8px] text-gray-500 uppercase font-mono">Asking Price</p>
-                  <p className="text-base font-extrabold text-emerald-400 font-mono">{formatINR(1250000)}</p>
+                  <p className="text-base font-extrabold text-[#C9A961] font-mono">$18,000</p>
                 </div>
               </div>
 
@@ -393,26 +397,26 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
         <div className="max-w-5xl mx-auto rounded-3xl bg-[#151517] border border-white/[0.06] p-8 md:p-12 text-left grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative overflow-hidden font-sans">
 
           <div className="space-y-4">
-            <span className="text-[9px] font-bold text-blue-400 tracking-widest uppercase font-mono">About IDsvault</span>
-            <h3 className="text-2xl font-extrabold text-white tracking-tight">India's dedicated username brokerage</h3>
-            <p className="text-sm text-[#9CA3AF] leading-relaxed">
-              <strong className="text-white">IDsvault</strong> is an independent brokerage platform for buying and selling premium Instagram handles, X usernames, and Telegram channels. We are not affiliated with Instagram, X, or Telegram. Every transaction is human-supervised by our Hyderabad desk.
+            <span className="text-[9px] font-bold text-[#C9A961] tracking-widest uppercase font-mono">About IDsvault</span>
+            <h3 className="text-2xl font-bold text-white tracking-tight">A quiet desk, based in Hyderabad. Serving clients globally.</h3>
+            <p className="text-sm text-[#A1A1A9] leading-relaxed">
+              <strong className="text-white">IDsvault</strong> is an independent broker-assisted desk for Telegram usernames, domain names, Discord communities, and YouTube channels. Instagram and X are handled on a private advisory basis only, with full platform-risk disclosure. Every deal is human-supervised.
             </p>
-            <div className="grid grid-cols-2 gap-3 pt-2 text-[11px] text-gray-200">
+            <div className="grid grid-cols-2 gap-3 pt-2 text-[11px] text-[#A1A1A9]">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>India-based desk</span>
+                <CheckCircle2 className="h-4 w-4 text-[#C9A961] shrink-0" />
+                <span>Hyderabad HQ · global clients</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>Human broker support</span>
+                <CheckCircle2 className="h-4 w-4 text-[#C9A961] shrink-0" />
+                <span>Named broker on every deal</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>Seller verification</span>
+                <CheckCircle2 className="h-4 w-4 text-[#C9A961] shrink-0" />
+                <span>Verified seller ownership</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-[#C9A961] shrink-0" />
                 <span>Escrow on every deal</span>
               </div>
             </div>
@@ -432,7 +436,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               <span>Seller verification: Running</span>
             </div>
             <div className="mt-2 pt-3 border-t border-white/[0.04] text-[10px] text-gray-500 leading-relaxed">
-              Platforms covered: Instagram · X (Twitter) · Telegram
+              Telegram · Domains · Discord · YouTube · Private Advisory (IG, X)
             </div>
           </div>
         </div>
@@ -445,13 +449,13 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
             <div className="flex items-end justify-between">
               <div className="space-y-2">
-                <span className="text-[10px] font-extrabold text-[#D4AF37] uppercase tracking-widest font-mono">Available Now</span>
+                <span className="text-[10px] font-extrabold text-[#C9A961] uppercase tracking-widest font-mono">Available Now</span>
                 <h2 className="text-2xl font-extrabold text-white tracking-tight">Featured handles for sale</h2>
                 <p className="text-xs text-gray-400">Ownership verified · Payment in escrow · Broker-supervised transfer</p>
               </div>
               <Link
-                to="/browse"
-                className="hidden sm:flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-white transition-colors uppercase tracking-wider"
+                to="/inventory"
+                className="hidden sm:flex items-center gap-1 text-xs font-medium text-[#6E6E78] hover:text-white transition-colors uppercase tracking-wider"
               >
                 View all
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -471,7 +475,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                     onClick={() => onSelectListing(item.slug)}
                   >
                     {/* Left accent on hover */}
-                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#C9A961] opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
@@ -485,7 +489,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                       </div>
 
                       <div>
-                        <h3 className="text-xl font-extrabold text-white tracking-tight group-hover:text-[#D4AF37] transition-colors">
+                        <h3 className="text-xl font-extrabold text-white tracking-tight group-hover:text-[#C9A961] transition-colors">
                           @{masked}
                         </h3>
                         <div className="flex flex-wrap gap-1 mt-1.5">
@@ -516,10 +520,10 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
             <div className="text-center pt-2">
               <Link
-                to="/browse"
-                className="inline-flex items-center gap-2 h-10 px-6 rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-xs font-bold text-gray-300 hover:text-white transition-all uppercase tracking-wider"
+                to="/inventory"
+                className="inline-flex items-center gap-2 h-10 px-6 rounded-lg border border-[#26262B] hover:border-[#3A3A42] text-xs font-medium text-[#A1A1A9] hover:text-white transition-all uppercase tracking-wider"
               >
-                Browse all handles
+                View full inventory
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

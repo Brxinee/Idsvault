@@ -38,7 +38,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
     "@type": "CollectionPage",
     "name": "Browse Premium Handles — IDsvault",
     "description": "Broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Payment in escrow on every deal.",
-    "url": "https://idsvault.com/browse",
+    "url": "https://idsvault.com/inventory",
     "provider": {
       "@type": "Organization",
       "name": "IDsvault",
@@ -132,7 +132,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
       <SEO
         title="Browse Handles"
         description="Browse broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Payment in escrow on every deal. Hyderabad broker-assisted."
-        canonical="/browse"
+        canonical="/inventory"
         structuredData={collectionSchema}
       />
 

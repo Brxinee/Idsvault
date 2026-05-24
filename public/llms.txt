@@ -1,74 +1,88 @@
 # IDsvault
 
-> India's broker-assisted marketplace for buying and selling premium Instagram handles, X (Twitter) usernames, and Telegram channels. Based in Hyderabad, Telangana.
+> A global broker-assisted digital identity desk for Telegram usernames, domain names, Discord communities, and YouTube channels. Headquartered in Hyderabad, Telangana, India. Serving buyers and sellers worldwide.
 
 ## What We Do
 
-IDsvault facilitates the secure transfer of valuable social media usernames between buyers and sellers. Every transaction is supervised by a human broker from our Hyderabad desk. The buyer's payment is held in escrow until they confirm full account access — neither party can be scammed.
+IDsvault facilitates the secure, broker-supervised transfer of premium digital assets between private parties. Every transaction is managed by a named human broker. Buyer funds are held in escrow until they confirm full ownership — neither party can be defrauded.
 
-We are an independent brokerage. We are not affiliated with Meta (Instagram), X Corp, or Telegram.
+We are an independent brokerage desk. We are not affiliated with Telegram, any domain registrar, Discord, Google, or any platform whose assets we facilitate.
 
-## Platforms
+## Asset Categories
 
-- Instagram handles (e.g. @brand, @company, @shortname)
-- X (Twitter) usernames
-- Telegram channels and usernames
+### Full Brokerage (public inventory)
+- Telegram usernames (Fragment-compatible, TON-settled)
+- Domain names (.com, .in, and selected extensions)
+- Discord servers (ownership transfer)
+- YouTube channels (Google Brand Account transfer)
+
+### Private Advisory (application-only, no public listings)
+- Instagram handles — platform ToS prohibit transfers; we disclose this risk in full before engagement
+- X (Twitter) usernames — same disclosure requirement
+- Minimum deal size $10,000 USD for advisory engagements
 
 ## How a Transaction Works
 
-1. Buyer submits an offer on the IDsvault website or via WhatsApp (+91 93929 74031)
+1. Buyer inquires via the IDsvault website or WhatsApp (+91 93929 74031)
 2. Seller ownership is verified by the Hyderabad desk before any listing is published
-3. Buyer pays IDsvault via UPI or bank transfer — funds held in escrow
-4. A broker supervises a live call where the seller transfers the account
-5. Buyer confirms full control: updates recovery email, phone number, and 2FA
-6. IDsvault releases the held payment to the seller, minus the brokerage fee
+3. Deal terms agreed between buyer and seller through IDsvault as intermediary
+4. Buyer sends payment to IDsvault's designated business account (never to seller directly)
+5. Live supervised transfer: seller, buyer, and broker on a simultaneous call
+6. Buyer confirms full account access and changes all credentials
+7. IDsvault releases escrowed payment to seller
 
-## Pricing
+## Escrow Protection
 
-All prices are in Indian Rupees (₹). Typical values range from ₹1 lakh to ₹20+ lakhs depending on handle length, platform, and commercial value. Price on Request (POR) listings require direct contact.
+- Buyer pays IDsvault, not the seller
+- Funds are frozen until buyer confirms ownership
+- If transfer fails for any reason: full refund within 3 business hours
+- KYC required for deals above $1,000 USD equivalent
+- Deals above $5,000 USD use licensed third-party escrow (Escrow.com or equivalent)
 
-## Buyer Protections
+## Platform Risk Disclosure
 
-- Seller verified before listing goes live
-- Payment in escrow — full refund if transfer fails
-- Human broker on every live transfer call
-- Refund processed within 3 business days if deal falls through
+Telegram username transfers via Fragment are sanctioned by Telegram and involve no platform risk.
 
-## Seller Protections
+Domain, Discord, and YouTube transfers carry standard secondary-market risk only.
 
-- Protected from payment chargebacks
-- Protected from account recovery attempts after transfer
-- Broker ensures payment is released only after buyer confirms control
+Instagram and X handle transfers are prohibited by those platforms' Terms of Service. We advise clients of this risk explicitly and in writing before any advisory engagement begins. We do not list these publicly.
 
 ## Contact
 
-- WhatsApp: +91 93929 74031 (preferred contact method)
-- Email: support@idsvault.com
-- Hours: Monday to Saturday, 9:30 AM – 8:30 PM IST
-- Location: Hyderabad, Telangana, India
+WhatsApp: +91 93929 74031
+Email: broker@idsvault.com
+Location: Hyderabad, Telangana, India
+Global service: yes
 
-## Website
+## Response Times
 
-- Homepage: https://idsvault.com
-- Browse handles: https://idsvault.com/browse
-- Sell a handle: https://idsvault.com/sell
-- Custom sourcing: https://idsvault.com/source
-- Contact: https://idsvault.com/contact
-- FAQ: https://idsvault.com/faq
+Business hours (IST): within 4 hours
+Weekends: within 24 hours
+
+## Pricing
+
+Commission structure:
+- 15% for deals under $5,000 USD
+- 12% for deals $5,000–$25,000
+- 10% for deals above $25,000
+- Negotiable for deals above $100,000
+
+All fees disclosed before any payment is made. No hidden charges.
 
 ## Frequently Asked Questions
 
-Q: How are sellers verified?
-A: Sellers must prove current account ownership through direct checks before any listing is accepted.
+**Is IDsvault affiliated with Telegram, any registrar, or the platforms you list?**
+No. We are an independent intermediary. All platform trademarks belong to their respective owners.
 
-Q: What happens if the transfer fails?
-A: The buyer's payment is refunded in full within 3 business days.
+**What happens if the transfer fails?**
+Full refund within 3 business hours. No questions.
 
-Q: What payment methods do you accept?
-A: UPI and bank transfer (NEFT/IMPS). Payment details shared after deal confirmation.
+**Do you hold funds yourself?**
+For deals under $5,000: yes, in a designated business account separate from operating funds.
+For deals above $5,000: licensed third-party escrow (Escrow.com or equivalent).
 
-Q: Are you affiliated with Instagram, X, or Telegram?
-A: No. IDsvault is fully independent. Not affiliated with Meta, X Corp, or Telegram.
+**Where are you based?**
+Hyderabad, Telangana, India. We serve clients globally.
 
-Q: What is your brokerage fee?
-A: Fee disclosed during deal initiation. Contact us on WhatsApp for current rates.
+**Do you work with buyers outside India?**
+Yes. We accept international clients. Payments can be arranged via Wise, SWIFT, or crypto (USDC/USDT) for international deals.

@@ -13,13 +13,11 @@ interface NavbarProps {
 }
 
 const navItems = [
-  { label: "Home",       to: "/" },
-  { label: "Inventory", to: "/browse" },
-  { label: "Sell", to: "/sell" },
-  { label: "Advisory", to: "/source" },
-  { label: "Journal",       to: "/blog" },
-  { label: "FAQ",        to: "/faq" },
-  { label: "Contact",    to: "/contact" },
+  { label: "Inventory", to: "/inventory" },
+  { label: "Sell",      to: "/sell" },
+  { label: "Advisory",  to: "/advisory" },
+  { label: "Journal",   to: "/journal" },
+  { label: "Contact",   to: "/contact" },
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
@@ -82,21 +80,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
-          <Link
-            to="/browse"
-            className="h-9 px-4 text-xs font-semibold rounded-lg border border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.02] text-gray-200 transition-all cursor-pointer select-none active:scale-95 flex items-center"
-            id="nav_nav_buy"
+          <button
+            onClick={onContactBroker}
+            className="relative group h-9 px-4 text-xs font-semibold rounded-lg bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] transition-all cursor-pointer select-none active:scale-95 flex items-center gap-1.5"
+            id="nav_inquire_cta"
           >
-            Browse Handles
-          </Link>
-          <Link
-            to="/sell"
-            className="relative group overflow-hidden h-9 px-4 text-xs font-semibold rounded-lg bg-blue-700 hover:bg-blue-600 border border-blue-500/20 text-white transition-all cursor-pointer select-none active:scale-95 flex items-center gap-1"
-            id="nav_nav_sell"
-          >
-            List For Sale
-            <ArrowUpRight className="h-3.5 w-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </Link>
+            Inquire
+            <ArrowUpRight className="h-3.5 w-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </button>
         </div>
 
         {/* Mobile hamburger */}
@@ -139,17 +130,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
 
               <div className="pt-4 border-t border-white/[0.06] grid grid-cols-2 gap-3">
                 <Link
-                  to="/browse"
+                  to="/inventory"
                   className="h-10 text-center text-xs font-semibold rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-white cursor-pointer flex items-center justify-center"
                 >
-                  Browse Handles
+                  View Inventory
                 </Link>
-                <Link
-                  to="/sell"
-                  className="h-10 text-center text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white cursor-pointer flex items-center justify-center"
+                <button
+                  onClick={onContactBroker}
+                  className="h-10 text-center text-xs font-semibold rounded-lg bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] cursor-pointer flex items-center justify-center gap-1"
                 >
-                  List For Sale
-                </Link>
+                  Inquire
+                  <ArrowUpRight className="h-3.5 w-3.5 opacity-70" />
+                </button>
               </div>
             </div>
           </motion.div>

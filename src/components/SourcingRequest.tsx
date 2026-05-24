@@ -89,9 +89,9 @@ Urgency: ${urgency}`;
   return (
     <>
     <SEO
-      title="Custom Handle Sourcing"
-      description="Can't find the username you want? Tell our Hyderabad broker desk what you need — we'll source your ideal Instagram handle, X username, or Telegram channel."
-      canonical="/source"
+      title="Private Advisory"
+      description="Need a specific Telegram username, domain, or Discord community? Describe what you need and our Hyderabad desk will source it for you."
+      canonical="/advisory"
     />
     <div className="max-w-xl mx-auto px-6 py-12 text-left">
 
