@@ -116,7 +116,7 @@ Urgency: Standard`;
         "@type": "Product",
         "name": `@${listing.username} — Premium ${listing.platform} Handle`,
         "description": listing.description || `Premium ${listing.platform} username available via IDsvault broker-assisted transfer.`,
-        "url": `https://idsvault.com/listing/${listing.slug}`,
+        "url": `https://idsvault.com/asset/${listing.slug}`,
         "brand": {
           "@type": "Organization",
           "name": "IDsvault",
@@ -140,7 +140,7 @@ Urgency: Standard`;
     <SEO
       title={`Buy @${listing.username} on ${listing.platform}`}
       description={`Premium @${listing.username} ${listing.platform} handle — ${listing.askingPrice > 0 ? `${formatINR(listing.askingPrice)} asking price. ` : ""}Broker-verified, payment in escrow. IDsvault Hyderabad.`}
-      canonical={`/listing/${listing.slug}`}
+      canonical={`/asset/${listing.slug}`}
       structuredData={listingSchema}
     />
     <div className="max-w-7xl mx-auto px-6 py-12 text-left">

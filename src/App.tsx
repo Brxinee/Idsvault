@@ -38,14 +38,18 @@ function viewToPath(view: string): string {
     return `/policy/${view.replace("policy-", "")}`;
   }
   const map: Record<string, string> = {
-    home:    "/",
-    browse:  "/browse",
-    sell:    "/sell",
-    request: "/source",
-    blog:    "/blog",
-    faq:     "/faq",
-    contact: "/contact",
-    admin:   "/admin",
+    home:      "/",
+    browse:    "/inventory",
+    inventory: "/inventory",
+    sell:      "/sell",
+    request:   "/advisory",
+    source:    "/advisory",
+    advisory:  "/advisory",
+    blog:      "/journal",
+    journal:   "/journal",
+    faq:       "/faq",
+    contact:   "/contact",
+    admin:     "/admin",
   };
   return map[view] ?? "/";
 }
@@ -69,15 +73,21 @@ function ListingDetailRoute({ listings, onAddProposal, onAddLog }: ListingDetail
     }
   }, [listing?.slug]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!listing) return <Navigate to="/browse" replace />;
+  if (!listing) return <Navigate to="/inventory" replace />;
 
   return (
     <ListingDetail
       listing={listing}
       onSubmitProposal={onAddProposal}
-      onNavigateBack={() => navigate("/browse")}
+      onNavigateBack={() => navigate("/inventory")}
     />
   );
+}
+
+/** Redirect /browse/:slug → /asset/:slug */
+function BrowseSlugRedirect() {
+  const { slug } = useParams<{ slug: string }>();
+  return <Navigate to={`/asset/${slug}`} replace />;
 }
 
 function PolicyRoute() {
@@ -182,7 +192,7 @@ export default function App() {
   };
 
   const handleSelectListing = (slug: string) => {
-    navigate(`/browse/${slug}`);
+    navigate(`/asset/${slug}`);
     addLog("LISTING_VIEW", `Viewed listing: @${slug}`);
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
       (window as any).trackIDsVaultEvent("view_item", { item_id: slug, item_category: "username" });
@@ -190,7 +200,7 @@ export default function App() {
   };
 
   const handleAddProposal = (offer: number, name: string, email: string, whatsapp: string) => {
-    const slug = location.pathname.split("/browse/")[1] ?? "";
+    const slug = location.pathname.split("/asset/")[1] ?? location.pathname.split("/browse/")[1] ?? "";
     if (!slug) return;
 
     const newLead: Lead = {
@@ -310,10 +320,12 @@ export default function App() {
                   />
                 }
               />
-              <Route path="/browse"
+
+              {/* ── Primary routes (new URL structure) ── */}
+              <Route path="/inventory"
                 element={<RegistryBrowse listings={listings} onSelectListing={handleSelectListing} />}
               />
-              <Route path="/browse/:slug"
+              <Route path="/asset/:slug"
                 element={
                   <ListingDetailRoute
                     listings={listings}
@@ -325,10 +337,10 @@ export default function App() {
               <Route path="/sell"
                 element={<SellApplication onRegisterListing={handleRegisterListing} />}
               />
-              <Route path="/source"
+              <Route path="/advisory"
                 element={<SourcingRequestView onRegisterRequest={handleRegisterSourcing} />}
               />
-              <Route path="/blog"
+              <Route path="/journal"
                 element={
                   <BlogView
                     onNavigate={handleNavigate}
@@ -353,7 +365,15 @@ export default function App() {
               />
               <Route path="/faq" element={<RegulatoryInfo segment="faq" />} />
               <Route path="/policy/:segment" element={<PolicyRoute />} />
-              {/* Legacy hash-less redirects for old links */}
+
+              {/* ── Legacy redirects (backward compat) ── */}
+              <Route path="/browse" element={<Navigate to="/inventory" replace />} />
+              <Route path="/browse/:slug" element={<BrowseSlugRedirect />} />
+              <Route path="/source" element={<Navigate to="/advisory" replace />} />
+              <Route path="/blog" element={<Navigate to="/journal" replace />} />
+              <Route path="/listing/:slug" element={<BrowseSlugRedirect />} />
+
+              {/* ── Catch-all ── */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </motion.div>
