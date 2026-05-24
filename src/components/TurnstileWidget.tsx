@@ -8,21 +8,28 @@ interface TurnstileWidgetProps {
 
 export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, actionName = "form_submission" }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  // Site key must be provided via VITE_TURNSTILE_SITE_KEY env var — no hardcoded fallback
   const siteKey = (import.meta.env.VITE_TURNSTILE_SITE_KEY || "").trim();
   const [errorStatus, setErrorStatus] = useState<boolean>(false);
   const [tokenGenerated, setTokenGenerated] = useState<string | null>(null);
 
+  // If no site key is configured, silently mark the form as ready so it
+  // remains submittable. Nothing is rendered — no error shown to users.
   useEffect(() => {
+    if (!siteKey) {
+      onVerify("__turnstile_not_configured__");
+    }
+  }, [siteKey, onVerify]);
+
+  useEffect(() => {
+    if (!siteKey) return; // skip widget setup when key is absent
+
     let widgetId: string | null = null;
     let timer: any = null;
 
     const renderWidget = () => {
       if (typeof window !== "undefined" && (window as any).turnstile && containerRef.current) {
         try {
-          // Clear any existing elements inside
           containerRef.current.innerHTML = "";
-          
           widgetId = (window as any).turnstile.render(containerRef.current, {
             sitekey: siteKey,
             theme: "dark",
@@ -46,7 +53,6 @@ export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, acti
           setErrorStatus(true);
         }
       } else {
-        // Retry polling in case script is still loading async
         timer = setTimeout(renderWidget, 500);
       }
     };
@@ -65,15 +71,8 @@ export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, acti
     };
   }, [siteKey, actionName, onVerify]);
 
-  // Show configuration error if site key is missing
-  if (!siteKey) {
-    return (
-      <div className="my-4 p-3 rounded-lg bg-red-500/5 border border-red-500/15 flex items-center gap-2 text-[10px] text-red-400 font-mono">
-        <ShieldAlert className="h-3.5 w-3.5 shrink-0" />
-        Security widget not configured. Set <strong className="mx-1">VITE_TURNSTILE_SITE_KEY</strong> in your environment.
-      </div>
-    );
-  }
+  // Render nothing when no key is set — form is already unblocked above
+  if (!siteKey) return null;
 
   return (
     <div className="my-4 p-3 rounded-lg bg-[#0F0F10] border border-white/[0.04] flex flex-col gap-2">

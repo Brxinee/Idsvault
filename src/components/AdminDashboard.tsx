@@ -326,15 +326,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
             )}
 
-            {!isSupabaseConfigured && (
-              <div className="p-3.5 rounded bg-red-500/5 border border-red-500/15 text-[10px] text-red-400 font-medium flex flex-col gap-1 text-left leading-relaxed font-sans">
-                <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[9px] mb-1">
-                  <ShieldAlert className="h-4 w-4 text-red-500 shrink-0" />
-                  <span>DATABASE NOT CONFIGURED</span>
-                </div>
-                <span>Admin access requires Supabase. Set <strong>VITE_SUPABASE_URL</strong> and <strong>VITE_SUPABASE_ANON_KEY</strong> in your environment and redeploy.</span>
-              </div>
-            )}
+            {/* Database config error only shown after a failed submit attempt via loginError */}
 
             <button
               type="submit"
