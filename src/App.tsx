@@ -43,13 +43,8 @@ export default function App() {
   // Consent shield state
   const [showConsent, setShowConsent] = useState<boolean>(false);
 
-  // Admin global login state
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("idsvault_mock_admin_unlocked") === "true";
-    }
-    return false;
-  });
+  // Admin global login state — only set via Supabase session check, never from localStorage
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     if (isSupabaseConfigured && supabase) {
@@ -85,7 +80,8 @@ export default function App() {
               }
             });
         } else {
-          setIsAdminLoggedIn(localStorage.getItem("idsvault_mock_admin_unlocked") === "true");
+          // No session — admin is never true without a valid Supabase session
+          setIsAdminLoggedIn(false);
         }
       });
 

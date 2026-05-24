@@ -7,19 +7,28 @@ import { createClient } from "@supabase/supabase-js";
 import { Listing, Lead, SourcingRequest, SystemLog, Platform, DealStatus } from "../types";
 
 // Check environment variables for Supabase database connection
-const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || "").trim();
-const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "").trim();
+const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || "").trim();
+const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || "").trim();
 
 // True production validation flag
 export const isSupabaseConfigured =
-  supabaseUrl &&
-  supabaseAnonKey &&
+  Boolean(supabaseUrl) &&
+  Boolean(supabaseAnonKey) &&
   supabaseUrl !== "YOUR_SUPABASE_URL" &&
   supabaseUrl.startsWith("https://");
 
 export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
+
+// Warn developers during local development if keys are missing
+if (import.meta.env.DEV && !isSupabaseConfigured) {
+  console.warn(
+    "[IDsvault] Supabase is not configured. " +
+    "Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env.local file. " +
+    "Admin access will be unavailable until these are set."
+  );
+}
 
 /**
  * PRODUCTION SQL BLUEPRINT SCHEMA
@@ -101,8 +110,21 @@ export const supabase = isSupabaseConfigured
 
 export const DATABASE_SCHEMA_SQL = `
 -- IDsvault Production Database Setup
--- Run these scripts in your Supabase SQL Editor to provision your database structure with full constraints.
+-- Run these scripts in your Supabase SQL Editor to provision the full schema.
 
+-- ─────────────────────────────────────────────
+-- 1. USERS (mirrors auth.users, stores role)
+-- ─────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.users (
+  id UUID REFERENCES auth.users NOT NULL PRIMARY KEY,
+  email TEXT NOT NULL,
+  role TEXT DEFAULT 'user' CHECK (role IN ('user', 'admin')),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- ─────────────────────────────────────────────
+-- 2. LISTINGS
+-- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.listings (
   id TEXT PRIMARY KEY,
   username TEXT NOT NULL,
@@ -118,9 +140,12 @@ CREATE TABLE IF NOT EXISTS public.listings (
   CONSTRAINT unique_platform_username UNIQUE (platform, normalized_username)
 );
 
+-- ─────────────────────────────────────────────
+-- 3. BUYER LEADS
+-- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.buyer_leads (
   id TEXT PRIMARY KEY,
-  listing_slug TEXT NOT NULL,
+  listing_slug TEXT NOT NULL REFERENCES public.listings(slug) ON DELETE CASCADE,
   buyer_name TEXT NOT NULL,
   buyer_email TEXT NOT NULL,
   whatsapp TEXT NOT NULL,
@@ -131,6 +156,9 @@ CREATE TABLE IF NOT EXISTS public.buyer_leads (
   created_time TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- ─────────────────────────────────────────────
+-- 4. SOURCING REQUESTS
+-- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.requests (
   id TEXT PRIMARY KEY,
   desired_username TEXT NOT NULL,
@@ -143,23 +171,88 @@ CREATE TABLE IF NOT EXISTS public.requests (
   created_time TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- ─────────────────────────────────────────────
+-- 5. ACTIVITY LOGS  (UUID pk avoids duplicate-ts inserts)
+-- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.activity_logs (
-  timestamp TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  timestamp TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
   action TEXT NOT NULL,
   detail TEXT NOT NULL
 );
 
--- Enable Row Level Security (RLS)
-ALTER TABLE public.listings ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.buyer_leads ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.requests ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.activity_logs ENABLE ROW LEVEL SECURITY;
+-- ─────────────────────────────────────────────
+-- 6. PERFORMANCE INDEXES
+-- ─────────────────────────────────────────────
+CREATE INDEX IF NOT EXISTS idx_listings_status   ON public.listings(status);
+CREATE INDEX IF NOT EXISTS idx_listings_platform ON public.listings(platform);
+CREATE INDEX IF NOT EXISTS idx_leads_listing_slug ON public.buyer_leads(listing_slug);
+CREATE INDEX IF NOT EXISTS idx_logs_timestamp    ON public.activity_logs(timestamp DESC);
 
--- Create Policies
-CREATE POLICY "Public Listings browse" ON public.listings FOR SELECT USING (true);
-CREATE POLICY "Anonymous submit proposals" ON public.buyer_leads FOR INSERT WITH CHECK (true);
-CREATE POLICY "Anonymous submit sourcing" ON public.requests FOR INSERT WITH CHECK (true);
-CREATE POLICY "Admin CRUD listings" ON public.listings FOR ALL TO authenticated USING (true);
-CREATE POLICY "Admin CRUD leads" ON public.buyer_leads FOR ALL TO authenticated USING (true);
-CREATE POLICY "Admin CRUD requests" ON public.requests FOR ALL TO authenticated USING (true);
+-- ─────────────────────────────────────────────
+-- 7. ROW LEVEL SECURITY
+-- ─────────────────────────────────────────────
+ALTER TABLE public.listings      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.buyer_leads   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.requests      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.activity_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.users         ENABLE ROW LEVEL SECURITY;
+
+-- ─────────────────────────────────────────────
+-- 8. HELPER: is_admin()
+-- ─────────────────────────────────────────────
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN
+LANGUAGE sql STABLE SECURITY DEFINER
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.users
+    WHERE id = auth.uid() AND role = 'admin'
+  );
+$$;
+
+-- ─────────────────────────────────────────────
+-- 9. POLICIES
+-- ─────────────────────────────────────────────
+
+-- Listings: public read of live/offer-pending; admin full CRUD
+CREATE POLICY "Public browse live listings"
+  ON public.listings FOR SELECT
+  USING (status IN ('LIVE', 'OFFER_PENDING') OR public.is_admin());
+
+CREATE POLICY "Admin manage listings"
+  ON public.listings FOR ALL
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
+
+-- Buyer leads: anonymous INSERT (anyone may submit a proposal); admin full access
+CREATE POLICY "Anonymous submit proposals"
+  ON public.buyer_leads FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Admin manage leads"
+  ON public.buyer_leads FOR ALL
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
+
+-- Sourcing requests: anonymous INSERT; admin full access
+CREATE POLICY "Anonymous submit sourcing"
+  ON public.requests FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Admin manage requests"
+  ON public.requests FOR ALL
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
+
+-- Activity logs: admin only
+CREATE POLICY "Admin manage logs"
+  ON public.activity_logs FOR ALL
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
+
+-- Users: each user can read their own row; admin can read all
+CREATE POLICY "Users read own profile"
+  ON public.users FOR SELECT
+  USING (id = auth.uid() OR public.is_admin());
 `;

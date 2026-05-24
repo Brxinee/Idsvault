@@ -4,29 +4,25 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import { 
-  ShieldCheck, 
-  ShieldAlert, 
-  Key, 
-  Download, 
-  Trash2, 
-  Clock, 
-  CheckCircle2, 
-  AlertTriangle, 
+import {
+  ShieldCheck,
+  ShieldAlert,
+  Key,
+  Download,
+  Clock,
+  AlertTriangle,
   Layers3,
   Search,
-  ArrowUpDown,
   KanbanSquare,
   FileSpreadsheet,
   ChevronRight,
-  TrendingUp,
   Inbox,
-  User,
   Filter
 } from "lucide-react";
+import { User } from "@supabase/supabase-js";
 import { Listing, Lead, SourcingRequest, SystemLog, DealStatus } from "../types";
 import { formatINR } from "../data";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { supabase, isSupabaseConfigured } from "../lib/supabase";
 
 interface AdminDashboardProps {
@@ -49,7 +45,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onAuthChange
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [sessionUser, setSessionUser] = useState<any>(null);
+  const [sessionUser, setSessionUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -64,12 +60,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Load and subscribe to authentication sessions on mount
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase) {
-      // Check if offline mock admin is unlocked
-      const mockUnlocked = localStorage.getItem("idsvault_mock_admin_unlocked") === "true";
-      if (mockUnlocked) {
-        setIsAuthenticated(true);
-        if (onAuthChange) onAuthChange(true);
-      }
+      // No Supabase — admin access is simply unavailable
       setIsLoading(false);
       return;
     }
@@ -80,11 +71,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         setSessionUser(session.user);
         checkAdminRole(session.user.id);
       } else {
-        const mockUnlocked = localStorage.getItem("idsvault_mock_admin_unlocked") === "true";
-        if (mockUnlocked) {
-          setIsAuthenticated(true);
-          if (onAuthChange) onAuthChange(true);
-        }
         setIsLoading(false);
       }
     });
@@ -96,15 +82,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         checkAdminRole(session.user.id);
       } else {
         setSessionUser(null);
-        // Retain mock login if it was set
-        const mockUnlocked = localStorage.getItem("idsvault_mock_admin_unlocked") === "true";
-        if (mockUnlocked) {
-          setIsAuthenticated(true);
-          if (onAuthChange) onAuthChange(true);
-        } else {
-          setIsAuthenticated(false);
-          if (onAuthChange) onAuthChange(false);
-        }
+        setIsAuthenticated(false);
+        if (onAuthChange) onAuthChange(false);
         setIsLoading(false);
       }
     });
@@ -155,36 +134,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setLoginError("");
     setRoleError("");
 
-    const bypassPassword = (import.meta.env.VITE_ADMIN_BYPASS_PASSWORD || "admin").trim();
-
-    // Prioritize mock master admin login bypass
-    if (email.trim() === "admin@idsvault.com" && (password === bypassPassword || password === "admin")) {
-      setIsAuthenticated(true);
-      localStorage.setItem("idsvault_mock_admin_unlocked", "true");
-      if (onAuthChange) onAuthChange(true);
-      onAddLog("DEMO_ADMIN_AUTHENTICATED", "Authorized administrative console accessed via secure bypass credentials.");
-      setIsLoading(false);
-      return;
-    }
-
     if (!isSupabaseConfigured || !supabase) {
-      setLoginError("Offline Demo Mode: Use 'admin@idsvault.com' and your configured secure password to unlock.");
+      setLoginError("Database not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.");
       setIsLoading(false);
       return;
     }
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
         setLoginError(error.message);
-        onAddLog("LOGIN_FAILURE", `Unauthenticated admin query: ${email} - Error: ${error.message}`);
+        onAddLog("LOGIN_FAILURE", `Failed login attempt for: ${email}`);
         setIsLoading(false);
       } else {
         onAddLog("ADMIN_AUTHENTICATED", "Authorized administrative console accessed by session credentials.");
+        // Session listener (onAuthStateChange) will call checkAdminRole automatically
       }
     } catch (err) {
       setLoginError("An unexpected system exception occurred during authentication.");
@@ -197,7 +162,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     if (supabase) {
       await supabase.auth.signOut();
     }
-    localStorage.removeItem("idsvault_mock_admin_unlocked");
     setSessionUser(null);
     setIsAuthenticated(false);
     if (onAuthChange) onAuthChange(false);
@@ -205,27 +169,43 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setIsLoading(false);
   };
 
+  /**
+   * Escapes a value for safe CSV inclusion.
+   * Wraps in double-quotes and escapes any embedded double-quotes.
+   */
+  const csvEscape = (value: string | number | null | undefined): string => {
+    const str = value === null || value === undefined ? "" : String(value);
+    return `"${str.replace(/"/g, '""')}"`;
+  };
+
   const triggerCSVDownload = (type: "listings" | "proposals" | "requests") => {
-    let output = "";
-    let fileName = `idsvault_export_${type}_${Date.now()}.csv`;
+    // Guard: only allow authenticated admins to export
+    if (!isAuthenticated) {
+      console.error("CSV export blocked: user is not authenticated.");
+      return;
+    }
+
+    let rows: string[][] = [];
+    const fileName = `idsvault_export_${type}_${Date.now()}.csv`;
 
     if (type === "listings") {
-      output = "ID,Username,Platform,Asking Price,Min Price,Status,Created Time\n";
+      rows.push(["ID", "Username", "Platform", "Asking Price", "Min Price", "Status", "Created Time"]);
       listings.forEach((v) => {
-        output += `"${v.id}","${v.username}","${v.platform}",${v.askingPrice},${v.minPrice},"${v.status}","${v.createdTime}"\n`;
+        rows.push([v.id, v.username, v.platform, String(v.askingPrice), String(v.minPrice), v.status, v.createdTime]);
       });
     } else if (type === "proposals") {
-      output = "ID,Listing,Buyer Name,Email,WhatsApp,Offer Price,Urgency,Status\n";
+      rows.push(["ID", "Listing", "Buyer Name", "Email", "WhatsApp", "Offer Price", "Urgency", "Status"]);
       leads.forEach((v) => {
-        output += `"${v.id}","${v.listingSlug}","${v.buyerName}","${v.buyerEmail}","${v.whatsapp}",${v.offer},"${v.urgency}","${v.status}"\n`;
+        rows.push([v.id, v.listingSlug, v.buyerName, v.buyerEmail, v.whatsapp, String(v.offer), v.urgency, v.status]);
       });
     } else if (type === "requests") {
-      output = "ID,Desired,Platform,Budget,Urgency,Alternatives,WhatsApp,Email\n";
+      rows.push(["ID", "Desired", "Platform", "Budget", "Urgency", "Alternatives", "WhatsApp", "Email"]);
       requests.forEach((v) => {
-        output += `"${v.id}","${v.desiredUsername}","${v.platform}",${v.budget},"${v.urgency}","${v.alternatives}","${v.whatsapp}","${v.email}"\n`;
+        rows.push([v.id, v.desiredUsername, v.platform, String(v.budget), v.urgency, v.alternatives, v.whatsapp, v.email]);
       });
     }
 
+    const output = rows.map((row) => row.map(csvEscape).join(",")).join("\n");
     const encoded = "data:text/csv;charset=utf-8," + encodeURIComponent(output);
     const trigger = document.createElement("a");
     trigger.setAttribute("href", encoded);
@@ -236,9 +216,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     onAddLog("CSV_EXPORTED", `Catalog dataset [${type.toUpperCase()}] downloaded to CSV archive.`);
   };
 
-  const handleStatusShift = (slug: string, newStatus: DealStatus) => {
+  const handleStatusShift = async (slug: string, newStatus: DealStatus) => {
+    // Update local state immediately for responsive UI
     onUpdateListingStatus(slug, newStatus);
-    onAddLog("STATUS_MODIFIED", `Vetted handle @${slug} status adjusted strictly to platform code: [${newStatus}]`);
+    onAddLog("STATUS_MODIFIED", `Vetted handle @${slug} status adjusted to: [${newStatus}]`);
+
+    // Persist to Supabase if configured
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { error } = await supabase
+          .from("listings")
+          .update({ status: newStatus })
+          .eq("slug", slug);
+        if (error) {
+          console.error("Failed to persist status update to database:", error.message);
+          onAddLog("STATUS_SYNC_ERROR", `DB sync failed for @${slug}: ${error.message}`);
+        }
+      } catch (err) {
+        console.error("Unexpected error persisting status update:", err);
+      }
+    }
   };
 
   // Filtered inventory elements for tabular search
@@ -330,12 +327,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             )}
 
             {!isSupabaseConfigured && (
-              <div className="p-3.5 rounded bg-amber-500/5 border border-amber-500/15 text-[10px] text-amber-400 font-medium flex flex-col gap-1 text-left leading-relaxed font-sans">
+              <div className="p-3.5 rounded bg-red-500/5 border border-red-500/15 text-[10px] text-red-400 font-medium flex flex-col gap-1 text-left leading-relaxed font-sans">
                 <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[9px] mb-1">
-                  <ShieldAlert className="h-4 w-4 text-amber-500 shrink-0" />
-                  <span>SUPABASE OFFLINE</span>
+                  <ShieldAlert className="h-4 w-4 text-red-500 shrink-0" />
+                  <span>DATABASE NOT CONFIGURED</span>
                 </div>
-                <span>To switch from client state to real authentication, define <strong>VITE_SUPABASE_URL</strong> and <strong>VITE_SUPABASE_ANON_KEY</strong> environment secrets.</span>
+                <span>Admin access requires Supabase. Set <strong>VITE_SUPABASE_URL</strong> and <strong>VITE_SUPABASE_ANON_KEY</strong> in your environment and redeploy.</span>
               </div>
             )}
 
