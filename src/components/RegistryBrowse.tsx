@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
+import { usePageTitle } from "../hooks/usePageTitle";
 import { 
   Search, 
   ShieldAlert, 
@@ -28,6 +29,7 @@ interface RegistryBrowseProps {
 }
 
 export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSelectListing }) => {
+  usePageTitle("Browse Handles");
   const [search, setSearch] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState<string>("all");
   const [selectedRarity, setSelectedRarity] = useState<string>("all");

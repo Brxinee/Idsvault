@@ -4,26 +4,25 @@
  */
 
 import React, { useState } from "react";
-import { 
-  Mail, 
-  MessageSquare, 
-  MapPin, 
-  Clock, 
+import {
+  Mail,
+  MessageSquare,
+  MapPin,
+  Clock,
   ArrowLeft,
-  ChevronRight,
   ShieldCheck,
   Send,
   Loader2,
   CheckCircle2
 } from "lucide-react";
-import { buildWhatsAppHandoff, WHATSAPP_NUMBER, SUPPORT_EMAIL } from "../data";
+import { useNavigate } from "react-router-dom";
+import { buildWhatsAppHandoff, SUPPORT_EMAIL } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import { usePageTitle } from "../hooks/usePageTitle";
 
-interface ContactViewProps {
-  onBackToHome: () => void;
-}
-
-export const ContactView: React.FC<ContactViewProps> = ({ onBackToHome }) => {
+export const ContactView: React.FC = () => {
+  const navigate = useNavigate();
+  usePageTitle("Contact Desk");
   const [inquiryType, setInquiryType] = useState("buy");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -76,7 +75,7 @@ Message Details: ${message}`;
       {/* Back button header */}
       <div className="flex items-center justify-between select-none">
         <button
-          onClick={onBackToHome}
+          onClick={() => navigate("/")}
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition-colors cursor-pointer group"
         >
           <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />

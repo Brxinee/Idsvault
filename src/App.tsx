@@ -3,16 +3,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
-import { MessageSquare, ShieldCheck, ArrowRight, Lock, Sparkles, X, ChevronRight } from "lucide-react";
+import { useState, useEffect, lazy, Suspense } from "react";
+import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from "react-router-dom";
+import { MessageSquare, ShieldCheck } from "lucide-react";
 import { Platform, DealStatus, Listing, Lead, SourcingRequest, SystemLog, Urgency } from "./types";
 import {
   initialListings,
   initialLeads,
   initialRequests,
   initialLogs,
-  WHATSAPP_NUMBER,
-  SUPPORT_EMAIL,
   buildWhatsAppHandoff,
   formatINR
 } from "./data";
@@ -23,80 +22,140 @@ import { RegistryBrowse } from "./components/RegistryBrowse";
 import { ListingDetail } from "./components/ListingDetail";
 import { SellApplication } from "./components/SellApplication";
 import { SourcingRequest as SourcingRequestView } from "./components/SourcingRequest";
-import { AdminDashboard } from "./components/AdminDashboard";
+// Heavy components lazy-loaded to reduce initial bundle
+const AdminDashboard = lazy(() => import("./components/AdminDashboard").then(m => ({ default: m.AdminDashboard })));
+const BlogView       = lazy(() => import("./components/BlogView").then(m => ({ default: m.BlogView })));
 import { RegulatoryInfo } from "./components/RegulatoryInfo";
 import { ContactView } from "./components/ContactView";
-import { BlogView } from "./components/BlogView";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
+// ─── Route helpers ────────────────────────────────────────────────────────────
+
+/** Maps legacy view names (used by inner components) to URL paths */
+function viewToPath(view: string): string {
+  if (view.startsWith("policy-")) {
+    return `/policy/${view.replace("policy-", "")}`;
+  }
+  const map: Record<string, string> = {
+    home:    "/",
+    browse:  "/browse",
+    sell:    "/sell",
+    request: "/source",
+    blog:    "/blog",
+    faq:     "/faq",
+    contact: "/contact",
+    admin:   "/admin",
+  };
+  return map[view] ?? "/";
+}
+
+// ─── Sub-route wrappers ───────────────────────────────────────────────────────
+
+interface ListingDetailRouteProps {
+  listings: Listing[];
+  onAddProposal: (offer: number, name: string, email: string, whatsapp: string) => void;
+  onAddLog: (action: string, detail: string) => void;
+}
+
+function ListingDetailRoute({ listings, onAddProposal, onAddLog }: ListingDetailRouteProps) {
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const listing = listings.find((l) => l.slug === slug);
+
+  useEffect(() => {
+    if (listing) {
+      onAddLog("LISTING_VIEW", `Viewed listing: @${listing.slug}`);
+    }
+  }, [listing?.slug]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!listing) return <Navigate to="/browse" replace />;
+
+  return (
+    <ListingDetail
+      listing={listing}
+      onSubmitProposal={onAddProposal}
+      onNavigateBack={() => navigate("/browse")}
+    />
+  );
+}
+
+function PolicyRoute() {
+  const { segment } = useParams<{ segment: string }>();
+  const valid = ["terms", "privacy", "refund", "acceptable", "trademark"] as const;
+  type Seg = typeof valid[number];
+
+  if (!segment || !(valid as readonly string[]).includes(segment)) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <RegulatoryInfo segment={`policy-${segment as Seg}` as any} />;
+}
+
+// ─── Main App ─────────────────────────────────────────────────────────────────
+
 export default function App() {
-  const [currentView, setCurrentView] = useState<string>("home");
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // Core Datastores modeled in React status
-  const [listings, setListings] = useState<Listing[]>(initialListings);
-  const [leads, setLeads] = useState<Lead[]>(initialLeads);
-  const [requests, setRequests] = useState<SourcingRequest[]>(initialRequests);
-  const [logs, setLogs] = useState<SystemLog[]>(initialLogs);
+  // Core data stores
+  const [listings,  setListings]  = useState<Listing[]>(initialListings);
+  const [leads,     setLeads]     = useState<Lead[]>(initialLeads);
+  const [requests,  setRequests]  = useState<SourcingRequest[]>(initialRequests);
+  const [logs,      setLogs]      = useState<SystemLog[]>(initialLogs);
 
-  // Consent shield state
-  const [showConsent, setShowConsent] = useState<boolean>(false);
-
-  // Admin global login state — only set via Supabase session check, never from localStorage
+  // Auth
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
 
+  // Analytics / logging on route changes
+  useEffect(() => {
+    addLog("NAVIGATION", `Route: ${location.pathname}`);
+    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
+      (window as any).trackIDsVaultEvent("page_view", {
+        page_title: location.pathname,
+        page_location: window.location.href,
+      });
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Supabase auth
   useEffect(() => {
     if (isSupabaseConfigured && supabase) {
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session) {
-          supabase
-            .from("users")
-            .select("role")
-            .eq("id", session.user.id)
-            .single()
-            .then(({ data }) => {
-              if (data && data.role === "admin") {
-                setIsAdminLoggedIn(true);
-              } else {
-                setIsAdminLoggedIn(false);
-              }
-            });
+          supabase.from("users").select("role").eq("id", session.user.id).single()
+            .then(({ data }) => setIsAdminLoggedIn(data?.role === "admin"));
         }
       });
 
       const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
         if (session) {
-          supabase
-            .from("users")
-            .select("role")
-            .eq("id", session.user.id)
-            .single()
-            .then(({ data }) => {
-              if (data && data.role === "admin") {
-                setIsAdminLoggedIn(true);
-              } else {
-                setIsAdminLoggedIn(false);
-              }
-            });
+          supabase.from("users").select("role").eq("id", session.user.id).single()
+            .then(({ data }) => setIsAdminLoggedIn(data?.role === "admin"));
         } else {
-          // No session — admin is never true without a valid Supabase session
           setIsAdminLoggedIn(false);
         }
       });
 
-      return () => {
-        subscription.unsubscribe();
-      };
+      return () => subscription.unsubscribe();
     }
   }, []);
 
+  // Consent banner
+  const [showConsent, setShowConsent] = useState<boolean>(false);
   useEffect(() => {
-    const consent = localStorage.getItem("idsvault_consent_shield");
-    if (!consent) {
+    if (!localStorage.getItem("idsvault_consent_shield")) {
       setShowConsent(true);
     }
   }, []);
+
+  // ─── Helpers ───────────────────────────────────────────────────────────────
+
+  const addLog = (action: string, detail: string) => {
+    const timeNow = new Date().toISOString().replace("T", " ").slice(0, 19);
+    setLogs((prev) => [{ timestamp: timeNow, action: action.toUpperCase(), detail }, ...prev]);
+  };
 
   const handleConsentAnswer = (granted: boolean) => {
     localStorage.setItem("idsvault_consent_shield", granted ? "granted" : "denied");
@@ -104,115 +163,68 @@ export default function App() {
     addLog("CONSENT", `Analytics consent: ${granted ? "granted" : "declined"}`);
   };
 
-  // Helper logger
-  const addLog = (action: string, detail: string) => {
-    const timeNow = new Date().toISOString().replace("T", " ").slice(0, 19);
-    const newLog: SystemLog = {
-      timestamp: timeNow,
-      action: action.toUpperCase(),
-      detail
-    };
-    setLogs((prev) => [newLog, ...prev]);
-  };
-
+  /** Legacy-style navigation used by components that still carry onNavigate prop */
   const handleNavigate = (view: string) => {
-    setCurrentView(view);
-    setSelectedSlug(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    addLog("NAVIGATION", `Navigated to: ${view}`);
-    
-    // GA4 Page View Tracking Link
-    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("page_view", { 
-        page_title: view.toUpperCase(), 
-        page_location: window.location.href 
-      });
-    }
+    navigate(viewToPath(view));
   };
 
   const handleSelectListing = (slug: string) => {
-    setSelectedSlug(slug);
-    setCurrentView("listing-detail");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate(`/browse/${slug}`);
     addLog("LISTING_VIEW", `Viewed listing: @${slug}`);
-
-    // GA4 View Item Tracking Link
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("view_item", { 
-        item_id: slug, 
-        item_category: "username" 
-      });
+      (window as any).trackIDsVaultEvent("view_item", { item_id: slug, item_category: "username" });
     }
   };
 
-  // Pushes proposal from client side
   const handleAddProposal = (offer: number, name: string, email: string, whatsapp: string) => {
-    if (!selectedSlug) return;
-    
-    // Add lead entry to state
+    const slug = location.pathname.split("/browse/")[1] ?? "";
+    if (!slug) return;
+
     const newLead: Lead = {
       id: `lead-${Date.now()}`,
-      listingSlug: selectedSlug,
+      listingSlug: slug,
       buyerName: name,
       buyerEmail: email,
       whatsapp,
       offer,
       urgency: Urgency.Standard,
-      notes: "Auto-generated inbound proposal matching portal bidding form inputs.",
+      notes: "Inbound offer from listing page.",
       status: "SUBMITTED",
-      createdTime: new Date().toISOString()
+      createdTime: new Date().toISOString(),
     };
 
     setLeads((prev) => [newLead, ...prev]);
-    addLog("OFFER_SUBMITTED", `Offer of ${formatINR(offer)} for @${selectedSlug} from: ${name}`);
-
-    // Update listing status to offer pending
     setListings((prev) =>
-      prev.map((item) =>
-        item.slug === selectedSlug ? { ...item, status: DealStatus.OfferPending } : item
-      )
+      prev.map((item) => item.slug === slug ? { ...item, status: DealStatus.OfferPending } : item)
     );
+    addLog("OFFER_SUBMITTED", `Offer of ${formatINR(offer)} for @${slug} from: ${name}`);
 
-    // GA4 Lead Submission Tracking Link
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("generate_lead", { 
-        item_id: selectedSlug,
-        value: offer,
-        currency: "INR"
-      });
+      (window as any).trackIDsVaultEvent("generate_lead", { item_id: slug, value: offer, currency: "INR" });
     }
   };
 
-  // Regists brand new seller list application
   const handleRegisterListing = (username: string, platform: Platform, asking: number, min: number) => {
     const slug = `${platform}-${username.toLowerCase()}`;
     const newListing: Listing = {
-      id: `ID-${Math.floor(1000 + Math.random() * 9000).toString()}`,
+      id: `ID-${Math.floor(1000 + Math.random() * 9000)}`,
       username,
       platform,
       category: "Off-Market Client Target",
       askingPrice: asking,
       minPrice: min,
       status: DealStatus.Live,
-      description: `Premium single word dictionary handle on ${platform.toUpperCase()} under contract. Unaltered original credentials status verified.`,
+      description: `Premium single-word handle on ${platform} under broker contract. Ownership verified.`,
       slug,
-      createdTime: new Date().toISOString()
+      createdTime: new Date().toISOString(),
     };
-
     setListings((prev) => [newListing, ...prev]);
-    addLog("LISTING_SUBMITTED", `Listing application: @${username} on ${platform.toUpperCase()} asking ${formatINR(asking)}`);
-
-    // GA4 Register Listing event tracking
+    addLog("LISTING_SUBMITTED", `Listing application: @${username} on ${platform} asking ${formatINR(asking)}`);
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("submit_listing", { 
-        username, 
-        platform, 
-        asking_price: asking 
-      });
+      (window as any).trackIDsVaultEvent("submit_listing", { username, platform, asking_price: asking });
     }
   };
 
-  // Regists a discrete off-market sourcing request demand
   const handleRegisterSourcing = (
     desiredUsername: string,
     platform: Platform,
@@ -227,130 +239,118 @@ export default function App() {
       budget,
       urgency,
       alternatives,
-      whatsapp: "Recorded Coordination Key",
-      email: "Vetted Corporate Mail Node",
-      createdTime: new Date().toISOString()
+      whatsapp: "Recorded",
+      email: "Recorded",
+      createdTime: new Date().toISOString(),
     };
-
     setRequests((prev) => [newReq, ...prev]);
-    addLog("SOURCING_SUBMITTED", `Sourcing request: @${desiredUsername} on ${platform.toUpperCase()}, budget ${formatINR(budget)}`);
-
-    // GA4 Submit Sourcing event tracking
+    addLog("SOURCING_SUBMITTED", `Sourcing request: @${desiredUsername} on ${platform}, budget ${formatINR(budget)}`);
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("submit_sourcing", { 
-        username: desiredUsername, 
-        platform, 
-        budget 
-      });
+      (window as any).trackIDsVaultEvent("submit_sourcing", { username: desiredUsername, platform, budget });
     }
   };
 
-  // Status transitions
   const handleUpdateListingStatus = (slug: string, status: DealStatus) => {
-    setListings((prev) =>
-      prev.map((item) => (item.slug === slug ? { ...item, status } : item))
-    );
+    setListings((prev) => prev.map((item) => item.slug === slug ? { ...item, status } : item));
   };
 
-  // Quick WhatsApp sticky click
   const handleDialBroker = () => {
     const phrase = "Hi IDsvault, I'd like to discuss buying or selling a username. Please contact me.";
     const launch = buildWhatsAppHandoff(phrase);
     window.open(launch.url, "_blank");
     addLog("WHATSAPP_CTA", "WhatsApp CTA tapped from mobile sticky bar.");
-
-    // GA4 Dialog event tracking
     if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("contact_whatsapp", { 
-        context: "sticky_mobile_cta" 
-      });
+      (window as any).trackIDsVaultEvent("contact_whatsapp", { context: "sticky_mobile_cta" });
     }
   };
 
-  // Find listing for detail
-  const activeListing = selectedSlug ? listings.find((item) => item.slug === selectedSlug) : null;
+  const featuredListings = listings.filter((l) => l.status === DealStatus.Live).slice(0, 4);
+
+  // ─── Render ────────────────────────────────────────────────────────────────
 
   return (
     <div className="bg-[#050505] text-white min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-white relative font-sans">
-      
-      {/* Sticky Top Navbar */}
-      <Navbar
-        currentView={currentView}
-        onNavigate={handleNavigate}
-        onContactBroker={handleDialBroker}
-      />
 
-      {/* Main Dynamic Viewport Frame */}
+      <Navbar onContactBroker={handleDialBroker} />
+
       <main className="flex-grow pb-24 md:pb-12">
+        <Suspense fallback={
+          <div className="flex items-center justify-center min-h-[40vh]">
+            <div className="h-5 w-5 rounded-full border-2 border-white/10 border-t-blue-500 animate-spin" />
+          </div>
+        }>
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentView + (selectedSlug || "")}
+            key={location.pathname}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.28, ease: "easeInOut" }}
           >
-            {currentView === "home" && <Hero onNavigate={handleNavigate} />}
-
-            {currentView === "browse" && (
-              <RegistryBrowse listings={listings} onSelectListing={handleSelectListing} />
-            )}
-
-            {currentView === "listing-detail" && activeListing && (
-              <ListingDetail
-                listing={activeListing}
-                onSubmitProposal={handleAddProposal}
-                onNavigateBack={() => handleNavigate("browse")}
+            <Routes location={location}>
+              <Route path="/"
+                element={
+                  <Hero
+                    featuredListings={featuredListings}
+                    onSelectListing={handleSelectListing}
+                    onNavigate={handleNavigate}
+                  />
+                }
               />
-            )}
-
-            {currentView === "sell" && (
-              <SellApplication onRegisterListing={handleRegisterListing} />
-            )}
-
-            {currentView === "request" && (
-              <SourcingRequestView onRegisterRequest={handleRegisterSourcing} />
-            )}
-
-            {currentView === "admin" && (
-              <AdminDashboard
-                listings={listings}
-                leads={leads}
-                requests={requests}
-                logs={logs}
-                onUpdateListingStatus={handleUpdateListingStatus}
-                onAddLog={addLog}
-                onAuthChange={setIsAdminLoggedIn}
+              <Route path="/browse"
+                element={<RegistryBrowse listings={listings} onSelectListing={handleSelectListing} />}
               />
-            )}
-
-            {currentView === "blog" && (
-              <BlogView 
-                onNavigate={handleNavigate} 
-                onBrowseListing={(slug) => { setSelectedSlug(slug); setCurrentView("listing-detail"); }} 
-                isAdmin={isAdminLoggedIn}
+              <Route path="/browse/:slug"
+                element={
+                  <ListingDetailRoute
+                    listings={listings}
+                    onAddProposal={handleAddProposal}
+                    onAddLog={addLog}
+                  />
+                }
               />
-            )}
-
-            {currentView.startsWith("policy-") && (
-              <RegulatoryInfo segment={currentView as any} />
-            )}
-
-            {currentView === "faq" && (
-              <RegulatoryInfo segment="faq" />
-            )}
-
-            {currentView === "contact" && (
-              <ContactView onBackToHome={() => setCurrentView("home")} />
-            )}
+              <Route path="/sell"
+                element={<SellApplication onRegisterListing={handleRegisterListing} />}
+              />
+              <Route path="/source"
+                element={<SourcingRequestView onRegisterRequest={handleRegisterSourcing} />}
+              />
+              <Route path="/blog"
+                element={
+                  <BlogView
+                    onNavigate={handleNavigate}
+                    onBrowseListing={handleSelectListing}
+                    isAdmin={isAdminLoggedIn}
+                  />
+                }
+              />
+              <Route path="/contact" element={<ContactView />} />
+              <Route path="/admin"
+                element={
+                  <AdminDashboard
+                    listings={listings}
+                    leads={leads}
+                    requests={requests}
+                    logs={logs}
+                    onUpdateListingStatus={handleUpdateListingStatus}
+                    onAddLog={addLog}
+                    onAuthChange={setIsAdminLoggedIn}
+                  />
+                }
+              />
+              <Route path="/faq" element={<RegulatoryInfo segment="faq" />} />
+              <Route path="/policy/:segment" element={<PolicyRoute />} />
+              {/* Legacy hash-less redirects for old links */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
           </motion.div>
         </AnimatePresence>
+        </Suspense>
       </main>
 
-      {/* Global Regulatory Footer */}
-      <Footer onNavigate={handleNavigate} />
+      <Footer />
 
-      {/* Universal Mobile Sticky Coordinator CTA */}
+      {/* Mobile sticky CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-40 p-4 bg-[#050505]/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden">
         <div className="max-w-md mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 select-none">
@@ -373,14 +373,14 @@ export default function App() {
         </div>
       </div>
 
-      {/* Preference Drawer */}
+      {/* Consent banner */}
       <AnimatePresence>
         {showConsent && (
           <div className="fixed bottom-22 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-[150] p-6 rounded-2xl bg-[#151517]/95 backdrop-blur-xl border border-white/[0.08] shadow-[0_15px_40px_rgba(0,0,0,0.7)] space-y-4 text-left font-sans">
             <div className="space-y-1.5">
               <h4 className="text-xs font-bold text-white tracking-tight flex items-center gap-2">
-                <ShieldCheck className="h-4.5 w-4.5 text-blue-500" />
-                <span>Privacy Shield Guidelines</span>
+                <ShieldCheck className="h-4 w-4 text-blue-500" />
+                <span>Analytics Consent</span>
               </h4>
               <p className="text-[10px] text-[#9CA3AF] leading-relaxed font-normal">
                 We use Google Analytics to understand how visitors use this site. No personal data is sold or shared with advertisers. You can decline and the site works fully.
@@ -395,9 +395,9 @@ export default function App() {
               </button>
               <button
                 onClick={() => handleConsentAnswer(true)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-[10px] text-white font-bold rounded-lg uppercase tracking-wider transition-colors cursor-pointer select-none ring-1 ring-blue-400/20 active:scale-95 text-center"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-[10px] text-white font-bold rounded-lg uppercase tracking-wider transition-colors cursor-pointer select-none active:scale-95 text-center"
               >
-                Agree & Trust
+                Allow Analytics
               </button>
             </div>
           </div>

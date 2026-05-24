@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   ArrowRight,
   Lock,
@@ -20,13 +21,18 @@ import {
   IndianRupee
 } from "lucide-react";
 import { motion } from "motion/react";
-import { formatINR } from "../data";
+import { formatINR, getBadgesForHandle, maskUsername } from "../data";
+import { Listing } from "../types";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 interface HeroProps {
+  featuredListings: Listing[];
+  onSelectListing: (slug: string) => void;
   onNavigate: (view: string) => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing }) => {
+  usePageTitle();
   const [activeStep, setActiveStep] = useState(0);
 
   const stepsData = [
@@ -143,22 +149,22 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row items-center gap-4"
           >
-            <button
-              onClick={() => onNavigate("browse")}
+            <Link
+              to="/browse"
               className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
               id="hero_primary_cta"
             >
               <span>Browse Available Handles</span>
               <ArrowRight className="h-4 w-4 text-white/80 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button
-              onClick={() => onNavigate("sell")}
+            </Link>
+            <Link
+              to="/sell"
               className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#0F0F10] hover:bg-[#151517] border border-white/[0.08] hover:border-white/[0.15] text-gray-200 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
               id="hero_secondary_cta"
             >
               <span>List Your Handle for Sale</span>
               <ArrowUpRight className="h-4 w-4 text-gray-500" />
-            </button>
+            </Link>
           </motion.div>
 
         </div>
@@ -393,6 +399,96 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           </div>
         </div>
       </section>
+
+      {/* ─── Featured Listings ──────────────────────────────────────────────── */}
+      {featuredListings.length > 0 && (
+        <section className="bg-[#050505] border-t border-white/[0.06] py-20 px-6">
+          <div className="max-w-7xl mx-auto space-y-10">
+
+            <div className="flex items-end justify-between">
+              <div className="space-y-2">
+                <span className="text-[10px] font-extrabold text-[#D4AF37] uppercase tracking-widest font-mono">Available Now</span>
+                <h2 className="text-2xl font-extrabold text-white tracking-tight">Featured handles for sale</h2>
+                <p className="text-xs text-gray-400">Ownership verified · Payment in escrow · Broker-supervised transfer</p>
+              </div>
+              <Link
+                to="/browse"
+                className="hidden sm:flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-white transition-colors uppercase tracking-wider"
+              >
+                View all
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {featuredListings.map((item) => {
+                const badges = getBadgesForHandle(item.username, item.platform);
+                const masked = maskUsername(item.username);
+                return (
+                  <motion.article
+                    key={item.id}
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.2 }}
+                    className="p-5 rounded-2xl bg-[#0F0F10] border border-white/[0.08] hover:border-white/[0.14] flex flex-col justify-between gap-4 group relative overflow-hidden cursor-pointer"
+                    onClick={() => onSelectListing(item.slug)}
+                  >
+                    {/* Left accent on hover */}
+                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] uppercase font-mono font-extrabold text-blue-400 bg-blue-500/10 border border-blue-500/15 px-2 py-0.5 rounded-full">
+                          {item.platform}
+                        </span>
+                        <span className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/15">
+                          <BadgeCheck className="h-3 w-3 stroke-[2.5]" />
+                          Verified
+                        </span>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-extrabold text-white tracking-tight group-hover:text-[#D4AF37] transition-colors">
+                          @{masked}
+                        </h3>
+                        <div className="flex flex-wrap gap-1 mt-1.5">
+                          {badges.slice(0, 2).map((b, idx) => (
+                            <span key={idx} className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded-full border tracking-wide uppercase ${b.style}`}>
+                              {b.label}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
+                      <div>
+                        <span className="text-[8px] font-bold uppercase tracking-widest text-gray-500 block">Asking Price</span>
+                        <span className="text-base font-extrabold text-emerald-400 font-mono">
+                          {formatINR(item.askingPrice)}
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-bold text-gray-400 group-hover:text-white transition-colors flex items-center gap-0.5">
+                        View <ArrowRight className="h-3 w-3" />
+                      </span>
+                    </div>
+                  </motion.article>
+                );
+              })}
+            </div>
+
+            <div className="text-center pt-2">
+              <Link
+                to="/browse"
+                className="inline-flex items-center gap-2 h-10 px-6 rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-xs font-bold text-gray-300 hover:text-white transition-all uppercase tracking-wider"
+              >
+                Browse all handles
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+
+          </div>
+        </section>
+      )}
 
     </div>
   );

@@ -1,17 +1,74 @@
-# IDsvault Model Context & Business Posture Information
+# IDsvault
 
-IDsvault is an independent, premium digital identity brokerage marketplace coordinating human-assisted transfers of high-value social media handles (@usernames) and brandable digital names.
+> India's broker-assisted marketplace for buying and selling premium Instagram handles, X (Twitter) usernames, and Telegram channels. Based in Hyderabad, Telangana.
 
-## Core Business Identity & Posture
-- **Independence:** IDsvault is NOT an official partner, agent, or affiliate of Instagram (Meta), X (Twitter), Discord, or Telegram.
-- **Escrow Operations:** IDsvault is NOT a licensed escrow bank or guaranteed automated transfer service. Instead, it provides human broker-supervised custody and step-by-step transaction workflow coordination.
-- **Service Offering:** Direct concierge brokering, off-market identifier sourcing campaigns, digital custody validation, and custom secure handovers.
+## What We Do
 
-## Legal & Compliance Guidelines
-- **Anti-Bypass Asset Shielding:** Public listings on IDsvault are strictly masked to prevent listing hijackings, speculative buyouts, and security extortion tactics. Real handles are only disclosed under secured broker-monitored environments.
-- **Risk Disclosures:** Digital namespace transaction operations run contrary to standard platforms' direct Terms of Service. IDsvault offers zero warranties against subsequent host platform reset campaigns, account de-activations, or subsequent recovery updates.
-- **Prohibited Actions:** Strictly excludes identifiers sourced from phishing, extortion, trademarks infringement, or unauthorized security breaches.
+IDsvault facilitates the secure transfer of valuable social media usernames between buyers and sellers. Every transaction is supervised by a human broker from our Hyderabad desk. The buyer's payment is held in escrow until they confirm full account access — neither party can be scammed.
 
-## API & Marketplace Access Rules
-- Sourcing campaigns are conducted discretely.
-- Live brokers coordinate secure handshakes on WhatsApp or secure alternative channels (+91 98765 43210 / desk@idsvault.com).
+We are an independent brokerage. We are not affiliated with Meta (Instagram), X Corp, or Telegram.
+
+## Platforms
+
+- Instagram handles (e.g. @brand, @company, @shortname)
+- X (Twitter) usernames
+- Telegram channels and usernames
+
+## How a Transaction Works
+
+1. Buyer submits an offer on the IDsvault website or via WhatsApp (+91 93929 74031)
+2. Seller ownership is verified by the Hyderabad desk before any listing is published
+3. Buyer pays IDsvault via UPI or bank transfer — funds held in escrow
+4. A broker supervises a live call where the seller transfers the account
+5. Buyer confirms full control: updates recovery email, phone number, and 2FA
+6. IDsvault releases the held payment to the seller, minus the brokerage fee
+
+## Pricing
+
+All prices are in Indian Rupees (₹). Typical values range from ₹1 lakh to ₹20+ lakhs depending on handle length, platform, and commercial value. Price on Request (POR) listings require direct contact.
+
+## Buyer Protections
+
+- Seller verified before listing goes live
+- Payment in escrow — full refund if transfer fails
+- Human broker on every live transfer call
+- Refund processed within 3 business days if deal falls through
+
+## Seller Protections
+
+- Protected from payment chargebacks
+- Protected from account recovery attempts after transfer
+- Broker ensures payment is released only after buyer confirms control
+
+## Contact
+
+- WhatsApp: +91 93929 74031 (preferred contact method)
+- Email: support@idsvault.com
+- Hours: Monday to Saturday, 9:30 AM – 8:30 PM IST
+- Location: Hyderabad, Telangana, India
+
+## Website
+
+- Homepage: https://idsvault.com
+- Browse handles: https://idsvault.com/browse
+- Sell a handle: https://idsvault.com/sell
+- Custom sourcing: https://idsvault.com/source
+- Contact: https://idsvault.com/contact
+- FAQ: https://idsvault.com/faq
+
+## Frequently Asked Questions
+
+Q: How are sellers verified?
+A: Sellers must prove current account ownership through direct checks before any listing is accepted.
+
+Q: What happens if the transfer fails?
+A: The buyer's payment is refunded in full within 3 business days.
+
+Q: What payment methods do you accept?
+A: UPI and bank transfer (NEFT/IMPS). Payment details shared after deal confirmation.
+
+Q: Are you affiliated with Instagram, X, or Telegram?
+A: No. IDsvault is fully independent. Not affiliated with Meta, X Corp, or Telegram.
+
+Q: What is your brokerage fee?
+A: Fee disclosed during deal initiation. Contact us on WhatsApp for current rates.
