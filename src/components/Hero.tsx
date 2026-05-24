@@ -9,18 +9,19 @@ import {
   ArrowRight,
   Lock,
   CheckCircle2,
-  RefreshCw,
   ShieldCheck,
   BadgeCheck,
   Users,
   ArrowUpRight,
-  Fingerprint,
-  FileCheck2,
-  Workflow,
-  ShieldAlert,
-  IndianRupee
+  IndianRupee,
+  MessageCircle,
+  ChevronDown,
+  ChevronUp,
+  AlertTriangle,
+  PhoneCall,
+  Wallet
 } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { formatINR, getBadgesForHandle, maskUsername } from "../data";
 import { Listing } from "../types";
 import { usePageTitle } from "../hooks/usePageTitle";
@@ -39,7 +40,7 @@ const homepageSchema = [
     "name": "IDsvault",
     "url": "https://idsvault.com",
     "logo": "https://idsvault.com/logo.png",
-    "description": "Global broker-assisted digital identity desk for Telegram usernames, domain names, Discord communities, and YouTube channels. Escrow-protected transfers with named-broker accountability. Headquartered in Hyderabad.",
+    "description": "Broker-verified Instagram, X, and Telegram usernames. Escrow-protected transfers with named-broker accountability. Based in Hyderabad, serving buyers and sellers worldwide.",
     "areaServed": "Worldwide",
     "address": {
       "@type": "PostalAddress",
@@ -61,51 +62,101 @@ const homepageSchema = [
       "target": { "@type": "EntryPoint", "urlTemplate": "https://idsvault.com/inventory?q={search_term_string}" },
       "query-input": "required name=search_term_string"
     }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is it legal to buy or sell Instagram usernames in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Instagram's Terms of Service prohibit username transfers, which means there is inherent platform risk. IDsvault only handles Instagram on a private advisory basis and discloses this risk in writing before any engagement begins. Telegram username transfers via Fragment are officially sanctioned and carry no platform risk."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does escrow work at IDsvault?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You pay IDsvault, not the seller. We hold the funds until you confirm you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails for any reason, you get a full refund within 3 business hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does IDsvault charge for brokering a deal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our commission is 15% for deals under $5,000 USD, 12% for deals between $5,000 and $25,000, and 10% for deals above $25,000. All fees are disclosed before any payment is made."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I buy a Telegram username through IDsvault?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Telegram username transfers via Fragment are officially supported by Telegram and are our primary listing category. Transfers are settled in TON and involve no platform risk."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if the seller tries to recover the account after the transfer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The transfer only happens on a live supervised call where our broker watches you change the recovery email, phone number, and 2FA before we release payment to the seller. The seller has no financial incentive to attempt recovery once they've been paid."
+        }
+      }
+    ]
+  }
+];
+
+const faqItems = [
+  {
+    q: "Is it legal to buy an Instagram or X username in India?",
+    a: "Instagram and X both prohibit username transfers in their Terms of Service. We disclose this risk explicitly and in writing before any engagement. We only handle IG/X on a private advisory basis — they are never publicly listed. Telegram transfers via Fragment are officially sanctioned by Telegram and carry no platform risk."
+  },
+  {
+    q: "How does the escrow work?",
+    a: "You pay IDsvault, not the seller. We hold the funds until you confirm full account access and have changed all credentials. Only then do we release payment to the seller. If anything goes wrong at any step, you get a full refund within 3 business hours — no questions asked."
+  },
+  {
+    q: "What is a 'live supervised transfer'?",
+    a: "The buyer, seller, and our Hyderabad broker are all on the same video call. The seller transfers the account while our broker watches. The buyer updates the recovery email, phone, and 2FA live on the call. No one hangs up until the buyer confirms they have full control."
+  },
+  {
+    q: "How much does IDsvault charge?",
+    a: "15% for deals under $5,000 · 12% for $5,000–$25,000 · 10% above $25,000 · Negotiable above $100,000. All fees are disclosed before any payment is made. No hidden charges."
+  },
+  {
+    q: "Can I buy a Telegram username?",
+    a: "Yes. Telegram usernames via Fragment are our primary listing category. Transfers are officially supported by Telegram, settled in TON, and involve no platform risk. Browse our current inventory to see available handles."
+  },
+  {
+    q: "What if the seller recovers the account after transfer?",
+    a: "The transfer happens live on a call. You change the recovery email, phone, and 2FA before we release any funds to the seller. The seller has no financial incentive to attempt recovery — they only get paid once you confirm full ownership."
+  },
+  {
+    q: "Can buyers outside India use IDsvault?",
+    a: "Yes. We serve clients globally. International payments can be arranged via Wise, SWIFT, or crypto (USDC/USDT). Our brokerage desk is based in Hyderabad and handles all coordination — time zone differences have not been a problem."
+  },
+  {
+    q: "How long does a deal take?",
+    a: "Typically 24–72 hours from inquiry to transfer. Time varies based on KYC verification (required above $1,000 USD), both parties' availability for the live call, and escrow setup. We keep both parties updated throughout."
+  },
+  {
+    q: "What KYC documents are required?",
+    a: "Under $1,000 USD: no KYC. $1,000–$10,000: government-issued ID. Above $10,000: ID plus source-of-funds review. All verification is handled by our Hyderabad desk and treated with full confidentiality."
+  },
+  {
+    q: "How do I list an asset for sale?",
+    a: "Submit your asset via our Sell page. We verify ownership before listing anything — sellers must prove they own the account. Once verified, we handle all buyer inquiries and negotiations. You only deal with our broker, not with buyers directly."
   }
 ];
 
 export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing }) => {
   usePageTitle();
-  const [activeStep, setActiveStep] = useState(0);
-
-  const stepsData = [
-    {
-      step: "01",
-      title: "Submit Your Offer",
-      desc: "Tell us the handle you want and your budget. Our Hyderabad desk creates a deal ticket and contacts both parties within 24 hours.",
-      icon: <Lock className="h-5 w-5 text-blue-500" />
-    },
-    {
-      step: "02",
-      title: "Seller Ownership Verified",
-      desc: "We confirm the seller actually owns the handle through direct account checks — no listing goes live without verification.",
-      icon: <Fingerprint className="h-5 w-5 text-emerald-500" />
-    },
-    {
-      step: "03",
-      title: "Buyer Pays Broker",
-      desc: "Send payment to our UPI or bank account. We hold the full amount in escrow — you get a complete refund if the transfer fails or doesn't happen.",
-      icon: <FileCheck2 className="h-5 w-5 text-purple-400" />
-    },
-    {
-      step: "04",
-      title: "Live Supervised Transfer",
-      desc: "We host a live call where the seller transfers the account while our broker watches. Both parties are on the call until transfer is confirmed.",
-      icon: <RefreshCw className="h-5 w-5 text-amber-500" />
-    },
-    {
-      step: "05",
-      title: "Buyer Confirms Control",
-      desc: "You update the recovery email, phone number, and 2FA. Confirm to our broker that you have full account access before we proceed.",
-      icon: <CheckCircle2 className="h-5 w-5 text-blue-400" />
-    },
-    {
-      step: "06",
-      title: "Seller Gets Paid",
-      desc: "Once you confirm full ownership, we release the escrowed funds to the seller. Our brokerage fee is deducted from the held amount.",
-      icon: <IndianRupee className="h-5 w-5 text-emerald-400" />
-    }
-  ];
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <div className="relative overflow-hidden bg-[#050505] text-white">
@@ -115,7 +166,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
         structuredData={homepageSchema}
       />
 
-      {/* Hero Section */}
+      {/* ── HERO ─────────────────────────────────────────── */}
       <section className="relative max-w-7xl mx-auto px-6 pt-12 md:pt-24 pb-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
         {/* Left Column */}
@@ -132,7 +183,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span>Global Digital Identity Desk · Hyderabad HQ</span>
+            <span>Hyderabad Broker Desk · Active Now</span>
           </motion.div>
 
           <div className="space-y-5">
@@ -142,9 +193,9 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.08]"
             >
-              A quiet desk for<br />
+              Buy the handle.<br />
               <span className="text-[#C9A961]">
-                premium digital handles.
+                Skip the scam.
               </span>
             </motion.h1>
 
@@ -154,8 +205,8 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-[#A1A1A9] text-base leading-relaxed max-w-lg"
             >
-              Telegram, domains, Discord, and select advisory work.
-              Brokered with escrow, identity verification, and named accountability.
+              Broker-verified Instagram, X, and Telegram usernames. Your money sits in escrow
+              until the transfer is done — then released to the seller. Simple, safe, supervised.
             </motion.p>
           </div>
 
@@ -168,7 +219,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
           >
             <div className="flex items-center gap-2">
               <BadgeCheck className="h-4 w-4 text-[#C9A961] shrink-0" />
-              <span>Verified sellers only</span>
+              <span>Seller ownership verified before listing</span>
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-[#C9A961] shrink-0" />
@@ -176,11 +227,11 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             </div>
             <div className="flex items-center gap-2">
               <Lock className="h-4 w-4 text-[#C9A961] shrink-0" />
-              <span>Escrow until transfer confirmed</span>
+              <span>Escrow until you confirm ownership</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-[#C9A961] shrink-0" />
-              <span>Global service · Hyderabad HQ</span>
+              <span>Full refund if transfer fails</span>
             </div>
           </motion.div>
 
@@ -196,7 +247,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
               id="hero_primary_cta"
             >
-              <span>View Inventory</span>
+              <span>Browse Handles</span>
               <ArrowRight className="h-4 w-4 opacity-70 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
@@ -204,16 +255,15 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#131316] hover:bg-[#1C1C20] border border-[#26262B] hover:border-[#3A3A42] text-[#A1A1A9] hover:text-white text-xs font-medium uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
               id="hero_secondary_cta"
             >
-              <span>Submit an Asset</span>
+              <span>Sell Yours</span>
               <ArrowUpRight className="h-4 w-4 opacity-50" />
             </Link>
           </motion.div>
 
         </div>
 
-        {/* Right Column: Deal status mockup cards */}
+        {/* Right Column: Deal status mockup */}
         <div className="lg:col-span-5 relative w-full flex justify-center">
-
           <div className="relative w-full max-w-sm h-[380px] flex items-center justify-center">
 
             {/* Active Deal Status Card */}
@@ -278,7 +328,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                 </div>
               </div>
               <div className="bg-[#151517] p-2.5 rounded-lg border border-white/[0.04] text-[9px] text-gray-400 text-left leading-relaxed">
-                "Seller ownership for @nexus has been verified. Ready to start the live transfer call — both parties confirmed."
+                "Seller ownership for @nexus verified. Ready to start the live transfer — both parties confirmed."
               </div>
             </motion.div>
 
@@ -287,61 +337,116 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
       </section>
 
-      {/* How It Works — 6 steps */}
+      {/* ── THE PROBLEM ─────────────────────────────────── */}
+      <section className="border-t border-white/[0.06] bg-[#0A0A0B] py-16 px-6">
+        <div className="max-w-4xl mx-auto space-y-8 text-left">
+          <div className="flex items-start gap-4">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 shrink-0 mt-1">
+              <AlertTriangle className="h-5 w-5 text-amber-400" />
+            </div>
+            <div className="space-y-3">
+              <span className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest font-mono">Why you need a broker</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
+                Direct DM deals get scammed. Every time.
+              </h2>
+              <p className="text-sm text-[#9CA3AF] leading-relaxed max-w-2xl">
+                Someone quotes you a price on Telegram or WhatsApp. You send the money. They transfer the handle. Two days later they use account recovery to take it back — and you have no recourse. This is not rare. It happens constantly in the handle trading space.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            <div className="p-5 rounded-xl bg-red-500/[0.04] border border-red-500/10 space-y-2">
+              <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest font-mono">Buyer risk</span>
+              <p className="text-xs text-gray-300 leading-relaxed">You pay, they recover. Money gone, handle gone. No paper trail, no platform support.</p>
+            </div>
+            <div className="p-5 rounded-xl bg-red-500/[0.04] border border-red-500/10 space-y-2">
+              <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest font-mono">Seller risk</span>
+              <p className="text-xs text-gray-300 leading-relaxed">You transfer first, they dispute the payment or reverse the bank transfer. You lose the handle and the money.</p>
+            </div>
+            <div className="p-5 rounded-xl bg-emerald-500/[0.04] border border-emerald-500/10 space-y-2">
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">With IDsvault</span>
+              <p className="text-xs text-gray-300 leading-relaxed">Funds are held in escrow. Transfer happens live on a supervised call. Both parties are protected at every step.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS (3 steps) ──────────────────────── */}
       <section className="border-t border-white/[0.06] bg-[#0F0F10] py-20 px-6">
-        <div className="max-w-7xl mx-auto space-y-16">
+        <div className="max-w-5xl mx-auto space-y-12">
 
           <div className="text-center space-y-3">
             <span className="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest font-mono">How It Works</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Six steps, fully brokered</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Three steps, no surprises</h2>
             <p className="text-sm text-[#9CA3AF] max-w-md mx-auto leading-relaxed">
-              Every deal follows this process. Neither buyer nor seller can skip a step — that's what makes it safe.
+              Every deal follows the same process. Neither side can skip a step.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
-            {stepsData.map((s, idx) => (
-              <motion.article
-                key={idx}
-                whileHover={{ y: -5 }}
-                className={`p-5 rounded-xl bg-[#151517] border transition-all duration-300 relative space-y-3.5 ${
-                  activeStep === idx
-                    ? "border-blue-500/30"
-                    : "border-white/[0.06] hover:border-white/[0.12]"
-                }`}
-                onClick={() => setActiveStep(idx)}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-black text-gray-500">{s.step}</span>
-                  <div className="p-2 rounded-lg bg-[#0F0F10] border border-white/[0.08]">
-                    {s.icon}
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+            <div className="relative p-6 rounded-2xl bg-[#151517] border border-white/[0.06] space-y-4 text-left">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-3xl font-black text-white/10">01</span>
+                <div className="p-2.5 rounded-xl bg-[#C9A961]/10 border border-[#C9A961]/20">
+                  <Wallet className="h-5 w-5 text-[#C9A961]" />
                 </div>
-                <div className="space-y-1 text-left">
-                  <h3 className="font-semibold text-xs text-white leading-snug">{s.title}</h3>
-                  <p className="text-[11px] text-gray-400 font-normal leading-normal">{s.desc}</p>
+              </div>
+              <div>
+                <h3 className="font-bold text-sm text-white mb-1">Pick your handle</h3>
+                <p className="text-xs text-gray-400 leading-relaxed">Browse verified listings or tell us what you're looking for. Our broker creates a deal ticket and contacts both parties within 24 hours.</p>
+              </div>
+            </div>
+
+            <div className="relative p-6 rounded-2xl bg-[#151517] border border-white/[0.06] space-y-4 text-left">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-3xl font-black text-white/10">02</span>
+                <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                  <Lock className="h-5 w-5 text-blue-400" />
                 </div>
-              </motion.article>
-            ))}
+              </div>
+              <div>
+                <h3 className="font-bold text-sm text-white mb-1">Pay into escrow</h3>
+                <p className="text-xs text-gray-400 leading-relaxed">Send payment to IDsvault — not to the seller. We hold the full amount until you confirm ownership. Full refund if anything goes wrong.</p>
+              </div>
+            </div>
+
+            <div className="relative p-6 rounded-2xl bg-[#151517] border border-white/[0.06] space-y-4 text-left">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-3xl font-black text-white/10">03</span>
+                <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                  <PhoneCall className="h-5 w-5 text-emerald-400" />
+                </div>
+              </div>
+              <div>
+                <h3 className="font-bold text-sm text-white mb-1">Transfer on a live call</h3>
+                <p className="text-xs text-gray-400 leading-relaxed">Buyer, seller, and broker on the same call. Seller transfers the account, you change all credentials live, confirm ownership, then we release funds to the seller.</p>
+              </div>
+            </div>
+
           </div>
+
+          <p className="text-center text-xs text-gray-500 pt-2">
+            Refund in 3 business hours if transfer fails at any step · KYC required above $1,000 USD
+          </p>
 
         </div>
       </section>
 
-      {/* Why Use IDsvault Instead of Dealing Directly */}
+      {/* ── WHY USE A BROKER ────────────────────────────── */}
       <section className="bg-[#050505] border-b border-white/[0.06] py-20 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           <div className="lg:col-span-4 space-y-4 text-left">
             <span className="inline-block px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 text-[9px] font-extrabold uppercase tracking-widest font-mono">
-              Why Use a Broker?
+              Why use a broker?
             </span>
             <h2 className="text-3xl font-extrabold text-white tracking-tight leading-[1.12]">
               Direct deals get scammed. Brokered deals don't.
             </h2>
             <p className="text-sm text-[#9CA3AF] leading-relaxed">
-              When you buy directly from a stranger, they can take your money and recover the account. When you sell directly, the buyer can chargeback after transfer. A broker eliminates both problems.
+              When you buy directly, the seller can take your money and recover the account. When you sell directly, the buyer can chargeback after transfer. A broker eliminates both risks.
             </p>
           </div>
 
@@ -350,40 +455,40 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <BadgeCheck className="h-4 w-4 text-emerald-400" />
-                Seller Verified Before Listing
+                Seller verified before listing
               </h4>
               <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                We confirm the seller has real account access before we accept their listing. No anonymous sellers, no fake inventory.
+                We confirm real account access before accepting any listing. No anonymous sellers, no fake inventory.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <Users className="h-4 w-4 text-blue-400" />
-                Broker on Every Live Transfer
+                Broker on every live transfer
               </h4>
               <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                Our Hyderabad broker supervises the account handover on a live call. No unsupervised transfers — the broker confirms both sides are satisfied.
+                Our Hyderabad broker supervises the handover on a live call. No unsupervised transfers — ever.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
-                <Workflow className="h-4 w-4 text-[#10B981]" />
-                Escrow Until You Confirm
+                <Lock className="h-4 w-4 text-[#10B981]" />
+                Escrow until you confirm
               </h4>
               <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                The buyer's payment stays with us until they confirm they have full account access. The seller only gets paid when the buyer is satisfied.
+                Your payment stays with us until you confirm full account access. Seller only gets paid when you're satisfied.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
-                <ShieldAlert className="h-4 w-4 text-amber-400" />
-                Chargeback & Recovery Protection
+                <ShieldCheck className="h-4 w-4 text-amber-400" />
+                Chargeback &amp; recovery protection
               </h4>
               <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                Sellers are protected from chargebacks. Buyers are protected from account recovery after sale. Our escrow process prevents both.
+                Sellers protected from chargebacks. Buyers protected from post-sale account recovery. Our escrow prevents both.
               </p>
             </div>
 
@@ -392,65 +497,15 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
         </div>
       </section>
 
-      {/* About Block */}
-      <section className="bg-[#0F0F10] py-20 px-6">
-        <div className="max-w-5xl mx-auto rounded-3xl bg-[#151517] border border-white/[0.06] p-8 md:p-12 text-left grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative overflow-hidden font-sans">
-
-          <div className="space-y-4">
-            <span className="text-[9px] font-bold text-[#C9A961] tracking-widest uppercase font-mono">About IDsvault</span>
-            <h3 className="text-2xl font-bold text-white tracking-tight">A quiet desk, based in Hyderabad. Serving clients globally.</h3>
-            <p className="text-sm text-[#A1A1A9] leading-relaxed">
-              <strong className="text-white">IDsvault</strong> is an independent broker-assisted desk for Telegram usernames, domain names, Discord communities, and YouTube channels. Instagram and X are handled on a private advisory basis only, with full platform-risk disclosure. Every deal is human-supervised.
-            </p>
-            <div className="grid grid-cols-2 gap-3 pt-2 text-[11px] text-[#A1A1A9]">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#C9A961] shrink-0" />
-                <span>Hyderabad HQ · global clients</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#C9A961] shrink-0" />
-                <span>Named broker on every deal</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#C9A961] shrink-0" />
-                <span>Verified seller ownership</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#C9A961] shrink-0" />
-                <span>Escrow on every deal</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-3.5 text-xs text-gray-300 font-mono">
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#0F0F10] border border-white/[0.04]">
-              <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-              <span>Brokerage desk: Active</span>
-            </div>
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#0F0F10] border border-white/[0.04]">
-              <span className="h-2 w-2 rounded-full bg-[#10B981]" />
-              <span>Hyderabad desk: Online</span>
-            </div>
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#0F0F10] border border-white/[0.04]">
-              <span className="h-2 w-2 rounded-full bg-purple-400" />
-              <span>Seller verification: Running</span>
-            </div>
-            <div className="mt-2 pt-3 border-t border-white/[0.04] text-[10px] text-gray-500 leading-relaxed">
-              Telegram · Domains · Discord · YouTube · Private Advisory (IG, X)
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Featured Listings ──────────────────────────────────────────────── */}
+      {/* ── FEATURED LISTINGS ───────────────────────────── */}
       {featuredListings.length > 0 && (
-        <section className="bg-[#050505] border-t border-white/[0.06] py-20 px-6">
+        <section className="bg-[#0F0F10] border-b border-white/[0.06] py-20 px-6">
           <div className="max-w-7xl mx-auto space-y-10">
 
             <div className="flex items-end justify-between">
               <div className="space-y-2">
                 <span className="text-[10px] font-extrabold text-[#C9A961] uppercase tracking-widest font-mono">Available Now</span>
-                <h2 className="text-2xl font-extrabold text-white tracking-tight">Featured handles for sale</h2>
+                <h2 className="text-2xl font-extrabold text-white tracking-tight">Handles for sale — buy instagram username india, telegram, and more</h2>
                 <p className="text-xs text-gray-400">Ownership verified · Payment in escrow · Broker-supervised transfer</p>
               </div>
               <Link
@@ -471,10 +526,9 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                     key={item.id}
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.2 }}
-                    className="p-5 rounded-2xl bg-[#0F0F10] border border-white/[0.08] hover:border-white/[0.14] flex flex-col justify-between gap-4 group relative overflow-hidden cursor-pointer"
+                    className="p-5 rounded-2xl bg-[#0A0A0B] border border-white/[0.08] hover:border-white/[0.14] flex flex-col justify-between gap-4 group relative overflow-hidden cursor-pointer"
                     onClick={() => onSelectListing(item.slug)}
                   >
-                    {/* Left accent on hover */}
                     <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#C9A961] opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="space-y-3">
@@ -523,7 +577,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                 to="/inventory"
                 className="inline-flex items-center gap-2 h-10 px-6 rounded-lg border border-[#26262B] hover:border-[#3A3A42] text-xs font-medium text-[#A1A1A9] hover:text-white transition-all uppercase tracking-wider"
               >
-                View full inventory
+                Browse full inventory
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
@@ -531,6 +585,129 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
           </div>
         </section>
       )}
+
+      {/* ── FOUNDER NOTE ────────────────────────────────── */}
+      <section className="bg-[#050505] py-20 px-6">
+        <div className="max-w-3xl mx-auto text-left space-y-6">
+          <span className="text-[10px] font-bold text-[#C9A961] tracking-widest uppercase font-mono">From the desk</span>
+          <blockquote className="text-xl sm:text-2xl font-semibold text-white leading-relaxed tracking-tight">
+            "We started this because we watched too many people get burned by handle dealers with no accountability. A broker changes the incentive structure — the seller only gets paid when the buyer is satisfied. That's it."
+          </blockquote>
+          <div className="flex items-center gap-3 pt-2">
+            <div className="h-10 w-10 rounded-full bg-[#C9A961]/10 border border-[#C9A961]/20 flex items-center justify-center font-bold text-sm text-[#C9A961] font-mono">
+              SR
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-white">Sanjay Reddy</p>
+              <p className="text-xs text-gray-500">Lead Broker · Hyderabad Desk</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 text-center">
+            {[
+              { val: "15%", label: "Commission on deals under $5K" },
+              { val: "3 hrs", label: "Refund window if transfer fails" },
+              { val: "1:1", label: "Named broker per deal" },
+              { val: "24/7", label: "WhatsApp response (IST business hrs 4h)" },
+            ].map(({ val, label }) => (
+              <div key={label} className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] space-y-1">
+                <p className="text-xl font-extrabold text-[#C9A961] font-mono">{val}</p>
+                <p className="text-[10px] text-gray-400 leading-snug">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ─────────────────────────────────────────── */}
+      <section className="bg-[#0F0F10] border-t border-white/[0.06] py-20 px-6" id="faq">
+        <div className="max-w-3xl mx-auto space-y-10">
+
+          <div className="text-center space-y-3">
+            <span className="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest font-mono">Common questions</span>
+            <h2 className="text-3xl font-extrabold text-white tracking-tight">Everything buyers and sellers ask us</h2>
+          </div>
+
+          <div className="space-y-2">
+            {faqItems.map((item, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div
+                  key={idx}
+                  className="rounded-xl border border-white/[0.06] bg-[#0A0A0B] overflow-hidden"
+                >
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : idx)}
+                    className="w-full px-5 py-4 text-left flex justify-between items-center gap-4 hover:bg-white/[0.01] transition-colors cursor-pointer"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-sm font-semibold text-white leading-snug">{item.q}</span>
+                    {isOpen
+                      ? <ChevronUp className="h-4 w-4 text-gray-400 shrink-0" />
+                      : <ChevronDown className="h-4 w-4 text-gray-400 shrink-0" />
+                    }
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="border-t border-white/[0.04] px-5 py-4 text-sm text-gray-400 leading-relaxed"
+                      >
+                        {item.a}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="text-center pt-4">
+            <Link
+              to="/faq"
+              className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors uppercase tracking-wider font-mono"
+            >
+              Full FAQ page
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── FINAL CTA BAND ──────────────────────────────── */}
+      <section className="bg-[#050505] border-t border-white/[0.06] py-20 px-6">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Ready to buy or sell a handle?
+          </h2>
+          <p className="text-sm text-[#9CA3AF] leading-relaxed max-w-lg mx-auto">
+            Message our Hyderabad desk on WhatsApp or browse verified listings now. No commitment required — just tell us what you're looking for.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              to="/inventory"
+              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+            >
+              Browse Handles
+              <ArrowRight className="h-4 w-4 opacity-70 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <a
+              href="https://wa.me/919392974031?text=Hi+IDsvault%2C+I+want+to+buy+or+sell+a+handle"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#131316] hover:bg-[#1C1C20] border border-[#26262B] hover:border-[#3A3A42] text-white text-xs font-medium uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
+            >
+              <MessageCircle className="h-4 w-4 text-emerald-400" />
+              WhatsApp Broker
+            </a>
+          </div>
+          <p className="text-[10px] text-gray-600 pt-2">
+            Commission: 15% &lt; $5K · 12% $5K–$25K · 10% &gt;$25K · All fees disclosed upfront · <Link to="/policy/terms" className="underline hover:text-gray-400">Terms</Link>
+          </p>
+        </div>
+      </section>
 
     </div>
   );

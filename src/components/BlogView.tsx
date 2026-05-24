@@ -40,6 +40,8 @@ import { motion, AnimatePresence } from "motion/react";
 interface BlogViewProps {
   onBrowseListing: (slug: string) => void;
   isAdmin?: boolean;
+  /** Legacy prop — kept for backward compat with App.tsx. Navigation uses useNavigate() internally. */
+  onNavigate?: (view: string) => void;
 }
 
 export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = false }) => {
@@ -92,6 +94,10 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
   // Feedback states
   const [copiedSlug, setCopiedSlug] = useState(false);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
+
+  // Pagination
+  const POSTS_PER_PAGE = 3;
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Available categories inside the registry
   const categories = useMemo(() => {
@@ -149,7 +155,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
         "blogPost": posts.filter(p => p.status === "published").map(p => ({
           "@type": "BlogPosting",
           "headline": p.title,
-          "url": `https://idsvault.com/blog/${p.slug}`,
+          "url": `https://idsvault.com/journal/${p.slug}`,
           "datePublished": p.publishedAt,
           "author": {
             "@type": "Person",
@@ -175,7 +181,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
       "@type": "BlogPosting",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": `https://idsvault.com/blog/${activePost.slug}`
+        "@id": `https://idsvault.com/journal/${activePost.slug}`
       },
       "headline": activePost.title,
       "description": activePost.metaDescription,
@@ -206,20 +212,20 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Blog",
-          "item": "https://idsvault.com/blog"
+          "name": "Journal",
+          "item": "https://idsvault.com/journal"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": activePost.category,
-          "item": `https://idsvault.com/blog?category=${encodeURIComponent(activePost.category)}`
+          "item": `https://idsvault.com/journal?category=${encodeURIComponent(activePost.category)}`
         },
         {
           "@type": "ListItem",
           "position": 4,
           "name": activePost.title,
-          "item": `https://idsvault.com/blog/${activePost.slug}`
+          "item": `https://idsvault.com/journal/${activePost.slug}`
         }
       ]
     };
@@ -266,15 +272,26 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
     return posts.find(p => p.featured && p.status === "published") || posts[0];
   }, [posts]);
 
-  // Non-featured listing posts
+  // Reset pagination when search/category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, activeCategory]);
+
+  // Non-featured listing posts (all, used for total count)
   const listPosts = useMemo(() => {
-    const list = filteredPosts.filter(p => p.id !== featuredPost?.id || activeCategory !== "All");
-    return list;
+    return filteredPosts.filter(p => p.id !== featuredPost?.id || activeCategory !== "All");
   }, [filteredPosts, featuredPost, activeCategory]);
+
+  // Paginated slice of listPosts
+  const totalPages = Math.ceil(listPosts.length / POSTS_PER_PAGE);
+  const paginatedPosts = useMemo(() => {
+    const start = (currentPage - 1) * POSTS_PER_PAGE;
+    return listPosts.slice(start, start + POSTS_PER_PAGE);
+  }, [listPosts, currentPage]);
 
   // Trigger copy URL slug action
   const handleCopyLink = () => {
-    const url = `${window.location.origin}/blog/${activePost?.slug}`;
+    const url = `${window.location.origin}/journal/${activePost?.slug}`;
     navigator.clipboard.writeText(url);
     setCopiedSlug(true);
     setTimeout(() => setCopiedSlug(false), 2000);
@@ -282,7 +299,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
 
   // Launch social triggers
   const handleShareSocial = (platform: "twitter" | "facebook") => {
-    const url = encodeURIComponent(`${window.location.origin}/blog/${activePost?.slug}`);
+    const url = encodeURIComponent(`${window.location.origin}/journal/${activePost?.slug}`);
     const text = encodeURIComponent(activePost?.title || "");
     const shareUrl = platform === "twitter" 
       ? `https://twitter.com/intent/tweet?url=${url}&text=${text}`
@@ -787,14 +804,14 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
               Home
             </button>
             <ChevronRight className="h-3 w-3" />
-            <button 
+            <button
               onClick={() => {
                 setActiveSlug(null);
                 setActiveCategory("All");
-              }} 
+              }}
               className="hover:text-blue-400 cursor-pointer transition-colors"
             >
-              Blog
+              Journal
             </button>
             <ChevronRight className="h-3 w-3" />
             <button 
@@ -1002,7 +1019,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                           </div>
                           <button
                             onClick={() => {
-                              navigate("/source");
+                              navigate("/advisory");
                               window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             className="h-9 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-[10px] text-white font-bold uppercase tracking-wider transition-all select-none cursor-pointer text-center shrink-0"
@@ -1277,9 +1294,9 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
           {filteredPosts.length === 0 ? (
             <div className="p-16 border border-dashed border-white/[0.06] rounded-2xl text-center space-y-3 max-w-md mx-auto">
               <AlertCircle className="h-8 w-8 text-gray-500 mx-auto" />
-              <h3 className="text-sm font-bold text-white tracking-tight">Zero Strategic Matching</h3>
+              <h3 className="text-sm font-bold text-white tracking-tight">No articles found</h3>
               <p className="text-xs text-gray-400 leading-relaxed font-normal">
-                No articles matched your keyword query. Refine terms or filter by categories.
+                No articles matched your search. Try different terms or reset the category filter.
               </p>
               <button
                 onClick={() => {
@@ -1288,78 +1305,113 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                 }}
                 className="px-3.5 py-2 rounded bg-white/[0.04] text-[10px] text-gray-200 uppercase tracking-wider font-bold hover:bg-white/[0.08]"
               >
-                Reset Search Filters
+                Reset Filters
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {listPosts.map((post, idx) => (
-                <motion.article
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: Math.min(idx * 0.05, 0.45) }}
-                  key={post.id}
-                  onClick={() => {
-                    setActiveSlug(post.slug);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                  className="group border border-white/[0.06] hover:border-white/[0.12] bg-[#0E0E10] p-6 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/[0.01] transition-all duration-300 cursor-pointer text-left flex flex-col justify-between"
-                  id={`article_card_${post.slug}`}
-                >
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center select-none mb-1">
-                      <span className="text-[8px] font-mono font-bold uppercase text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
-                        {post.category}
-                      </span>
-                      {post.status === "draft" && (
-                        <span className="text-[8px] font-mono font-bold uppercase text-amber-400 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
-                          DRAFT NODE
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {paginatedPosts.map((post, idx) => (
+                  <motion.article
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: Math.min(idx * 0.05, 0.2) }}
+                    key={post.id}
+                    onClick={() => {
+                      setActiveSlug(post.slug);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className="group border border-white/[0.06] hover:border-white/[0.12] bg-[#0E0E10] p-6 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/[0.01] transition-all duration-300 cursor-pointer text-left flex flex-col justify-between"
+                    id={`article_card_${post.slug}`}
+                  >
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center select-none mb-1">
+                        <span className="text-[8px] font-mono font-bold uppercase text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
+                          {post.category}
+                        </span>
+                        {post.status === "draft" && (
+                          <span className="text-[8px] font-mono font-bold uppercase text-amber-400 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+                            DRAFT
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors leading-snug tracking-tight font-sans">
+                        {post.title}
+                      </h3>
+
+                      <p className="text-gray-400 text-xs font-sans font-normal leading-relaxed line-clamp-3">
+                        {post.introduction}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 mt-4 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-[#9CA3AF] font-mono select-none">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-3.5 w-3.5 text-gray-500" />
+                        <span>{post.readTime}</span>
+                      </div>
+
+                      {/* Admin editing suite controls */}
+                      {cmsMode ? (
+                        <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                          <button
+                            onClick={() => handleBeginCMS(post)}
+                            className="h-6 w-6 rounded bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/25 transition-colors cursor-pointer"
+                            title="Edit article"
+                          >
+                            <Edit className="h-3 w-3" />
+                          </button>
+                          <button
+                            onClick={(e) => handleDeletePost(post.id, e)}
+                            className="h-6 w-6 rounded bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 hover:bg-red-500/25 transition-colors cursor-pointer"
+                            title="Delete article"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="flex items-center gap-0.5 text-blue-400 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-widest leading-none pt-0.5">
+                          Read <ChevronRight className="h-3.5 w-3.5" />
                         </span>
                       )}
                     </div>
-                    
-                    <h3 className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors leading-snug tracking-tight font-sans">
-                      {post.title}
-                    </h3>
-                    
-                    <p className="text-gray-400 text-xs font-sans font-normal leading-relaxed line-clamp-3">
-                      {post.introduction}
-                    </p>
-                  </div>
+                  </motion.article>
+                ))}
+              </div>
 
-                  <div className="pt-4 mt-4 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-[#9CA3AF] font-mono select-none">
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5 text-gray-500" />
-                      <span>{post.readTime}</span>
-                    </div>
-                    
-                    {/* Admin editing suite controls */}
-                    {cmsMode ? (
-                      <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          onClick={() => handleBeginCMS(post)}
-                          className="h-6 w-6 rounded bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/25 transition-colors cursor-pointer"
-                          title="Edit Editorial metadata and body content"
-                        >
-                          <Edit className="h-3 w-3" />
-                        </button>
-                        <button
-                          onClick={(e) => handleDeletePost(post.id, e)}
-                          className="h-6 w-6 rounded bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 hover:bg-red-500/25 transition-colors cursor-pointer"
-                          title="Permanently remove article"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
-                    ) : (
-                      <span className="flex items-center gap-0.5 text-blue-400 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-widest leading-none pt-0.5">
-                        Read Guide <ChevronRight className="h-3.5 w-3.5" />
-                      </span>
-                    )}
-                  </div>
-                </motion.article>
-              ))}
-            </div>
+              {/* Pagination controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 pt-4 select-none">
+                  <button
+                    onClick={() => { setCurrentPage(p => Math.max(p - 1, 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    disabled={currentPage === 1}
+                    className="h-8 px-4 rounded-lg border border-white/[0.08] text-xs font-bold text-gray-400 hover:text-white hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                  >
+                    ← Prev
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                    <button
+                      key={page}
+                      onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                      className={`h-8 w-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        page === currentPage
+                          ? "bg-blue-600 text-white border border-blue-500/30"
+                          : "border border-white/[0.08] text-gray-400 hover:text-white hover:border-white/[0.15]"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => { setCurrentPage(p => Math.min(p + 1, totalPages)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    disabled={currentPage === totalPages}
+                    className="h-8 px-4 rounded-lg border border-white/[0.08] text-xs font-bold text-gray-400 hover:text-white hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                  >
+                    Next →
+                  </button>
+                </div>
+              )}
+            </>
           )}
 
         </div>

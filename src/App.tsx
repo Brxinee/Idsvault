@@ -294,9 +294,17 @@ export default function App() {
   return (
     <div className="bg-[#050505] text-white min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-white relative font-sans">
 
+      {/* Skip to content — accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-[#C9A961] focus:text-[#0A0A0B] focus:text-xs focus:font-bold focus:uppercase focus:tracking-wider"
+      >
+        Skip to content
+      </a>
+
       <Navbar onContactBroker={handleDialBroker} />
 
-      <main className="flex-grow pb-24 md:pb-12">
+      <main id="main-content" className="flex-grow pb-24 md:pb-12">
         <Suspense fallback={
           <div className="flex items-center justify-center min-h-[40vh]">
             <div className="h-5 w-5 rounded-full border-2 border-white/10 border-t-blue-500 animate-spin" />
@@ -383,28 +391,37 @@ export default function App() {
 
       <Footer />
 
-      {/* Mobile sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 p-4 bg-[#050505]/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden">
-        <div className="max-w-md mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2 select-none">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <div className="text-left leading-tight gap-0.5 font-sans">
-              <p className="text-[8px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Desk Online</p>
-              <p className="text-xs text-white font-bold font-mono">HYDERABAD</p>
-            </div>
-          </div>
-          <button
-            onClick={handleDialBroker}
-            className="flex-grow max-w-[200px] h-10 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-bold uppercase tracking-wider text-white transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 text-center"
+      {/* Mobile sticky CTA — Browse / Sell dual buttons */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-[#050505]/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden">
+        <div className="max-w-md mx-auto grid grid-cols-2 gap-3">
+          <a
+            href="/inventory"
+            className="h-11 rounded-xl bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]"
+            onClick={(e) => { e.preventDefault(); navigate("/inventory"); }}
           >
-            <MessageSquare className="h-4 w-4" />
-            <span>WhatsApp Broker</span>
-          </button>
+            Browse Handles
+          </a>
+          <a
+            href="/sell"
+            className="h-11 rounded-xl bg-[#131316] border border-[#26262B] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-95"
+            onClick={(e) => { e.preventDefault(); navigate("/sell"); }}
+          >
+            Sell Yours
+          </a>
         </div>
       </div>
+
+      {/* WhatsApp floating button — desktop */}
+      <a
+        href="https://wa.me/919392974031?text=Hi+IDsvault%2C+I+want+to+buy+or+sell+a+handle"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hidden md:flex fixed bottom-6 right-6 z-50 h-12 w-12 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20BD5A] shadow-[0_4px_20px_rgba(37,211,102,0.4)] transition-all hover:scale-105 active:scale-95"
+        aria-label="Contact IDsvault on WhatsApp"
+        title="WhatsApp Broker"
+      >
+        <MessageSquare className="h-5 w-5 text-white" />
+      </a>
 
       {/* Consent banner */}
       <AnimatePresence>

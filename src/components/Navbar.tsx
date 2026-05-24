@@ -131,17 +131,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
               <div className="pt-4 border-t border-white/[0.06] grid grid-cols-2 gap-3">
                 <Link
                   to="/inventory"
-                  className="h-10 text-center text-xs font-semibold rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-white cursor-pointer flex items-center justify-center"
+                  className="h-10 text-center text-xs font-bold rounded-lg bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] cursor-pointer flex items-center justify-center gap-1"
                 >
-                  View Inventory
+                  Browse Handles
                 </Link>
-                <button
-                  onClick={onContactBroker}
-                  className="h-10 text-center text-xs font-semibold rounded-lg bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] cursor-pointer flex items-center justify-center gap-1"
+                <Link
+                  to="/sell"
+                  className="h-10 text-center text-xs font-semibold rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-white cursor-pointer flex items-center justify-center gap-1"
                 >
-                  Inquire
+                  Sell Yours
                   <ArrowUpRight className="h-3.5 w-3.5 opacity-70" />
-                </button>
+                </Link>
               </div>
             </div>
           </motion.div>
