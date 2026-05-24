@@ -37,6 +37,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <button onClick={() => onNavigate("browse")} className="text-[#8E8E93] hover:text-white transition-colors cursor-pointer">
               Marketplace Directory
             </button>
+            <button onClick={() => onNavigate("keep")} className="text-[#8E8E93] hover:text-white transition-colors cursor-pointer">
+              Keep Desk
+            </button>
             <button onClick={() => onNavigate("sell")} className="text-[#8E8E93] hover:text-white transition-colors cursor-pointer">
               Sell Username
             </button>

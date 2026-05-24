@@ -19,6 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
   const navItems = [
     { label: "Home", value: "home" },
     { label: "Browse IDs", value: "browse" },
+    { label: "Keep Desk", value: "keep" },
     { label: "Sell Your ID", value: "sell" },
     { label: "Request ID", value: "request" },
     { label: "Blog", value: "blog" },

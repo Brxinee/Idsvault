@@ -28,6 +28,7 @@ import { RegulatoryInfo } from "./components/RegulatoryInfo";
 import { ContactView } from "./components/ContactView";
 import { BlogView } from "./components/BlogView";
 import { SchemaMarkup } from "./components/SchemaMarkup";
+import { KeepDesk } from "./components/KeepDesk";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -511,6 +512,10 @@ export default function App() {
 
             {currentView === "request" && (
               <SourcingRequestView onRegisterRequest={handleRegisterSourcing} />
+            )}
+
+            {currentView === "keep" && (
+              <KeepDesk />
             )}
 
             {currentView === "admin" && (
