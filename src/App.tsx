@@ -27,6 +27,7 @@ import { AdminDashboard } from "./components/AdminDashboard";
 import { RegulatoryInfo } from "./components/RegulatoryInfo";
 import { ContactView } from "./components/ContactView";
 import { BlogView } from "./components/BlogView";
+import { SchemaMarkup } from "./components/SchemaMarkup";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -101,6 +102,196 @@ export default function App() {
       setShowConsent(true);
     }
   }, []);
+
+  // Technical SEO Title and Meta Description Engine
+  const currentListingForSEO = selectedSlug ? listings.find((item) => item.slug === selectedSlug) : null;
+  useEffect(() => {
+    let title = "IDsvault | Premium Digital Identity & Username Brokerage";
+    let desc = "Secure, broker-assisted premium digital handle and username brokerage marketplace. Hyderabad-based human-guided verification and structured payment workflow.";
+
+    if (currentView === "browse") {
+      title = "Premium Username Registry | Instagram, X, Telegram | IDsvault";
+      desc = "Browse verified digital namespaces and premium off-market handles on X, Instagram, and Telegram. Hand-audited assets under Hyderabad brokerage custody.";
+    } else if (currentView === "listing-detail" && currentListingForSEO) {
+      title = `Acquire @${currentListingForSEO.username} Premium Handle | ${currentListingForSEO.platform.toUpperCase()} Brokerage | IDsvault`;
+      desc = `Secure the high-value handle @${currentListingForSEO.username} on ${currentListingForSEO.platform.toUpperCase()} with IDsvault security. Live verification and broker-held transfer protection in India.`;
+    } else if (currentView === "sell") {
+      title = "Sell Premium Usernames & Handles Safely | IDsvault India";
+      desc = "Submit your high-value Instagram, Telegram, or X handle for corporate valuation and listing. Premium audience reach under discrete escrow-holding safeguards.";
+    } else if (currentView === "request") {
+      title = "Custom Username Sourcing Campaigns | IDsvault Bureau";
+      desc = "Commission a targeted off-market username acquisition campaign. Our Hyderabad brokers track and secure elite handles with complete anonymity.";
+    } else if (currentView === "blog") {
+      title = "Digital Brand Strategy Library & Handle Valuations | IDsvault";
+      desc = "Read expert articles on digital asset positioning, social username values, trademark risks, the transfer mechanics of OG handles, and compliance updates.";
+    } else if (currentView === "contact") {
+      title = "Contact Hyderabad Desk | Secure Username Brokerage | IDsvault";
+      desc = "Reach out directly to the IDsvault elite desk in Hi-Tech City, Hyderabad. Live WhatsApp support, SWIFT wire coordination, and manual audits.";
+    } else if (currentView.startsWith("policy-")) {
+      const formatted = currentView.replace("policy-", "").toUpperCase();
+      title = `${formatted} Policy & Legal Framework | IDsvault`;
+      desc = `Understand the administrative legal guidelines, risk disclosures, refund commitments, and AML/KYC policies for IDsvault digital transactions.`;
+    } else if (currentView === "faq") {
+      title = "IDsvault FAQs | Secure Handle Trading Questions Answered";
+      desc = "Factual answers about social media username transfers, how payment holding works, platform terms of service risks, and Indian banking coordinates.";
+    }
+
+    document.title = title;
+    
+    // Update meta description tag dynamically
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", desc);
+    }
+
+    // Dynamic JSON-LD structured data script injection
+    const existingSchema = document.getElementById("idsvault-jsonld-schema");
+    if (existingSchema) {
+      existingSchema.remove();
+    }
+
+    const schemas = [];
+
+    // Organization Schema
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "IDsvault",
+      "url": "https://idsvault.com",
+      "logo": "https://idsvault.com/logo.png",
+      "description": "Hyderabad-based secure secure escrow brokerage coordination desk for high-AOV Instagram, X, and Telegram usernames.",
+      "founder": {
+        "@type": "Person",
+        "name": "Vinay Naidu"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Hyderabad",
+        "addressRegion": "Telangana",
+        "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "support@idsvault.com",
+        "contactType": "customer service"
+      }
+    });
+
+    // WebSite with SearchAction
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "IDsvault",
+      "url": "https://idsvault.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://idsvault.com/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    });
+
+    // FAQ Page Schema
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is buying and selling social usernames legal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. While platform Terms of Service technically prohibit handle trading, administrative assignment contracts for intangible branding rights are valid and enforceable in India."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the IDsvault broker bank holding work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Buyers transfer funds directly to our secure bank account (UPI / bank transfers). We hold the funds securely in our designated broker account, supervise the transition of credentials live, and credit the seller only after ownership is fully confirmed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the refund timeline if credentials fail to transfer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If seller bio audits fail or platform blocks transition, we immediately cancel the deal and issue a complete 100% refund within 24 business hours."
+          }
+        }
+      ]
+    });
+
+    // Product Schema for Current Listing or All Featured
+    if (currentListingForSEO) {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": `@${currentListingForSEO.username} on ${currentListingForSEO.platform.toUpperCase()}`,
+        "description": currentListingForSEO.description,
+        "offers": {
+          "@type": "Offer",
+          "price": currentListingForSEO.askingPrice,
+          "priceCurrency": "INR",
+          "itemCondition": "https://schema.org/NewCondition",
+          "availability": "https://schema.org/InStock",
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "IN"
+          }
+        }
+      });
+    }
+
+    // BreadcrumbList Schema
+    const breadcrumbs = [
+      {
+        "@type": "ListItem",
+        "id": "https://idsvault.com/",
+        "position": 1,
+        "name": "Home"
+      }
+    ];
+    if (currentView !== "home") {
+      breadcrumbs.push({
+        "@type": "ListItem",
+        "id": `https://idsvault.com/#${currentView}`,
+        "position": 2,
+        "name": currentView.toUpperCase()
+      });
+    }
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": breadcrumbs
+    });
+
+    const script = document.createElement("script");
+    script.id = "idsvault-jsonld-schema";
+    script.type = "application/ld+json";
+    script.innerHTML = JSON.stringify(schemas);
+    document.head.appendChild(script);
+
+    // Dynamic OpenGraph/Twitter card tags
+    const setMetaTag = (attrName: "property" | "name", attrValue: string, contentValue: string) => {
+      let metaNode = document.head.querySelector(`meta[${attrName}="${attrValue}"]`);
+      if (!metaNode) {
+        metaNode = document.createElement("meta");
+        metaNode.setAttribute(attrName, attrValue);
+        document.head.appendChild(metaNode);
+      }
+      metaNode.setAttribute("content", contentValue);
+    };
+
+    setMetaTag("property", "og:title", title);
+    setMetaTag("property", "og:description", desc);
+    setMetaTag("property", "og:type", "website");
+    setMetaTag("property", "og:url", typeof window !== "undefined" ? window.location.href : "https://idsvault.com");
+    setMetaTag("name", "twitter:card", "summary_large_image");
+    setMetaTag("name", "twitter:title", title);
+    setMetaTag("name", "twitter:description", desc);
+
+  }, [currentView, currentListingForSEO]);
 
   const handleConsentAnswer = (granted: boolean) => {
     localStorage.setItem("idsvault_consent_shield", granted ? "granted" : "denied");
@@ -275,7 +466,8 @@ export default function App() {
   const activeListing = selectedSlug ? listings.find((item) => item.slug === selectedSlug) : null;
 
   return (
-    <div className="bg-[#050505] text-white min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-white relative font-sans">
+    <div className="bg-[#0A0A0B] text-white min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-white relative font-sans">
+      <SchemaMarkup view={currentView} activeListing={activeListing} />
       
       {/* Sticky Top Navbar */}
       <Navbar
@@ -294,7 +486,12 @@ export default function App() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.28, ease: "easeInOut" }}
           >
-            {currentView === "home" && <Hero onNavigate={handleNavigate} />}
+            {currentView === "home" && (
+              <Hero 
+                onNavigate={handleNavigate} 
+                onSelectListing={handleSelectListing} 
+              />
+            )}
 
             {currentView === "browse" && (
               <RegistryBrowse listings={listings} onSelectListing={handleSelectListing} />

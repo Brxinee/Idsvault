@@ -92,6 +92,23 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
   const [copiedSlug, setCopiedSlug] = useState(false);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
 
+  // Pagination & Overlay States
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, searchQuery]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveSlug(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   // Available categories inside the registry
   const categories = useMemo(() => {
     const set = new Set(posts.map(p => p.category));
@@ -135,7 +152,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
         "@context": "https://schema.org",
         "@type": "Blog",
         "name": "IDsvault Strategy Library",
-        "description": "High-authority guides, valuation frameworks, escrow checklists, and strategy audits for Premium Usernames.",
+        "description": "High-authority guides, valuation frameworks, brokerage transfer checklists, and strategy audits for Premium Usernames.",
         "publisher": {
           "@type": "Organization",
           "name": "IDsvault Hub",
@@ -271,6 +288,13 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
     return list;
   }, [filteredPosts, featuredPost, activeCategory]);
 
+  const postsPerPage = 3;
+  const totalPages = useMemo(() => Math.ceil(listPosts.length / postsPerPage), [listPosts]);
+  const paginatedPosts = useMemo(() => {
+    const startIndex = (currentPage - 1) * postsPerPage;
+    return listPosts.slice(startIndex, startIndex + postsPerPage);
+  }, [listPosts, currentPage]);
+
   // Trigger copy URL slug action
   const handleCopyLink = () => {
     const url = `${window.location.origin}/blog/${activePost?.slug}`;
@@ -326,7 +350,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
         { type: "paragraph", content: "Write comprehensive research breakdown paragraphs. Avoid fluff." }
       ]);
       setFormFaqs([
-        { question: "Is this transaction secure?", answer: "Yes, IDsvault secure escrow ensures assets are fully isolated before releasing trust funds." }
+        { question: "Is this transaction secure?", answer: "Yes, IDsvault secure broker-held flow ensures assets are fully isolated before releasing trust funds." }
       ]);
     }
   };
@@ -1063,7 +1087,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
 
               {/* Avoid Dangerous Platforms Claim warning Disclaimer */}
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] text-[10px] text-gray-500 leading-relaxed max-w-2xl font-sans mt-4">
-                <strong>Safety & Regulatory Notice:</strong> IDsvault is an independent digital assets broker facilitating administrative assignment contracts of high-value handles. We hold no official affiliation, sponsorship, license, or association with Instagram, Twitter/X, Telegram, or any associated parent organizations. Transactions are secured solely through licensed domestic client-trust escrow holding parameters.
+                <strong>Safety & Regulatory Notice:</strong> IDsvault is an independent digital assets broker facilitating administrative assignment contracts of high-value handles. We hold no official affiliation, sponsorship, license, or association with Instagram, Twitter/X, Telegram, or any associated parent organizations. Transactions are secured solely through broker-held funds in our designated broker account.
               </div>
 
             </div>
@@ -1292,7 +1316,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {listPosts.map((post, idx) => (
+              {paginatedPosts.map((post, idx) => (
                 <motion.article
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -1358,6 +1382,33 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                   </div>
                 </motion.article>
               ))}
+            </div>
+          )}
+
+          {/* Simple and elegant pagination controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between border-t border-white/[0.06] pt-6 mt-8 select-none">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => {
+                  setCurrentPage((p) => Math.max(p - 1, 1));
+                }}
+                className="px-4 py-2 text-xs font-semibold rounded bg-[#0E0E10] border border-white/[0.08] hover:border-white/[0.15] text-[#F5F5F7] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+              >
+                &larr; Previous Page
+              </button>
+              <span className="text-xs text-gray-400 font-mono">
+                Page <strong className="text-white">{currentPage}</strong> of <strong className="text-white">{totalPages}</strong>
+              </span>
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => {
+                  setCurrentPage((p) => Math.min(p + 1, totalPages));
+                }}
+                className="px-4 py-2 text-xs font-semibold rounded bg-[#0E0E10] border border-white/[0.08] hover:border-white/[0.15] text-[#F5F5F7] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+              >
+                Next Page &rarr;
+              </button>
             </div>
           )}
 

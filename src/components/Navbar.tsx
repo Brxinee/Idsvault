@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
   };
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-white/[0.06] bg-[#050505]/75 backdrop-blur-xl">
+    <header className="sticky top-0 z-[100] border-b border-[#2A2A2E] bg-[#0A0A0B]/85 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         
         {/* Brand Logo & Vibe */}
@@ -42,19 +42,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
           id="nav_logo"
         >
           <div className="relative">
-            <div className="absolute inset-0 bg-blue-500/20 blur-md rounded-full group-hover:bg-blue-500/30 transition-all duration-300" />
-            <div className="relative h-8 w-8 rounded-lg bg-[#0F0F10] border border-white/[0.08] flex items-center justify-center group-hover:border-blue-500/30 transition-all">
-              <Shield className="h-4.5 w-4.5 text-blue-500" />
+            <div className="absolute inset-0 bg-[#D4AF37]/10 blur-md rounded-full group-hover:bg-[#D4AF37]/20 transition-all duration-300" />
+            <div className="relative h-8 w-8 rounded-lg bg-[#141416] border border-[#2A2A2E] flex items-center justify-center group-hover:border-[#D4AF37]/30 transition-all">
+              <Shield className="h-4.5 w-4.5 text-[#D4AF37]" />
             </div>
           </div>
           <div className="flex flex-col items-start leading-none gap-0.5">
-            <span className="font-semibold text-[15px] text-white tracking-tight">IDsvault</span>
-            <span className="text-[8px] font-mono font-bold tracking-widest text-[#10B981] uppercase">brokerage</span>
+            <span className="font-semibold text-[15px] text-white tracking-tight font-display">IDsvault</span>
+            <span className="text-[8px] font-mono font-bold tracking-widest text-[#30D158] uppercase">BROKERAGE desk</span>
           </div>
         </button>
 
         {/* Desktop Navigation Links (Linear Inspired) */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-[#0F0F10] border border-white/[0.04]">
+        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-[#141416] border border-[#2A2A2E]">
           {navItems.map((item) => {
             const isActive = currentView === item.value;
             return (
@@ -62,14 +62,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
                 key={item.value}
                 onClick={() => handleNavClick(item.value)}
                 className={`relative px-4 py-1.5 text-xs font-medium cursor-pointer transition-colors duration-200 rounded-full select-none ${
-                  isActive ? "text-white" : "text-gray-400 hover:text-gray-200"
+                  isActive ? "text-white font-bold" : "text-[#8E8E93] hover:text-[#F5F5F7]"
                 }`}
                 id={`nav_item_${item.value}`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNavIndicator"
-                    className="absolute inset-0 bg-white/[0.03] border border-white/[0.08] rounded-full -z-10"
+                    className="absolute inset-0 bg-white/[0.03] border border-[#2A2A2E] rounded-full -z-10"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -83,20 +83,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={() => handleNavClick("browse")}
-            className="h-9 px-4 text-xs font-semibold rounded-lg border border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.02] text-gray-200 transition-all cursor-pointer select-none active:scale-95"
+            className="h-9 px-4 text-xs font-semibold rounded-lg border border-[#2A2A2E] hover:border-[#D4AF37]/30 hover:bg-[#141416] text-[#F5F5F7] transition-all cursor-pointer select-none active:scale-95"
             id="nav_nav_buy"
           >
             Explore Registry
           </button>
           <button
             onClick={() => handleNavClick("sell")}
-            className="relative group overflow-hidden h-9 px-4 text-xs font-semibold rounded-lg bg-blue-650 hover:bg-blue-600 border border-blue-500/20 text-white transition-all cursor-pointer select-none active:scale-95"
+            className="relative group overflow-hidden h-9 px-4 text-xs font-semibold rounded-lg bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:scale-[1.01] text-black transition-all cursor-pointer select-none active:scale-95"
             id="nav_nav_sell"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="relative flex items-center gap-1">
+            <span className="relative flex items-center gap-1 font-bold uppercase tracking-wider text-[10px]">
               List For Sale
-              <ArrowUpRight className="h-3.5 w-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight className="h-3.5 w-3.5 text-black" />
             </span>
           </button>
         </div>
@@ -104,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
         {/* Mobile Burger and Close Controls */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.08] text-gray-400 hover:text-white transition-all cursor-pointer"
+          className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg border border-[#2A2A2E] text-[#8E8E93] hover:text-white transition-all cursor-pointer bg-[#141416]"
           aria-label="Toggle navigation menu"
           id="mobile_menu_trigger"
         >
@@ -120,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="md:hidden border-b border-white/[0.06] bg-[#0F0F10] overflow-hidden"
+            className="md:hidden border-b border-[#2A2A2E] bg-[#141416] overflow-hidden"
             id="mobile_drawer"
           >
             <div className="px-6 py-6 space-y-4 flex flex-col">
@@ -131,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
                     key={item.value}
                     onClick={() => handleNavClick(item.value)}
                     className={`text-sm font-medium py-1 text-left transition-colors cursor-pointer select-none ${
-                      isActive ? "text-blue-400 font-semibold" : "text-gray-300 hover:text-white"
+                      isActive ? "text-[#D4AF37] font-semibold" : "text-gray-300 hover:text-white"
                     }`}
                   >
                     {item.label}
@@ -139,16 +138,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
                 );
               })}
               
-              <div className="pt-4 border-t border-white/[0.06] grid grid-cols-2 gap-3">
+              <div className="pt-4 border-t border-[#2A2A2E] grid grid-cols-2 gap-3">
                 <button
                   onClick={() => handleNavClick("browse")}
-                  className="h-10 text-center text-xs font-semibold rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-white cursor-pointer"
+                  className="h-10 text-center text-xs font-semibold rounded-lg border border-[#2A2A2E] hover:border-white/[0.15] text-white cursor-pointer bg-[#0A0A0B]"
                 >
                   Explore Registry
                 </button>
                 <button
                   onClick={() => handleNavClick("sell")}
-                  className="h-10 text-center text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white cursor-pointer"
+                  className="h-10 text-center text-xs font-semibold rounded-lg bg-gradient-to-r from-[#D4AF37] to-amber-600 text-black cursor-pointer font-bold uppercase tracking-wider"
                 >
                   List For Sale
                 </button>

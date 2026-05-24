@@ -12,8 +12,8 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="border-t border-white/8 bg-[#050505] py-16 px-6 mt-auto">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-sm text-gray-400">
+    <footer className="border-t border-[#2A2A2E] bg-[#0A0A0B] py-16 px-6 mt-auto">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-sm text-[#8E8E93]">
         
         {/* Brand Info */}
         <div className="space-y-4 md:col-span-1 text-left">
@@ -21,22 +21,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             onClick={() => onNavigate("home")}
             className="flex items-center space-x-2 text-white font-bold tracking-tight hover:opacity-90 transition-opacity cursor-pointer text-left"
           >
-            <Shield className="h-5 w-5 text-blue-500" />
-            <span className="font-semibold text-lg text-white">IDsvault</span>
+            <Shield className="h-5 w-5 text-[#D4AF37]" />
+            <span className="font-semibold text-lg text-white font-display tracking-tight">IDsvault</span>
           </button>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Premium, independent digital identity brokerage marketplace. Dedicated support, pre-listing verified review, and manual broker-assisted transfers since 2026.
+          <p className="text-xs text-[#8E8E93] leading-relaxed">
+            Premium, independent digital identity brokerage desk based in Hyderabad. Serving startusp, creators, and brands with verified human brokerage and secure holds.
           </p>
-          <div className="text-[11px] text-gray-400 space-y-1 font-mono pt-2">
-            <p className="font-bold text-white uppercase tracking-wider text-[9px] mb-1">Corporate Desk</p>
-            <p>📍 Hyderabad, India</p>
-            <p>✉️ <a href="mailto:support@idsvault.com" className="hover:text-white transition-colors">support@idsvault.com</a></p>
+          <div className="text-[11px] text-[#8E8E93] space-y-1 font-mono pt-2">
+            <p className="font-bold text-white uppercase tracking-wider text-[9px] mb-1">Hyderabad HQ Desk</p>
+            <p className="text-gray-300">📍 Madhapur Hi-Tech City, Hyderabad, IN</p>
+            <p className="text-gray-300">💼 GST No: 36AAPCV8248M1ZC</p>
+            <p className="text-gray-300">👤 Founder: Vinay Naidu</p>
+            <p>✉️ <a href="mailto:broker@idsvault.com" className="hover:text-[#D4AF37] transition-colors text-white">broker@idsvault.com</a></p>
           </div>
         </div>
 
         {/* Registry navigation */}
         <div className="space-y-3 text-left">
-          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Registry Navigation</h4>
+          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider font-mono text-[#D4AF37]">Registry Navigation</h4>
           <ul className="space-y-2 text-xs">
             <li>
               <button onClick={() => onNavigate("browse")} className="hover:text-white transition-colors cursor-pointer text-left">
@@ -50,22 +52,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </li>
             <li>
               <button onClick={() => onNavigate("request")} className="hover:text-white transition-colors cursor-pointer text-left">
-                Private Commission Sourcing
+                Private Sourcing Campaign
               </button>
             </li>
             <li>
-              <button onClick={() => onNavigate("blog")} className="hover:text-white transition-colors cursor-pointer text-left font-semibold text-emerald-400">
-                📖 Editorial Blog Strategy
+              <button onClick={() => onNavigate("blog")} className="hover:text-white transition-colors cursor-pointer text-left font-semibold text-[#D4AF37]">
+                📖 Strategy Library (AEO/GEO)
               </button>
             </li>
             <li>
               <button onClick={() => onNavigate("contact")} className="hover:text-white transition-colors cursor-pointer text-left">
-                📞 Contact page
+                📞 Connect Desk
               </button>
             </li>
-            <li className="pt-1.5 border-t border-white/[0.04]">
-              <button onClick={() => onNavigate("admin")} className="hover:text-white text-[10px] text-gray-650 transition-colors cursor-pointer text-left">
-                🔐 Admin Console Gate
+            <li className="pt-1.5 border-t border-[#2A2A2E]">
+              <button onClick={() => onNavigate("admin")} className="hover:text-white text-[10px] text-gray-500 transition-colors cursor-pointer text-left">
+                🔐 Internal Admin Portal 
               </button>
             </li>
           </ul>
@@ -73,7 +75,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         {/* Operational Guidelines */}
         <div className="space-y-3 text-left">
-          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Policies & Guidelines</h4>
+          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider font-mono text-[#D4AF37]">Policies & Guidelines</h4>
           <ul className="space-y-2 text-xs">
             <li>
               <button onClick={() => onNavigate("policy-acceptable")} className="hover:text-white transition-colors cursor-pointer text-left">
@@ -82,17 +84,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </li>
             <li>
               <button onClick={() => onNavigate("policy-trademark")} className="hover:text-white transition-colors cursor-pointer text-left">
-                Trademark Policy
+                Trademark Rules
               </button>
             </li>
             <li>
               <button onClick={() => onNavigate("policy-refund")} className="hover:text-white transition-colors cursor-pointer text-left">
-                Refund Rules
+                Refund Rules & Escrow
               </button>
             </li>
             <li>
               <button onClick={() => onNavigate("faq")} className="hover:text-white transition-colors cursor-pointer text-left">
-                Common Trust FAQ
+                Knowledge FAQ Base
               </button>
             </li>
           </ul>
@@ -100,20 +102,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         {/* Regulatory Posture */}
         <div className="space-y-3 text-left">
-          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Legal Framework</h4>
+          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider font-mono text-[#D4AF37]">Legal Framework</h4>
           <ul className="space-y-2 text-xs">
             <li>
               <button onClick={() => onNavigate("policy-terms")} className="hover:text-white transition-colors cursor-pointer text-left">
-                Terms of Service
+                Terms of Service (ToS)
               </button>
             </li>
             <li>
               <button onClick={() => onNavigate("policy-privacy")} className="hover:text-white transition-colors cursor-pointer text-left">
-                Privacy Policy
+                Privacy Protection
               </button>
             </li>
-            <li className="text-[10px] text-gray-600 leading-normal pt-1">
-              All third-party trademarks, names, and logos are the properties of their respective trademark holders. IDsvault is fully independent and has no official relationship with Instagram, X, or Telegram.
+            <li>
+              <button onClick={() => onNavigate("policy-aml-kyc")} className="hover:text-white transition-colors cursor-pointer text-left">
+                AML & KYC Standard
+              </button>
+            </li>
+            <li className="text-[10px] text-gray-600 leading-normal pt-1 italic font-sans">
+              Warning: IDsvault is fully independent and is not endorsed or officially affiliated with Meta Platforms, Instagram, X Corp, or Telegram Inc. Social usernames are subject to platform Terms of Service.
             </li>
           </ul>
         </div>

@@ -175,6 +175,9 @@ Urgency: ${urgency}`;
                       className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                     />
                   </div>
+                  <p className="mt-1.5 text-[9px] text-gray-500 font-normal leading-normal">
+                    Payment via UPI · Bank · Wise · Crypto once we confirm sourcing.
+                  </p>
                 </div>
 
                 <div>

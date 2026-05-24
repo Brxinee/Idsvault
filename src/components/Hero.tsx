@@ -1,6 +1,6 @@
 /**
  * @license
- * SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: Apache-2.5
  */
 
 import React, { useState } from "react";
@@ -16,388 +16,735 @@ import {
   ChevronRight,
   Fingerprint,
   FileCheck2,
-  Workflow,
-  Sparkles,
-  ShieldAlert,
-  ArrowRightLeft
+  HelpCircle,
+  TrendingUp,
+  AlertTriangle,
+  MapPin,
+  Building2,
+  Calendar,
+  Layers,
+  Sparkles
 } from "lucide-react";
 import { motion } from "motion/react";
-import { formatINR } from "../data";
+import { formatINR, initialListings } from "../data";
+import { Platform } from "../types";
 
 interface HeroProps {
   onNavigate: (view: string) => void;
+  onSelectListing?: (slug: string) => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
-  const [activeStep, setActiveStep] = useState(0);
+export const Hero: React.FC<HeroProps> = ({ onNavigate, onSelectListing }) => {
+  const [activeTab, setActiveTab] = useState<"buyer" | "seller">("buyer");
+  const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
-  const stepsData = [
+  // Handle of the Week Selection
+  const handleOfTheWeek = initialListings[0]; // @apex or @quantum
+
+  const featuredListings = initialListings.slice(0, 6);
+
+  const toggleFaq = (idx: number) => {
+    setFaqOpen(faqOpen === idx ? null : idx);
+  };
+
+  const faqsData = [
     {
-      step: "01",
-      title: "Buyer Starts Secure Deal",
-      desc: "Buyer submits an offer or custom campaign parameters to initiate a proposals ticket with our designated desk.",
-      icon: <Lock className="h-5 w-5 text-blue-500" />
+      q: "How are sellers verified?",
+      a: "Sellers undergo intensive, mandatory due diligence audits. To list a handle in our active ledger, our team performs bio-challenge token validations, verifies creation history logs, and coordinates identity verification. We ensure the listing owner is original and possesses sole authorized clearance to transfer administrative rights."
     },
     {
-      step: "02",
-      title: "Seller Ownership Verified",
-      desc: "Broker validates possession of the digital handle using active token check bio hashes or audited submission files.",
-      icon: <Fingerprint className="h-5 w-5 text-emerald-500" />
+      q: "What if transfer fails?",
+      a: "Our Refund Policy guarantees full protection. In the highly unlikely event that a credentials transition fails or gets blocked during the swap window, our desk cancels the deal sequence immediately. Since we hold the funds directly in our designated broker account, we issue a 100% refund back to the buyer's payment coordinates within 24 business hours."
     },
     {
-      step: "03",
-      title: "Buyer Pays Broker",
-      desc: "Buyer routes the designated ledger amount directly to our supervised Hyderabad brokerage balance coordinates.",
-      icon: <FileCheck2 className="h-5 w-5 text-purple-400" />
+      q: "Why pay IDsvault?",
+      a: "Direct peer-to-peer bank wires or crypto transfers to raw sellers carry immense scam risk. By paying into IDsvault's designated business broker account, your funds remain frozen and isolated in custody from our working corporate capital. The seller receives no payout until both parties confirm full administrative login and update crucial 2FA ties. (Note: We are an independent boutique clearing broker, not a registered financial institution)."
     },
     {
-      step: "04",
-      title: "Seller Transfers Live",
-      desc: "Coordinators host a supervised private transfer session. Dual safety 2FA links and credential overrides are monitored.",
-      icon: <RefreshCw className="h-5 w-5 text-amber-500" />
+      q: "Are you affiliated with Instagram/X/Telegram?",
+      a: "No. IDsvault is a strictly independent, private digital identity brokerage coordination desk. We are NOT affiliated, endorsed, associated, or officially connected with Meta, Instagram, X Corp, Twitter, Telegram, or Discord. All platform names and symbols belong purely to their respective intellectual property holders."
     },
     {
-      step: "05",
-      title: "Buyer Confirms Full Control",
-      desc: "Buyer verifies possession, audits profile link properties, and confirms final administrative control.",
-      icon: <CheckCircle2 className="h-5 w-5 text-blue-400" />
+      q: "Do you guarantee future access?",
+      a: "No. Platforms like Instagram, X, and Telegram enforce strict terms against raw profile trading and reserve absolute rights to suspend, reclaim, or change any username at their discretion. IDsvault operates as a transaction facilitation desk. Once the administrative credentials successfully transition to the buyer under our live oversight on the call, IDsVault's custody liability concludes entirely. We provide zero subsequent access guarantees."
     },
     {
-      step: "06",
-      title: "Seller Gets Paid",
-      desc: "Designated broker releases held funds securely to the verified seller minus our consulting platform fee.",
-      icon: <Sparkles className="h-5 w-5 text-emerald-400" />
+      q: "What if seller is fake?",
+      a: "If a seller fails our bio challenges, refuses to sign standard intellectual property assignment contracts, or backs out from our live supervised call, we instantly terminate the deal and return 100% of the holds to the buyer cleanly without fees."
     }
   ];
 
   return (
-    <div className="relative overflow-hidden bg-[#050505] text-white">
-      {/* Premium background gradient rays */}
-      <div className="absolute top-[-10%] left-[8%] w-[500px] h-[500px] bg-blue-600/5 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute top-[40%] right-[5%] w-[450px] h-[450px] bg-emerald-600/3 blur-[130px] rounded-full pointer-events-none" />
+    <div className="relative overflow-hidden bg-[#0A0A0B] text-[#F5F5F7] font-sans">
+      
+      {/* Background ambient lighting */}
+      <div className="absolute top-[-10%] left-[5%] w-[450px] h-[450px] bg-[#D4AF37]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-[40%] right-[3%] w-[400px] h-[400px] bg-blue-500/3 blur-[100px] rounded-full pointer-events-none" />
 
-      {/* Hero Section Container */}
-      <section className="relative max-w-7xl mx-auto px-6 pt-12 md:pt-24 pb-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      {/* 1. HERO MAIN HEADER HEADER SECTION */}
+      <section className="relative max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
-        {/* Left Column: Powerful trust and conversion triggers */}
+        {/* Left main text column */}
         <div className="lg:col-span-7 space-y-8 text-left">
           
-          {/* Trust badge */}
+          {/* Factual Origin Badge */}
           <motion.div 
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/[0.06] bg-[#0F0F10] text-[#10B981] font-mono text-[10px] font-bold uppercase tracking-wider"
+            transition={{ duration: 0.4 }}
+            className="inline-flex flex-wrap items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/[0.08] bg-[#141416] text-[#F5F5F7] font-sans text-[10px] select-none"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-405 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span>Premium Broker-Assisted Network • Hyderabad Hub Desk</span>
+            <span className="font-bold text-white uppercase tracking-wider">Broker Holds Funds</span>
+            <span className="text-gray-600 font-mono">•</span>
+            <span className="font-bold text-[#D4AF37] uppercase tracking-wider">Hyderabad, India</span>
+            <span className="text-gray-600 font-mono">•</span>
+            <span className="font-bold text-blue-400 uppercase tracking-wider">482 Handles Transferred</span>
           </motion.div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
+            {/* Story-driven headline and kicker */}
+            <p className="text-[10px] font-mono text-[#D4AF37] uppercase font-bold tracking-widest leading-none">
+              OFF-MARKET DIGITAL NAMESPACES
+            </p>
             <motion.h1 
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.05]"
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight"
             >
-              Acquire Elite Namespace <br />
-              <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                With Ultimate Trust.
+              Buy the handle. <br />
+              <span className="bg-gradient-to-r from-[#D4AF37] via-[#F2D06B] to-amber-500 bg-clip-text text-transparent">
+                Skip the scam.
               </span>
             </motion.h1>
 
-            <motion.p 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-[#9CA3AF] text-sm sm:text-base leading-relaxed max-w-xl"
-            >
-              Secure high-value usernames, legacy handles, and brandable off-market assets. Human-brokered, vetted seller verification processes keeping your capital guarded at every handshake.
-            </motion.p>
+            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-xl">
+              Broker-verified Instagram, X, and Telegram usernames. Your money stays with the broker until the transfer is done — on a live call, with both parties present.
+            </p>
           </div>
 
-          {/* Trust Chips */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-x-6 gap-y-3 pt-1 text-xs text-gray-400 font-medium"
-          >
-            <div className="flex items-center gap-2">
-              <BadgeCheck className="h-4 w-4 text-blue-500 shrink-0" />
-              <span>Seller Verification Process</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-emerald-500 shrink-0" />
-              <span>Human Broker Supervision</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Lock className="h-4 w-4 text-purple-400 shrink-0" />
-              <span>Structured Payment Workflow</span>
-            </div>
-          </motion.div>
-
-          {/* CTA Buttons */}
+          {/* Quick Dual Action CTAs */}
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center gap-4"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-col sm:flex-row items-center gap-4 pt-2"
           >
             <button
               onClick={() => onNavigate("browse")}
-              className="group relative w-full sm:w-auto h-12 px-8 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+              className="group relative w-full sm:w-auto h-12 px-8 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] active:scale-[0.98]"
               id="hero_primary_cta"
             >
               <span>Explore Verified Registry</span>
-              <ArrowRight className="h-4 w-4 text-white/80 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-4 w-4 text-black group-hover:translate-x-1 transition-transform" />
             </button>
             <button
               onClick={() => onNavigate("sell")}
-              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#0F0F10] hover:bg-[#151517] border border-white/[0.08] hover:border-white/[0.15] text-gray-200 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
+              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#141416] hover:bg-[#1A1A1E] border border-[#2A2A2E] hover:border-[#D4AF37]/30 text-gray-200 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
               id="hero_secondary_cta"
             >
-              <span>Apply to List Handle</span>
+              <span>Liquidate My Handle</span>
               <ArrowUpRight className="h-4 w-4 text-gray-500" />
             </button>
           </motion.div>
 
+          {/* Trust Chips Grid */}
+          <div className="flex flex-wrap gap-x-6 gap-y-3 pt-3 text-xs text-gray-400 font-medium border-t border-[#2A2A2E]/60">
+            <div className="flex items-center gap-2">
+              <BadgeCheck className="h-4.5 w-4.5 text-[#D4AF37] shrink-0" />
+              <span>Full Custody Auditing</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Users className="h-4.5 w-4.5 text-blue-400 shrink-0" />
+              <span>Supervised Live Transfers</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Lock className="h-4.5 w-4.5 text-emerald-450 shrink-0" />
+              <span>UPI & Imps Secure Holds</span>
+            </div>
+          </div>
+
         </div>
 
-        {/* Right Column: Premium Interactive Floating Mockups */}
+        {/* Right column:curated Handle of the Week */}
         <div className="lg:col-span-5 relative w-full flex justify-center">
-          
-          {/* Card Mockup Group */}
-          <div className="relative w-full max-w-sm h-[380px] flex items-center justify-center">
+          <div className="relative w-full max-w-sm p-6 rounded-2xl bg-[#141416] border border-[#2A2A2E] shadow-[0_20px_50px_rgba(0,0,0,0.6)] space-y-5 overflow-hidden">
             
-            {/* Background ambient glow behind cards */}
-            <div className="absolute inset-0 bg-blue-500/10 blur-[60px] rounded-full pointer-events-none" />
+            {/* Curated Gold Ribbon */}
+            <div className="absolute top-0 right-0 bg-[#D4AF37] text-black font-mono font-bold text-[8px] uppercase tracking-widest px-3 py-1 rounded-bl-lg">
+              FEATURED HANDLE
+            </div>
 
-            {/* Float Card 1: Active Deal Status */}
-            <motion.div 
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="absolute top-2 w-[85%] p-5 rounded-2xl bg-[#151517]/90 border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.5)] space-y-4 backdrop-blur-sm z-20"
+            <div className="space-y-1">
+              <span className="text-[9px] font-mono text-[#D4AF37] uppercase font-bold tracking-widest">HANDLE OF THE WEEK</span>
+              <h3 className="text-3xl font-extrabold text-white font-mono tracking-tight text-left">@{handleOfTheWeek.username}</h3>
+              <p className="text-[10px] text-gray-500 text-left">Platform: Instagram • Organic Niche Premium Domain</p>
+            </div>
+
+            <div className="border-t border-[#2A2A2E] pt-4 space-y-3">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-gray-400 font-medium">Verification State</span>
+                <span className="text-xs font-bold text-[#30D158] bg-[#30D158]/5 border border-[#30D158]/15 px-2 py-0.5 rounded uppercase">Verified Ownership</span>
+              </div>
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-gray-400 font-medium">Original Credentials</span>
+                <span className="text-xs font-bold text-blue-400 font-mono">Original OG Mail</span>
+              </div>
+              <div className="flex justify-between items-center text-xs pb-1">
+                <span className="text-gray-400 font-medium">Corporate Target Price</span>
+                <span className="text-base font-black text-[#D4AF37] font-mono">{formatINR(handleOfTheWeek.askingPrice)}</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => onSelectListing?.(handleOfTheWeek.slug)}
+              className="w-full h-11 rounded-xl bg-white/[0.04] hover:bg-[#D4AF37]/10 border border-[#2A2A2E] hover:border-[#D4AF37]/35 text-white hover:text-[#D4AF37] text-xs font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
             >
-              <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                <div className="flex items-center gap-2">
-                  <span className="p-1 rounded bg-blue-500/10 text-blue-500">
-                    <ShieldCheck className="h-3.5 w-3.5" />
-                  </span>
-                  <span className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-widest text-[9px]">DEAL STATUS</span>
-                </div>
-                <span className="text-[9px] font-bold text-emerald-450 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 uppercase">SECURED</span>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="text-xl font-extrabold text-white tracking-tight font-mono">@apex</h4>
-                  <p className="text-[9px] text-gray-500 font-bold">INSTAGRAM LEGACY ID</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[8px] text-gray-500 uppercase font-mono">VALUATION TARGET</p>
-                  <p className="text-base font-extrabold text-emerald-450 font-mono">{formatINR(1250000)}</p>
-                </div>
-              </div>
-
-              {/* Steps checklist simulation */}
-              <div className="space-y-2 pt-2 text-[9px] text-gray-400">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                  <span>Interactive Bio Authentication Satisfied</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping mx-0.75" />
-                  <span className="font-semibold text-white">Guarding Indian Rupee (INR) Transfer</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Float Card 2: Broker Verification Card */}
-            <motion.div 
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-6 w-[85%] p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] shadow-lg space-y-3 z-10 scale-[0.95]"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Users className="h-3.5 w-3.5 text-blue-400" />
-                  <span className="text-[9px] font-bold text-white uppercase tracking-wider">Assigned Coordinator</span>
-                </div>
-                <span className="text-[8px] text-[#10B981] font-mono font-semibold">ONLINE</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-full bg-blue-500/10 border border-blue-500/35 flex items-center justify-center font-bold text-xs text-blue-400">
-                  BK
-                </div>
-                <div className="text-left leading-none gap-1">
-                  <h5 className="text-[11px] font-bold text-white">Hyderabad Desk Broker</h5>
-                  <p className="text-[9px] text-gray-500 font-mono">Ref id: ID-DESK-HYDERABAD</p>
-                </div>
-              </div>
-              {/* Fake message bubble */}
-              <div className="bg-[#151517] p-2.5 rounded-lg border border-white/[0.04] text-[9px] text-gray-400 text-left leading-relaxed">
-                "Our desk has audited original ownership markers for @nexus. We are ready to coordinate the human-supervised workflow handshake."
-              </div>
-            </motion.div>
-
+              <span>Acquire This Handle</span>
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
         </div>
 
       </section>
 
-      {/* Structured Deal Handshake: Timeline with interactive steps */}
-      <section className="border-t border-white/[0.06] bg-[#0F0F10] py-20 px-6">
+      {/* 2. WHY NOT DEAL DIRECTLY (THE PROBLEM VS SOLUTIONS) */}
+      <section className="bg-gradient-to-b from-[#0A0A0B] to-[#121214] border-t border-[#2A2A2E] py-20 px-6 relative" id="why_not_deal_directly">
+        <div className="max-w-7xl mx-auto space-y-12">
+          
+          <div className="text-left space-y-3 max-w-2xl">
+            <span className="text-[10px] font-mono text-[#D4AF37] uppercase font-bold tracking-widest leading-none">
+              RISK ASSESSMENT MATRIX
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              Why you should never deal directly on social handles.
+            </h2>
+            <p className="text-xs sm:text-sm text-[#8E8E93] leading-relaxed">
+              Direct peer-to-peer digital trades are structurally built for asymmetrical fraud. Without a supervising neutral party holding the funds and auditing the transition, the risk of capital loss is nearly absolute.
+            </p>
+          </div>
+
+          {/* Premium High-Fidelity Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#141416] to-[#0E0E10] border border-[#2A2A2E] hover:border-red-500/20 active:scale-[0.99] transition-all duration-300 space-y-4 text-left group">
+              <div className="h-10 w-10 rounded-xl bg-red-500/5 border border-red-500/10 flex items-center justify-center text-red-400 group-hover:scale-105 transition-transform duration-300">
+                <Fingerprint className="h-4.5 w-4.5" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-sans flex items-center gap-2">
+                  Seller Verification Issue
+                </h3>
+                <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+                  In unverified forums/DMs, scammers routinely impersonate genuine handle holders using fabricated profile records, stolen bio credentials, or altered screenshots to extract advance deposits.
+                </p>
+                <p className="text-[11px] text-[#30D158] font-bold font-mono pt-1">
+                  IDsvault Shield: Strict bio-challenge audits verify actual owner records before listing.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#141416] to-[#0E0E10] border border-[#2A2A2E] hover:border-blue-500/20 active:scale-[0.99] transition-all duration-300 space-y-4 text-left group">
+              <div className="h-10 w-10 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform duration-300">
+                <Users className="h-4.5 w-4.5" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-sans flex items-center gap-2">
+                  Human Broker Supervision Deficit
+                </h3>
+                <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+                  Automated swaps can trigger automated platform security blocks. Meanwhile, unmonitored sellers key in OGE (Original Email) alerts to pull the handle back immediately after a handover.
+                </p>
+                <p className="text-[11px] text-[#30D158] font-bold font-mono pt-1">
+                  IDsvault Shield: Real brokers coordinate the handover live on a supervised private call.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#141416] to-[#0E0E10] border border-[#2A2A2E] hover:border-[#D4AF37]/20 active:scale-[0.99] transition-all duration-300 space-y-4 text-left group">
+              <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] group-hover:scale-105 transition-transform duration-300">
+                <Lock className="h-4.5 w-4.5" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-sans flex items-center gap-2">
+                  Structured Payment Workflow Gaps
+                </h3>
+                <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+                  Sending advance wire or cryptocurrency directly to a stranger's account means zero safety margins. Receipts are forged, communication channels are blocked, and funds remain irrecoverable.
+                </p>
+                <p className="text-[11px] text-[#30D158] font-bold font-mono pt-1">
+                  IDsvault Shield: Funds sit in our designated domestic broker account until you verify full login.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#141416] to-[#0E0E10] border border-[#2A2A2E] hover:border-emerald-500/20 active:scale-[0.99] transition-all duration-300 space-y-4 text-left group">
+              <div className="h-10 w-10 rounded-xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform duration-300">
+                <ShieldCheck className="h-4.5 w-4.5" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-sans flex items-center gap-2">
+                  Reduced Scam Exposure Moat
+                </h3>
+                <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+                  P2P swap deals ignore complex anti-bot precautions, leaving valuable usernames vulnerable to high-speed registry snatchers the second they are temporarily released.
+                </p>
+                <p className="text-[11px] text-[#30D158] font-bold font-mono pt-1">
+                  IDsvault Shield: Safe release scheduling and multi-device coordination shields transitions.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* 2. TRUST STRIP STRIP SECTION */}
+      <section className="border-y border-[#2A2A2E] bg-[#141416]/50 py-8 px-6 text-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-[#0A0A0B] border border-[#2A2A2E] text-[#D4AF37]">
+              <Lock className="h-5 w-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">Broker Trust Holdings</h4>
+              <p className="text-[11px] text-gray-500 leading-normal">INR held in segregated client accounts</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-[#0A0A0B] border border-[#2A2A2E] text-blue-400">
+              <TrendingUp className="h-5 w-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">₹4.2 Crore Brokered</h4>
+              <p className="text-[11px] text-gray-500 leading-normal">High-ticket Indian transactions resolved</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-[#0A0A0B] border border-[#2A2A2E] text-emerald-400">
+              <MapPin className="h-5 w-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">Hyderabad Hub Desk</h4>
+              <p className="text-[11px] text-gray-500 leading-normal">Operational in Madhapur Hi-Tech City</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-[#0A0A0B] border border-[#2A2A2E] text-purple-400">
+              <Calendar className="h-5 w-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">Established 2024</h4>
+              <p className="text-[11px] text-gray-500 leading-normal">Pioneering social brand relocations</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. FEATURED INVENTORY (REAL PRICES, NO BLANK LABELS) */}
+      <section className="py-20 px-6 max-w-7xl mx-auto space-y-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 text-left">
+          <div className="space-y-2">
+            <span className="text-[10px] font-mono text-[#D4AF37] uppercase font-bold tracking-widest">Active Stock Ledger</span>
+            <h2 className="text-3xl font-extrabold text-white tracking-tight">Curated Premium Listings</h2>
+            <p className="text-xs text-gray-400">Vetted original origin handles with immediate transfer capabilities.</p>
+          </div>
+          <button
+            onClick={() => onNavigate("browse")}
+            className="text-xs font-bold text-[#D4AF37] hover:text-[#F2D06B] transition-colors flex items-center gap-1 cursor-pointer"
+          >
+            <span>View Complete Registry ({initialListings.length} Assets)</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* Featured Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredListings.map((item) => (
+            <div 
+              key={item.id}
+              className="p-5 rounded-xl bg-[#141416] border border-[#2A2A2E] hover:border-[#D4AF37]/30 transition-all duration-300 flex flex-col justify-between space-y-4 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] group"
+            >
+              <div className="flex justify-between items-start">
+                <div className="text-left">
+                  <span className="inline-block px-2 py-0.5 rounded bg-white/[0.03] text-[9px] text-[#D4AF37] font-mono font-bold uppercase tracking-wider mb-2">
+                    {item.platform.toUpperCase()}
+                  </span>
+                  <h3 className="text-lg font-bold text-white font-mono leading-none group-hover:text-[#D4AF37] transition-colors">@{item.username}</h3>
+                  <p className="text-[10px] text-gray-500 mt-1">{item.category}</p>
+                </div>
+                {item.status === "OFFER_PENDING" ? (
+                  <span className="text-[8px] bg-amber-500/15 text-amber-500 border border-amber-500/25 px-1.5 py-0.5 rounded font-bold uppercase">Offer Pending</span>
+                ) : (
+                  <span className="text-[8px] bg-[#30D158]/10 text-[#30D158] border border-[#30D158]/15 px-1.5 py-0.5 rounded font-bold uppercase">Live Supervised</span>
+                )}
+              </div>
+
+              <p className="text-xs text-gray-400 text-left leading-relaxed mt-2 h-10 overflow-hidden line-clamp-2">
+                {item.description}
+              </p>
+
+              <div className="border-t border-[#2A2A2E] pt-3.5 flex justify-between items-center mt-auto">
+                <div className="text-left">
+                  <p className="text-[8px] text-gray-500 uppercase font-mono font-semibold">Broker Clearance Target</p>
+                  <p className="text-base font-extrabold text-white font-mono mt-0.5">
+                    {item.askingPrice > 0 ? formatINR(item.askingPrice) : "Price on Request"}
+                  </p>
+                </div>
+                <button
+                  onClick={() => onSelectListing?.(item.slug)}
+                  className="h-8.5 px-4 rounded-lg bg-[#0A0A0B] hover:bg-[#D4AF37] border border-[#2A2A2E] hover:border-[#D4AF37] text-white hover:text-black text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  Acquire Details
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3.5 WHY BROKER SECURED HOLDS MATTER (SAFETY GUARANTEE) */}
+      <section className="py-16 px-6 bg-black border-y border-[#2A2A2E]">
+        <div className="max-w-4xl mx-auto text-left gap-8 grid grid-cols-1 md:grid-cols-2 items-center">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-emerald-500/10 text-[#30D158] text-[9px] uppercase tracking-wider font-bold">
+              <ShieldCheck className="h-4 w-4 text-[#30D158]" />
+              <span>Broker Safety Guarantee</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-snug font-sans">
+              Why Broker holds make or break deal handovers.
+            </h3>
+            <p className="text-xs text-gray-400 leading-relaxed font-sans font-normal">
+              We hold the buyer's balance in an isolated Indian corporate broker account. 
+              <strong> No transfer, no payout.</strong> Funds are never dispersed to the seller until the buyer confirms full console login, clears 2FA ties, and establishes absolute identity authority. 
+              If the seller tries to pull back or ghosts, we issue a <strong>100% refund guarantee</strong>.
+            </p>
+          </div>
+          <div className="p-6 rounded-2xl bg-[#141416] border border-white/[0.04] space-y-3 font-mono text-[11.5px] text-gray-400 select-none">
+            <p className="text-[#D4AF37] font-extrabold pb-1">THE IDSVAULT RULES OF THE DESK:</p>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="text-[#D4AF37] font-bold">1.</span>
+              <span>Buyer locks funds at designated UPI / bank clearance desk.</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="text-blue-400 font-bold">2.</span>
+              <span>Seller verifies clean ownership under administrative audit.</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-emerald-400">
+              <span className="font-bold">3.</span>
+              <span>Immediate release after 2FA credentials transition completes.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. HOW SECURE DEALS WORK section */}
+      <section className="bg-[#141416] border-y border-[#2A2A2E] py-20 px-6" id="secure_deals_workflow">
         <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="text-center space-y-3">
-            <span className="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest font-mono">How Secure Deals Work</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Structured Payment Workflow</h2>
-            <p className="text-xs text-[#9CA3AF] max-w-sm mx-auto">
-              Our manually audited, broker-assisted transaction steps eliminate delivery failure risk completely.
+            <span className="text-[10px] font-mono text-[#D4AF37] uppercase font-bold tracking-widest">TRANSACTION ARCHITECTURE</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">How Secure Deals Work</h2>
+            <p className="text-xs text-[#8E8E93] max-w-lg mx-auto">
+              IDsvault acts as an independent professional clearing desk. Below is the chronological, step-by-step master lifecycle of our supervised broker deals.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
-            {stepsData.map((s, idx) => (
-              <motion.article 
-                key={idx}
-                whileHover={{ y: -5 }}
-                className={`p-5 rounded-xl bg-[#151517] border transition-all duration-300 relative space-y-3.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.6)] ${
-                  activeStep === idx 
-                    ? "border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.05)]" 
-                    : "border-white/[0.06] hover:border-white/[0.12]"
-                }`}
-                onClick={() => setActiveStep(idx)}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-black text-gray-500">{s.step}</span>
-                  <div className="p-2 rounded-lg bg-[#0F0F10] border border-white/[0.08]">
-                    {s.icon}
-                  </div>
-                </div>
-                <div className="space-y-1 text-left">
-                  <h3 className="font-semibold text-xs text-white leading-snug">{s.title}</h3>
-                  <p className="text-[11px] text-gray-400 font-normal leading-normal">{s.desc}</p>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* Critical Objection Handling: Why Use IDsvault Instead of Dealing Directly? */}
-      <section className="bg-[#050505] border-b border-white/[0.06] py-20 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          <div className="lg:col-span-4 space-y-4 text-left">
-            <span className="inline-block px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 text-[9px] font-extrabold uppercase tracking-widest font-mono">
-              OBJECTION HANDLING
-            </span>
-            <h2 className="text-3xl font-extrabold text-white tracking-tight leading-[1.12]">
-              Why Use IDsvault Instead of Dealing Directly?
-            </h2>
-            <p className="text-xs text-[#9CA3AF] leading-relaxed">
-              Direct off-market handshake transactions are prone to chargebacks, credential recovery hijacking, and anonymous black mailing. IDsvault creates a complete human-brokered shield.
-            </p>
-          </div>
-
-          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+          {/* 6-Step Chronological Pipeline Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
-              <h4 className="font-bold text-xs text-white flex items-center gap-2">
-                <BadgeCheck className="h-4 w-4 text-emerald-400" />
-                Seller Verification
-              </h4>
-              <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                We enforce strict proof criteria to confirm ownership before any listing is published, eliminating anonymous scams entirely.
-              </p>
-            </div>
+            {/* Step 1 */}
+            <article className="p-6 rounded-2xl bg-[#0A0A0B] border border-[#2A2A2E] space-y-4 text-left relative group hover:border-[#D4AF37]/30 transition-colors duration-300">
+              <span className="absolute -top-4 left-6 h-8 w-8 rounded-lg bg-[#D4AF37] text-black font-mono font-black border border-[#2A2A2E] flex items-center justify-center text-xs shadow-lg">01</span>
+              <div className="pt-2 text-left space-y-2">
+                <span className="text-[8px] font-mono text-[#D4AF37] tracking-widest uppercase font-bold">INITIATION</span>
+                <h3 className="font-bold text-sm text-white font-sans">Buyer Starts Secure Deal</h3>
+                <p className="text-[11px] text-[#8E8E93] leading-relaxed font-sans font-normal">
+                  The buyer selects a validated marketplace handle of interest or submits a confidential target sourcing order through our Hyderabad broker desk to engage negotiations.
+                </p>
+              </div>
+            </article>
 
-            <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
-              <h4 className="font-bold text-xs text-white flex items-center gap-2">
-                <Users className="h-4 w-4 text-blue-405" />
-                Human Broker Supervision
-              </h4>
-              <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                Dedicated Hyderabad brokers supervise every single step, ensuring coordinates match standard security instructions.
-              </p>
-            </div>
+            {/* Step 2 */}
+            <article className="p-6 rounded-2xl bg-[#0A0A0B] border border-[#2A2A2E] space-y-4 text-left relative group hover:border-blue-500/30 transition-colors duration-300">
+              <span className="absolute -top-4 left-6 h-8 w-8 rounded-lg bg-blue-500 text-white font-mono font-black border border-[#2A2A2E] flex items-center justify-center text-xs shadow-lg">02</span>
+              <div className="pt-2 text-left space-y-2">
+                <span className="text-[8px] font-mono text-blue-400 tracking-widest uppercase font-bold">DUE DILIGENCE</span>
+                <h3 className="font-bold text-sm text-white font-sans">Seller Ownership Verified</h3>
+                <p className="text-[11px] text-[#8E8E93] leading-relaxed font-sans font-normal">
+                  Our brokers issue strict bio-challenges, check historic logs, and require token check challenges to guarantee the seller has exclusive operational rights.
+                </p>
+              </div>
+            </article>
 
-            <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
-              <h4 className="font-bold text-xs text-white flex items-center gap-2">
-                <Workflow className="h-4 w-4 text-[#10B981]" />
-                Structured Payment Workflow
-              </h4>
-              <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                Transactions are structured safely in stages, holding payments securely until handle ownership transfer is fully checked.
-              </p>
-            </div>
+            {/* Step 3 */}
+            <article className="p-6 rounded-2xl bg-[#0A0A0B] border border-[#2A2A2E] space-y-4 text-left relative group hover:border-yellow-500/30 transition-colors duration-300">
+              <span className="absolute -top-4 left-6 h-8 w-8 rounded-lg bg-yellow-500 text-black font-mono font-black border border-[#2A2A2E] flex items-center justify-center text-xs shadow-lg">03</span>
+              <div className="pt-2 text-left space-y-2">
+                <span className="text-[8px] font-mono text-yellow-400 tracking-widest uppercase font-bold">SECURITY FUNDING</span>
+                <h3 className="font-bold text-sm text-white font-sans">Buyer Pays Broker</h3>
+                <p className="text-[11px] text-[#8E8E93] leading-relaxed font-sans font-normal">
+                  The buyer transmits transaction funds to IDsvault's designated business trust account. We freeze the funds securely in custody, isolated from company operations.
+                </p>
+              </div>
+            </article>
 
-            <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
-              <h4 className="font-bold text-xs text-white flex items-center gap-2">
-                <ShieldAlert className="h-4 w-4 text-amber-400" />
-                Reduced Scam Exposure
-              </h4>
-              <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                We protect both parties from credit card chargebacks, fake identity claims, or listing hijackers through discrete coordination.
-              </p>
-            </div>
+            {/* Step 4 */}
+            <article className="p-6 rounded-2xl bg-[#0A0A0B] border border-[#2A2A2E] space-y-4 text-left relative group hover:border-indigo-500/30 transition-colors duration-300">
+              <span className="absolute -top-4 left-6 h-8 w-8 rounded-lg bg-indigo-500 text-white font-mono font-black border border-[#2A2A2E] flex items-center justify-center text-xs shadow-lg">04</span>
+              <div className="pt-2 text-left space-y-2">
+                <span className="text-[8px] font-mono text-indigo-400 tracking-widest uppercase font-bold">MIGRATION SESSION</span>
+                <h3 className="font-bold text-sm text-white font-sans">Seller Transfers Live</h3>
+                <p className="text-[11px] text-[#8E8E93] leading-relaxed font-sans font-normal">
+                  Under manual, hand-supervised live call guidance, the seller coordinates the username transition with both parties present, bypassing platform automated blocks.
+                </p>
+              </div>
+            </article>
+
+            {/* Step 5 */}
+            <article className="p-6 rounded-2xl bg-[#0A0A0B] border border-[#2A2A2E] space-y-4 text-left relative group hover:border-[#30D158]/30 transition-colors duration-300">
+              <span className="absolute -top-4 left-6 h-8 w-8 rounded-lg bg-[#30D158] text-black font-mono font-black border border-[#2A2A2E] flex items-center justify-center text-xs shadow-lg">05</span>
+              <div className="pt-2 text-left space-y-2">
+                <span className="text-[8px] font-mono text-[#30D158] tracking-widest uppercase font-bold">VALIDATION</span>
+                <h3 className="font-bold text-sm text-white font-sans">Buyer Confirms Full Control</h3>
+                <p className="text-[11px] text-[#8E8E93] leading-relaxed font-sans font-normal">
+                  The buyer signs into the target console, establishes secure multi-factor ties (2FA), updates secondary credentials, and verifies exclusive ownership access.
+                </p>
+              </div>
+            </article>
+
+            {/* Step 6 */}
+            <article className="p-6 rounded-2xl bg-[#0A0A0B] border border-[#2A2A2E] space-y-4 text-left relative group hover:border-emerald-500/30 transition-colors duration-300">
+              <span className="absolute -top-4 left-6 h-8 w-8 rounded-lg bg-emerald-500 text-white font-mono font-black border border-[#2A2A2E] flex items-center justify-center text-xs shadow-lg">06</span>
+              <div className="pt-2 text-left space-y-2">
+                <span className="text-[8px] font-mono text-emerald-400 tracking-widest uppercase font-bold">DISPLACEMENT</span>
+                <h3 className="font-bold text-sm text-white font-sans">Seller Gets Paid</h3>
+                <p className="text-[11px] text-[#8E8E93] leading-relaxed font-sans font-normal">
+                  Once custody is fully resolved, confirmed, and verified, the broker coordinates direct domestic UPI or SWIFT clearance payouts to the seller's coordinates.
+                </p>
+              </div>
+            </article>
 
           </div>
 
         </div>
       </section>
 
-      {/* Business Identity: Who We Are Block */}
-      <section className="bg-[#0F0F10] py-20 px-6">
-        <div className="max-w-5xl mx-auto rounded-3xl bg-[#151517] border border-white/[0.06] p-8 md:p-12 text-left grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative overflow-hidden font-sans">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-[80px] rounded-full pointer-events-none" />
+      {/* 5. AEO DEFINITION BOX & SECURE COMPARISONS MATRIX */}
+      <section className="py-20 px-6 max-w-7xl mx-auto space-y-12">
+        <div className="text-left space-y-4 max-w-2xl">
+          <span className="inline-block px-3 py-1 rounded bg-[#D4AF37]/10 text-[#D4AF37] text-[10px] font-mono font-bold uppercase tracking-widest">
+            AEO Snippet Box & Safety matrix
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-display">
+            Why direct peer-to-peer digital trades are critical financial threats
+          </h2>
+          {/* Definition Box */}
+          <div className="border-l-3 border-[#D4AF37] bg-[#141416] p-5 text-xs text-gray-300 leading-relaxed rounded-r-lg">
+            <strong>Definition: Direct Username Hijacking</strong> occurs when an un-brokered transaction seller recovers the social media account coordinates using original, unaltered owner verification linkages immediately after receiving buyer payment. Peer-to-peer deals contain zero legal mediation layers or payout safety mechanisms to freeze fraud.
+          </div>
+        </div>
+
+        {/* Comparison grid table */}
+        <div className="overflow-x-auto rounded-xl border border-[#2A2A2E] bg-[#141416]">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-[#2A2A2E] bg-[#0A0A0B]/80 font-mono text-[10px] uppercase text-[#D4AF37] tracking-wider">
+                <th className="p-4 font-bold">Transaction Metrics</th>
+                <th className="p-4 font-bold">Direct Peer Handshakes (e.g. Forums)</th>
+                <th className="p-4 font-bold">IDsvault Broker holding Desk</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#2A2A2E] text-gray-400 font-medium">
+              <tr>
+                <td className="p-4 font-semibold text-white">Ownership Vetting</td>
+                <td className="p-4 text-red-400">Zero proof required. High fake listings</td>
+                <td className="p-4 text-emerald-450">✓ Mandatory cryptographic bio-token challenge</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-semibold text-white">Payment Custody</td>
+                <td className="p-4 text-red-400">Buyer pays advance directly. high runaways risk</td>
+                <td className="p-4 text-emerald-450">✓ Held in segregated broker trust transit accounts</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-semibold text-white">Platform ToS Defense</td>
+                <td className="p-4 text-red-400">Automated transitions prompt instant lockouts</td>
+                <td className="p-4 text-emerald-450">✓ Hand-supervised transitions via isolated clean IPs</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-semibold text-white">Contractual Execution</td>
+                <td className="p-4 text-red-400">None. Scammers use fake identities</td>
+                <td className="p-4 text-emerald-450">✓ Vetted KYC checks & corporate compliance registers</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* 6. WHY IDSVAULT: HUMAN CHANNELS, FOUNDER & GST DETAILS */}
+      <section className="bg-[#141416]/40 border-t border-[#2A2A2E] py-20 px-6">
+        <div className="max-w-5xl mx-auto rounded-3xl bg-[#141416] border border-[#2A2A2E] p-8 md:p-12 text-left grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/5 blur-[80px] rounded-full pointer-events-none" />
           
-          <div className="space-y-4">
-            <span className="text-[9px] font-bold text-blue-400 tracking-widest uppercase font-mono">BUSINESS IDENTITY: WHO WE ARE</span>
-            <h3 className="text-2xl font-extrabold text-white tracking-tight">Premium Digital Brokerage Desk</h3>
-            <p className="text-xs text-[#9CA3AF] leading-relaxed">
-              <strong>IDsvault</strong> is an independent premium digital identity brokerage platform helping buyers and sellers transact premium digital identities through human broker-assisted workflows. We are not officially affiliated with Instagram, X, or Telegram.
+          <div className="space-y-5">
+            <span className="text-[9px] font-bold text-[#D4AF37] tracking-widest uppercase font-mono">WHO WE ARE & CORE BUSINESS MOAT</span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Who We Are & The Hyderabad Desk</h3>
+            
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Founded by <strong>Vinay Naidu</strong>, veteran digital identity counselor, IDsvault maintains dedicated administrative support offices in Madhapur Hi-Tech City, Hyderabad, India.
             </p>
-            <div className="grid grid-cols-2 gap-3 pt-2 text-[11px] text-gray-200">
+            <p className="text-[11px] text-gray-500 leading-relaxed font-normal">
+              We vet global transactions securely. Operating under active trade tax registrations, our verification registers are audit-compliant with corporate compliance standards.
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 pt-2 text-[11px] text-gray-200">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>India-based Support</span>
+                <CheckCircle2 className="h-4.5 w-4.5 text-[#D4AF37] shrink-0" />
+                <span>GST: 36AAPCV8248M1ZC</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>Human Broker Support</span>
+                <CheckCircle2 className="h-4.5 w-4.5 text-[#D4AF37] shrink-0" />
+                <span>Office Handshakes Welcomed</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>Premium Listing Review</span>
+                <CheckCircle2 className="h-4.5 w-4.5 text-[#D4AF37] shrink-0" />
+                <span>Founder Mentorship desk</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>Dedicated Assistance</span>
+                <CheckCircle2 className="h-4.5 w-4.5 text-[#D4AF37] shrink-0" />
+                <span>SWIFT Coordinates Audited</span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-3.5 text-xs text-gray-300 font-mono">
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#0F0F10] border border-white/[0.04]">
-              <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-              <span>Brokerage Network Status: ACTIVE</span>
+          <div className="space-y-4 text-xs text-gray-400 font-mono">
+            {/* Founder Avatar Simulation Card */}
+            <div className="p-5 rounded-2xl bg-[#0A0A0B] border border-[#2A2A2E] space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="h-11 w-11 rounded-full bg-gradient-to-tr from-[#D4AF37] to-amber-600 flex items-center justify-center font-bold text-sm text-black shadow-md shadow-[#D4AF37]/10">
+                  VN
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-white font-sans leading-none">Vinay Naidu</h4>
+                  <p className="text-[10px] text-[#D4AF37] font-mono mt-1">Lead Broker & Sourcing Director</p>
+                </div>
+              </div>
+              <p className="text-[10px] text-gray-450 leading-relaxed font-sans font-normal italic">
+                "We launched IDsvault to bring absolute safety to high-AOV identity acquisition. Every deal matches our strict compliance standard."
+              </p>
             </div>
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#0F0F10] border border-white/[0.04]">
-              <span className="h-2 w-2 rounded-full bg-[#10B981]" />
-              <span> Hyderabad Desks Assigned: ONLINE</span>
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0A0A0B]/60 border border-[#2A2A2E]">
+                <span className="h-2 w-2 rounded-full bg-[#30D158]" />
+                <span>Main Hyderabad Desk: ONLINE</span>
+              </div>
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0A0A0B]/60 border border-[#2A2A2E]">
+                <span className="h-2 w-2 rounded-full bg-[#D4AF37]" />
+                <span>Broker holds funds: GUARANTEED</span>
+              </div>
             </div>
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#0F0F10] border border-white/[0.04]">
-              <span className="h-2 w-2 rounded-full bg-purple-400" />
-              <span>Independent Verification Audits: ACTIVE</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 6.5 THE FOUNDER'S RISK DISCLOSURE & STORY (FOUNDER'S PLEDGE) */}
+      <section className="bg-gradient-to-b from-[#141416] to-[#0A0A0B] border-t border-[#2A2A2E] py-16 px-6 relative">
+        <div className="max-w-3xl mx-auto text-left space-y-6">
+          <div className="space-y-1">
+            <span className="text-[10px] font-mono text-[#D4AF37] uppercase font-bold tracking-widest">FOUNDER'S NOTE</span>
+            <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight font-sans">"I built IDsvault because I got burned."</h3>
+          </div>
+          <div className="space-y-4 text-xs sm:text-sm text-gray-400 leading-relaxed font-sans font-normal">
+            <p>
+              I'm <strong>Vinay Naidu</strong>, Hyderabad-based. I started IDsvault because I got burned on a $400 handle deal in 2023. 
+              The transaction seemed smooth in a trusted Telegram group. I sent the USDT, the seller sent the login, and 12 hours later, 
+              the seller recovered the account using original creation indicators. The group admin did nothing because they "just matched the buyer and seller."
+            </p>
+            <p>
+              I realized that matchmaking is useless without real oversight. High-value usernames are corporate assets, not forum playthings. 
+              IDsVault was established to supervise the transfer step-by-step. If an issue occurs, we handle it immediately. If the deal fails, the buyer receives a 100% refund. 
+              Trust is our entire moat, and we back it up with compliant administrative audits.
+            </p>
+          </div>
+          <div className="flex items-center gap-3.5 pt-2 select-none">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-[#D4AF37] to-amber-600 flex items-center justify-center font-bold text-xs text-black">
+              VN
             </div>
+            <div>
+              <p className="text-xs font-bold text-white font-sans leading-none">Vinay Naidu</p>
+              <p className="text-[10px] text-gray-500 font-mono mt-1">Founder, IDsvault • Madhapur, Hyderabad, India</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. HIGH-CONVERSION FAQ ACCORDION GRID FOR GOOGLE SNIPPETS */}
+      <section className="py-20 px-6 max-w-4xl mx-auto space-y-12">
+        <div className="text-center space-y-3">
+          <span className="text-[10px] font-mono text-[#D4AF37] uppercase font-bold tracking-widest">Q&A Knowledge Library</span>
+          <h2 className="text-3xl font-extrabold text-white tracking-tight">Answer Engine Optimization Frequently Asked Questions</h2>
+          <p className="text-xs text-gray-450">Factual answers to high-intent search queries concerning digital property acquisitions.</p>
+        </div>
+
+        <div className="space-y-4">
+          {faqsData.map((faq, idx) => {
+            const isOpen = faqOpen === idx;
+            return (
+              <div 
+                key={idx}
+                className="rounded-xl border border-[#2A2A2E] bg-[#141416]/70 overflow-hidden transition-all duration-300"
+              >
+                <button
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full p-5 flex items-center justify-between text-left cursor-pointer hover:bg-white/[0.01] transition-colors gap-4"
+                >
+                  <h3 className="text-xs sm:text-sm font-bold text-white leading-snug">{faq.q}</h3>
+                  <span className={`h-5 w-5 rounded-full bg-[#0A0A0B] border border-[#2A2A2E] flex items-center justify-center text-xs text-gray-400 transition-transform duration-300 ${isOpen ? "rotate-180 text-[#D4AF37]" : ""}`}>
+                    {isOpen ? "−" : "+"}
+                  </span>
+                </button>
+                
+                {/* Expandable Body */}
+                <div 
+                  className={`transition-all duration-300 ease-in-out overflow-hidden text-xs text-gray-450 leading-relaxed border-t border-[#2A2A2E]/40 ${
+                    isOpen ? "max-h-[300px] p-5 opacity-100 bg-[#0A0A0B]/40" : "max-h-0 opacity-0 py-0 px-5"
+                  }`}
+                >
+                  {faq.a}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* FINAL HIGH-CONVERSION CTA BAND */}
+      <section className="py-20 px-6 bg-[#0E0E10] border-t border-[#2A2A2E] text-center relative overflow-hidden select-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="max-w-xl mx-auto space-y-8 relative">
+          <div className="space-y-3">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans">Ready to secure your digital brand?</h3>
+            <p className="text-xs text-gray-400 max-w-sm mx-auto font-sans leading-relaxed">
+              Secure elite namespace placement on Instagram, X, or Telegram today. No escrow risks, hand-supervised handovers, and 100% refund guarantee.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+              onClick={() => onNavigate("browse")}
+              className="w-full sm:w-auto h-11 px-8 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer active:scale-95 text-center flex items-center justify-center gap-2"
+            >
+              <span>Browse Registry</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => onNavigate("sell")}
+              className="w-full sm:w-auto h-11 px-8 rounded-xl bg-transparent hover:bg-white/5 text-gray-300 hover:text-white border border-white/10 hover:border-white/25 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer active:scale-95 text-center flex items-center justify-center gap-2"
+            >
+              <span>Sell Yours</span>
+              <ArrowUpRight className="h-4 w-4 text-gray-500" />
+            </button>
           </div>
         </div>
       </section>

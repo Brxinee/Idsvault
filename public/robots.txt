@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /browse
+Allow: /sell
+Allow: /request
+Allow: /blog
+Allow: /faq
+Disallow: /admin
+Disallow: /checkout
+Disallow: /auth
+
+Sitemap: https://idsvault.com/sitemap.xml

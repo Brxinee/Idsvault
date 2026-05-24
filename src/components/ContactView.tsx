@@ -101,7 +101,7 @@ Message Details: ${message}`;
           <div className="space-y-3">
             <h1 className="text-3xl font-extrabold text-white tracking-tight leading-tight">Hyderabad Desk</h1>
             <p className="text-xs text-[#9CA3AF] leading-relaxed">
-              Connect directly with our manual brokerage team. We enforce pristine, human-guided security checks for escrow transactions and off-market asset acquisitions.
+              Connect directly with our manual brokerage team. We enforce pristine, human-guided security checks for brokerage handshakes and off-market asset acquisitions.
             </p>
           </div>
 

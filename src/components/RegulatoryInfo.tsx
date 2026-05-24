@@ -8,7 +8,7 @@ import { Scale, ShieldAlert, Sparkles, AlertTriangle, HelpCircle, FileText, Chev
 import { motion, AnimatePresence } from "motion/react";
 
 interface RegulatoryInfoProps {
-  segment: "policy-acceptable" | "policy-trademark" | "policy-refund" | "policy-terms" | "policy-privacy" | "faq";
+  segment: "policy-acceptable" | "policy-trademark" | "policy-refund" | "policy-terms" | "policy-privacy" | "policy-aml-kyc" | "faq";
 }
 
 export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
@@ -149,31 +149,62 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
         <motion.section 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6 animate-in duration-200"
         >
           <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
             <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/15">
               <AlertTriangle className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Refund & Reversal Terms</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Framework Guideline SV-REVERSAL-2026</p>
+              <h1 className="text-xl font-extrabold text-white tracking-tight">Refund & Escrow Payout Policy</h1>
+              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-ESCROW-REVERSAL-2026-v2</p>
             </div>
           </header>
 
           <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
-            <p>
-              Capital security is the fundamental hallmark of IDsvault. We operate a highly structured payment workflow to protect both parties during verification stages.
+            <p className="text-gray-400">
+              Clear financial rules build trust. This Refund & Escrow Policy outlines exactly when and how your funds move during broked deals.
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Failed Verification Reversals</h3>
-            <p className="text-[#10B981] pl-3 border-l-2 border-emerald-500 font-normal bg-emerald-500/5 p-3 rounded-r-lg">
-              If an assigned administrative coordinator determines that a social username transition cannot be executed securely—due to seller loss of custody, host platform technical blocking, or invalid creation coordinates, the buyer's held payments will be fully reversed to the original originating bank credit ledger within three (3) business hours, excluding standard network processing bank fees.
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">1. Exactly How Money Moves Step-by-Step</h3>
+            <div className="pl-3 border-l border-[#D4AF37] space-y-2.5 text-gray-450">
+              <p>
+                <strong>Step 1: Buyer locks payment.</strong> The buyer transfers the agreed funds to our designated corporate banking trust account (via standard Indian UPI, IMPS, RTGS, NEFT, or global USDC). We verify the credit deposit.
+              </p>
+              <p>
+                <strong>Step 2: Broker freezes the escrow hold.</strong> The funds sit frozen in our secured partner account. They are isolated from any company operating capital. We send a verified challenge alert to the seller to lock the handle.
+              </p>
+              <p>
+                <strong>Step 3: Supervised Handover.</strong> Our broker leads a private call or secure chat. We guide the buyer to take control, update recover coordinates, clear out original fallback vectors, and set up 2FA parameters.
+              </p>
+              <p>
+                <strong>Step 4: Buyer confirms & Funds Dispatch.</strong> Once the buyer confirms total control of credentials, our desk releases the payout. We credit the seller's registered bank coordinates immediately.
+              </p>
+            </div>
+
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">2. Guaranteed 100% Refund Triggers</h3>
+            <p className="text-gray-400">
+              We issue a full, prompt refund of held balances within 24 business hours if any of these conditions are met:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-gray-400">
+              <li>The seller cancels the trade, backs out, or goes unresponsive during verification audits.</li>
+              <li>The seller fails the profile live Bio verification challenge.</li>
+              <li>The host platform (Instagram, X, Telegram) locks, resets, or permanently freezes the credential during transition.</li>
+            </ul>
+
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">3. Post-Transfer Handover Policy</h3>
+            <p className="text-gray-400 bg-red-500/[0.02] p-3 border border-red-500/10 rounded-lg">
+              Once the buyer logs in live, overrides original email bindings, confirms custody under broker supervision, and signals release, the trade is finalized. At this point, the transaction is irreversible. IDsVault offers no post-swap survival warranties, as host platforms reserve the right to enforce terms at any future date.
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Final Handoff Completed Posture</h3>
-            <p className="text-gray-400 font-normal">
-              The transaction is finalized and marked COMPLETED when the buyer completes verification checks, configures secure recovery passwords/2FA factors, and confirms original administrative custody. Following completion, all transactions are final, irreversible, and non-refundable. IDsvault does not assume post-transfer risks.
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">4. Payment Disputes Resolution</h3>
+            <p className="text-gray-400">
+              Since IDsvault holds the funds directly in our designated broker account, payment disputes do not require a third-party escrow provider's process. Contact <strong className="text-white font-mono">broker@idsvault.com</strong> with your deal reference. We hold all deal records — WhatsApp messages, call logs, transfer confirmations — and can resolve most disputes within 24 hours.
+            </p>
+
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">5. Jurisdiction & Contact</h3>
+            <p className="text-gray-400">
+              All transactions are subject to legal mediation in <strong>Hyderabad, India</strong>. For any pending trade disputes, contact the Broker Lead directly at <strong className="text-white font-mono">broker@idsvault.com</strong>.
             </p>
           </div>
         </motion.section>
@@ -183,46 +214,62 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
         <motion.section 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6 animate-in duration-200"
         >
           <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
             <div className="p-2.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/15">
               <FileText className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Terms of Service Agreement</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Document reference SV-TOS-2026-v3</p>
+              <h1 className="text-xl font-extrabold text-white tracking-tight">Terms of Service</h1>
+              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-PLAIN-TOS-2026-v1</p>
             </div>
           </header>
 
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
-            <p>
-              Welcome to IDsvault. By using this browser application, submitting proposals, or interacting with our India-based coordination staff, you accept these terms in their entirety.
+          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
+            <p className="text-gray-400">
+              By using IDsvault, applying to list social handles, or submitting buyer deposits, you agree to these clear rules in their entirety.
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Legal Capacity Limit (18+ Requirement)</h3>
-            <p className="text-gray-400 font-normal">
-              You must be at least 18 years of age and possess full legal capacity to enter binding agreements in your jurisdiction to engage our broker desk, submit listings, or participate in structured deals.
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">1. Who Can Use This Platform</h3>
+            <p className="text-gray-400">
+              You must be at least 18 years old and have the complete legal capacity to enter binding contracts under Indian law (or the laws of your home jurisdiction) to buy or sell namespace identifiers with us.
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Seller Ownership Warranty & Guarantees</h3>
-            <p className="text-gray-400 font-normal">
-              Sellers applying to index username assets must warrant full, legal, unencumbered ownership of the handle. Sellers assume full liability for fraudulent claims or coordinates bypass.
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">2. Listing Rules & Ownership Warranties</h3>
+            <p className="text-gray-400">
+              Sellers applying to index username assets must warrant full, legitimate authority to control and release the handle. Sellers are subject to cryptographic verification challenges (profile Bio bio-token updates) to verify ownership. Fake claims, stolen profiles, or coordinates bypass will trigger an immediate, lifelong platform ban.
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">3. Buyer Acknowledgement & Platform Risk Disclaimer</h3>
-            <p className="text-gray-400 font-normal">
-              Digital handle transfers violate the strictly defined user Terms of Service of social networks (Instagram, X, Telegram). Host platforms reserve immediate, absolute right to reset, freeze, or terminate profiles. Buyers engage coordinators entirely at their own risk. IDsvault offers zero post-transfer possession guarantees, nor does it guarantee future account survival.
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">3. Prohibited Handle Assets</h3>
+            <p className="text-gray-400">
+              We strictly reject and ban the listing or purchase of:
+            </p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-450">
+              <li>Names registered as active corporate trademarks.</li>
+              <li>Usernames mirroring public government agencies, military, or municipal divisions.</li>
+              <li>Identifiers obtained through extortion, coordinate hacking, phishing, SIM swapping, or physical harassment threats.</li>
+              <li>Names used solely for hate speech, violence, or brand impersonation scams.</li>
+            </ul>
+
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">4. Platform Terms of Service Disclaimer</h3>
+            <div className="text-amber-500 bg-amber-500/[0.03] p-4 rounded-xl border border-amber-500/10 leading-relaxed">
+              <strong>OFFICIAL DISCLAIMER:</strong> Social networks (Meta, Instagram, X Corp, and Telegram) technically prohibit the commercial transfer, leasing, or sale of usernames. They reserve the absolute right to reset, freeze, or terminate profiles at any time. Buyers assume this platform-level risk entirely. IDsvault is an independent, private brokerage desk. We are not affiliated with, endorsed by, or officially connected to Meta, X, or Telegram. All trademarks belong to their respective corporate IP holders.
+            </div>
+
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">5. Broker Fee Structure</h3>
+            <p className="text-gray-400">
+              We charge a standard <strong>10% brokerage commission fee</strong> on successful transactions. If customized sourcing campaigns fail or the transfer is unfinalized, no setup or hidden listing fees are charged.
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">4. Independent Intermediary Role</h3>
-            <p className="text-[#3B82F6] bg-blue-500/5 p-4 rounded-xl border border-blue-500/10 leading-relaxed font-normal">
-              <strong>NOTICE OF THIRD-PARTY POLICY:</strong> IDsvault is NOT an official financial bank, nor is it affiliated with Meta, Instagram, X Corp, or Telegram. We operate strictly as an independent premium digital brokerage helper desk.
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">6. How payment works</h3>
+            <p className="text-gray-400">
+              Your payment goes to IDsvault's designated broker account — via UPI, bank transfer, Wise, SWIFT, or crypto (USDC/USDT). We hold the full amount, separate from our operating funds, until you confirm on the live call that you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund — no third-party claim process needed, because we hold the funds directly.
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">5. Liability Limitation & Fraud Policy</h3>
-            <p className="text-gray-400 font-normal">
-              IDsvault is not liable for indirect, incidental, or post-transfer network bans. Any malicious coordination bypass, coordinate fraud, or credit chargeback attempt triggers a complete blacklist and immediate report to legal authorities.
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">7. Jurisdiction & Dispute Resolution</h3>
+            <p className="text-gray-400">
+              These Terms are governed by the laws of India. Any legal dispute or mediation concerning our services is resolved exclusively under the jurisdiction of the courts in <strong>Hyderabad, Telangana, India</strong>.
             </p>
           </div>
         </motion.section>
@@ -232,31 +279,80 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
         <motion.section 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6 animate-in duration-200"
         >
           <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
             <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/15">
               <FileText className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Privacy Shield Policy</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Ref: SV-PRIVACY-SHIELD-2026</p>
+              <h1 className="text-xl font-extrabold text-white tracking-tight">Plain-English Privacy Policy</h1>
+              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-CORE-PRIVACY-2026-v1</p>
+            </div>
+          </header>
+
+          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
+            <p className="text-gray-405">
+              We respect your privacy. Username deals require confidentiality. This plain-English policy explains exactly what we gather, how we store it, and when we remove it.
+            </p>
+
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">1. Exactly What Data We Collect & Why</h3>
+            <p className="text-gray-400">
+              We collect the bare minimum required to safely verify ownership and complete secure currency disbursements:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-gray-450 border-l border-blue-500/20 ml-2">
+              <li><strong>Email Address:</strong> Primarily to send transactional contracts, receipt confirmations, and secure codes.</li>
+              <li><strong>Phone / WhatsApp:</strong> Used for direct secure chat communication during live coordinate transfers.</li>
+              <li><strong>Payment Reference Numbers:</strong> Standard transaction receipts or bank reference reference records to verify UPI/RTGS clearance.</li>
+              <li><strong>Social Handle Traded:</strong> The specific username identifier under contract, necessary for ownership checks.</li>
+            </ul>
+
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">2. Storing Data & Secure Holdings</h3>
+            <p className="text-gray-400">
+              All client details are processed locally in secure-hashed offline vaults. No database indexes are shared with outside advertising or digital harvesting networks. Our escrow banking processes run through verified partner bank trusts in Hyderabad, India, compliant with national transaction frameworks.
+            </p>
+
+            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">3. Precise Retention & Fast Deletion</h3>
+            <p className="text-gray-400">
+              Our storage targets prioritize data pruning over generic data hoarding:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-gray-450">
+              <li>All transition logs, Bio tokens, and temporary files are permanently pruned within <strong>thirty (30) days</strong> of trade completion.</li>
+              <li><strong>You can delete your data instantly at any time.</strong> Simply email <strong className="text-white font-mono">support@idsvault.com</strong> with your reference number. We will permanently purge all personal files and data from our active folders within 24 business hours.</li>
+            </ul>
+          </div>
+        </motion.section>
+      )}
+
+      {segment === "policy-aml-kyc" && (
+        <motion.section 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+        >
+          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
+            <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/15">
+              <Scale className="h-5 w-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold text-white tracking-tight">Anti-Money Laundering & KYC Policies</h1>
+              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Ref: SV-AML-KYC-2026</p>
             </div>
           </header>
 
           <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
             <p>
-              We prioritize isolation of client identities over generic data harvesting campaigns. Client credentials, WhatsApp codes, and coordinate profiles remain strictly localized.
+              To maintain the integrity of our brokerage platform, IDsvault maintains risk mitigation standards including Identity Verification (KYC).
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Encryption & Data Retention Limits</h3>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Identity Verification Thresholds</h3>
             <p className="text-gray-400 font-normal">
-              Client details are stored under secure multi-layered hashes. Transaction data collected during active handshakes are permanently pruned from indexes within thirty (30) days of ticket resolution.
+              Identity verification (KYC) is strictly required for deals exceeding $1,000 USD (or equivalent INR). Users must provide a copy of government-issued photo identification (e.g. Aadhaar, PAN card, or passport) before entering deep broker-monitored transition phases.
             </p>
 
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Analytics & Cookie Disclosure</h3>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Verification Compliance</h3>
             <p className="text-gray-400 font-normal">
-              Our site implements Google Analytics (GA4) with anonymised IP tracking coordinates solely to measure general geographic browser volumes. We never collect login credentials, social profiles, or financial banking coordinate codes via cookies.
+              For all clients, we require identity verification at the thresholds above regardless of payment method. We reserve the absolute right to suspend transaction matching until identity claims are verified.
             </p>
           </div>
         </motion.section>

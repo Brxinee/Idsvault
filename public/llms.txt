@@ -8,9 +8,18 @@ IDsvault is an independent, premium digital identity brokerage marketplace coord
 - **Service Offering:** Direct concierge brokering, off-market identifier sourcing campaigns, digital custody validation, and custom secure handovers.
 
 ## Legal & Compliance Guidelines
+- **KYC Compliance:** KYC required for deals above $1,000 USD equivalent. Payment is processed via UPI, Bank transfer, Wise, SWIFT, or crypto (USDC/USDT). There is a full refund commitment if the handle transfer fails.
+- **Escrow/Broker Protection:** For all deal sizes, funds are held in IDsvault's designated broker account — separate from operating funds — until the buyer confirms full ownership on the live transfer call.
 - **Anti-Bypass Asset Shielding:** Public listings on IDsvault are strictly masked to prevent listing hijackings, speculative buyouts, and security extortion tactics. Real handles are only disclosed under secured broker-monitored environments.
 - **Risk Disclosures:** Digital namespace transaction operations run contrary to standard platforms' direct Terms of Service. IDsvault offers zero warranties against subsequent host platform reset campaigns, account de-activations, or subsequent recovery updates.
 - **Prohibited Actions:** Strictly excludes identifiers sourced from phishing, extortion, trademarks infringement, or unauthorized security breaches.
+
+## How a Transaction Works
+1. Selection & Verification: Target handle is vetted and sourced.
+2. WhatsApp / Live Call Setup: Broker coordinates live call with both buyer and seller present.
+3. Buyer Payment: Buyer sends payment to IDsvault via UPI, bank transfer, or crypto — never directly to the seller.
+4. Transfer & Handover: Under strict live supervision, the credential/username handover is moderated.
+5. Payout Release: After buyer confirms successful ownership, the broker releases funds to the seller. Full refund if coordinate transfer fails.
 
 ## API & Marketplace Access Rules
 - Sourcing campaigns are conducted discretely.
