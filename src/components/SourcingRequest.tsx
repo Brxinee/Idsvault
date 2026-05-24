@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { usePageTitle } from "../hooks/usePageTitle";
 import { 
   Send, 
   AlertCircle, 
@@ -25,6 +26,7 @@ interface SourcingRequestProps {
 }
 
 export const SourcingRequest: React.FC<SourcingRequestProps> = ({ onRegisterRequest }) => {
+  usePageTitle("Custom Sourcing");
   const [step, setStep] = useState(1);
 
   const [desiredUsername, setDesiredUsername] = useState("");

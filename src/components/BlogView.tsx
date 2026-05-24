@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   BookOpen, 
   Search, 
@@ -37,12 +38,12 @@ import { initialBlogPosts } from "../data/blogs";
 import { motion, AnimatePresence } from "motion/react";
 
 interface BlogViewProps {
-  onNavigate: (view: string) => void;
   onBrowseListing: (slug: string) => void;
   isAdmin?: boolean;
 }
 
-export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing, isAdmin = false }) => {
+export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = false }) => {
+  const navigate = useNavigate();
   // Load blog posts from local storage or fall back to initial seeded database
   const [posts, setPosts] = useState<BlogPost[]>(() => {
     const saved = localStorage.getItem("idsvault_blogs_db");
@@ -780,7 +781,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
           {/* Breadcrumb Navigation System */}
           <nav className="flex items-center gap-1.5 text-gray-500 text-[10px] font-mono tracking-wide uppercase select-none">
             <button 
-              onClick={() => onNavigate("home")} 
+              onClick={() => navigate("/")} 
               className="hover:text-blue-400 cursor-pointer transition-colors"
             >
               Home
@@ -1001,7 +1002,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                           </div>
                           <button
                             onClick={() => {
-                              onNavigate("request");
+                              navigate("/source");
                               window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             className="h-9 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-[10px] text-white font-bold uppercase tracking-wider transition-all select-none cursor-pointer text-center shrink-0"
@@ -1115,7 +1116,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                   </p>
                   <button
                     onClick={() => {
-                      onNavigate("request");
+                      navigate("/source");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold uppercase tracking-wider rounded transition-colors cursor-pointer select-none text-center"

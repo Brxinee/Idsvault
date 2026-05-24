@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useRef, useEffect } from "react";
+import { usePageTitle } from "../hooks/usePageTitle";
 import { 
   Upload, 
   HelpCircle, 
@@ -26,6 +27,7 @@ interface SellApplicationProps {
 }
 
 export const SellApplication: React.FC<SellApplicationProps> = ({ onRegisterListing }) => {
+  usePageTitle("Sell Your Handle");
   // Wizard steps: 1 or 2
   const [step, setStep] = useState(1);
 
