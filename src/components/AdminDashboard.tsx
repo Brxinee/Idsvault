@@ -57,52 +57,64 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [proposalsSearch, setProposalsSearch] = useState("");
   const [kanbanPlatformFilter, setKanbanPlatformFilter] = useState<string>("all");
 
+  // ─── Auth mode detection ────────────────────────────────────────────────────
+  // Priority: Supabase (full DB auth) → VITE_ADMIN_PASSWORD (env-var auth)
+  const envAdminPassword = (import.meta.env.VITE_ADMIN_PASSWORD || "").trim();
+  const useEnvAuth = !isSupabaseConfigured && Boolean(envAdminPassword);
+
   // Load and subscribe to authentication sessions on mount
   useEffect(() => {
-    if (!isSupabaseConfigured || !supabase) {
-      // No Supabase — admin access is simply unavailable
+    if (isSupabaseConfigured && supabase) {
+      // ── Supabase auth path ──────────────────────────────────────────────────
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          setSessionUser(session.user);
+          checkAdminRole(session.user.id);
+        } else {
+          setIsLoading(false);
+        }
+      });
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (session) {
+          setSessionUser(session.user);
+          checkAdminRole(session.user.id);
+        } else {
+          setSessionUser(null);
+          setIsAuthenticated(false);
+          if (onAuthChange) onAuthChange(false);
+          setIsLoading(false);
+        }
+      });
+
+      return () => { subscription.unsubscribe(); };
+
+    } else if (useEnvAuth) {
+      // ── Env-var password auth path ──────────────────────────────────────────
+      // Restore session from sessionStorage (expires when tab closes)
+      const saved = sessionStorage.getItem("idsvault_admin_session");
+      if (saved === "authenticated") {
+        setIsAuthenticated(true);
+        if (onAuthChange) onAuthChange(true);
+      }
       setIsLoading(false);
-      return;
+
+    } else {
+      // Neither Supabase nor env password configured
+      setIsLoading(false);
     }
-
-    // Hydrate current session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setSessionUser(session.user);
-        checkAdminRole(session.user.id);
-      } else {
-        setIsLoading(false);
-      }
-    });
-
-    // Listen to changes in session tokens
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        setSessionUser(session.user);
-        checkAdminRole(session.user.id);
-      } else {
-        setSessionUser(null);
-        setIsAuthenticated(false);
-        if (onAuthChange) onAuthChange(false);
-        setIsLoading(false);
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
   }, []);
 
-  // Secure role checker querying database
+  // Secure role checker querying Supabase database
   const checkAdminRole = async (userId: string) => {
     try {
       setIsLoading(true);
       setRoleError("");
       const { data, error } = await supabase!
-          .from("users")
-          .select("role")
-          .eq("id", userId)
-          .single();
+        .from("users")
+        .select("role")
+        .eq("id", userId)
+        .single();
 
       if (error) {
         console.error("Profile security audit error:", error);
@@ -134,25 +146,39 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setLoginError("");
     setRoleError("");
 
-    if (!isSupabaseConfigured || !supabase) {
-      setLoginError("Database not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-      if (error) {
-        setLoginError(error.message);
-        onAddLog("LOGIN_FAILURE", `Failed login attempt for: ${email}`);
+    if (isSupabaseConfigured && supabase) {
+      // ── Supabase sign-in ────────────────────────────────────────────────────
+      try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          setLoginError(error.message);
+          onAddLog("LOGIN_FAILURE", `Failed login attempt for: ${email}`);
+          setIsLoading(false);
+        } else {
+          onAddLog("ADMIN_AUTHENTICATED", "Administrative console accessed via Supabase session.");
+          // onAuthStateChange listener triggers checkAdminRole automatically
+        }
+      } catch (err) {
+        setLoginError("An unexpected error occurred. Please try again.");
         setIsLoading(false);
-      } else {
-        onAddLog("ADMIN_AUTHENTICATED", "Authorized administrative console accessed by session credentials.");
-        // Session listener (onAuthStateChange) will call checkAdminRole automatically
       }
-    } catch (err) {
-      setLoginError("An unexpected system exception occurred during authentication.");
+
+    } else if (useEnvAuth) {
+      // ── Env-var password sign-in ────────────────────────────────────────────
+      if (password === envAdminPassword) {
+        sessionStorage.setItem("idsvault_admin_session", "authenticated");
+        setIsAuthenticated(true);
+        if (onAuthChange) onAuthChange(true);
+        onAddLog("ADMIN_AUTHENTICATED", "Administrative console accessed via environment credentials.");
+      } else {
+        setLoginError("Incorrect password. Please try again.");
+        onAddLog("LOGIN_FAILURE", "Failed env-password admin login attempt.");
+      }
+      setIsLoading(false);
+
+    } else {
+      // Nothing configured
+      setLoginError("Admin access is not configured. Set VITE_ADMIN_PASSWORD (or VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY) in your Vercel environment variables.");
       setIsLoading(false);
     }
   };
@@ -162,10 +188,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     if (supabase) {
       await supabase.auth.signOut();
     }
+    sessionStorage.removeItem("idsvault_admin_session");
     setSessionUser(null);
     setIsAuthenticated(false);
     if (onAuthChange) onAuthChange(false);
-    onAddLog("ADMIN_SESSION_CLOSED", "Lead controller session closed voluntarily.");
+    onAddLog("ADMIN_SESSION_CLOSED", "Admin session closed voluntarily.");
     setIsLoading(false);
   };
 
