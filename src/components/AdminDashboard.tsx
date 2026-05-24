@@ -57,52 +57,64 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [proposalsSearch, setProposalsSearch] = useState("");
   const [kanbanPlatformFilter, setKanbanPlatformFilter] = useState<string>("all");
 
+  // ─── Auth mode detection ────────────────────────────────────────────────────
+  // Priority: Supabase (full DB auth) → VITE_ADMIN_PASSWORD (env-var auth)
+  const envAdminPassword = (import.meta.env.VITE_ADMIN_PASSWORD || "").trim();
+  const useEnvAuth = !isSupabaseConfigured && Boolean(envAdminPassword);
+
   // Load and subscribe to authentication sessions on mount
   useEffect(() => {
-    if (!isSupabaseConfigured || !supabase) {
-      // No Supabase — admin access is simply unavailable
+    if (isSupabaseConfigured && supabase) {
+      // ── Supabase auth path ──────────────────────────────────────────────────
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          setSessionUser(session.user);
+          checkAdminRole(session.user.id);
+        } else {
+          setIsLoading(false);
+        }
+      });
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (session) {
+          setSessionUser(session.user);
+          checkAdminRole(session.user.id);
+        } else {
+          setSessionUser(null);
+          setIsAuthenticated(false);
+          if (onAuthChange) onAuthChange(false);
+          setIsLoading(false);
+        }
+      });
+
+      return () => { subscription.unsubscribe(); };
+
+    } else if (useEnvAuth) {
+      // ── Env-var password auth path ──────────────────────────────────────────
+      // Restore session from sessionStorage (expires when tab closes)
+      const saved = sessionStorage.getItem("idsvault_admin_session");
+      if (saved === "authenticated") {
+        setIsAuthenticated(true);
+        if (onAuthChange) onAuthChange(true);
+      }
       setIsLoading(false);
-      return;
+
+    } else {
+      // Neither Supabase nor env password configured
+      setIsLoading(false);
     }
-
-    // Hydrate current session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setSessionUser(session.user);
-        checkAdminRole(session.user.id);
-      } else {
-        setIsLoading(false);
-      }
-    });
-
-    // Listen to changes in session tokens
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        setSessionUser(session.user);
-        checkAdminRole(session.user.id);
-      } else {
-        setSessionUser(null);
-        setIsAuthenticated(false);
-        if (onAuthChange) onAuthChange(false);
-        setIsLoading(false);
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
   }, []);
 
-  // Secure role checker querying database
+  // Secure role checker querying Supabase database
   const checkAdminRole = async (userId: string) => {
     try {
       setIsLoading(true);
       setRoleError("");
       const { data, error } = await supabase!
-          .from("users")
-          .select("role")
-          .eq("id", userId)
-          .single();
+        .from("users")
+        .select("role")
+        .eq("id", userId)
+        .single();
 
       if (error) {
         console.error("Profile security audit error:", error);
@@ -134,25 +146,39 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setLoginError("");
     setRoleError("");
 
-    if (!isSupabaseConfigured || !supabase) {
-      setLoginError("Database not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-      if (error) {
-        setLoginError(error.message);
-        onAddLog("LOGIN_FAILURE", `Failed login attempt for: ${email}`);
+    if (isSupabaseConfigured && supabase) {
+      // ── Supabase sign-in ────────────────────────────────────────────────────
+      try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          setLoginError(error.message);
+          onAddLog("LOGIN_FAILURE", `Failed login attempt for: ${email}`);
+          setIsLoading(false);
+        } else {
+          onAddLog("ADMIN_AUTHENTICATED", "Administrative console accessed via Supabase session.");
+          // onAuthStateChange listener triggers checkAdminRole automatically
+        }
+      } catch (err) {
+        setLoginError("An unexpected error occurred. Please try again.");
         setIsLoading(false);
-      } else {
-        onAddLog("ADMIN_AUTHENTICATED", "Authorized administrative console accessed by session credentials.");
-        // Session listener (onAuthStateChange) will call checkAdminRole automatically
       }
-    } catch (err) {
-      setLoginError("An unexpected system exception occurred during authentication.");
+
+    } else if (useEnvAuth) {
+      // ── Env-var password sign-in ────────────────────────────────────────────
+      if (password === envAdminPassword) {
+        sessionStorage.setItem("idsvault_admin_session", "authenticated");
+        setIsAuthenticated(true);
+        if (onAuthChange) onAuthChange(true);
+        onAddLog("ADMIN_AUTHENTICATED", "Administrative console accessed via environment credentials.");
+      } else {
+        setLoginError("Incorrect password. Please try again.");
+        onAddLog("LOGIN_FAILURE", "Failed env-password admin login attempt.");
+      }
+      setIsLoading(false);
+
+    } else {
+      // Nothing configured
+      setLoginError("Admin access is not configured. Set VITE_ADMIN_PASSWORD (or VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY) in your Vercel environment variables.");
       setIsLoading(false);
     }
   };
@@ -162,10 +188,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     if (supabase) {
       await supabase.auth.signOut();
     }
+    sessionStorage.removeItem("idsvault_admin_session");
     setSessionUser(null);
     setIsAuthenticated(false);
     if (onAuthChange) onAuthChange(false);
-    onAddLog("ADMIN_SESSION_CLOSED", "Lead controller session closed voluntarily.");
+    onAddLog("ADMIN_SESSION_CLOSED", "Admin session closed voluntarily.");
     setIsLoading(false);
   };
 
@@ -326,15 +353,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
             )}
 
-            {!isSupabaseConfigured && (
-              <div className="p-3.5 rounded bg-red-500/5 border border-red-500/15 text-[10px] text-red-400 font-medium flex flex-col gap-1 text-left leading-relaxed font-sans">
-                <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[9px] mb-1">
-                  <ShieldAlert className="h-4 w-4 text-red-500 shrink-0" />
-                  <span>DATABASE NOT CONFIGURED</span>
-                </div>
-                <span>Admin access requires Supabase. Set <strong>VITE_SUPABASE_URL</strong> and <strong>VITE_SUPABASE_ANON_KEY</strong> in your environment and redeploy.</span>
-              </div>
-            )}
+            {/* Database config error only shown after a failed submit attempt via loginError */}
 
             <button
               type="submit"
@@ -429,7 +448,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {/* Column 1: LIVE */}
           <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
-              <span className="text-[10px] font-bold text-emerald-450 uppercase tracking-widest font-mono">● LIVE INDEX</span>
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">● LIVE INDEX</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
                 ({listings.filter(v => v.status === DealStatus.Live && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter)).length})
               </span>
@@ -522,7 +541,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {/* Column 4: QUARANTINED */}
           <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
-              <span className="text-[10px] font-bold text-red-405 uppercase tracking-widest font-mono">● QUARANTINED</span>
+              <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest font-mono">● QUARANTINED</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
                 ({listings.filter(v => v.status === DealStatus.Quarantined && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter)).length})
               </span>
@@ -532,7 +551,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 .filter(v => v.status === DealStatus.Quarantined && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
                   <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs space-y-1">
-                    <span className="font-bold text-red-550">@{item.username}</span>
+                    <span className="font-bold text-red-500">@{item.username}</span>
                     <p className="text-[9px] text-gray-505">Auditing Infractions</p>
                     <button 
                       onClick={() => handleStatusShift(item.slug, DealStatus.Live)}
@@ -592,7 +611,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/[0.04] font-normal font-mono">
                 {filteredInventoryTable.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-6 text-center text-gray-650 text-[11px]">
+                    <td colSpan={5} className="py-6 text-center text-gray-500 text-[11px]">
                       No matching namespaces located in our tables database cache files.
                     </td>
                   </tr>
@@ -716,7 +735,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/[0.04] font-normal font-mono text-[11px]">
                 {filteredProposalsTable.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="py-6 text-center text-gray-650">
+                    <td colSpan={4} className="py-6 text-center text-gray-500">
                       No proposals index found matching search coordinates.
                     </td>
                   </tr>

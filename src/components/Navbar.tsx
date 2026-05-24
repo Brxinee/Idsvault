@@ -41,11 +41,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
           className="flex items-center gap-2.5 text-white font-semibold tracking-tight cursor-pointer hover:opacity-90 group transition-all"
           id="nav_logo"
         >
-          <div className="relative">
-            <div className="absolute inset-0 bg-blue-500/20 blur-md rounded-full group-hover:bg-blue-500/30 transition-all duration-300" />
-            <div className="relative h-8 w-8 rounded-lg bg-[#0F0F10] border border-white/[0.08] flex items-center justify-center group-hover:border-blue-500/30 transition-all">
-              <Shield className="h-4.5 w-4.5 text-blue-500" />
-            </div>
+          <div className="h-8 w-8 rounded-lg bg-[#0F0F10] border border-white/[0.08] flex items-center justify-center group-hover:border-blue-500/30 transition-all">
+            <Shield className="h-4.5 w-4.5 text-blue-500" />
           </div>
           <div className="flex flex-col items-start leading-none gap-0.5">
             <span className="font-semibold text-[15px] text-white tracking-tight">IDsvault</span>
@@ -90,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
           </button>
           <button
             onClick={() => handleNavClick("sell")}
-            className="relative group overflow-hidden h-9 px-4 text-xs font-semibold rounded-lg bg-blue-650 hover:bg-blue-600 border border-blue-500/20 text-white transition-all cursor-pointer select-none active:scale-95"
+            className="relative group overflow-hidden h-9 px-4 text-xs font-semibold rounded-lg bg-blue-700 hover:bg-blue-600 border border-blue-500/20 text-white transition-all cursor-pointer select-none active:scale-95"
             id="nav_nav_sell"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity" />
