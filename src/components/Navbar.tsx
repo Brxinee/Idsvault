@@ -14,10 +14,10 @@ interface NavbarProps {
 
 const navItems = [
   { label: "Home",       to: "/" },
-  { label: "Browse IDs", to: "/browse" },
-  { label: "Sell Your ID", to: "/sell" },
-  { label: "Request ID", to: "/source" },
-  { label: "Blog",       to: "/blog" },
+  { label: "Inventory", to: "/browse" },
+  { label: "Sell", to: "/sell" },
+  { label: "Advisory", to: "/source" },
+  { label: "Journal",       to: "/blog" },
   { label: "FAQ",        to: "/faq" },
   { label: "Contact",    to: "/contact" },
 ];
