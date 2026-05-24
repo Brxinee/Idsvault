@@ -8,7 +8,8 @@ interface TurnstileWidgetProps {
 
 export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, actionName = "form_submission" }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const siteKey = (import.meta.env.VITE_TURNSTILE_SITE_KEY || "0x4AAAAAADUnYiTH-QihS0W1buI8_DcJ9_Q").trim();
+  // Site key must be provided via VITE_TURNSTILE_SITE_KEY env var — no hardcoded fallback
+  const siteKey = (import.meta.env.VITE_TURNSTILE_SITE_KEY || "").trim();
   const [errorStatus, setErrorStatus] = useState<boolean>(false);
   const [tokenGenerated, setTokenGenerated] = useState<string | null>(null);
 
@@ -63,6 +64,16 @@ export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, acti
       }
     };
   }, [siteKey, actionName, onVerify]);
+
+  // Show configuration error if site key is missing
+  if (!siteKey) {
+    return (
+      <div className="my-4 p-3 rounded-lg bg-red-500/5 border border-red-500/15 flex items-center gap-2 text-[10px] text-red-400 font-mono">
+        <ShieldAlert className="h-3.5 w-3.5 shrink-0" />
+        Security widget not configured. Set <strong className="mx-1">VITE_TURNSTILE_SITE_KEY</strong> in your environment.
+      </div>
+    );
+  }
 
   return (
     <div className="my-4 p-3 rounded-lg bg-[#0F0F10] border border-white/[0.04] flex flex-col gap-2">
