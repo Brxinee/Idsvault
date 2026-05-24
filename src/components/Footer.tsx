@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
             <span className="font-semibold text-lg text-white">IDsvault</span>
           </Link>
           <p className="text-xs text-gray-500 leading-relaxed">
-            Independent username brokerage marketplace. Buyer and seller verified. Payment held in escrow until transfer is complete. Hyderabad, India.
+            Global broker-assisted digital identity desk for Telegram usernames, domains, Discord communities, and selected YouTube transfers. Headquartered in Hyderabad.
           </p>
           <div className="text-[11px] text-gray-500 space-y-2 pt-2">
             <div className="flex items-center gap-2">
@@ -42,23 +42,23 @@ export const Footer: React.FC = () => {
 
         {/* Marketplace */}
         <div className="space-y-3 text-left">
-          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Marketplace</h4>
+          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Services</h4>
           <ul className="space-y-2 text-xs">
-            <li><Link to="/browse"  className="hover:text-white transition-colors">Browse Handles</Link></li>
-            <li><Link to="/sell"    className="hover:text-white transition-colors">Sell Your Username</Link></li>
-            <li><Link to="/source"  className="hover:text-white transition-colors">Custom Sourcing</Link></li>
-            <li><Link to="/blog"    className="hover:text-white transition-colors">Blog</Link></li>
+            <li><Link to="/browse"  className="hover:text-white transition-colors">Inventory</Link></li>
+            <li><Link to="/sell"    className="hover:text-white transition-colors">Seller Intake</Link></li>
+            <li><Link to="/source"  className="hover:text-white transition-colors">Private Advisory</Link></li>
+            <li><Link to="/blog"    className="hover:text-white transition-colors">Journal</Link></li>
             <li><Link to="/contact" className="hover:text-white transition-colors">Contact Desk</Link></li>
           </ul>
         </div>
 
         {/* Policies */}
         <div className="space-y-3 text-left">
-          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Policies</h4>
+          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Trust</h4>
           <ul className="space-y-2 text-xs">
-            <li><Link to="/policy/acceptable" className="hover:text-white transition-colors">Acceptable Use</Link></li>
-            <li><Link to="/policy/trademark"  className="hover:text-white transition-colors">Trademark Policy</Link></li>
-            <li><Link to="/policy/refund"     className="hover:text-white transition-colors">Refund Policy</Link></li>
+            <li><Link to="/policy/aml-kyc" className="hover:text-white transition-colors">AML & KYC</Link></li>
+            <li><Link to="/policy/sanctions"  className="hover:text-white transition-colors">Sanctions</Link></li>
+            <li><Link to="/policy/dispute"     className="hover:text-white transition-colors">Dispute Resolution</Link></li>
             <li><Link to="/faq"               className="hover:text-white transition-colors">FAQ</Link></li>
           </ul>
         </div>
@@ -69,6 +69,8 @@ export const Footer: React.FC = () => {
           <ul className="space-y-2 text-xs">
             <li><Link to="/policy/terms"   className="hover:text-white transition-colors">Terms of Service</Link></li>
             <li><Link to="/policy/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+            <li><Link to="/policy/risk-disclosure" className="hover:text-white transition-colors">Risk Disclosure</Link></li>
+            <li><Link to="/policy/imprint" className="hover:text-white transition-colors">Imprint</Link></li>
             <li className="pt-3 border-t border-white/[0.04]">
               <Link to="/admin" className="hover:text-white text-[10px] text-gray-600 transition-colors">
                 Admin Console

@@ -82,7 +82,20 @@ function ListingDetailRoute({ listings, onAddProposal, onAddLog }: ListingDetail
 
 function PolicyRoute() {
   const { segment } = useParams<{ segment: string }>();
-  const valid = ["terms", "privacy", "refund", "acceptable", "trademark"] as const;
+  const valid = [
+    "terms",
+    "privacy",
+    "refund",
+    "dispute",
+    "risk-disclosure",
+    "aml-kyc",
+    "sanctions",
+    "cookie-policy",
+    "dmca",
+    "grievance",
+    "accessibility",
+    "imprint"
+  ] as const;
   type Seg = typeof valid[number];
 
   if (!segment || !(valid as readonly string[]).includes(segment)) {
