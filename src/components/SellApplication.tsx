@@ -5,6 +5,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { usePageTitle } from "../hooks/usePageTitle";
+import { SEO } from "./SEO";
 import { 
   Upload, 
   HelpCircle, 
@@ -28,6 +29,7 @@ interface SellApplicationProps {
 
 export const SellApplication: React.FC<SellApplicationProps> = ({ onRegisterListing }) => {
   usePageTitle("Sell Your Handle");
+  // SEO handled via <SEO> component below
   // Wizard steps: 1 or 2
   const [step, setStep] = useState(1);
 
@@ -175,8 +177,14 @@ WhatsApp: ${whatsapp}`;
   };
 
   return (
+    <>
+    <SEO
+      title="Sell Your Username"
+      description="List your premium Instagram handle, X username, or Telegram channel for sale through IDsvault. Broker-verified, secure escrow, Hyderabad desk."
+      canonical="/sell"
+    />
     <div className="max-w-xl mx-auto px-6 py-12 text-left">
-      
+
       <div className="mb-10 text-center space-y-3">
         <h1 className="text-3xl font-extrabold tracking-tight text-white leading-tight">Sell Premium Identifier</h1>
         <p className="text-xs text-[#9CA3AF] max-w-sm mx-auto">
@@ -480,5 +488,6 @@ WhatsApp: ${whatsapp}`;
       </AnimatePresence>
 
     </div>
+    </>
   );
 };

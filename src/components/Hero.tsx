@@ -24,12 +24,45 @@ import { motion } from "motion/react";
 import { formatINR, getBadgesForHandle, maskUsername } from "../data";
 import { Listing } from "../types";
 import { usePageTitle } from "../hooks/usePageTitle";
+import { SEO } from "./SEO";
 
 interface HeroProps {
   featuredListings: Listing[];
   onSelectListing: (slug: string) => void;
   onNavigate: (view: string) => void;
 }
+
+const homepageSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "IDsvault",
+    "url": "https://idsvault.com",
+    "logo": "https://idsvault.com/logo.png",
+    "description": "India's broker-assisted marketplace for buying and selling premium Instagram handles, X usernames, and Telegram channels. Payment held in escrow until transfer is confirmed.",
+    "areaServed": { "@type": "Country", "name": "India" },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Hyderabad",
+      "addressRegion": "Telangana",
+      "addressCountry": "IN"
+    },
+    "email": "support@idsvault.com",
+    "telephone": "+919392974031",
+    "sameAs": ["https://wa.me/919392974031"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "IDsvault",
+    "url": "https://idsvault.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": { "@type": "EntryPoint", "urlTemplate": "https://idsvault.com/browse?q={search_term_string}" },
+      "query-input": "required name=search_term_string"
+    }
+  }
+];
 
 export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing }) => {
   usePageTitle();
@@ -76,6 +109,11 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
   return (
     <div className="relative overflow-hidden bg-[#050505] text-white">
+
+      <SEO
+        canonical="/"
+        structuredData={homepageSchema}
+      />
 
       {/* Hero Section */}
       <section className="relative max-w-7xl mx-auto px-6 pt-12 md:pt-24 pb-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
