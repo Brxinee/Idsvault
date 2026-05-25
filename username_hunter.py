@@ -13,6 +13,7 @@ Usage:
 import argparse
 import csv
 import json
+import os
 import random
 import re
 import sys
@@ -428,19 +429,69 @@ def filter_candidates(pool: list) -> list:
 # INSTAGRAM AVAILABILITY CHECK
 # ──────────────────────────────────────────────────────────────
 
-def make_session() -> requests.Session:
+def load_ig_cookies() -> dict:
+    """
+    Load Instagram session cookies from (in priority order):
+      1. IG_SESSION_ID + IG_CSRF_TOKEN environment variables
+      2. .env file in the current directory
+      3. ig_cookies.json  {"sessionid": "...", "csrftoken": "..."}
+
+    HOW TO GET YOUR COOKIES
+    -----------------------
+    1. Log in to Instagram in Chrome/Firefox.
+    2. Open DevTools (F12) → Application tab → Cookies → https://www.instagram.com
+    3. Copy the values for  sessionid  and  csrftoken.
+    4. Either:
+         export IG_SESSION_ID=<value>
+         export IG_CSRF_TOKEN=<value>
+       or create ig_cookies.json:
+         {"sessionid": "<value>", "csrftoken": "<value>"}
+
+    Without valid cookies Instagram returns 401 for all API requests
+    after a small number of unauthenticated hits.
+    """
+    # 1. Environment variables
+    sid  = os.environ.get("IG_SESSION_ID", "")
+    csrf = os.environ.get("IG_CSRF_TOKEN", "")
+    if sid:
+        return {"sessionid": sid, "csrftoken": csrf}
+
+    # 2. .env file (simple KEY=VALUE, no quotes needed)
+    env_path = Path(".env")
+    if env_path.exists():
+        for line in env_path.read_text().splitlines():
+            line = line.strip()
+            if line.startswith("IG_SESSION_ID="):
+                sid = line.split("=", 1)[1].strip().strip('"\'')
+            if line.startswith("IG_CSRF_TOKEN="):
+                csrf = line.split("=", 1)[1].strip().strip('"\'')
+        if sid:
+            return {"sessionid": sid, "csrftoken": csrf}
+
+    # 3. ig_cookies.json
+    cookie_path = Path("ig_cookies.json")
+    if cookie_path.exists():
+        data = json.loads(cookie_path.read_text())
+        if data.get("sessionid"):
+            return data
+
+    return {}
+
+
+def make_session(cookies: dict) -> requests.Session:
     s = requests.Session()
     s.headers.update({
+        "User-Agent":      random.choice(USER_AGENTS),
         "Accept":          "*/*",
-        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Language": "en-US,en;q=0.9",
         "Accept-Encoding": "gzip, deflate, br",
         "Connection":      "keep-alive",
-        # Instagram's own web app ID — same one the browser uses when
-        # the frontend JS calls this endpoint, so it's treated as a
-        # normal web client request rather than a scraper.
         "X-IG-App-ID":     "936619743392459",
         "X-Requested-With": "XMLHttpRequest",
     })
+    if cookies:
+        s.cookies.update(cookies)
+        s.headers.update({"X-CSRFToken": cookies.get("csrftoken", "")})
     return s
 
 
@@ -448,16 +499,18 @@ def check_username(session: requests.Session, username: str) -> str:
     """
     Returns: 'available' | 'taken' | 'skip'
 
-    Uses Instagram's internal profile-info endpoint which reliably
-    returns HTTP 404 for non-existent usernames and HTTP 200 + JSON
-    for existing profiles — unlike the profile page URL which returns
-    HTTP 200 for everything since Instagram became a fully client-side
-    React app.
+    Instagram's internal profile-info endpoint:
+      GET /api/v1/users/web_profile_info/?username={name}
 
-    HTTP 404  → available
-    HTTP 200  → taken (profile exists, JSON body with 'data' key)
+    With a valid session cookie this reliably returns:
+      HTTP 404 → username does not exist (available)
+      HTTP 200 → profile exists (taken)
+
+    Without cookies the endpoint returns 401 after a small number of
+    requests due to IP-based rate limiting.
+
     HTTP 429  → rate-limited: sleep then retry
-    HTTP 401/403 → session needs refresh, skip for now
+    HTTP 401/403 → auth required; remind user to supply cookies
     Other     → skip
     """
     url = f"https://www.instagram.com/api/v1/users/web_profile_info/?username={username}"
@@ -480,8 +533,14 @@ def check_username(session: requests.Session, username: str) -> str:
                 continue   # retry same username
 
             if resp.status_code in (401, 403):
-                print(f"\n  ⚠️  Auth required ({resp.status_code}). Skipping {username}.", flush=True)
-                return "skip"
+                print(
+                    f"\n  🔒  Instagram returned {resp.status_code} — session cookie required.\n"
+                    f"      Add your cookies via IG_SESSION_ID / IG_CSRF_TOKEN env vars\n"
+                    f"      or create ig_cookies.json. See --help for details.\n"
+                    f"      Halting to avoid wasting the candidate queue.",
+                    flush=True,
+                )
+                sys.exit(1)
 
             # Unexpected status
             print(f"  ⚠️  HTTP {resp.status_code} for {username}", flush=True)
@@ -565,6 +624,15 @@ def main():
     print("🔐  idsvault — Instagram Username Hunter")
     print("=" * 54)
 
+    # ── Load cookies ──
+    cookies = load_ig_cookies()
+    if cookies:
+        print(f"  Auth      : session cookie loaded ✅")
+    else:
+        print(f"  Auth      : ⚠️  no cookies found — Instagram will 401 after ~5 requests")
+        print(f"              Set IG_SESSION_ID + IG_CSRF_TOKEN or create ig_cookies.json")
+    print()
+
     # ── Generate + filter ──
     raw = build_candidates()
     print(f"  Generated : {len(raw):>5} raw candidates")
@@ -593,7 +661,7 @@ def main():
     skipped_count = len([r for r in checked.values() if r == "skip"])
 
     init_csv()
-    session = make_session()
+    session = make_session(cookies)
 
     print(f"  Resuming  : {len(checked)} already checked, "
           f"{len(found)} available found, {skipped_count} skipped")
