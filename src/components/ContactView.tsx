@@ -8,6 +8,7 @@ import {
   Mail,
   MessageSquare,
   MapPin,
+  Phone,
   Clock,
   ArrowLeft,
   ShieldCheck,
@@ -36,7 +37,7 @@ export const ContactView: React.FC = () => {
     e.preventDefault();
 
     if (!name.trim() || !email.trim() || !whatsapp.trim() || !message.trim()) {
-      alert("Please populate all contact requirements securely.");
+      alert("Please fill in all fields before submitting.");
       return;
     }
 
@@ -46,20 +47,20 @@ export const ContactView: React.FC = () => {
       setIsSubmitting(false);
 
       const topicMap: Record<string, string> = {
-        buy: "Buy/Acquisition Request",
-        sell: "Sell/Listing Proposal",
-        sourcing: "Private Sourcing Commission",
-        legal: "Legal & Trademark Audit Notice",
-        general: "General Support Consultation"
+        buy: "Buy / Acquisition Enquiry",
+        sell: "Sell / Listing Proposal",
+        sourcing: "Off-Market Sourcing Request",
+        legal: "Legal / IP Claim",
+        general: "General Enquiry"
       };
 
-      const customMsg = `Hi IDsvault, I want help with ${topicMap[inquiryType] || "General support"}.
+      const customMsg = `Hi IDsvault, I'd like to discuss: ${topicMap[inquiryType] || "General enquiry"}.
 
 Topic: ${topicMap[inquiryType]}
 Name: ${name}
 Email: ${email}
 WhatsApp: ${whatsapp}
-Message Details: ${message}`;
+Message: ${message}`;
 
       const coords = buildWhatsAppHandoff(customMsg);
 
@@ -74,33 +75,30 @@ Message Details: ${message}`;
     <>
     <SEO
       title="Contact Our Desk"
-      description="Get in touch with IDsvault's Hyderabad broker desk. WhatsApp, email, or phone — we respond quickly to buying and selling enquiries."
+      description="Get in touch with IDsvault's Hyderabad broker desk. WhatsApp, email, or phone — we respond same day to buying and selling enquiries."
       canonical="/contact"
     />
     <div className="max-w-4xl mx-auto px-6 py-12 text-left space-y-10">
 
-      {/* Back button header */}
-      <div className="flex items-center justify-between select-none">
+      {/* Back button */}
+      <div className="flex items-center justify-start select-none">
         <button
           onClick={() => navigate("/")}
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition-colors cursor-pointer group"
         >
           <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-          <span>Exit to Index</span>
+          <span>Back to Home</span>
         </button>
-        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest bg-white/5 px-2.5 py-1 rounded-full border border-white/[0.04]">
-          Support ID: Hyderabad-Active
-        </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-        
-        {/* Left Side: Contact Information Cards */}
+
+        {/* Left: Contact info cards */}
         <div className="md:col-span-5 space-y-6">
           <div className="space-y-3">
             <h1 className="text-3xl font-extrabold text-white tracking-tight leading-tight">Hyderabad Desk</h1>
             <p className="text-xs text-muted leading-relaxed">
-              Connect directly with our manual brokerage team. We enforce pristine, human-guided security checks for escrow transactions and off-market asset acquisitions.
+              Reach our desk via WhatsApp, email, or the form. We respond same day, Mon–Sat 09:30 AM – 8:30 PM IST.
             </p>
           </div>
 
@@ -108,48 +106,66 @@ Message Details: ${message}`;
             <div className="flex items-start gap-3.5 p-4 rounded-xl bg-surface border border-white/[0.06]">
               <MapPin className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Location Hub</p>
+                <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Office</p>
                 <p className="text-xs text-white font-medium">Hyderabad, Telangana, India</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-surface border border-white/[0.06]">
+              <Phone className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Phone / WhatsApp</p>
+                <a
+                  href="tel:+919392974031"
+                  className="text-xs text-white font-medium hover:text-blue-400 transition-colors"
+                >
+                  +91 93929 74031
+                </a>
               </div>
             </div>
 
             <div className="flex items-start gap-3.5 p-4 rounded-xl bg-surface border border-white/[0.06]">
               <Mail className="h-5 w-5 text-[#10B981] shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">General Email</p>
-                <p className="text-xs text-white font-medium">{SUPPORT_EMAIL}</p>
+                <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Email</p>
+                <a
+                  href={`mailto:${SUPPORT_EMAIL}`}
+                  className="text-xs text-white font-medium hover:text-blue-400 transition-colors"
+                >
+                  {SUPPORT_EMAIL}
+                </a>
               </div>
             </div>
 
             <div className="flex items-start gap-3.5 p-4 rounded-xl bg-surface border border-white/[0.06]">
               <Clock className="h-5 w-5 text-purple-400 shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Desk Availability</p>
-                <p className="text-xs text-white font-medium">Mon - Sat: 09:30 AM - 08:30 PM (IST)</p>
+                <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Hours</p>
+                <p className="text-xs text-white font-medium">Mon – Sat: 09:30 AM – 8:30 PM IST</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Side: Contact Submission Workstation */}
+        {/* Right: Contact form */}
         <div className="md:col-span-7">
           <div className="p-8 rounded-2xl bg-surface border border-white/[0.08]" id="contact_desktop_container">
-            <h3 className="font-extrabold text-white text-lg tracking-tight mb-6">Select Inquiry Focus</h3>
-            
+            <h3 className="font-extrabold text-white text-lg tracking-tight mb-6">Send a Message</h3>
+
             <form onSubmit={handleSubmit} className="space-y-5">
-              
-              {/* Inquiry pills selector */}
+
+              {/* Topic selector */}
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2.5 font-mono">
-                  Topic of Consultation
+                  Topic
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
-                    { id: "buy", label: "Acquire Name" },
-                    { id: "sell", label: "List Asset" },
-                    { id: "sourcing", label: "Custom Sourcing" },
-                    { id: "legal", label: "Legal/IP Claims" },
-                    { id: "general", label: "General Help" }
+                    { id: "buy",      label: "Acquire" },
+                    { id: "sell",     label: "List Asset" },
+                    { id: "sourcing", label: "Sourcing" },
+                    { id: "legal",    label: "Legal / IP" },
+                    { id: "general",  label: "General" }
                   ].map((topic) => (
                     <button
                       key={topic.id}
@@ -167,7 +183,7 @@ Message Details: ${message}`;
                 </div>
               </div>
 
-              {/* Form entries */}
+              {/* Form fields */}
               <div className="space-y-4">
                 <div>
                   <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
@@ -186,12 +202,12 @@ Message Details: ${message}`;
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                      Corporate Email Address
+                      Email Address
                     </label>
                     <input
                       type="email"
                       required
-                      placeholder="e.g. anand@kumarholdings.in"
+                      placeholder="e.g. anand@example.in"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
@@ -200,7 +216,7 @@ Message Details: ${message}`;
 
                   <div>
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                      Active WhatsApp Contact
+                      WhatsApp Number
                     </label>
                     <input
                       type="tel"
@@ -215,12 +231,12 @@ Message Details: ${message}`;
 
                 <div>
                   <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                    Describe your request detail
+                    Your Message
                   </label>
                   <textarea
                     required
                     rows={4}
-                    placeholder="Provide specific handle names, platforms, budgets or target timelines..."
+                    placeholder="Handle names, platforms, budget, or anything else..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none resize-none leading-relaxed"
@@ -238,7 +254,7 @@ Message Details: ${message}`;
                 ) : (
                   <>
                     <Send className="h-3.5 w-3.5" />
-                    <span>Initiate Contact Verification</span>
+                    <span>Send Message</span>
                   </>
                 )}
               </button>
@@ -249,15 +265,15 @@ Message Details: ${message}`;
 
       </div>
 
-      {/* Trust warning badge */}
+      {/* Trust note */}
       <article className="p-4 rounded-xl bg-blue-500/[0.012] border border-blue-500/10 text-xs text-gray-400 flex items-start gap-3 select-none leading-relaxed">
         <ShieldCheck className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
         <p>
-          Each message submitted is assigned a unique reference audit ticket. Communication history remains strictly confidential between the client and the allocated Hyderabad operations manager.
+          All enquiries are handled confidentially by Sanjay Reddy (Lead Broker & Grievance Officer). We do not share your contact details with third parties.
         </p>
       </article>
 
-      {/* Success Modal Dialogue */}
+      {/* Success Modal */}
       <AnimatePresence>
         {successHandoff && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in">
@@ -271,11 +287,11 @@ Message Details: ${message}`;
               <div className="h-12 w-12 bg-[#10B981]/10 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-2">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
-              
+
               <div className="space-y-2">
-                <h3 className="font-extrabold text-xl text-white tracking-tight animate-pulse">Ticket Generated</h3>
+                <h3 className="font-extrabold text-xl text-white tracking-tight">Ready to Send</h3>
                 <p className="text-xs text-gray-400 leading-relaxed font-normal text-center">
-                  Your inquiry coordinate packet has been logged. Open the secure handoff stream to chat with our active Hyderabad operations Desk right now.
+                  Open WhatsApp to deliver your message, or use the email link below if you prefer.
                 </p>
               </div>
 
@@ -288,7 +304,7 @@ Message Details: ${message}`;
                   onClick={() => setSuccessHandoff(null)}
                 >
                   <MessageSquare className="h-4 w-4 text-white" />
-                  Connect to Hyderabad WhatsApp
+                  Open WhatsApp
                 </a>
                 <a
                   href={successHandoff.mailto}
@@ -296,7 +312,7 @@ Message Details: ${message}`;
                   onClick={() => setSuccessHandoff(null)}
                 >
                   <Mail className="h-3.5 w-3.5 text-gray-400" />
-                  Backup Direct Mail Dispatch
+                  Send via Email Instead
                 </a>
               </div>
             </motion.div>

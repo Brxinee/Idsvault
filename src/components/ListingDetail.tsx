@@ -139,7 +139,7 @@ Urgency: Standard`;
     <>
     <SEO
       title={`Buy @${listing.username} on ${listing.platform}`}
-      description={`Premium @${listing.username} ${listing.platform} handle — ${listing.askingPrice > 0 ? `${formatINR(listing.askingPrice)} asking price. ` : ""}Broker-verified, payment in escrow. IDsvault Hyderabad.`}
+      description={`Premium @${listing.username} ${listing.platform} handle — ${listing.askingPrice > 0 ? `${formatINR(listing.askingPrice)} asking price. ` : ""}Broker-verified. Payment held by broker until transfer confirmed. IDsvault Hyderabad.`}
       canonical={`/asset/${listing.slug}`}
       structuredData={listingSchema}
     />
@@ -152,7 +152,7 @@ Urgency: Standard`;
         id="detail_back_trigger"
       >
         <ChevronLeft className="h-4 w-4 text-gray-500 group-hover:-translate-x-0.5 transition-transform animate-in" />
-        <span>Back to Namespace Registry</span>
+        <span>Back to Inventory</span>
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -174,11 +174,11 @@ Urgency: Standard`;
             </header>
 
             <div className="space-y-4 pt-10 pb-12">
-              <span className="text-[10px] font-bold text-gray-500 block uppercase tracking-widest font-mono">Masked Identifier</span>
+              <span className="text-[10px] font-bold text-gray-500 block uppercase tracking-widest font-mono">Handle</span>
               <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
                 @{maskedTitle}
               </h1>
-              <p className="text-xs text-blue-400 font-mono tracking-wide">Registry ID: Reference Block #{listing.id}-SVX</p>
+              <p className="text-xs text-blue-400 font-mono tracking-wide">Ref #{listing.id}</p>
             </div>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-white/[0.06] text-xs">
@@ -205,9 +205,9 @@ Urgency: Standard`;
 
           {/* Broker Assessment Context Form */}
           <article className="p-8 rounded-2xl bg-surface border border-white/[0.08] space-y-4 text-left">
-            <h2 className="text-xs font-bold text-white uppercase tracking-widest font-mono">Desk Coordinator Assessment</h2>
+            <h2 className="text-xs font-bold text-white uppercase tracking-widest font-mono">About this Handle</h2>
             <p className="text-xs text-muted leading-relaxed">
-              {listing.description} This namespace has successfully satisfied our strict criteria and verified ownership controls. The seller is currently under administrative contract, guarding ownership markers and linked configuration coordinates under human broker supervision.
+              {listing.description}
             </p>
           </article>
 
@@ -218,17 +218,17 @@ Urgency: Standard`;
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div className="p-4 rounded-xl bg-raised border border-white/[0.04] space-y-2">
                 <Lock className="h-4 w-4 text-blue-500" />
-                <h4 className="font-bold text-white text-[11px] tracking-tight">Ledger Isolation</h4>
+                <h4 className="font-bold text-white text-[11px] tracking-tight">Payment Held by Broker</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
-                  Your payment coordinates are guarded. Fund release occurs strictly once ownership transfer is verified.
+                  Payment is held in the broker's registered business account. Funds are released only after the transfer is confirmed.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-raised border border-white/[0.04] space-y-2">
                 <Fingerprint className="h-4 w-4 text-[#10B981]" />
-                <h4 className="font-bold text-white text-[11px] tracking-tight">Vetted Tokens</h4>
+                <h4 className="font-bold text-white text-[11px] tracking-tight">Ownership Confirmed</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
-                  Sellers verify active ownership properties with bio token validations prior to coordinate listing approvals.
+                  Sellers demonstrate active account access before listing. We verify ownership before any handle goes live.
                 </p>
               </div>
 
@@ -248,8 +248,8 @@ Urgency: Standard`;
           <div className="p-6 rounded-2xl bg-raised border border-white/[0.08] sticky top-24 space-y-6">
             
             <div className="space-y-1">
-              <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest font-mono block">Secure Bidding Desk</span>
-              <h3 className="text-lg font-bold text-white">Initialize Proposal</h3>
+              <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest font-mono block">Offer Desk</span>
+              <h3 className="text-lg font-bold text-white">Make an Offer</h3>
               <p className="text-xs text-muted">Submit custom valuation offers in compliance with our structured payment workflow.</p>
             </div>
 
@@ -300,7 +300,7 @@ Urgency: Standard`;
 
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                  Representative Full Name
+                  Your Full Name
                 </label>
                 <input
                   type="text"
@@ -315,7 +315,7 @@ Urgency: Standard`;
 
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                  Business E-mail Node
+                  Your Email Address
                 </label>
                 <input
                   type="email"
@@ -330,7 +330,7 @@ Urgency: Standard`;
 
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                  WhatsApp Contact Coordinates
+                  WhatsApp Number
                 </label>
                 <input
                   type="tel"
@@ -369,7 +369,7 @@ Urgency: Standard`;
                   ) : (
                     <>
                       <span>Make Offer</span>
-                      {cooldown > 0 && <span className="font-mono text-[8 offices] text-blue-305">({cooldown}s)</span>}
+                      {cooldown > 0 && <span className="font-mono text-[8px] text-blue-300">({cooldown}s)</span>}
                     </>
                   )}
                 </button>
@@ -379,7 +379,7 @@ Urgency: Standard`;
             {/* Support Message */}
             <div className="pt-2 border-t border-white/[0.06] text-center select-none">
               <p className="text-[10px] text-gray-500">
-                Need bespoke corporate legal contracts? Direct secure liaison with our Hyderabad Desk consultancy hotline is online.
+                Questions? Message our Hyderabad desk on WhatsApp or email broker@idsvault.com.
               </p>
             </div>
 
@@ -405,9 +405,9 @@ Urgency: Standard`;
               </div>
               
               <div className="space-y-1.5">
-                <h3 className="font-extrabold text-xl text-white tracking-tight">Bid Proposals Locked</h3>
+                <h3 className="font-extrabold text-xl text-white tracking-tight">Offer Received</h3>
                 <p className="text-xs text-gray-400 leading-relaxed font-normal">
-                  Your acquisition bid has been authenticated. To allocate your dedicated broker coordinator and initiate manual coordinate checks, initiate the direct communication handshake.
+                  Open WhatsApp to send your offer to our Hyderabad desk. We'll confirm receipt and come back to you same day.
                 </p>
               </div>
 
@@ -419,7 +419,7 @@ Urgency: Standard`;
                   className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer outline-none"
                   onClick={() => setSuccessOverlay(null)}
                 >
-                  Launch Custom WhatsApp Workspace
+                  Open WhatsApp Conversation
                 </a>
                 <a
                   href={successOverlay.mailto}
@@ -427,7 +427,7 @@ Urgency: Standard`;
                   onClick={() => setSuccessOverlay(null)}
                 >
                   <Mail className="h-3.5 w-3.5" />
-                  No WhatsApp? Mail Coordinator Fallback
+                  Prefer email? Write to broker@idsvault.com
                 </a>
               </div>
 
@@ -435,7 +435,7 @@ Urgency: Standard`;
                 onClick={() => setSuccessOverlay(null)}
                 className="text-[10px] text-gray-500 hover:text-gray-300 uppercase tracking-wider block mx-auto cursor-pointer font-bold select-none pt-2"
               >
-                Close Portal & Browse Directory
+                Close
               </button>
             </motion.div>
           </div>
