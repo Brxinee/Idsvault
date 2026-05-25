@@ -49,6 +49,7 @@ function viewToPath(view: string): string {
     blog:      "/journal",
     journal:   "/journal",
     faq:       "/faq",
+    about:     "/about",
     contact:   "/contact",
     admin:     "/admin",
   };
