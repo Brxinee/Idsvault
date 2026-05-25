@@ -16,7 +16,7 @@ const navItems = [
   { label: "Inventory", to: "/inventory" },
   { label: "Sell",      to: "/sell" },
   { label: "Advisory",  to: "/advisory" },
-  { label: "Journal",   to: "/journal" },
+  { label: "About",     to: "/about" },
   { label: "Contact",   to: "/contact" },
 ];
 

@@ -45,19 +45,19 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "What we list publicly",
-        body: "Our public inventory covers Telegram usernames (transferred via Fragment, officially supported by Telegram), domain names, Discord server ownership transfers, and YouTube Brand Account transfers. Instagram and X (Twitter) handles are handled on a private advisory basis only — they are never publicly listed — because both platforms prohibit username transfers in their Terms of Service. We disclose this risk in writing before any advisory engagement begins."
+        body: "Our public inventory covers Telegram usernames (broker-supervised live transfer), domain names, Discord server ownership transfers, and YouTube Brand Account transfers. Instagram and X (Twitter) handles are handled on a private advisory basis only — they are never publicly listed — because both platforms prohibit username transfers in their Terms of Service. We disclose this risk in writing before any advisory engagement begins."
       },
       {
         heading: "How payment works",
-        body: "You pay IDsvault, not the seller. For deals under USD 5,000, funds are held in a designated business account separate from our operating funds. For deals above USD 5,000, we use licensed third-party escrow (Escrow.com or equivalent). We do not release funds to the seller until the buyer confirms full account access and has changed all credentials. If the transfer fails for any reason, the buyer gets a full refund within 3 business hours."
+        body: "Your payment goes to IDsvault's designated broker account — via UPI or bank transfer (NEFT/RTGS/IMPS). All payments are processed through our registered business current account with full GST-compliant tax invoicing. We hold the full amount, separate from our operating funds, until you confirm on the live call that you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund — no third-party claim process needed, because we hold the funds directly."
       },
       {
         heading: "Fees and disclosure",
-        body: "Our commission is 15% for deals under USD 5,000, 12% for deals between USD 5,000 and USD 25,000, and 10% for deals above USD 25,000. Deals above USD 100,000 are negotiable. All fees are disclosed before any payment is made. There are no hidden charges."
+        body: "Our commission is 15% + GST (18%) for deals under ₹5,00,000, 12% + GST for deals between ₹5,00,000 and ₹20,00,000, and 10% + GST for deals above ₹20,00,000. Deals above ₹85,00,000 are negotiable. All fees are disclosed before any payment is made. A GST-compliant tax invoice is issued for every transaction. There are no hidden charges."
       },
       {
         heading: "Governing law",
-        body: "These terms are governed by the laws of India. Disputes are subject to arbitration in Hyderabad, Telangana. Where non-waivable local consumer rights apply — including EU, UK, Australian, or Canadian statutory rights — those rights take precedence. Nothing in these terms removes your statutory consumer rights."
+        body: "These terms are governed by the laws of India. IDsvault serves buyers and sellers in India only. Disputes are subject to arbitration in Hyderabad, Telangana under the Arbitration and Conciliation Act 1996. Consumer rights under the Consumer Protection Act 2019 (India) apply to all transactions and are not excluded by these terms."
       },
       {
         heading: "Limitations",
@@ -73,11 +73,11 @@ const policyContent: Record<string, PolicyDoc> = {
     sections: [
       {
         heading: "What we collect",
-        body: "When you use IDsvault, we collect the information you provide directly: your name, email address, WhatsApp number, and deal-related details (the handle you want, your budget, the platform). For KYC-required deals (above USD 1,000), we also collect government-issued ID documents and may request source-of-funds information for deals above USD 10,000. We collect analytics data through Google Analytics to understand how visitors use the site."
+        body: "When you use IDsvault, we collect the information you provide directly: your name, email address, WhatsApp number, and deal-related details (the handle you want, your budget, the platform). For KYC-required deals (above ₹85,000), we collect government-issued ID documents (Aadhaar/PAN). For deals above ₹8,50,000, we may request a source-of-funds declaration. We collect analytics data through Google Analytics to understand how visitors use the site."
       },
       {
         heading: "Why we collect it",
-        body: "We process your data to operate the brokerage service — matching buyers and sellers, verifying ownership, running the escrow process, and completing the transfer. KYC data is collected because we are legally required to verify identity above certain deal thresholds. Analytics data helps us improve the site. We do not sell personal data to third parties or use it for advertising."
+        body: "We process your data to operate the facilitation service — matching buyers and sellers, verifying ownership, coordinating payment, and completing the transfer. KYC data is collected because we are legally required under PMLA guidelines to verify identity above certain deal thresholds. Analytics data helps us improve the site. We do not sell personal data to third parties or use it for advertising."
       },
       {
         heading: "How long we keep it",
@@ -85,11 +85,11 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "Your rights",
-        body: "You have the right to access the personal data we hold about you, correct inaccuracies, and request deletion of data we are not required to retain. EU and UK users have additional rights under GDPR including portability and the right to object to certain processing. California users have rights under CCPA/CPRA. Indian users have rights under the Digital Personal Data Protection Act 2023. To exercise any of these rights, email broker@idsvault.com."
+        body: "Under the Digital Personal Data Protection Act 2023 (DPDPA), you have the right to access the personal data we hold about you, correct inaccuracies, request erasure of data we are not legally required to retain, and raise a grievance. Requests are handled through our Grievance Officer — email broker@idsvault.com. We aim to respond within 7 business days."
       },
       {
-        heading: "Cross-border transfers",
-        body: "Our core operations are based in India. When data is shared with third-party processors outside India — such as hosting providers, analytics platforms, or escrow services — we use contractual safeguards including Standard Contractual Clauses where required by EU/UK law."
+        heading: "Data processors",
+        body: "IDsvault is India-based and serves Indian clients only. We use third-party processors for hosting (Vercel) and analytics (Google Analytics). When data is processed outside India, we maintain appropriate contractual safeguards. We do not share personal data with buyers, sellers, or any marketing platform."
       }
     ]
   },
@@ -101,7 +101,7 @@ const policyContent: Record<string, PolicyDoc> = {
     sections: [
       {
         heading: "The short version",
-        body: "If the transfer fails for any reason — the seller backs out, ownership verification fails, the platform blocks it, anything — you get a full refund within 3 business hours. No questions. No deductions. No waiting weeks. This is the whole point of using escrow."
+        body: "If the transfer fails for any reason — the seller backs out, ownership verification fails, the platform blocks it, anything — you get a full refund within 3 business hours. No questions. No deductions. No waiting weeks. This is the whole point of broker-held payment: we control the funds, so we can return them immediately."
       },
       {
         heading: "When refunds apply",
@@ -109,15 +109,11 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "Completed transfers",
-        body: "Once you confirm to our broker that you have full account access — you have changed the recovery email, phone number, and 2FA — the escrow is released to the seller and the deal is complete. At that point, the transaction is final. If you later discover a problem with the account, that is treated as a dispute (see our Dispute Resolution Policy), not an automatic refund."
+        body: "Once you confirm to our broker that you have full account access — you have changed the recovery email, phone number, and 2FA — payment is released to the seller and the deal is complete. At that point, the transaction is final. If you later discover a problem with the account, that is treated as a dispute (see our Dispute Resolution Policy), not an automatic refund."
       },
       {
         heading: "Fees",
-        body: "If a deal is cancelled before the transfer is initiated, our brokerage fee is refunded in full. If the transfer was attempted but failed, our fee is also refunded. We only retain our commission on successfully completed deals."
-      },
-      {
-        heading: "EU and UK buyers",
-        body: "EU and UK consumers have statutory withdrawal rights for certain service contracts. Because our service involves active broker engagement that begins immediately, we ask you to explicitly confirm at deal initiation that you are requesting immediate commencement and acknowledge that statutory withdrawal rights may be limited once the service has begun. We will explain this clearly before you pay."
+        body: "If a deal is cancelled before the transfer is initiated, our brokerage fee is refunded in full. If the transfer was attempted but failed, our fee is also refunded. We only retain our commission on successfully completed deals. GST on fees follows the same refund logic."
       }
     ]
   },
@@ -129,23 +125,23 @@ const policyContent: Record<string, PolicyDoc> = {
     sections: [
       {
         heading: "Start with us",
-        body: "Most disputes are resolved quickly because we have records of everything — WhatsApp messages, call logs, ownership verification steps, and escrow release confirmations. If you have a concern about a deal, contact broker@idsvault.com with your deal reference. We aim to respond within 24 hours."
+        body: "Most disputes are resolved quickly because we have records of everything — WhatsApp messages, call logs, ownership verification steps, and payment release confirmations. If you have a concern about a deal, contact broker@idsvault.com with your deal reference. We aim to respond within 24 hours."
       },
       {
         heading: "Escrow disputes",
-        body: "For deals above USD 5,000 where a licensed escrow provider is used, payment-related disputes are handled through the escrow provider's formal dispute process. IDsvault will provide all deal documentation to support the review."
+        body: "Since IDsvault holds the funds directly in our designated broker account, payment disputes do not require a third-party process. Contact broker@idsvault.com with your deal reference number. We maintain records of all WhatsApp conversations, call logs, and transfer confirmations. Most disputes are resolved within 24 hours."
       },
       {
         heading: "Ownership and platform disputes",
         body: "If a seller is found to have misrepresented ownership, or if an account is recovered post-transfer, we treat that as fraud and escalate internally. We will cooperate with law enforcement if required and can assist buyers in documenting the incident for police complaint purposes."
       },
       {
-        heading: "EU consumers",
-        body: "EU consumers may use the European Commission's Online Dispute Resolution platform (ec.europa.eu/odr) for cross-border disputes where required. Our compliance email is broker@idsvault.com."
+        heading: "Consumer forum escalation",
+        body: "If a dispute cannot be resolved through our process, you may escalate to the National Consumer Disputes Redressal Commission (NCDRC) or relevant State Consumer Forum under the Consumer Protection Act 2019. You may also file a complaint with the Telangana State Consumer Forum if you are based in Telangana."
       },
       {
         heading: "Final resolution",
-        body: "If a dispute cannot be resolved through our process or the escrow provider's process, it is subject to arbitration in Hyderabad, India under Indian arbitration law. Where non-waivable local consumer rights apply, those rights are not limited by these terms."
+        body: "If a dispute cannot be resolved through our internal process or consumer forum escalation, it is subject to arbitration in Hyderabad, India under the Arbitration and Conciliation Act 1996. Indian law governs all disputes."
       }
     ]
   },
@@ -157,7 +153,7 @@ const policyContent: Record<string, PolicyDoc> = {
     sections: [
       {
         heading: "Telegram usernames",
-        body: "Telegram username transfers via Fragment are officially supported by Telegram. This is the cleanest category we offer — the transfer is on-chain, platform-sanctioned, and irreversible once confirmed. The main risk is the standard volatility of digital asset values: a handle worth $10,000 today may be worth more or less in the future. There is no platform enforcement risk."
+        body: "Telegram username transfers are done through a live supervised call — broker, buyer, and seller together. The seller transfers the username, you confirm access, and only then does the broker release payment. This is the cleanest and most straightforward category we handle. The main risk is market value fluctuation: a handle worth ₹5,00,000 today may be worth more or less in the future."
       },
       {
         heading: "Domain names",
@@ -193,7 +189,7 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "Thresholds",
-        body: "Under USD 1,000 equivalent: basic name and contact details. Between USD 1,000 and USD 10,000: government-issued photo ID (passport, Aadhaar, or equivalent). Above USD 10,000: ID plus source-of-funds review and enhanced due diligence. For international clients, we follow FATF guidance and the KYC standards of the client's jurisdiction."
+        body: "Under ₹85,000 equivalent: basic name and contact details. Between ₹85,000 and ₹8,50,000: government-issued photo ID. Above ₹8,50,000: ID plus source-of-funds review and enhanced due diligence. For all clients, we require identity verification at the thresholds above regardless of payment method. PAN and Aadhaar are the primary accepted documents for Indian clients."
       },
       {
         heading: "How we handle KYC documents",
@@ -213,11 +209,11 @@ const policyContent: Record<string, PolicyDoc> = {
     sections: [
       {
         heading: "Restricted parties",
-        body: "IDsvault does not provide services to individuals or entities on OFAC (US), UN, EU, or Indian sanctions lists. We screen buyers, sellers, and deal counterparties against these lists at onboarding and before deal completion."
+        body: "IDsvault does not provide services to individuals or entities on Indian government sanctions lists, or UN sanctions lists. Since we serve India only, international sanctions lists are not applicable, but we do not knowingly facilitate any transaction that would violate Indian law."
       },
       {
         heading: "Restricted jurisdictions",
-        body: "We do not service clients in jurisdictions subject to comprehensive international sanctions. If a payment originates from a restricted jurisdiction or a client discloses they are based there, we will decline the engagement and, where required by law, report the attempted contact."
+        body: "IDsvault serves Indian buyers and sellers only. We do not accept international clients, cross-border payments, or transactions involving overseas parties. This simplifies our compliance posture and eliminates most sanctions-related risk entirely."
       },
       {
         heading: "How screening works",
@@ -293,11 +289,11 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "Escalation",
-        body: "If you are not satisfied with our response, you may escalate to Indian consumer forums or, for EU/UK clients, your national consumer protection authority. We cooperate fully with regulatory inquiries."
+        body: "If you are not satisfied with our response, you may escalate to Indian consumer forums under the Consumer Protection Act 2019. We cooperate fully with regulatory inquiries."
       },
       {
         heading: "Regulatory contact",
-        body: "For data protection complaints, EU residents may contact their national supervisory authority. UK residents may contact the ICO (ico.org.uk). Indian residents may contact the relevant CERT-In or data protection authority once the DPDPA framework is fully operational."
+        body: "For data protection complaints, Indian clients may contact the relevant CERT-In or data protection authority once the DPDPA 2023 framework is fully operational. Email broker@idsvault.com for all compliance-related inquiries."
       }
     ]
   },
@@ -333,7 +329,7 @@ const policyContent: Record<string, PolicyDoc> = {
     sections: [
       {
         heading: "Business identity",
-        body: "IDsvault is operated as a private brokerage desk based in Hyderabad, Telangana, India. We provide broker-assisted digital handle transfer services to clients globally."
+        body: "IDsvault is operated as a private brokerage desk based in Hyderabad, Telangana, India. We provide broker-advised digital identity transfer facilitation services to buyers and sellers in India."
       },
       {
         heading: "Contact",
@@ -354,11 +350,11 @@ const policyContent: Record<string, PolicyDoc> = {
 const faqItems = [
   {
     q: "Is it legal to buy or sell an Instagram or X username?",
-    a: "Instagram and X (Twitter) both prohibit username transfers in their Terms of Service. This means any transfer carries platform enforcement risk — the account could be suspended or the username recycled. IDsvault does not publicly list Instagram or X handles. We only engage with these on a private advisory basis, and we require clients to sign a written risk acknowledgement before we do anything. Telegram transfers via Fragment are officially sanctioned by Telegram and carry no platform risk."
+    a: "Instagram and X (Twitter) both prohibit username transfers in their Terms of Service. This means any transfer carries platform enforcement risk — the account could be suspended or the username recycled. IDsvault does not publicly list Instagram or X handles. We only engage with these on a private advisory basis, and we require clients to sign a written risk acknowledgement before we do anything. Telegram username transfers are done on a live broker-supervised call and carry no platform enforcement risk."
   },
   {
-    q: "How does escrow work?",
-    a: "You pay IDsvault, not the seller. We hold the full amount until you confirm you have full account access and have changed all credentials — email, phone, and 2FA. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund within 3 business hours."
+    q: "How does broker-held payment work?",
+    a: "You pay IDsvault via UPI or bank transfer — not the seller. We hold the full amount in our designated business account until you confirm full account access on the live call and have changed all credentials — email, phone, and 2FA. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund within 3 business hours."
   },
   {
     q: "What is a live supervised transfer?",
@@ -366,19 +362,19 @@ const faqItems = [
   },
   {
     q: "How much does IDsvault charge?",
-    a: "15% for deals under $5,000 USD · 12% for $5,000–$25,000 · 10% above $25,000 · Negotiable above $100,000. All fees are disclosed before any payment is made. Our fee comes out of the escrowed amount — we deduct it when we release funds to the seller."
+    a: "15% + 18% GST for deals under ₹5,00,000 · 12% + GST for ₹5,00,000–₹20,00,000 · 10% + GST above ₹20,00,000 · Negotiable for deals above ₹85,00,000. All fees are disclosed before any payment is made. GST-compliant tax invoice issued for every transaction."
   },
   {
     q: "Can I buy a Telegram username through IDsvault?",
-    a: "Yes. Telegram usernames via Fragment are our primary listing category. Transfers are officially supported by Telegram, settled in TON cryptocurrency, and involve no platform risk. Browse our current inventory to see available handles."
+    a: "Yes. Telegram username transfers are our primary listing category. The transfer happens on a live supervised call — broker, buyer, and seller together. No platform enforcement risk. Browse our inventory to see available handles."
   },
   {
-    q: "Can buyers outside India use IDsvault?",
-    a: "Yes. We serve clients globally. International payments can be arranged via Wise, SWIFT, or crypto (USDC/USDT). Our brokerage desk is in Hyderabad and handles all coordination regardless of time zone."
+    q: "Do you serve buyers and sellers across India?",
+    a: "Yes. IDsvault serves buyers and sellers across all Indian states. Our broker desk is based in Hyderabad but handles inquiries from anywhere in India via WhatsApp, phone, and Telegram. Payments are via UPI or bank transfer in INR."
   },
   {
     q: "What KYC documents do I need?",
-    a: "Under $1,000 USD: none. Between $1,000 and $10,000 USD: government-issued photo ID (passport, Aadhaar, or equivalent). Above $10,000 USD: ID plus source-of-funds review. All documents are treated with full confidentiality and are not shared with the counterparty."
+    a: "Under ₹85,000: no KYC required. ₹85,000–₹8,50,000: government-issued photo ID (PAN or Aadhaar). Above ₹8,50,000: ID plus source-of-funds review. PAN is the primary document for Indian clients. All documents are treated with full confidentiality and are not shared with the counterparty."
   },
   {
     q: "How long does a deal take?",
@@ -398,7 +394,7 @@ const faqItems = [
   },
   {
     q: "What happens if IDsvault shuts down mid-deal?",
-    a: "For deals above USD 5,000 where licensed third-party escrow (Escrow.com or equivalent) is used, your funds are protected by the escrow provider independently of IDsvault. For smaller deals, funds are held in a segregated business account — not mixed with operating funds. We maintain deal records that can be reviewed by any legal authority if required."
+    a: "All funds are held in IDsvault's registered business current account, kept strictly separate from operating funds. Every deal has a signed engagement letter and GST invoice. Deal records are maintained for 7 years. If something ever goes wrong, all documentation is available to any legal authority."
   }
 ];
 
@@ -410,7 +406,7 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
       <div className="max-w-3xl mx-auto px-6 py-12 text-left space-y-8">
         <SEO
           title="Frequently Asked Questions — IDsvault"
-          description="Common questions about buying and selling Instagram, X, and Telegram usernames through IDsvault's broker-supervised escrow service."
+          description="Common questions about buying and selling Instagram, X, and Telegram usernames through IDsvault's broker-supervised transfer service in India."
           canonical="/faq"
           structuredData={{
             "@context": "https://schema.org",

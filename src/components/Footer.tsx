@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { Shield, MapPin, Mail } from "lucide-react";
+import { Shield, MapPin, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Footer: React.FC = () => {
@@ -24,18 +24,28 @@ export const Footer: React.FC = () => {
             <span className="font-semibold text-lg text-white">IDsvault</span>
           </Link>
           <p className="text-xs text-gray-500 leading-relaxed">
-            Global broker-assisted digital identity desk for Telegram usernames, domains, Discord communities, and selected YouTube transfers. Headquartered in Hyderabad.
+            IDsvault — Digital Identity Facilitation Desk. India-based broker-advised service for Telegram usernames, domains, Discord communities, and selected YouTube transfers.
           </p>
           <div className="text-[11px] text-gray-500 space-y-2 pt-2">
             <div className="flex items-center gap-2">
               <MapPin className="h-3.5 w-3.5 text-gray-600 shrink-0" />
-              <span>Hyderabad, Telangana, India</span>
+              <span>Hyderabad, Telangana — 500 081, India</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Phone className="h-3.5 w-3.5 text-gray-600 shrink-0" />
+              <a href="tel:+919392974031" className="hover:text-white transition-colors">
+                +91 93929 74031
+              </a>
             </div>
             <div className="flex items-center gap-2">
               <Mail className="h-3.5 w-3.5 text-gray-600 shrink-0" />
-              <a href="mailto:support@idsvault.com" className="hover:text-white transition-colors">
-                support@idsvault.com
+              <a href="mailto:broker@idsvault.com" className="hover:text-white transition-colors">
+                broker@idsvault.com
               </a>
+            </div>
+            <div className="pt-1 text-[10px] text-gray-600 font-mono">
+              GSTIN: Applied / [XX XXXXX XXXXX XX]
+              <span className="block text-[9px] text-gray-700 mt-0.5">to be updated on registration</span>
             </div>
           </div>
         </div>
@@ -47,6 +57,7 @@ export const Footer: React.FC = () => {
             <li><Link to="/inventory" className="hover:text-white transition-colors">Inventory</Link></li>
             <li><Link to="/sell"      className="hover:text-white transition-colors">Submit an Asset</Link></li>
             <li><Link to="/advisory"  className="hover:text-white transition-colors">Private Advisory</Link></li>
+            <li><Link to="/about"     className="hover:text-white transition-colors">About IDsvault</Link></li>
             <li><Link to="/journal"   className="hover:text-white transition-colors">Journal</Link></li>
             <li><Link to="/contact"   className="hover:text-white transition-colors">Contact Desk</Link></li>
           </ul>
@@ -82,9 +93,14 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] text-gray-600">
-        <p>© {year} IDsvault. All rights reserved. Independent brokerage — not affiliated with Meta, X Corp, or Telegram.</p>
-        <p className="font-mono">Hyderabad, Telangana, India</p>
+      <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-white/[0.04] space-y-3">
+        <p className="text-[10px] text-gray-600 leading-relaxed max-w-3xl">
+          IDsvault facilitates private transfer agreements. We do not own digital assets. All transactions governed by Indian law, Hyderabad jurisdiction. Platform trademarks belong to respective owners.
+        </p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[10px] text-gray-600">
+          <p>© {year} IDsvault. All rights reserved. Independent brokerage — not affiliated with Meta, X Corp, or Telegram.</p>
+          <p className="font-mono">Hyderabad, Telangana, India</p>
+        </div>
       </div>
     </footer>
   );

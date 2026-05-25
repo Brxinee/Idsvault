@@ -26,6 +26,7 @@ import { SourcingRequest as SourcingRequestView } from "./components/SourcingReq
 const AdminDashboard = lazy(() => import("./components/AdminDashboard").then(m => ({ default: m.AdminDashboard })));
 const BlogView       = lazy(() => import("./components/BlogView").then(m => ({ default: m.BlogView })));
 import { RegulatoryInfo } from "./components/RegulatoryInfo";
+import { AboutPage } from "./components/AboutPage";
 import { ContactView } from "./components/ContactView";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
@@ -371,6 +372,7 @@ export default function App() {
                   />
                 }
               />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/faq" element={<RegulatoryInfo segment="faq" />} />
               <Route path="/policy/:segment" element={<PolicyRoute />} />
 

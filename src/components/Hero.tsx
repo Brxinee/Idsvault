@@ -40,8 +40,8 @@ const homepageSchema = [
     "name": "IDsvault",
     "url": "https://idsvault.com",
     "logo": "https://idsvault.com/logo.png",
-    "description": "Broker-verified Instagram, X, and Telegram usernames. Escrow-protected transfers with named-broker accountability. Based in Hyderabad, serving buyers and sellers worldwide.",
-    "areaServed": "Worldwide",
+    "description": "India-based broker-advised digital identity facilitation desk for Telegram usernames, domain names, Discord servers, and YouTube channels. Escrow-free — broker holds funds in designated account. Based in Hyderabad, Telangana.",
+    "areaServed": "IN",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Hyderabad",
@@ -72,15 +72,15 @@ const homepageSchema = [
         "name": "Is it legal to buy or sell Instagram usernames in India?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Instagram's Terms of Service prohibit username transfers, which means there is inherent platform risk. IDsvault only handles Instagram on a private advisory basis and discloses this risk in writing before any engagement begins. Telegram username transfers via Fragment are officially sanctioned and carry no platform risk."
+          "text": "Instagram's Terms of Service prohibit username transfers, which means there is inherent platform risk. IDsvault only handles Instagram on a private advisory basis and discloses this risk in writing before any engagement begins. Telegram username transfers are broker-supervised on a live call with no platform enforcement risk."
         }
       },
       {
         "@type": "Question",
-        "name": "How does escrow work at IDsvault?",
+        "name": "How does broker-held payment work at IDsvault?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "You pay IDsvault, not the seller. We hold the funds until you confirm you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails for any reason, you get a full refund within 3 business hours."
+          "text": "You pay IDsvault directly — via UPI or bank transfer — not the seller. We hold the funds in our designated broker account until you confirm full account access on the live call and have changed all credentials. Only then do we release payment to the seller. If the transfer fails for any reason, you get a full refund within 3 business hours."
         }
       },
       {
@@ -88,7 +88,7 @@ const homepageSchema = [
         "name": "How much does IDsvault charge for brokering a deal?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Our commission is 15% for deals under $5,000 USD, 12% for deals between $5,000 and $25,000, and 10% for deals above $25,000. All fees are disclosed before any payment is made."
+          "text": "Our commission is 15% + GST for deals under ₹5,00,000, 12% + GST for ₹5,00,000–₹20,00,000, and 10% + GST above ₹20,00,000. All fees are disclosed before any payment is made. GST invoice issued on all transactions."
         }
       },
       {
@@ -96,7 +96,7 @@ const homepageSchema = [
         "name": "Can I buy a Telegram username through IDsvault?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Telegram username transfers via Fragment are officially supported by Telegram and are our primary listing category. Transfers are settled in TON and involve no platform risk."
+          "text": "Yes. Telegram username transfers are our primary listing category. The transfer is done on a live supervised call with no platform enforcement risk. Browse our current inventory to see available handles."
         }
       },
       {
@@ -114,11 +114,11 @@ const homepageSchema = [
 const faqItems = [
   {
     q: "Is it legal to buy an Instagram or X username in India?",
-    a: "Instagram and X both prohibit username transfers in their Terms of Service. We disclose this risk explicitly and in writing before any engagement. We only handle IG/X on a private advisory basis — they are never publicly listed. Telegram transfers via Fragment are officially sanctioned by Telegram and carry no platform risk."
+    a: "Instagram and X both prohibit username transfers in their Terms of Service. We disclose this risk explicitly and in writing before any engagement. We only handle IG/X on a private advisory basis — they are never publicly listed. Telegram transfers are broker-supervised on a live call and carry no platform enforcement risk."
   },
   {
-    q: "How does the escrow work?",
-    a: "You pay IDsvault, not the seller. We hold the funds until you confirm full account access and have changed all credentials. Only then do we release payment to the seller. If anything goes wrong at any step, you get a full refund within 3 business hours — no questions asked."
+    q: "How does broker-held payment work?",
+    a: "You pay IDsvault directly via UPI or bank transfer (NEFT/RTGS/IMPS) — never to the seller. We hold the funds in our designated business account until you confirm full account access on the live call. Only then do we release payment to the seller. If anything goes wrong at any step, you get a full refund within 3 business hours — no questions asked."
   },
   {
     q: "What is a 'live supervised transfer'?",
@@ -126,27 +126,27 @@ const faqItems = [
   },
   {
     q: "How much does IDsvault charge?",
-    a: "15% for deals under $5,000 · 12% for $5,000–$25,000 · 10% above $25,000 · Negotiable above $100,000. All fees are disclosed before any payment is made. No hidden charges."
+    a: "15% + GST for deals under ₹5,00,000 · 12% + GST for ₹5,00,000–₹20,00,000 · 10% + GST above ₹20,00,000 · Negotiable above ₹85,00,000. GST invoice issued on all fees. All charges disclosed before payment — no hidden fees."
   },
   {
     q: "Can I buy a Telegram username?",
-    a: "Yes. Telegram usernames via Fragment are our primary listing category. Transfers are officially supported by Telegram, settled in TON, and involve no platform risk. Browse our current inventory to see available handles."
+    a: "Yes. Telegram username transfers are our primary listing category. The transfer is done on a live supervised call — broker, buyer, and seller together. No platform enforcement risk. Browse our current inventory to see available handles."
   },
   {
     q: "What if the seller recovers the account after transfer?",
     a: "The transfer happens live on a call. You change the recovery email, phone, and 2FA before we release any funds to the seller. The seller has no financial incentive to attempt recovery — they only get paid once you confirm full ownership."
   },
   {
-    q: "Can buyers outside India use IDsvault?",
-    a: "Yes. We serve clients globally. International payments can be arranged via Wise, SWIFT, or crypto (USDC/USDT). Our brokerage desk is based in Hyderabad and handles all coordination — time zone differences have not been a problem."
+    q: "Do you work with buyers and sellers across India?",
+    a: "Yes. Our broker desk is in Hyderabad but we handle inquiries from anywhere in India via WhatsApp, phone, and Telegram. Payments are via UPI or bank transfer in INR. We do not currently serve international clients."
   },
   {
     q: "How long does a deal take?",
-    a: "Typically 24–72 hours from inquiry to transfer. Time varies based on KYC verification (required above $1,000 USD), both parties' availability for the live call, and escrow setup. We keep both parties updated throughout."
+    a: "Typically 24–72 hours from inquiry to completed transfer. Time depends on KYC verification (required above ₹85,000), both parties' availability for the live call, and deal complexity. We keep both parties updated at every step."
   },
   {
     q: "What KYC documents are required?",
-    a: "Under $1,000 USD: no KYC. $1,000–$10,000: government-issued ID. Above $10,000: ID plus source-of-funds review. All verification is handled by our Hyderabad desk and treated with full confidentiality."
+    a: "Under ₹85,000: no KYC. ₹85,000–₹8,50,000: government-issued photo ID (Aadhaar or PAN). Above ₹8,50,000: ID plus source-of-funds declaration. PAN is mandatory for all transactions above ₹2,00,000. All verification handled confidentially by our Hyderabad desk."
   },
   {
     q: "How do I list an asset for sale?",
@@ -183,7 +183,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span>Hyderabad Broker Desk · Active Now</span>
+            <span>Hyderabad, India · Broker Desk Active</span>
           </motion.div>
 
           <div className="space-y-5">
@@ -205,8 +205,8 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-[#A1A1A9] text-base leading-relaxed max-w-lg"
             >
-              Broker-verified Instagram, X, and Telegram usernames. Your money sits in escrow
-              until the transfer is done — then released to the seller. Simple, safe, supervised.
+              Broker-verified Instagram, X, and Telegram usernames. Your money stays with the
+              broker until the transfer is done — on a live call, with both parties present.
             </motion.p>
           </div>
 
@@ -227,7 +227,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             </div>
             <div className="flex items-center gap-2">
               <Lock className="h-4 w-4 text-[#C9A961] shrink-0" />
-              <span>Escrow until you confirm ownership</span>
+              <span>Broker holds funds until you confirm ownership</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-[#C9A961] shrink-0" />
@@ -289,7 +289,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                 </div>
                 <div className="text-right">
                   <p className="text-[8px] text-gray-500 uppercase font-mono">Asking Price</p>
-                  <p className="text-base font-extrabold text-[#C9A961] font-mono">$18,000</p>
+                  <p className="text-base font-extrabold text-[#C9A961] font-mono">₹15,00,000</p>
                 </div>
               </div>
 
@@ -300,7 +300,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping mx-0.75" />
-                  <span className="font-semibold text-white">Payment in escrow · Transfer pending</span>
+                  <span className="font-semibold text-white">Payment held by broker · Transfer pending</span>
                 </div>
               </div>
             </motion.div>
@@ -366,7 +366,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             </div>
             <div className="p-5 rounded-xl bg-emerald-500/[0.04] border border-emerald-500/10 space-y-2">
               <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">With IDsvault</span>
-              <p className="text-xs text-gray-300 leading-relaxed">Funds are held in escrow. Transfer happens live on a supervised call. Both parties are protected at every step.</p>
+              <p className="text-xs text-gray-300 leading-relaxed">Funds are held by the broker. Transfer happens live on a supervised call. Both parties are protected at every step.</p>
             </div>
           </div>
         </div>
@@ -407,8 +407,8 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                 </div>
               </div>
               <div>
-                <h3 className="font-bold text-sm text-white mb-1">Pay into escrow</h3>
-                <p className="text-xs text-gray-400 leading-relaxed">Send payment to IDsvault — not to the seller. We hold the full amount until you confirm ownership. Full refund if anything goes wrong.</p>
+                <h3 className="font-bold text-sm text-white mb-1">Pay the broker</h3>
+                <p className="text-xs text-gray-400 leading-relaxed">Send payment to IDsvault via UPI or bank transfer — not to the seller. We hold the full amount in our designated broker account. Full refund if anything goes wrong.</p>
               </div>
             </div>
 
@@ -428,7 +428,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
           </div>
 
           <p className="text-center text-xs text-gray-500 pt-2">
-            Refund in 3 business hours if transfer fails at any step · KYC required above $1,000 USD
+            Refund in 3 business hours if transfer fails at any step · KYC required above ₹85,000
           </p>
 
         </div>
@@ -475,10 +475,10 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <Lock className="h-4 w-4 text-[#10B981]" />
-                Escrow until you confirm
+                Broker holds funds until you confirm
               </h4>
               <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                Your payment stays with us until you confirm full account access. Seller only gets paid when you're satisfied.
+                Your payment stays with the broker until you confirm full account access on the live call. Seller only gets paid when you're satisfied.
               </p>
             </div>
 
@@ -488,7 +488,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                 Chargeback &amp; recovery protection
               </h4>
               <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
-                Sellers protected from chargebacks. Buyers protected from post-sale account recovery. Our escrow prevents both.
+                Sellers protected from chargebacks. Buyers protected from post-sale account recovery. Broker-held payment and live supervised transfer prevents both.
               </p>
             </div>
 
@@ -506,7 +506,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               <div className="space-y-2">
                 <span className="text-[10px] font-extrabold text-[#C9A961] uppercase tracking-widest font-mono">Available Now</span>
                 <h2 className="text-2xl font-extrabold text-white tracking-tight">Handles for sale — buy instagram username india, telegram, and more</h2>
-                <p className="text-xs text-gray-400">Ownership verified · Payment in escrow · Broker-supervised transfer</p>
+                <p className="text-xs text-gray-400">Ownership verified · Payment held by broker · Live supervised transfer</p>
               </div>
               <Link
                 to="/inventory"
@@ -604,10 +604,10 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 text-center">
             {[
-              { val: "15%", label: "Commission on deals under $5K" },
+              { val: "15%", label: "Commission on deals under ₹5L" },
               { val: "3 hrs", label: "Refund window if transfer fails" },
               { val: "1:1", label: "Named broker per deal" },
-              { val: "24/7", label: "WhatsApp response (IST business hrs 4h)" },
+              { val: "4hr", label: "Response within 4 hours during business hours (IST)" },
             ].map(({ val, label }) => (
               <div key={label} className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] space-y-1">
                 <p className="text-xl font-extrabold text-[#C9A961] font-mono">{val}</p>
@@ -704,7 +704,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             </a>
           </div>
           <p className="text-[10px] text-gray-600 pt-2">
-            Commission: 15% &lt; $5K · 12% $5K–$25K · 10% &gt;$25K · All fees disclosed upfront · <Link to="/policy/terms" className="underline hover:text-gray-400">Terms</Link>
+            Commission: 15% (deals under ₹5L) · 12% (₹5L–₹20L) · 10% (above ₹20L) · 18% GST on fees · All charges disclosed before payment · <Link to="/policy/terms" className="underline hover:text-gray-400">Terms</Link>
           </p>
         </div>
       </section>

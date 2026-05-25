@@ -495,7 +495,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
             IDsVault Editorial Strategy
           </h1>
           <p className="text-sm text-gray-400 mt-1 max-w-2xl font-sans">
-            Guiding founders, startups, and virtual asset managers through secure ownership, valuation models, and legal digital brand clearances in India and globally.
+            Guiding founders, startups, and virtual asset managers through secure ownership, valuation models, and legal digital brand clearances in India.
           </p>
         </div>
 
