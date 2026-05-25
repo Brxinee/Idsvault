@@ -3,86 +3,55 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { ErrorInfo, ReactNode } from "react";
-import { AlertTriangle } from "lucide-react";
+import React, { Component, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
-  /** Optional custom fallback UI */
-  fallback?: ReactNode;
 }
 
 interface State {
   hasError: boolean;
-  errorMessage: string;
+  error: Error | null;
 }
 
-/**
- * React Error Boundary — catches rendering errors in the component tree
- * and displays a safe fallback instead of a blank/broken page.
- *
- * NOTE: Must be a class component because getDerivedStateFromError /
- * componentDidCatch are not available on function components.
- */
-export class ErrorBoundary extends React.Component<Props, State> {
-  // Explicit field declarations required by this project's tsconfig
-  // (useDefineForClassFields: false prevents TypeScript inferring inherited fields)
-  state: State;
-  declare props: Readonly<Props>;
-  declare setState: React.Component<Props, State>["setState"];
-
+export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false, errorMessage: "" };
+    this.state = { hasError: false, error: null };
   }
 
   static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, errorMessage: error.message };
+    return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    // Log to console in development; in production, route to a server-side
-    // error tracker (Sentry, Supabase logs, etc.)
-    console.error("[ErrorBoundary] Caught rendering error:", error, info.componentStack);
-  }
-
-  handleReset() {
-    this.setState({ hasError: false, errorMessage: "" });
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error("[IDsvault] Unhandled error:", error, info);
   }
 
   render() {
     if (this.state.hasError) {
-      if (this.props.fallback) {
-        return this.props.fallback;
-      }
-
       return (
-        <div className="max-w-md mx-auto px-6 py-24 flex flex-col items-center text-center gap-6">
-          <span className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 inline-block">
-            <AlertTriangle className="h-8 w-8" />
-          </span>
-          <div className="space-y-2">
-            <h2 className="text-lg font-bold text-white tracking-tight">Something went wrong</h2>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              An unexpected error occurred while rendering this section.
-              Please reload the page or contact support if the problem persists.
+        <div className="min-h-screen bg-canvas flex items-center justify-center px-6 text-center">
+          <div className="space-y-4 max-w-sm">
+            <p className="text-2xl">⚠️</p>
+            <h1 className="text-white font-bold text-lg">Something went wrong</h1>
+            <p className="text-muted text-xs leading-relaxed">
+              An unexpected error occurred. Please refresh the page or{" "}
+              <a href="mailto:broker@idsvault.com" className="underline hover:text-white">
+                contact us
+              </a>
+              .
             </p>
-            {import.meta.env.DEV && this.state.errorMessage && (
-              <pre className="mt-3 text-left text-[10px] text-red-400 bg-red-500/5 border border-red-500/10 rounded-lg p-3 overflow-x-auto whitespace-pre-wrap">
-                {this.state.errorMessage}
-              </pre>
-            )}
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider transition-colors cursor-pointer"
+            >
+              Reload Page
+            </button>
           </div>
-          <button
-            onClick={() => this.handleReset()}
-            className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider transition-colors cursor-pointer active:scale-95"
-          >
-            Try Again
-          </button>
         </div>
       );
     }
-
     return this.props.children;
   }
 }

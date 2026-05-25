@@ -104,4 +104,25 @@ export interface SystemLog {
   detail: string;
 }
 
+export interface KeepChecklistItem {
+  id: string;
+  text: string;
+  done: boolean;
+}
+
+export interface KeepNote {
+  id: string;
+  title: string;
+  content: string;
+  isPinned: boolean;
+  isArchived: boolean;
+  color: string; // Tailwind color class or hex background overlay
+  label: string; // e.g. "Registry", "Sourcing", "Escrow", "Personal"
+  checklist: KeepChecklistItem[] | null;
+  image: string | null; // Base64 image attachment
+  lastUpdated: string;
+  isGoogleSynced: boolean;
+}
+
+
 

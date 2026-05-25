@@ -30,6 +30,7 @@ import { AboutPage } from "./components/AboutPage";
 import { ContactView } from "./components/ContactView";
 import { ProcessPage } from "./components/ProcessPage";
 import { TrustPage } from "./components/TrustPage";
+import { KeepDesk } from "./components/KeepDesk";
 import { CookieConsent } from "./components/CookieConsent";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
@@ -57,6 +58,7 @@ function viewToPath(view: string): string {
     trust:     "/trust",
     contact:   "/contact",
     admin:     "/admin",
+    keep:      "/keep",
   };
   return map[view] ?? "/";
 }
@@ -378,6 +380,7 @@ export default function App() {
                   />
                 }
               />
+              <Route path="/keep"    element={<KeepDesk />} />
               <Route path="/about"   element={<AboutPage />} />
               <Route path="/process" element={<ProcessPage />} />
               <Route path="/trust"   element={<TrustPage />} />

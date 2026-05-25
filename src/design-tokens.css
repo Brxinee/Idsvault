@@ -1,0 +1,52 @@
+/**
+ * IDsvault - Premium Design System Tokens v1
+ * Operating Jurisdiction: Hyderabad, India
+ * Theme Layout: Dark-First Swiss/Mono Premium Editorial Archetype
+ */
+
+:root {
+  /* Colors - Dark-First, Single Committed Palette */
+  --color-bg: #0A0A0B;               /* Deepest dark vault canvas background */
+  --color-surface: #131316;          /* Standard elegant UI cards and surfaces */
+  --color-surface-2: #1C1C20;        /* Secondary elevated surfaces */
+  --color-border: #26262B;           /* Razor-thin 1px dark border separator */
+  --color-border-strong: #3A3A42;    /* Interactive border focus / active signals */
+  --color-text-primary: #F5F5F7;     /* High-contrast luxurious off-white */
+  --color-text-secondary: #A1A1A9;   /* Slate-gray for labels, details, and secondary text */
+  --color-text-tertiary: #6E6E78;    /* Muted gray for inactive states and timestamps */
+  --color-accent: #C9A961;           /* Authentic antique gold for luxury status tags */
+  --color-accent-hover: #D4B670;     /* Rich antique gold variant on hover states */
+  --color-success: #34D399;          /* Compliance-first green positive status */
+  --color-danger: #F87171;           /* Risk, danger and cancellation warnings */
+
+  /* Fonts */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Layout & Width Constraints */
+  --max-content-width: 1280px;
+
+  /* Spacing Scale (Strict Baseline Grid) */
+  --spacing-grid-4: 4px;
+  --spacing-grid-8: 8px;
+  --spacing-grid-12: 12px;
+  --spacing-grid-16: 16px;
+  --spacing-grid-24: 24px;
+  --spacing-grid-32: 32px;
+  --spacing-grid-48: 48px;
+  --spacing-grid-64: 64px;
+  --spacing-grid-96: 96px;
+  --spacing-grid-128: 128px;
+
+  /* Border Radii (No generic round corners) */
+  --radius-standard: 8px;
+  --radius-cards: 12px;
+  --radius-tags: 999px;
+
+  /* Motion & Animation Tokens */
+  --duration-micro: 150ms;
+  --duration-standard: 250ms;
+  --duration-page: 400ms;
+  --ease-custom: cubic-bezier(0.4, 0, 0.2, 1);
+}
