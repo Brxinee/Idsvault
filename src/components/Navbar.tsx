@@ -18,12 +18,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
 
   const navItems = [
     { label: "Home", value: "home" },
-    { label: "Browse IDs", value: "browse" },
-    { label: "Keep Desk", value: "keep" },
-    { label: "Sell Your ID", value: "sell" },
-    { label: "Request ID", value: "request" },
-    { label: "Blog", value: "blog" },
-    { label: "FAQ", value: "faq" },
+    { label: "Inventory", value: "browse" },
+    { label: "Process", value: "process" },
+    { label: "Journal", value: "blog" },
+    { label: "About", value: "about" },
+    { label: "Trust", value: "trust" },
     { label: "Contact", value: "contact" }
   ];
 
@@ -83,19 +82,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
         {/* Desktop CTA actions with glowing focus states */}
         <div className="hidden md:flex items-center gap-3">
           <button
-            onClick={() => handleNavClick("browse")}
-            className="h-9 px-4 text-xs font-semibold rounded-lg border border-[#2A2A2E] hover:border-[#D4AF37]/30 hover:bg-[#141416] text-[#F5F5F7] transition-all cursor-pointer select-none active:scale-95"
-            id="nav_nav_buy"
-          >
-            Explore Registry
-          </button>
-          <button
             onClick={() => handleNavClick("sell")}
-            className="relative group overflow-hidden h-9 px-4 text-xs font-semibold rounded-lg bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:scale-[1.01] text-black transition-all cursor-pointer select-none active:scale-95"
+            className="h-9 px-4 text-xs font-semibold rounded-lg border border-[#2A2A2E] hover:border-white/10 hover:bg-[#141416] text-[#F5F5F7] transition-all cursor-pointer select-none active:scale-95"
             id="nav_nav_sell"
           >
+            Sell Handle
+          </button>
+          <button
+            onClick={() => handleNavClick("advisory")}
+            className="relative group overflow-hidden h-9 px-4 text-xs font-semibold rounded-lg bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:scale-[1.01] text-black transition-all cursor-pointer select-none active:scale-95"
+            id="nav_nav_inquire"
+          >
             <span className="relative flex items-center gap-1 font-bold uppercase tracking-wider text-[10px]">
-              List For Sale
+              Inquire
               <ArrowUpRight className="h-3.5 w-3.5 text-black" />
             </span>
           </button>
@@ -141,16 +140,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onConta
               
               <div className="pt-4 border-t border-[#2A2A2E] grid grid-cols-2 gap-3">
                 <button
-                  onClick={() => handleNavClick("browse")}
+                  onClick={() => handleNavClick("sell")}
                   className="h-10 text-center text-xs font-semibold rounded-lg border border-[#2A2A2E] hover:border-white/[0.15] text-white cursor-pointer bg-[#0A0A0B]"
                 >
-                  Explore Registry
+                  Sell
                 </button>
                 <button
-                  onClick={() => handleNavClick("sell")}
+                  onClick={() => handleNavClick("advisory")}
                   className="h-10 text-center text-xs font-semibold rounded-lg bg-gradient-to-r from-[#D4AF37] to-amber-600 text-black cursor-pointer font-bold uppercase tracking-wider"
                 >
-                  List For Sale
+                  Inquire ↗
                 </button>
               </div>
             </div>

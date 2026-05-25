@@ -29,6 +29,11 @@ import { ContactView } from "./components/ContactView";
 import { BlogView } from "./components/BlogView";
 import { SchemaMarkup } from "./components/SchemaMarkup";
 import { KeepDesk } from "./components/KeepDesk";
+import { AboutView } from "./components/AboutView";
+import { TrustView } from "./components/TrustView";
+import { ProcessView } from "./components/ProcessView";
+import { AdvisoryView } from "./components/AdvisoryView";
+import { ShowcaseView } from "./components/ShowcaseView";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -135,6 +140,18 @@ export default function App() {
     } else if (currentView === "faq") {
       title = "IDsvault FAQs | Secure Handle Trading Questions Answered";
       desc = "Factual answers about social media username transfers, how payment holding works, platform terms of service risks, and Indian banking coordinates.";
+    } else if (currentView === "about") {
+      title = "About IDsvault | Human-Guided Premium Digital Identity Broker";
+      desc = "Read our founder's story and how Vinay Naidu created IDsvault in Hyderabad as an honest, fully registered alternative to anonymous platforms.";
+    } else if (currentView === "trust") {
+      title = "Trust Framework & Legal Registrations | IDsvault";
+      desc = "Verifiable sole proprietorship details, active GSTIN registration, indemnity cyber insurances, and legal disclosures for secure digital handle trading.";
+    } else if (currentView === "process") {
+      title = "Our 10-Step Handover Protocol | Secure Escrow | IDsvault";
+      desc = "Detailed checklist illustrating our human-supervised escrow transfer process from KYC checks and video Bio validation calls to secure disbursements.";
+    } else if (currentView === "advisory") {
+      title = "Private Bespoke Advisory & Sourcing Campaigns | IDsvault";
+      desc = "Application-only premium tier for deep off-market acquisitions and brand handle transitions. Complete discretion with manual oversight under Indian court lines.";
     }
 
     document.title = title;
@@ -536,6 +553,26 @@ export default function App() {
                 onBrowseListing={(slug) => { setSelectedSlug(slug); setCurrentView("listing-detail"); }} 
                 isAdmin={isAdminLoggedIn}
               />
+            )}
+
+            {currentView === "about" && (
+              <AboutView onNavigate={handleNavigate} />
+            )}
+
+            {currentView === "trust" && (
+              <TrustView />
+            )}
+
+            {currentView === "process" && (
+              <ProcessView />
+            )}
+
+            {currentView === "advisory" && (
+              <AdvisoryView />
+            )}
+
+            {currentView === "showcase" && (
+              <ShowcaseView />
             )}
 
             {currentView.startsWith("policy-") && (

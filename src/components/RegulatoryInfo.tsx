@@ -8,7 +8,7 @@ import { Scale, ShieldAlert, Sparkles, AlertTriangle, HelpCircle, FileText, Chev
 import { motion, AnimatePresence } from "motion/react";
 
 interface RegulatoryInfoProps {
-  segment: "policy-acceptable" | "policy-trademark" | "policy-refund" | "policy-terms" | "policy-privacy" | "policy-aml-kyc" | "faq";
+  segment: "policy-acceptable" | "policy-trademark" | "policy-refund" | "policy-terms" | "policy-privacy" | "policy-aml-kyc" | "faq" | "policy-risk-disclosure" | "policy-dispute" | "policy-grievance" | "policy-cookies" | "policy-kyc-aml";
 }
 
 export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
@@ -324,7 +324,7 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
         </motion.section>
       )}
 
-      {segment === "policy-aml-kyc" && (
+      {(segment === "policy-aml-kyc" || segment === "policy-kyc-aml") && (
         <motion.section 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -340,7 +340,7 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
             </div>
           </header>
 
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
+          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
             <p>
               To maintain the integrity of our brokerage platform, IDsvault maintains risk mitigation standards including Identity Verification (KYC).
             </p>
@@ -353,6 +353,141 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
             <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Verification Compliance</h3>
             <p className="text-gray-400 font-normal">
               For all clients, we require identity verification at the thresholds above regardless of payment method. We reserve the absolute right to suspend transaction matching until identity claims are verified.
+            </p>
+          </div>
+        </motion.section>
+      )}
+
+      {segment === "policy-risk-disclosure" && (
+        <motion.section 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+        >
+          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
+            <div className="p-2.5 rounded-lg bg-red-500/10 text-red-500 border border-red-500/15">
+              <AlertTriangle className="h-5 w-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold text-white tracking-tight">Platform Risk Acknowledgment</h1>
+              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-RISK-2026-v1</p>
+            </div>
+          </header>
+
+          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
+            <p>
+              Commercial transactions involving social network namespaces carry systemic constraints. We require all clients to read and sign this acknowledgment before initiating transfers.
+            </p>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Host Network Terms of Service (ToS)</h3>
+            <p className="text-gray-400 font-normal">
+              Meta (Instagram), X Corp, and Telegram technically prohibit the commercial transfer, lease, or trade of usernames. Host entities retain absolute, unilateral control over all handles and reserve the right to freeze, lock, or reclaim namespaces without notice.
+            </p>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Post-Transaction Reclamations</h3>
+            <p className="text-gray-400 font-normal">
+              Any future reclamation, copyright clawback, trademark challenge, or system-automated reset occurring AFTER the supervised trade completed on live call is outside IDsvault control. Our brokerage acts solely as an escrow intermediary of the coordinate release session and delivers no post-swap perpetuity warranty.
+            </p>
+          </div>
+        </motion.section>
+      )}
+
+      {segment === "policy-dispute" && (
+        <motion.section 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+        >
+          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
+            <div className="p-2.5 rounded-lg bg-[#C9A961]/10 text-[#C9A961] border border-[#C9A961]/15">
+              <Scale className="h-5 w-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold text-white tracking-tight">Dispute Resolution Process</h1>
+              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-DISPUTE-MEDIATE-2026</p>
+            </div>
+          </header>
+
+          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
+            <p>
+              IDsvault maintains strict operational dispute guidelines to shield both buyers and sellers from unilateral losses and escrow conflicts.
+            </p>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Direct Broker Mediation</h3>
+            <p className="text-gray-400 font-normal">
+              Because all intermediate capital is held in isolated current bank accounts of IDsvault rather than distributed directly to sellers, transactions are protected from direct scams. Any dispute raised during a supervised session triggers an immediate lock of funds pending manual review.
+            </p>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Hyderabad Court Jurisdictions</h3>
+            <p className="text-gray-400 font-normal">
+              Where direct coordination fails or an unrecoverable contract breach is identified, both parties submit to exclusive legal mediation under the courts of Hyderabad (Telangana State, India).
+            </p>
+          </div>
+        </motion.section>
+      )}
+
+      {segment === "policy-grievance" && (
+        <motion.section 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+        >
+          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
+            <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/15">
+              <CheckCircle2 className="h-5 w-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold text-white tracking-tight">Grievance Officer Representation</h1>
+              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Intermediary Compliance (IT Rules 2021)</p>
+            </div>
+          </header>
+
+          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
+            <p>
+              In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, and state commercial frameworks, the Grievance Officer details are published.
+            </p>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Grievance Officer Coordinates</h3>
+            <p className="text-gray-400 font-normal pl-4 border-l border-[#C9A961]">
+              <strong>Name:</strong> Vinay Naidu<br/>
+              <strong>Designation:</strong> Managing Broker & Founder<br/>
+              <strong>Office:</strong> Desk 4A, High-Tech Workspace Plaza, Madhapur, Hyderabad, TS, India<br/>
+              <strong>Official Email:</strong> <a href="mailto:broker@idsvault.com" className="text-[#C9A961] underline">broker@idsvault.com</a>
+            </p>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Complaint Response SLA</h3>
+            <p className="text-gray-400 font-normal">
+              Grievances regarding copyright, false claims, or coordinate disputes are formally acknowledged within 24 hours. Valid redressal updates or administrative listings removals are enacted within 36 hours.
+            </p>
+          </div>
+        </motion.section>
+      )}
+
+      {segment === "policy-cookies" && (
+        <motion.section 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+        >
+          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
+            <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/15">
+              <FileText className="h-5 w-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold text-white tracking-tight">Cookie & local State Disclosure</h1>
+              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-COOKIE-2026-v1</p>
+            </div>
+          </header>
+
+          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
+            <p>
+              We prioritize privacy. IDsvault does not deploy third-party advertising cookies, retargeting mechanisms, or cross-site tracking scripts.
+            </p>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Functional Local Storage</h3>
+            <p className="text-gray-400 font-normal">
+              We leverage standard local secure variables exclusively for system essential choices:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-gray-400">
+              <li>Consent Shield acceptance preferences state.</li>
+              <li>Encrypted in-memory status indicators for secure browser sessions.</li>
+            </ul>
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Zero Marketing Pixels</h3>
+            <p className="text-gray-400 font-normal">
+              No Meta Pixel, Google Analytics audience retargeting, or advertising identifiers are ever loaded inside our domains.
             </p>
           </div>
         </motion.section>
