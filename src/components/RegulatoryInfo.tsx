@@ -1,549 +1,590 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React, { useState } from "react";
-import { Scale, ShieldAlert, Sparkles, AlertTriangle, HelpCircle, FileText, ChevronDown, CheckCircle2 } from "lucide-react";
+import { ChevronDown, FileText, MessageCircle, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { SEO } from "./SEO";
+import { Link } from "react-router-dom";
+
+type Segment =
+  | "policy-terms"
+  | "policy-privacy"
+  | "policy-refund"
+  | "policy-dispute"
+  | "policy-risk-disclosure"
+  | "policy-aml-kyc"
+  | "policy-sanctions"
+  | "policy-cookie-policy"
+  | "policy-dmca"
+  | "policy-grievance"
+  | "policy-accessibility"
+  | "policy-imprint"
+  | "policy-acceptable-use"
+  | "policy-trademark"
+  | "faq";
 
 interface RegulatoryInfoProps {
-  segment: "policy-acceptable" | "policy-trademark" | "policy-refund" | "policy-terms" | "policy-privacy" | "policy-aml-kyc" | "faq" | "policy-risk-disclosure" | "policy-dispute" | "policy-grievance" | "policy-cookies" | "policy-kyc-aml";
+  segment: Segment;
 }
 
+type PolicySection = { heading: string; body: string };
+type PolicyDoc = {
+  title: string;
+  description: string;
+  canonical: string;
+  updated: string;
+  sections: PolicySection[];
+};
+
+const policyContent: Record<string, PolicyDoc> = {
+  "policy-terms": {
+    title: "Terms of Service",
+    description: "How IDsvault works, what we do, what we don't do, and what you agree to when you use our brokerage service.",
+    canonical: "/policy/terms",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "What IDsvault is",
+        body: "IDsvault is a private broker-assisted desk based in Hyderabad, India. We facilitate the supervised transfer of digital handles — Telegram usernames, domain names, Discord communities, and selected YouTube channels — between private parties. We are not an open marketplace. Every deal goes through a named human broker."
+      },
+      {
+        heading: "What we list publicly",
+        body: "Our public inventory covers Telegram usernames (broker-supervised live transfer), domain names, Discord server ownership transfers, and YouTube Brand Account transfers. Instagram and X (Twitter) handles are handled on a private advisory basis only — they are never publicly listed — because both platforms prohibit username transfers in their Terms of Service. We disclose this risk in writing before any advisory engagement begins."
+      },
+      {
+        heading: "How payment works",
+        body: "Your payment goes to IDsvault's designated broker account — via UPI or bank transfer (NEFT/RTGS/IMPS). All payments are processed through our registered business current account with full GST-compliant tax invoicing. We hold the full amount, separate from our operating funds, until you confirm on the live call that you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund — no third-party claim process needed, because we hold the funds directly."
+      },
+      {
+        heading: "Fees and disclosure",
+        body: "Our commission is 15% + GST (18%) for deals under ₹5,00,000, 12% + GST for deals between ₹5,00,000 and ₹20,00,000, and 10% + GST for deals above ₹20,00,000. Deals above ₹85,00,000 are negotiable. All fees are disclosed before any payment is made. A GST-compliant tax invoice is issued for every transaction. There are no hidden charges."
+      },
+      {
+        heading: "Governing law",
+        body: "These terms are governed by the laws of India. IDsvault serves buyers and sellers in India only. Disputes are subject to arbitration in Hyderabad, Telangana under the Arbitration and Conciliation Act 1996. Consumer rights under the Consumer Protection Act 2019 (India) apply to all transactions and are not excluded by these terms."
+      },
+      {
+        heading: "Limitations",
+        body: "IDsvault is not affiliated with Telegram, Instagram, X (Twitter), Discord, YouTube, or any domain registrar. All platform trademarks belong to their respective owners. We cannot guarantee that a platform will not change its policies after a transfer is completed. Our liability is limited to the amount of brokerage fees we collected on the specific deal in question."
+      }
+    ]
+  },
+  "policy-privacy": {
+    title: "Privacy Policy",
+    description: "What personal data IDsvault collects, why we collect it, how long we keep it, and your rights.",
+    canonical: "/policy/privacy",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "What we collect",
+        body: "When you use IDsvault, we collect the information you provide directly: your name, email address, WhatsApp number, and deal-related details (the handle you want, your budget, the platform). For KYC-required deals (above ₹85,000), we collect government-issued ID documents (Aadhaar/PAN). For deals above ₹8,50,000, we may request a source-of-funds declaration. We collect analytics data through Google Analytics to understand how visitors use the site."
+      },
+      {
+        heading: "Why we collect it",
+        body: "We process your data to operate the facilitation service — matching buyers and sellers, verifying ownership, coordinating payment, and completing the transfer. KYC data is collected because we are legally required under PMLA guidelines to verify identity above certain deal thresholds. Analytics data helps us improve the site. We do not sell personal data to third parties or use it for advertising."
+      },
+      {
+        heading: "How long we keep it",
+        body: "Deal records and KYC documents are retained for seven years to comply with India's anti-money laundering record-keeping requirements. Analytics data follows Google Analytics retention settings (up to 14 months). If you request deletion of your data, we will delete what we legally can and explain what we are required to retain."
+      },
+      {
+        heading: "Your rights",
+        body: "Under the Digital Personal Data Protection Act 2023 (DPDPA), you have the right to access the personal data we hold about you, correct inaccuracies, request erasure of data we are not legally required to retain, and raise a grievance. Requests are handled through our Grievance Officer — email broker@idsvault.com. We aim to respond within 7 business days."
+      },
+      {
+        heading: "Data processors",
+        body: "IDsvault is India-based and serves Indian clients only. We use third-party processors for hosting (Vercel) and analytics (Google Analytics). When data is processed outside India, we maintain appropriate contractual safeguards. We do not share personal data with buyers, sellers, or any marketing platform."
+      }
+    ]
+  },
+  "policy-refund": {
+    title: "Refund Policy",
+    description: "When you get your money back, how quickly, and what happens if a transfer goes wrong.",
+    canonical: "/policy/refund",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "The short version",
+        body: "If the transfer fails for any reason — the seller backs out, ownership verification fails, the platform blocks it, anything — you get a full refund within 3 business hours. No questions. No deductions. No waiting weeks. This is the whole point of broker-held payment: we control the funds, so we can return them immediately."
+      },
+      {
+        heading: "When refunds apply",
+        body: "A refund is triggered if: (1) the seller fails to complete the transfer during the live supervised call; (2) we cannot verify seller ownership and therefore cannot proceed with listing; (3) either party withdraws before the transfer has been initiated; or (4) the transfer attempt fails for any technical or platform reason."
+      },
+      {
+        heading: "Completed transfers",
+        body: "Once you confirm to our broker that you have full account access — you have changed the recovery email, phone number, and 2FA — payment is released to the seller and the deal is complete. At that point, the transaction is final. If you later discover a problem with the account, that is treated as a dispute (see our Dispute Resolution Policy), not an automatic refund."
+      },
+      {
+        heading: "Fees",
+        body: "If a deal is cancelled before the transfer is initiated, our brokerage fee is refunded in full. If the transfer was attempted but failed, our fee is also refunded. We only retain our commission on successfully completed deals. GST on fees follows the same refund logic."
+      }
+    ]
+  },
+  "policy-dispute": {
+    title: "Dispute Resolution",
+    description: "How we handle disagreements, what evidence we look at, and your escalation options.",
+    canonical: "/policy/dispute",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "Start with us",
+        body: "Most disputes are resolved quickly because we have records of everything — WhatsApp messages, call logs, ownership verification steps, and payment release confirmations. If you have a concern about a deal, contact broker@idsvault.com with your deal reference. We aim to respond within 24 hours."
+      },
+      {
+        heading: "Broker-held payment disputes",
+        body: "Since IDsvault holds the funds directly in our designated broker account, payment disputes do not require a third-party process. Contact broker@idsvault.com with your deal reference number. We maintain records of all WhatsApp conversations, call logs, and transfer confirmations. Most disputes are resolved within 24 hours."
+      },
+      {
+        heading: "Ownership and platform disputes",
+        body: "If a seller is found to have misrepresented ownership, or if an account is recovered post-transfer, we treat that as fraud and escalate internally. We will cooperate with law enforcement if required and can assist buyers in documenting the incident for police complaint purposes."
+      },
+      {
+        heading: "Consumer forum escalation",
+        body: "If a dispute cannot be resolved through our process, you may escalate to the National Consumer Disputes Redressal Commission (NCDRC) or relevant State Consumer Forum under the Consumer Protection Act 2019. You may also file a complaint with the Telangana State Consumer Forum if you are based in Telangana."
+      },
+      {
+        heading: "Final resolution",
+        body: "If a dispute cannot be resolved through our internal process or consumer forum escalation, it is subject to arbitration in Hyderabad, India under the Arbitration and Conciliation Act 1996. Indian law governs all disputes."
+      }
+    ]
+  },
+  "policy-risk-disclosure": {
+    title: "Platform Risk Disclosure",
+    description: "Honest disclosure of what can go wrong with each type of digital handle transfer — before you buy.",
+    canonical: "/policy/risk-disclosure",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "Telegram usernames",
+        body: "Telegram username transfers are done through a live supervised call — broker, buyer, and seller together. The seller transfers the username, you confirm access, and only then does the broker release payment. This is the cleanest and most straightforward category we handle. The main risk is market value fluctuation: a handle worth ₹5,00,000 today may be worth more or less in the future."
+      },
+      {
+        heading: "Domain names",
+        body: "Domain transfers are standard secondary-market transactions processed through registrar transfer protocols. The primary risks are expiry (if a domain is not renewed), trademark disputes if a brand later claims the domain, and country-code domain restrictions that vary by TLD. We verify that the seller has full transfer authority before listing."
+      },
+      {
+        heading: "Discord servers",
+        body: "Discord server ownership transfers are done by transferring admin rights and then the original owner leaving. Discord does not have a formal secondary market policy prohibiting this, but Discord can suspend servers for Terms of Service violations. We verify server standing before brokering."
+      },
+      {
+        heading: "YouTube channels",
+        body: "YouTube channel transfers are done through Google Brand Account authority delegation. Google does not explicitly prohibit this but may flag account ownership changes. The new owner should immediately update recovery details and connect a primary Google account."
+      },
+      {
+        heading: "Instagram and X (Twitter) — advisory only",
+        body: "Both Instagram and X explicitly prohibit the transfer or sale of usernames in their Terms of Service. This means any transfer carries the risk of platform enforcement: the account could be suspended, the username could be recycled, or the original owner could report the transfer to the platform. IDsvault does not publicly list Instagram or X handles. We only engage with these on a private advisory basis, and we require clients to sign a written risk acknowledgement before we do anything. We are telling you this upfront so there is no ambiguity."
+      },
+      {
+        heading: "No permanent guarantees",
+        body: "No broker — including IDsvault — can guarantee that a platform will not change its policies, suspend an account, or reclaim a username in the future. We can guarantee a clean, supervised transfer process. We cannot guarantee what a platform does after the transfer is complete."
+      }
+    ]
+  },
+  "policy-aml-kyc": {
+    title: "AML / KYC Policy",
+    description: "Why we verify identity, what documents we need, and how we handle high-value deals.",
+    canonical: "/policy/aml-kyc",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "Why we do KYC",
+        body: "Digital handle transactions can involve significant sums of money. We have an obligation to ensure we are not facilitating money laundering, tax evasion, or transactions with sanctioned parties. This is not just a legal requirement — it protects honest buyers and sellers by keeping bad actors off the platform."
+      },
+      {
+        heading: "Thresholds",
+        body: "Under ₹85,000 equivalent: basic name and contact details. Between ₹85,000 and ₹8,50,000: government-issued photo ID. Above ₹8,50,000: ID plus source-of-funds review and enhanced due diligence. For all clients, we require identity verification at the thresholds above regardless of payment method. PAN and Aadhaar are the primary accepted documents for Indian clients."
+      },
+      {
+        heading: "How we handle KYC documents",
+        body: "KYC documents are transmitted securely and stored with access controls. They are retained for seven years as required by India's Prevention of Money Laundering Act (PMLA). We do not share KYC documents with sellers. If you are a buyer, the seller does not see your identity documents — they only know the deal is proceeding."
+      },
+      {
+        heading: "Suspicious activity",
+        body: "We reserve the right to refuse or cancel any transaction where we suspect money laundering, fraud, or sanctions evasion — regardless of deal size. We will not explain specific reasons to the parties involved if doing so would compromise a compliance investigation. Refunds for cancelled KYC-flagged deals are handled on a case-by-case basis in accordance with our legal obligations."
+      }
+    ]
+  },
+  "policy-sanctions": {
+    title: "Sanctions Policy",
+    description: "Who we cannot work with and how we screen for restricted parties.",
+    canonical: "/policy/sanctions",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "Restricted parties",
+        body: "IDsvault does not provide services to individuals or entities on Indian government sanctions lists, or UN sanctions lists. Since we serve India only, international sanctions lists are not applicable, but we do not knowingly facilitate any transaction that would violate Indian law."
+      },
+      {
+        heading: "Restricted jurisdictions",
+        body: "IDsvault serves Indian buyers and sellers only. We do not accept international clients, cross-border payments, or transactions involving overseas parties. This simplifies our compliance posture and eliminates most sanctions-related risk entirely."
+      },
+      {
+        heading: "How screening works",
+        body: "We use name, email, payment origin, and IP data as part of our layered screening process. False declarations during onboarding — claiming to be in an unrestricted jurisdiction when you are not — are grounds for permanent service denial and potential reporting to relevant authorities."
+      },
+      {
+        heading: "False declarations",
+        body: "Providing false identity or location information during onboarding is a material breach of our terms. We reserve the right to freeze any in-progress deal and withhold funds pending compliance review if we discover a false declaration mid-transaction."
+      }
+    ]
+  },
+  "policy-cookie-policy": {
+    title: "Cookie Policy",
+    description: "What cookies we use, what they do, and how to control them.",
+    canonical: "/policy/cookie-policy",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "What we use",
+        body: "IDsvault uses Google Analytics to understand how visitors use the site — which pages are visited, how long people stay, and what actions they take. We use a consent banner to ask for your permission before enabling analytics. We do not use advertising cookies or share cookie data with third-party advertisers."
+      },
+      {
+        heading: "Essential cookies",
+        body: "A small number of cookies are strictly necessary for the site to function — for example, remembering your consent choice so we do not ask you every time. These are not optional and cannot be disabled without breaking site functionality."
+      },
+      {
+        heading: "Analytics cookies",
+        body: "Google Analytics cookies (ga, gid, _gat) are loaded only after you consent. They track anonymised usage patterns to help us improve the site. No personal information is transmitted in these cookies. You can decline analytics at any time through the cookie preference controls in the footer."
+      },
+      {
+        heading: "Changing your preference",
+        body: "You can change your cookie consent at any time. Clear site cookies in your browser settings or use the cookie preference link in the footer. Declining analytics does not affect your ability to use the site or contact our broker desk."
+      }
+    ]
+  },
+  "policy-dmca": {
+    title: "DMCA / Copyright Policy",
+    description: "How to submit a copyright takedown notice if your content appears on IDsvault without permission.",
+    canonical: "/policy/dmca",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "How to file a notice",
+        body: "If you believe content on IDsvault infringes your copyright, send a written notice to broker@idsvault.com with: (1) your name and contact information; (2) identification of the copyrighted work you claim is infringed; (3) identification of the specific content on our site; (4) a statement that you believe in good faith the use is not authorised; (5) a statement under penalty of perjury that the information is accurate and you are the rights holder or authorised to act on their behalf."
+      },
+      {
+        heading: "What happens next",
+        body: "We will acknowledge receipt within 3 business days. Valid notices will result in the content being temporarily delisted while we review. Incomplete notices may be returned for additional information before action is taken."
+      },
+      {
+        heading: "Counter-notices",
+        body: "If you believe content was delisted incorrectly, you may submit a counter-notice with your contact details, identification of the removed content, and a statement under penalty of perjury that the content was removed by mistake. Counter-notices may result in content reinstatement after the statutory waiting period."
+      },
+      {
+        heading: "Note on username listings",
+        body: "Username listings on IDsvault display platform handles (e.g. @username) and descriptive information about the handle. We do not host third-party creative content. If you believe a listing misrepresents your brand in a way that causes trademark confusion, please contact us — this may be better handled as a trademark matter than a DMCA notice."
+      }
+    ]
+  },
+  "policy-grievance": {
+    title: "Grievance & Complaints",
+    description: "How to raise a complaint with IDsvault and who our India grievance officer is.",
+    canonical: "/policy/grievance",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "How to raise a complaint",
+        body: "If you have a complaint about our service — whether about a deal, our conduct, data handling, or any other matter — email broker@idsvault.com with a clear description of your concern. We acknowledge all complaints within 24 hours during business days and aim to resolve them within 7 business days."
+      },
+      {
+        heading: "India grievance officer",
+        body: "In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, IDsvault maintains a designated Grievance Officer.\n\nName: Sanjay Reddy\nDesignation: Lead Broker & Grievance Officer\nEmail: broker@idsvault.com\nPhone: +91 93929 74031\nAddress: Hyderabad, Telangana — 500 081, India\n\nThe Grievance Officer will acknowledge complaints within 24 hours and work to resolve them within 15 business days."
+      },
+      {
+        heading: "Escalation",
+        body: "If you are not satisfied with our response, you may escalate to Indian consumer forums under the Consumer Protection Act 2019. We cooperate fully with regulatory inquiries."
+      },
+      {
+        heading: "Regulatory contact",
+        body: "For data protection complaints, Indian clients may contact the relevant CERT-In or data protection authority once the DPDPA 2023 framework is fully operational. Email broker@idsvault.com for all compliance-related inquiries."
+      }
+    ]
+  },
+  "policy-accessibility": {
+    title: "Accessibility Statement",
+    description: "Our commitment to making IDsvault usable for everyone, including people with disabilities.",
+    canonical: "/policy/accessibility",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "Our commitment",
+        body: "IDsvault is committed to making our website accessible to people with disabilities. We target WCAG 2.1 AA conformance as our standard. We believe everyone who needs to buy or sell a digital handle should be able to use our site."
+      },
+      {
+        heading: "What we have done",
+        body: "The site is designed for keyboard navigation throughout. We maintain visible focus indicators so keyboard users can track their position. Buttons and interactive elements have descriptive labels. We use sufficient colour contrast ratios in our dark-first design. Modal dialogs manage focus correctly. A skip-to-content link is provided at the top of every page."
+      },
+      {
+        heading: "Known limitations",
+        body: "Some dynamic content (animated deal status cards, the floating WhatsApp button) may not be fully optimised for all screen reader workflows. We are working to improve this. If you encounter a barrier, please tell us — we will prioritise fixing it."
+      },
+      {
+        heading: "Request accommodations",
+        body: "If you need information in a different format — large print, plain text, or another accessible format — contact broker@idsvault.com. We will do our best to accommodate you promptly. For deal-specific assistance, our broker desk can manage the entire process over WhatsApp or phone if the website is not accessible to you."
+      }
+    ]
+  },
+  "policy-acceptable-use": {
+    title: "Acceptable Use Policy",
+    description: "What IDsvault will and will not facilitate — conduct rules for buyers and sellers.",
+    canonical: "/policy/acceptable-use",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "What we facilitate",
+        body: "IDsvault facilitates the supervised transfer of: Telegram usernames (officially transferable, no platform restriction), domain names (standard secondary-market transfers), Discord server ownership transfers, and YouTube channel transfers via Google Brand Account delegation. These are handled with full documentation and broker oversight."
+      },
+      {
+        heading: "What we do not facilitate",
+        body: "IDsvault will refuse service for the following, without exception:\n\n• Assets obtained through hacking, phishing, social engineering, or account recovery exploits\n• Handles or accounts that impersonate real individuals, brands, or public figures\n• Assets that infringe registered trademarks in India or internationally\n• Assets containing slurs, hate speech, or content prohibited under Indian IT Rules 2021\n• Transactions where the buyer's intended use is impersonation, fraud, or misrepresentation\n• Assets linked to unlawful activity of any kind\n• Parties on Indian government sanctions lists or UNSC consolidated list"
+      },
+      {
+        heading: "Instagram and X — advisory only",
+        body: "Instagram and X (Twitter) explicitly prohibit username transfers in their Terms of Service. IDsvault does not publicly list handles from these platforms. We only engage with Instagram and X handles on a private advisory basis, and only after the client has signed a written risk acknowledgement confirming they understand and accept the platform enforcement risk."
+      },
+      {
+        heading: "Seller responsibilities",
+        body: "Sellers must: (1) be the original and lawful owner of the asset; (2) not have obtained the asset through any unauthorised method; (3) warrant that the asset does not infringe any third-party trademark; (4) indemnify IDsvault against any third-party claims arising from the listing or transfer of the asset."
+      },
+      {
+        heading: "Buyer responsibilities",
+        body: "Buyers must: (1) confirm their identity as required under our KYC policy; (2) ensure their intended use of the asset does not infringe any third-party trademark or violate any applicable law; (3) not misrepresent their identity or intended use to IDsvault."
+      },
+      {
+        heading: "Enforcement",
+        body: "Violation of this policy may result in immediate termination of service, forfeiture of any deposits, and reporting to relevant law enforcement authorities. False declarations are a material breach of our Terms of Service."
+      }
+    ]
+  },
+  "policy-trademark": {
+    title: "Trademark Complaint Procedure",
+    description: "How to submit a trademark complaint if you believe an IDsvault listing infringes your registered trademark.",
+    canonical: "/policy/trademark",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "Before you file",
+        body: "IDsvault pre-screens listings against the Indian Trade Marks Registry (ipindiaservices.gov.in) and WIPO databases before publishing. If you believe a listing still infringes your registered trademark, follow the procedure below."
+      },
+      {
+        heading: "How to file a trademark complaint",
+        body: "Send a written notice to broker@idsvault.com with the subject line 'Trademark Complaint'. Your notice must include:\n\n1. Your full legal name and contact information\n2. The registered trademark you claim is infringed (provide TM registration number and jurisdiction)\n3. The specific IDsvault listing you are complaining about (URL or handle)\n4. A statement explaining how the listing infringes your mark\n5. A declaration under penalty of perjury that the information is accurate and you are the rights holder or authorised agent\n\nWe cannot act on anonymous complaints or complaints without a trademark registration reference."
+      },
+      {
+        heading: "What happens after you file",
+        body: "We will acknowledge receipt within 24 hours. Valid notices with a verified trademark registration will result in the listing being temporarily suspended within 48 hours while we investigate. We will contact the seller and provide them an opportunity to respond. Incomplete notices will be returned for additional information."
+      },
+      {
+        heading: "Seller response",
+        body: "If a listing is suspended following a trademark complaint, the seller will be notified and may provide a counter-statement with evidence that the handle does not infringe the claimed mark. We will mediate where possible. If the complaint is valid, the listing will be permanently delisted and any pending deal will be cancelled with a full buyer refund."
+      },
+      {
+        heading: "Repeat infringement",
+        body: "Sellers who repeatedly list trademark-infringing assets will be permanently banned from IDsvault. We cooperate fully with trademark owners pursuing legal remedies through Indian courts or the Trade Marks Registry."
+      }
+    ]
+  },
+  "policy-imprint": {
+    title: "Imprint / Business Identification",
+    description: "Legal identity and contact details for IDsvault.",
+    canonical: "/policy/imprint",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "Business identity",
+        body: "IDsvault is operated as a private brokerage desk based in Hyderabad, Telangana, India. We provide broker-advised digital identity transfer facilitation services to buyers and sellers in India."
+      },
+      {
+        heading: "Contact",
+        body: "Primary: broker@idsvault.com\nWhatsApp: +91 93929 74031\nLocation: Hyderabad, Telangana, India"
+      },
+      {
+        heading: "Platform independence",
+        body: "IDsvault is an independent intermediary. We are not affiliated with, endorsed by, or officially connected to Telegram, Instagram, X (Twitter), Discord, YouTube, or any domain registrar. All platform names and trademarks are the property of their respective owners."
+      },
+      {
+        heading: "Governing jurisdiction",
+        body: "All service terms are governed by the laws of India. For legal correspondence, contact broker@idsvault.com. We aim to respond to all legal inquiries within 5 business days."
+      }
+    ]
+  }
+};
+
+const faqItems = [
+  {
+    q: "Is it legal to buy or sell an Instagram or X username?",
+    a: "Instagram and X (Twitter) both prohibit username transfers in their Terms of Service. This means any transfer carries platform enforcement risk — the account could be suspended or the username recycled. IDsvault does not publicly list Instagram or X handles. We only engage with these on a private advisory basis, and we require clients to sign a written risk acknowledgement before we do anything. Telegram username transfers are done on a live broker-supervised call and carry no platform enforcement risk."
+  },
+  {
+    q: "How does broker-held payment work?",
+    a: "You pay IDsvault via UPI or bank transfer — not the seller. We hold the full amount in our designated business account until you confirm full account access on the live call and have changed all credentials — email, phone, and 2FA. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund within 3 business hours."
+  },
+  {
+    q: "What is a live supervised transfer?",
+    a: "The buyer, seller, and our Hyderabad broker are all on a video call together. The seller transfers the account while our broker watches. You update all credentials live on the call. Nobody leaves until you confirm you have full control. This makes account recovery after transfer essentially impossible."
+  },
+  {
+    q: "How much does IDsvault charge?",
+    a: "15% + 18% GST for deals under ₹5,00,000 · 12% + GST for ₹5,00,000–₹20,00,000 · 10% + GST above ₹20,00,000 · Negotiable for deals above ₹85,00,000. All fees are disclosed before any payment is made. GST-compliant tax invoice issued for every transaction."
+  },
+  {
+    q: "Can I buy a Telegram username through IDsvault?",
+    a: "Yes. Telegram username transfers are our primary listing category. The transfer happens on a live supervised call — broker, buyer, and seller together. No platform enforcement risk. Browse our inventory to see available handles."
+  },
+  {
+    q: "Do you serve buyers and sellers across India?",
+    a: "Yes. IDsvault serves buyers and sellers across all Indian states. Our broker desk is based in Hyderabad but handles inquiries from anywhere in India via WhatsApp, phone, and Telegram. Payments are via UPI or bank transfer in INR."
+  },
+  {
+    q: "What KYC documents do I need?",
+    a: "Under ₹85,000: no KYC required. ₹85,000–₹8,50,000: government-issued photo ID (PAN or Aadhaar). Above ₹8,50,000: ID plus source-of-funds review. PAN is the primary document for Indian clients. All documents are treated with full confidentiality and are not shared with the counterparty."
+  },
+  {
+    q: "How long does a deal take?",
+    a: "Typically 24–72 hours from first inquiry to completed transfer. This includes ownership verification, KYC (if required), both parties scheduling the live call, and the transfer itself. Complex deals or high-value deals with enhanced due diligence may take longer — we will keep you updated throughout."
+  },
+  {
+    q: "What if the seller tries to recover the account after transfer?",
+    a: "Account recovery is effectively prevented by the live supervised transfer process. You change the recovery email, phone number, and 2FA before our broker releases any funds to the seller. The seller has no financial incentive to attempt recovery once they have been paid. If it ever happens, we assist you in documenting the incident and escalating to law enforcement."
+  },
+  {
+    q: "How do I list a handle for sale?",
+    a: "Submit through our Sell page. We verify ownership before listing anything — you must prove you own the account. Once verified, we handle all buyer inquiries and negotiations. You deal with our broker, not with buyers directly. There is no listing fee — we earn our commission only on completed deals."
+  },
+  {
+    q: "Is IDsvault affiliated with Telegram, Instagram, or any platform?",
+    a: "No. IDsvault is an independent intermediary. We are not affiliated with, endorsed by, or officially connected to Telegram, Instagram, X (Twitter), Discord, YouTube, or any domain registrar. All platform trademarks belong to their respective owners."
+  },
+  {
+    q: "What happens if IDsvault shuts down mid-deal?",
+    a: "All funds are held in IDsvault's registered business current account, kept strictly separate from operating funds. Every deal has a signed engagement letter and GST invoice. Deal records are maintained for 7 years. If something ever goes wrong, all documentation is available to any legal authority."
+  }
+];
+
 export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
-  // FAQ active index state for interactive accordion reveal
-  const [activeFaq, setActiveFaq] = useState<number | null>(0);
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
-  const toggleFaq = (index: number) => {
-    setActiveFaq(activeFaq === index ? null : index);
-  };
+  if (segment === "faq") {
+    return (
+      <div className="max-w-3xl mx-auto px-6 py-12 text-left space-y-8">
+        <SEO
+          title="Frequently Asked Questions — IDsvault"
+          description="Common questions about buying and selling Instagram, X, and Telegram usernames through IDsvault's broker-supervised transfer service in India."
+          canonical="/faq"
+          structuredData={{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqItems.map(item => ({
+              "@type": "Question",
+              "name": item.q,
+              "acceptedAnswer": { "@type": "Answer", "text": item.a }
+            }))
+          }}
+        />
 
-  const faqItems = [
-    {
-      q: "How are sellers verified?",
-      a: "Our Hyderabad coordination desk operates extensive pre-listing verification audits, manual ownership checks, profile verification, and strict listing moderation. Sellers must resolve ownership token hashes or custom screenshot proof reviews before any database approval is posted in our publicly searchable index catalog, reducing anonymous speculation risks entirely."
-    },
-    {
-      q: "What if transfer fails?",
-      a: "If coordinate release fails validation checks or a handle is determined permanently locked, the transaction is gracefully cancelled. Held INR deposits are fully reversed and refunded back to the originating bank coordinate account within three (3) business hours under our structured payment workflow."
-    },
-    {
-      q: "Why pay IDsvault instead of seller?",
-      a: "Paying our supervised brokerage ensures absolute security. Our structured payment workflow acts as a complete protective shield, isolating intermediate funds. Capital is only released to the seller upon validated, manual buyer coordinate possession, eliminating direct-deal chargebacks or hijackings entirely."
-    },
-    {
-      q: "Are you affiliated with Instagram/X/Telegram?",
-      a: "No. IDsvault is a strictly independent, premium digital identity brokerage coordination desk. We are NOT an official partner, associate, or affiliate of Meta, Instagram, X Corp, or Telegram, nor are we licensed by them. All trademarks belong to their respective corporate trademark holders."
-    },
-    {
-      q: "Do you guarantee future access?",
-      a: "No. Independent coordination desks can guarantee future access or indefinitely override host platform policies. We supervise and verify the immediate transaction handshake, but post-transfer account security is subject to platform Terms of Service, which prohibit identity transfers. Buyers acknowledge this host risk before starting deals."
-    },
-    {
-      q: "How long do deals take?",
-      a: "Standard, human-brokered transfers resolve in 4 to 24 hours under the active manual supervision of our Hyderabad-based coordination staff."
-    },
-    {
-      q: "What qualifies as premium?",
-      a: "An identifier is considered premium if it consists of a single dictionary word, is under 5 characters (short handle), contains historical brand equity, or represents a prominent industry niche. Our Hyderabad curation desk manually checks trademark databases and platform age before listing approval."
-    },
-    {
-      q: "What if seller is fake?",
-      a: "All listed usernames are publicly masked. Direct bypass attempts are actively screened out. We check and confirm actual coordinate control before listing approval, completely mitigating fake listings before they are indexed."
-    }
-  ];
+        <div className="space-y-2">
+          <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest font-mono">FAQ</span>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Everything buyers and sellers ask us</h1>
+          <p className="text-sm text-gray-400 leading-relaxed max-w-xl">
+            Plain answers. No legal jargon. If you have a question that isn't here, message our broker on{" "}
+            <a href="https://wa.me/919392974031" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">WhatsApp</a>.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          {faqItems.map((item, index) => (
+            <div key={index} className="border border-white/[0.06] rounded-xl bg-canvas overflow-hidden">
+              <button
+                className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.01] transition-colors cursor-pointer gap-4"
+                onClick={() => setActiveFaq(activeFaq === index ? null : index)}
+                aria-expanded={activeFaq === index}
+              >
+                <span className="text-sm font-semibold text-white leading-snug">{item.q}</span>
+                <ChevronDown className={`h-4 w-4 text-gray-400 shrink-0 transition-transform ${activeFaq === index ? "rotate-180" : ""}`} />
+              </button>
+              <AnimatePresence initial={false}>
+                {activeFaq === index && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="border-t border-white/[0.04] px-5 py-4 text-sm text-gray-400 leading-relaxed"
+                  >
+                    {item.a}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+
+        <div className="pt-4 flex flex-col sm:flex-row gap-3">
+          <a
+            href="https://wa.me/919392974031?text=Hi+IDsvault%2C+I+have+a+question"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 h-10 px-5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white uppercase tracking-wider transition-colors"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Ask on WhatsApp
+          </a>
+          <Link
+            to="/inventory"
+            className="inline-flex items-center gap-2 h-10 px-5 rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-xs font-medium text-gray-300 hover:text-white uppercase tracking-wider transition-colors"
+          >
+            Browse handles
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const content = policyContent[segment];
+  if (!content) return null;
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 space-y-8 text-left">
-      
-      {segment === "policy-acceptable" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+    <div className="max-w-3xl mx-auto px-6 py-12 text-left space-y-8">
+      <SEO title={`${content.title} — IDsvault`} description={content.description} canonical={content.canonical} />
+
+      <header className="space-y-3 pb-6 border-b border-white/[0.06]">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-surface border border-white/[0.08]">
+            <FileText className="h-5 w-5 text-accent" />
+          </div>
+          <div>
+            <p className="text-[10px] font-bold text-accent uppercase tracking-widest font-mono">IDsvault Policy</p>
+            <h1 className="text-2xl font-extrabold text-white tracking-tight">{content.title}</h1>
+          </div>
+        </div>
+        <p className="text-sm text-gray-400 leading-relaxed">{content.description}</p>
+        <p className="text-[10px] text-gray-600 font-mono">Last updated: {content.updated} · Questions? <a href="mailto:broker@idsvault.com" className="underline hover:text-gray-400">broker@idsvault.com</a></p>
+      </header>
+
+      <div className="space-y-8">
+        {content.sections.map((section, idx) => (
+          <section key={idx} className="space-y-2">
+            <h2 className="text-sm font-bold text-white">{section.heading}</h2>
+            <p className="text-sm text-gray-400 leading-relaxed whitespace-pre-line">{section.body}</p>
+          </section>
+        ))}
+      </div>
+
+      <div className="pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row gap-3">
+        <Link
+          to="/faq"
+          className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors uppercase tracking-wider font-mono"
         >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-500 border border-blue-500/15">
-              <ShieldAlert className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Acceptable Use Policy</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Platform Guideline SV-AUP-2026-v1</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
-            <p>
-              IDsvault facilitates matchmaking communications, seller ownership audits, and manual broker-assisted transfers for premium social usernames and digital identifiers. We support robust standards to insulate transaction workflows from unethical or illicit activities.
-            </p>
-
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Strictly Prohibited Assets</h3>
-            <p className="text-gray-400 pl-3 border-l-2 border-red-500/40 font-normal">
-              Users are strictly forbidden from submitting requests, listing applications, or proposing bids on any identifier obtained via illicit means, including:
-            </p>
-            <ul className="list-disc pl-6 space-y-2 text-gray-400 font-normal leading-relaxed">
-              <li>Credential phishing, SIM-swapping, session hijacking, or malicious credential breaches.</li>
-              <li>Cyberstalking, extortion, harassment campaigns, or coercive real-life threats directed toward previous account holders.</li>
-              <li>Any identifier belonging to standard government administration agencies, military branches, emergency response systems, or public health structures.</li>
-            </ul>
-
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Speculation Boundaries</h3>
-            <p className="font-normal text-gray-400">
-              To protect off-market asset integrations, listed identifiers are publicly masked (e.g., @va***t) in our catalog. Direct communications bypass tactics to evade broker ledger checkpoints when a transaction has begun will result in administrative seller listing termination and complete quarantine of listings.
-            </p>
-
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">3. Platform Abuse & Intellectual Complaints</h3>
-            <p className="text-gray-400 font-normal">
-              We reserve immediate listing removal rights for any profiles determined to contain fraudulent claims, stale assets, or coordinate bypass tricks.
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "policy-trademark" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
+          Full FAQ
+          <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
+        <a
+          href="mailto:broker@idsvault.com"
+          className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors uppercase tracking-wider font-mono"
         >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-500 border border-amber-500/15">
-              <Scale className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Trademark & Patent Policies</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Policy Guideline SV-IP-2026-v2</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
-            <p>
-              IDsvault operates strictly as an independent third-party listing indexing portal, coordinate compliance auditor, and manual broker consultation desk. We maintain absolute respect for registered corporate brand titles, registered corporate entities, and trademark patents.
-            </p>
-
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Trademark Audit & Quarantine Processes</h3>
-            <p className="font-normal text-gray-400">
-              Authorized legal representatives of corporate entities holding registered trademark certifications from recognized public registries can submit trademark infringement or IP complaint claims directly to our operations hub.
-            </p>
-
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Submission Minimum Requirements</h3>
-            <p className="text-gray-400 font-normal">
-              All legal IP communications must be routed to <strong className="text-white">support@idsvault.com</strong> and contain the following certified coordinates:
-            </p>
-            <ul className="list-disc pl-6 space-y-2 text-gray-400 font-mono text-[10.5px]">
-              <li>Subject heading: [TRADEMARK AUDIT REQUEST - SV-LEDGER]</li>
-              <li>Official registration certificate citation numbers.</li>
-              <li>Direct electronic signature of patent counsel or authorized trademark representative.</li>
-            </ul>
-
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">3. Disposition Response Times</h3>
-            <p className="text-gray-450 font-normal">
-              Vetted infracting listings are quarantined from the public database index within twelve (12) business hours and held in administrative arbitration pending legal resolution or coordinate release.
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "policy-refund" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6 animate-in duration-200"
-        >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/15">
-              <AlertTriangle className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Refund & Escrow Payout Policy</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-ESCROW-REVERSAL-2026-v2</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
-            <p className="text-gray-400">
-              Clear financial rules build trust. This Refund & Escrow Policy outlines exactly when and how your funds move during broked deals.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">1. Exactly How Money Moves Step-by-Step</h3>
-            <div className="pl-3 border-l border-[#D4AF37] space-y-2.5 text-gray-450">
-              <p>
-                <strong>Step 1: Buyer locks payment.</strong> The buyer transfers the agreed funds to our designated corporate banking trust account (via standard Indian UPI, IMPS, RTGS, NEFT, or global USDC). We verify the credit deposit.
-              </p>
-              <p>
-                <strong>Step 2: Broker freezes the escrow hold.</strong> The funds sit frozen in our secured partner account. They are isolated from any company operating capital. We send a verified challenge alert to the seller to lock the handle.
-              </p>
-              <p>
-                <strong>Step 3: Supervised Handover.</strong> Our broker leads a private call or secure chat. We guide the buyer to take control, update recover coordinates, clear out original fallback vectors, and set up 2FA parameters.
-              </p>
-              <p>
-                <strong>Step 4: Buyer confirms & Funds Dispatch.</strong> Once the buyer confirms total control of credentials, our desk releases the payout. We credit the seller's registered bank coordinates immediately.
-              </p>
-            </div>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">2. Guaranteed 100% Refund Triggers</h3>
-            <p className="text-gray-400">
-              We issue a full, prompt refund of held balances within 24 business hours if any of these conditions are met:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-gray-400">
-              <li>The seller cancels the trade, backs out, or goes unresponsive during verification audits.</li>
-              <li>The seller fails the profile live Bio verification challenge.</li>
-              <li>The host platform (Instagram, X, Telegram) locks, resets, or permanently freezes the credential during transition.</li>
-            </ul>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">3. Post-Transfer Handover Policy</h3>
-            <p className="text-gray-400 bg-red-500/[0.02] p-3 border border-red-500/10 rounded-lg">
-              Once the buyer logs in live, overrides original email bindings, confirms custody under broker supervision, and signals release, the trade is finalized. At this point, the transaction is irreversible. IDsVault offers no post-swap survival warranties, as host platforms reserve the right to enforce terms at any future date.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">4. Payment Disputes Resolution</h3>
-            <p className="text-gray-400">
-              Since IDsvault holds the funds directly in our designated broker account, payment disputes do not require a third-party escrow provider's process. Contact <strong className="text-white font-mono">broker@idsvault.com</strong> with your deal reference. We hold all deal records — WhatsApp messages, call logs, transfer confirmations — and can resolve most disputes within 24 hours.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">5. Jurisdiction & Contact</h3>
-            <p className="text-gray-400">
-              All transactions are subject to legal mediation in <strong>Hyderabad, India</strong>. For any pending trade disputes, contact the Broker Lead directly at <strong className="text-white font-mono">broker@idsvault.com</strong>.
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "policy-terms" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6 animate-in duration-200"
-        >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/15">
-              <FileText className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Terms of Service</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-PLAIN-TOS-2026-v1</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
-            <p className="text-gray-400">
-              By using IDsvault, applying to list social handles, or submitting buyer deposits, you agree to these clear rules in their entirety.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">1. Who Can Use This Platform</h3>
-            <p className="text-gray-400">
-              You must be at least 18 years old and have the complete legal capacity to enter binding contracts under Indian law (or the laws of your home jurisdiction) to buy or sell namespace identifiers with us.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">2. Listing Rules & Ownership Warranties</h3>
-            <p className="text-gray-400">
-              Sellers applying to index username assets must warrant full, legitimate authority to control and release the handle. Sellers are subject to cryptographic verification challenges (profile Bio bio-token updates) to verify ownership. Fake claims, stolen profiles, or coordinates bypass will trigger an immediate, lifelong platform ban.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">3. Prohibited Handle Assets</h3>
-            <p className="text-gray-400">
-              We strictly reject and ban the listing or purchase of:
-            </p>
-            <ul className="list-disc pl-5 space-y-1 text-gray-450">
-              <li>Names registered as active corporate trademarks.</li>
-              <li>Usernames mirroring public government agencies, military, or municipal divisions.</li>
-              <li>Identifiers obtained through extortion, coordinate hacking, phishing, SIM swapping, or physical harassment threats.</li>
-              <li>Names used solely for hate speech, violence, or brand impersonation scams.</li>
-            </ul>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">4. Platform Terms of Service Disclaimer</h3>
-            <div className="text-amber-500 bg-amber-500/[0.03] p-4 rounded-xl border border-amber-500/10 leading-relaxed">
-              <strong>OFFICIAL DISCLAIMER:</strong> Social networks (Meta, Instagram, X Corp, and Telegram) technically prohibit the commercial transfer, leasing, or sale of usernames. They reserve the absolute right to reset, freeze, or terminate profiles at any time. Buyers assume this platform-level risk entirely. IDsvault is an independent, private brokerage desk. We are not affiliated with, endorsed by, or officially connected to Meta, X, or Telegram. All trademarks belong to their respective corporate IP holders.
-            </div>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">5. Broker Fee Structure</h3>
-            <p className="text-gray-400">
-              We charge a standard <strong>10% brokerage commission fee</strong> on successful transactions. If customized sourcing campaigns fail or the transfer is unfinalized, no setup or hidden listing fees are charged.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">6. How payment works</h3>
-            <p className="text-gray-400">
-              Your payment goes to IDsvault's designated broker account — via UPI, bank transfer, Wise, SWIFT, or crypto (USDC/USDT). We hold the full amount, separate from our operating funds, until you confirm on the live call that you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund — no third-party claim process needed, because we hold the funds directly.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">7. Jurisdiction & Dispute Resolution</h3>
-            <p className="text-gray-400">
-              These Terms are governed by the laws of India. Any legal dispute or mediation concerning our services is resolved exclusively under the jurisdiction of the courts in <strong>Hyderabad, Telangana, India</strong>.
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "policy-privacy" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6 animate-in duration-200"
-        >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/15">
-              <FileText className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Plain-English Privacy Policy</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-CORE-PRIVACY-2026-v1</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal">
-            <p className="text-gray-405">
-              We respect your privacy. Username deals require confidentiality. This plain-English policy explains exactly what we gather, how we store it, and when we remove it.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">1. Exactly What Data We Collect & Why</h3>
-            <p className="text-gray-400">
-              We collect the bare minimum required to safely verify ownership and complete secure currency disbursements:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-gray-450 border-l border-blue-500/20 ml-2">
-              <li><strong>Email Address:</strong> Primarily to send transactional contracts, receipt confirmations, and secure codes.</li>
-              <li><strong>Phone / WhatsApp:</strong> Used for direct secure chat communication during live coordinate transfers.</li>
-              <li><strong>Payment Reference Numbers:</strong> Standard transaction receipts or bank reference reference records to verify UPI/RTGS clearance.</li>
-              <li><strong>Social Handle Traded:</strong> The specific username identifier under contract, necessary for ownership checks.</li>
-            </ul>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">2. Storing Data & Secure Holdings</h3>
-            <p className="text-gray-400">
-              All client details are processed locally in secure-hashed offline vaults. No database indexes are shared with outside advertising or digital harvesting networks. Our escrow banking processes run through verified partner bank trusts in Hyderabad, India, compliant with national transaction frameworks.
-            </p>
-
-            <h3 className="font-bold text-white text-xs uppercase tracking-wider font-mono pt-2">3. Precise Retention & Fast Deletion</h3>
-            <p className="text-gray-400">
-              Our storage targets prioritize data pruning over generic data hoarding:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-gray-450">
-              <li>All transition logs, Bio tokens, and temporary files are permanently pruned within <strong>thirty (30) days</strong> of trade completion.</li>
-              <li><strong>You can delete your data instantly at any time.</strong> Simply email <strong className="text-white font-mono">support@idsvault.com</strong> with your reference number. We will permanently purge all personal files and data from our active folders within 24 business hours.</li>
-            </ul>
-          </div>
-        </motion.section>
-      )}
-
-      {(segment === "policy-aml-kyc" || segment === "policy-kyc-aml") && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
-        >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/15">
-              <Scale className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Anti-Money Laundering & KYC Policies</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Ref: SV-AML-KYC-2026</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
-            <p>
-              To maintain the integrity of our brokerage platform, IDsvault maintains risk mitigation standards including Identity Verification (KYC).
-            </p>
-
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Identity Verification Thresholds</h3>
-            <p className="text-gray-400 font-normal">
-              Identity verification (KYC) is strictly required for deals exceeding $1,000 USD (or equivalent INR). Users must provide a copy of government-issued photo identification (e.g. Aadhaar, PAN card, or passport) before entering deep broker-monitored transition phases.
-            </p>
-
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Verification Compliance</h3>
-            <p className="text-gray-400 font-normal">
-              For all clients, we require identity verification at the thresholds above regardless of payment method. We reserve the absolute right to suspend transaction matching until identity claims are verified.
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "policy-risk-disclosure" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
-        >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-red-500/10 text-red-500 border border-red-500/15">
-              <AlertTriangle className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Platform Risk Acknowledgment</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-RISK-2026-v1</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
-            <p>
-              Commercial transactions involving social network namespaces carry systemic constraints. We require all clients to read and sign this acknowledgment before initiating transfers.
-            </p>
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Host Network Terms of Service (ToS)</h3>
-            <p className="text-gray-400 font-normal">
-              Meta (Instagram), X Corp, and Telegram technically prohibit the commercial transfer, lease, or trade of usernames. Host entities retain absolute, unilateral control over all handles and reserve the right to freeze, lock, or reclaim namespaces without notice.
-            </p>
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Post-Transaction Reclamations</h3>
-            <p className="text-gray-400 font-normal">
-              Any future reclamation, copyright clawback, trademark challenge, or system-automated reset occurring AFTER the supervised trade completed on live call is outside IDsvault control. Our brokerage acts solely as an escrow intermediary of the coordinate release session and delivers no post-swap perpetuity warranty.
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "policy-dispute" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
-        >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-[#C9A961]/10 text-[#C9A961] border border-[#C9A961]/15">
-              <Scale className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Dispute Resolution Process</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-DISPUTE-MEDIATE-2026</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
-            <p>
-              IDsvault maintains strict operational dispute guidelines to shield both buyers and sellers from unilateral losses and escrow conflicts.
-            </p>
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Direct Broker Mediation</h3>
-            <p className="text-gray-400 font-normal">
-              Because all intermediate capital is held in isolated current bank accounts of IDsvault rather than distributed directly to sellers, transactions are protected from direct scams. Any dispute raised during a supervised session triggers an immediate lock of funds pending manual review.
-            </p>
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Hyderabad Court Jurisdictions</h3>
-            <p className="text-gray-400 font-normal">
-              Where direct coordination fails or an unrecoverable contract breach is identified, both parties submit to exclusive legal mediation under the courts of Hyderabad (Telangana State, India).
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "policy-grievance" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
-        >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/15">
-              <CheckCircle2 className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Grievance Officer Representation</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">Intermediary Compliance (IT Rules 2021)</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
-            <p>
-              In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, and state commercial frameworks, the Grievance Officer details are published.
-            </p>
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Grievance Officer Coordinates</h3>
-            <p className="text-gray-400 font-normal pl-4 border-l border-[#C9A961]">
-              <strong>Name:</strong> Vinay Naidu<br/>
-              <strong>Designation:</strong> Managing Broker & Founder<br/>
-              <strong>Office:</strong> Desk 4A, High-Tech Workspace Plaza, Madhapur, Hyderabad, TS, India<br/>
-              <strong>Official Email:</strong> <a href="mailto:broker@idsvault.com" className="text-[#C9A961] underline">broker@idsvault.com</a>
-            </p>
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Complaint Response SLA</h3>
-            <p className="text-gray-400 font-normal">
-              Grievances regarding copyright, false claims, or coordinate disputes are formally acknowledged within 24 hours. Valid redressal updates or administrative listings removals are enacted within 36 hours.
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "policy-cookies" && (
-        <motion.section 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6"
-        >
-          <header className="flex items-center gap-3 border-b border-white/[0.06] pb-5">
-            <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/15">
-              <FileText className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">Cookie & local State Disclosure</h1>
-              <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider font-bold">SV-COOKIE-2026-v1</p>
-            </div>
-          </header>
-
-          <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-normal font-sans">
-            <p>
-              We prioritize privacy. IDsvault does not deploy third-party advertising cookies, retargeting mechanisms, or cross-site tracking scripts.
-            </p>
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">1. Functional Local Storage</h3>
-            <p className="text-gray-400 font-normal">
-              We leverage standard local secure variables exclusively for system essential choices:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-gray-400">
-              <li>Consent Shield acceptance preferences state.</li>
-              <li>Encrypted in-memory status indicators for secure browser sessions.</li>
-            </ul>
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider font-mono pt-2">2. Zero Marketing Pixels</h3>
-            <p className="text-gray-400 font-normal">
-              No Meta Pixel, Google Analytics audience retargeting, or advertising identifiers are ever loaded inside our domains.
-            </p>
-          </div>
-        </motion.section>
-      )}
-
-      {segment === "faq" && (
-        <section className="space-y-6">
-          <header className="text-center space-y-2 pb-6 border-b border-white/[0.06]">
-            <span className="p-2.5 rounded-xl bg-blue-500/10 text-blue-500 inline-block mb-1 border border-blue-500/20">
-              <HelpCircle className="h-5 w-5" />
-            </span>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">Trust & Operations FAQ</h1>
-            <p className="text-xs text-gray-400 max-w-sm mx-auto font-normal text-center">
-              Answering key questions transparently to maintain absolute transactional trust without misleading official alignments.
-            </p>
-          </header>
-
-          {/* Interactive Accordion elements */}
-          <div className="space-y-3" id="faq_accordion_wrapper">
-            {faqItems.map((item, idx) => {
-              const isOpen = activeFaq === idx;
-              return (
-                <div 
-                  key={idx}
-                  className="rounded-xl bg-[#0F0F10] border border-white/[0.08] overflow-hidden transition-all duration-200"
-                >
-                  <button
-                    onClick={() => toggleFaq(idx)}
-                    className="w-full p-5 text-left flex items-center justify-between text-xs font-bold text-white hover:bg-white/[0.01] cursor-pointer"
-                  >
-                    <span className="font-semibold tracking-tight">{item.q}</span>
-                    <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
-                  </button>
-                  
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="border-t border-white/[0.04] bg-[#050505]/40 overflow-hidden"
-                      >
-                        <p className="p-5 text-xs text-gray-400 leading-relaxed font-normal">
-                          {item.a}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
-
+          Email broker desk
+          <ArrowRight className="h-3.5 w-3.5" />
+        </a>
+      </div>
     </div>
   );
 };

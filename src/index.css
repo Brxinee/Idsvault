@@ -1,130 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300..900;1,300..900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import "./design-tokens.css";
 @import "tailwindcss";
+@import "./tokens.css";
 
 @theme {
-  /* Fonts Pairing */
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
-  --font-mono: var(--font-mono);
+  /* ── Fonts ─────────────────────────────────── */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Font Scale Limit Mapping */
-  --text-xs: 0.75rem;     /* 12px */
-  --text-sm: 0.875rem;    /* 14px */
-  --text-base: 1rem;      /* 16px mobile body */
-  --text-lg: 1.0625rem;   /* 17px desktop body */
-  --text-xl: 1.125rem;    /* 18px */
-  --text-2xl: 1.375rem;   /* 22px */
-  --text-3xl: 1.75rem;    /* 28px */
-  --text-4xl: 2.25rem;    /* 36px */
-  --text-5xl: 3rem;       /* 48px */
-  --text-6xl: 4rem;       /* 64px */
-  --text-7xl: 5.5rem;     /* 88px */
+  /* ── Surface scale → bg-canvas, bg-surface, bg-raised, bg-overlay ── */
+  --color-canvas:       #050505;
+  --color-surface:      #0F0F10;
+  --color-raised:       #151517;
+  --color-overlay:      #1C1C20;
 
-  /* Dark-First Dedicated Palette */
-  --color-bg: var(--color-bg);
-  --color-surface: var(--color-surface);
-  --color-surface-2: var(--color-surface-2);
-  --color-border: var(--color-border);
-  --color-border-strong: var(--color-border-strong);
-  --color-text-primary: var(--color-text-primary);
-  --color-text-secondary: var(--color-text-secondary);
-  --color-text-tertiary: var(--color-text-tertiary);
-  --color-accent: var(--color-accent);
-  --color-accent-hover: var(--color-accent-hover);
-  --color-success: var(--color-success);
-  --color-danger: var(--color-danger);
+  /* ── Accent → bg-accent, text-accent, border-accent ── */
+  --color-accent:       #C9A961;
+  --color-accent-light: #D4B670;
+  --color-accent-dim:   #A88940;
 
-  /* Backward Compatibility Mappings for Existing Registry Components */
-  --color-bg-vault: var(--color-bg);
-  --color-surface-vault: var(--color-surface);
-  --color-border-vault: var(--color-border);
-  --color-accent-vault: var(--color-accent);
-  --color-accent-hover-vault: var(--color-accent-hover);
+  /* ── Primary action → bg-action, text-action ── */
+  --color-action:       #2563EB;
+  --color-action-hover: #1D4ED8;
 
-  /* Spacing Grid Equivalents */
-  --spacing-grid-4: var(--spacing-grid-4);
-  --spacing-grid-8: var(--spacing-grid-8);
-  --spacing-grid-12: var(--spacing-grid-12);
-  --spacing-grid-16: var(--spacing-grid-16);
-  --spacing-grid-24: var(--spacing-grid-24);
-  --spacing-grid-32: var(--spacing-grid-32);
-  --spacing-grid-48: var(--spacing-grid-48);
-  --spacing-grid-64: var(--spacing-grid-64);
-  --spacing-grid-96: var(--spacing-grid-96);
-  --spacing-grid-128: var(--spacing-grid-128);
+  /* ── Text → text-ink, text-muted, text-faint ── */
+  --color-ink:          #F5F5F7;
+  --color-muted:        #A1A1A9;
+  --color-faint:        #6E6E78;
+  --color-ghost:        #3F3F46;
 
-  /* Radii mapping */
-  --radius-standard: var(--radius-standard);
-  --radius-cards: var(--radius-cards);
-  --radius-tags: var(--radius-tags);
+  /* ── Status ─────────────────────────────────── */
+  --color-success:      #34D399;
+  --color-warning:      #FBBF24;
+  --color-danger:       #F87171;
+  --color-info:         #60A5FA;
 
-  /* Pure Transitions & Motions tokens */
-  --transition-duration-micro: var(--duration-micro);
-  --transition-duration-standard: var(--duration-standard);
-  --transition-duration-page: var(--duration-page);
-  --transition-timing-function-custom: var(--ease-custom);
-  
-  /* Built-in dynamic custom animations mapping */
-  --animate-fade-in: fade-in var(--duration-standard) var(--ease-custom);
-  --animate-page-fade: page-fade var(--duration-page) var(--ease-custom);
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes page-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  /* ── Focus ring ─────────────────────────────── */
+  --color-focus:        #2563EB;
 }
 
 @layer base {
+  html {
+    font-size: 16px;
+  }
+
   body {
-    background-color: var(--color-bg);
-    color: var(--color-text-primary);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     font-family: var(--font-sans);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    letter-spacing: -0.025em;
-    font-weight: 600;
+
+  /* Display headings — heavier Inter weight for editorial impact */
+  h1, h2 {
+    font-feature-settings: "kern" 1, "liga" 1, "dlig" 1;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h3, h4 {
+    font-feature-settings: "kern" 1, "liga" 1;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  /* Monospace — price values, handles, IDs */
+  code, kbd, pre, [class*="font-mono"] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "kern" 0, "tnum" 1;
+  }
+
+  /* Global focus-visible ring — keyboard nav is visible everywhere */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Respect prefers-reduced-motion — Phase 2 requirement */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-/* Custom premium scrollbar styling matching layout standards */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: var(--radius-standard);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
-}
-
-/* Base custom class to easily constrain grids & pages natively */
-.max-width-constraint {
-  max-width: var(--max-content-width);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .max-width-constraint {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
+/* Scrollbar — neutral, matches surface scale */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--color-canvas); }
+::-webkit-scrollbar-thumb  { background: var(--color-surface); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-raised); }

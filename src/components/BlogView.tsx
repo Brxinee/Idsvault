@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   BookOpen, 
   Search, 
@@ -37,12 +38,14 @@ import { initialBlogPosts } from "../data/blogs";
 import { motion, AnimatePresence } from "motion/react";
 
 interface BlogViewProps {
-  onNavigate: (view: string) => void;
   onBrowseListing: (slug: string) => void;
   isAdmin?: boolean;
+  /** Legacy prop — kept for backward compat with App.tsx. Navigation uses useNavigate() internally. */
+  onNavigate?: (view: string) => void;
 }
 
-export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing, isAdmin = false }) => {
+export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = false }) => {
+  const navigate = useNavigate();
   // Load blog posts from local storage or fall back to initial seeded database
   const [posts, setPosts] = useState<BlogPost[]>(() => {
     const saved = localStorage.getItem("idsvault_blogs_db");
@@ -92,22 +95,9 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
   const [copiedSlug, setCopiedSlug] = useState(false);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
 
-  // Pagination & Overlay States
+  // Pagination
+  const POSTS_PER_PAGE = 3;
   const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeCategory, searchQuery]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setActiveSlug(null);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
 
   // Available categories inside the registry
   const categories = useMemo(() => {
@@ -152,7 +142,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
         "@context": "https://schema.org",
         "@type": "Blog",
         "name": "IDsvault Strategy Library",
-        "description": "High-authority guides, valuation frameworks, brokerage transfer checklists, and strategy audits for Premium Usernames.",
+        "description": "High-authority guides, valuation frameworks, escrow checklists, and strategy audits for Premium Usernames.",
         "publisher": {
           "@type": "Organization",
           "name": "IDsvault Hub",
@@ -165,7 +155,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
         "blogPost": posts.filter(p => p.status === "published").map(p => ({
           "@type": "BlogPosting",
           "headline": p.title,
-          "url": `https://idsvault.com/blog/${p.slug}`,
+          "url": `https://idsvault.com/journal/${p.slug}`,
           "datePublished": p.publishedAt,
           "author": {
             "@type": "Person",
@@ -191,7 +181,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
       "@type": "BlogPosting",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": `https://idsvault.com/blog/${activePost.slug}`
+        "@id": `https://idsvault.com/journal/${activePost.slug}`
       },
       "headline": activePost.title,
       "description": activePost.metaDescription,
@@ -222,20 +212,20 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Blog",
-          "item": "https://idsvault.com/blog"
+          "name": "Journal",
+          "item": "https://idsvault.com/journal"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": activePost.category,
-          "item": `https://idsvault.com/blog?category=${encodeURIComponent(activePost.category)}`
+          "item": `https://idsvault.com/journal?category=${encodeURIComponent(activePost.category)}`
         },
         {
           "@type": "ListItem",
           "position": 4,
           "name": activePost.title,
-          "item": `https://idsvault.com/blog/${activePost.slug}`
+          "item": `https://idsvault.com/journal/${activePost.slug}`
         }
       ]
     };
@@ -282,22 +272,26 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
     return posts.find(p => p.featured && p.status === "published") || posts[0];
   }, [posts]);
 
-  // Non-featured listing posts
+  // Reset pagination when search/category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, activeCategory]);
+
+  // Non-featured listing posts (all, used for total count)
   const listPosts = useMemo(() => {
-    const list = filteredPosts.filter(p => p.id !== featuredPost?.id || activeCategory !== "All");
-    return list;
+    return filteredPosts.filter(p => p.id !== featuredPost?.id || activeCategory !== "All");
   }, [filteredPosts, featuredPost, activeCategory]);
 
-  const postsPerPage = 3;
-  const totalPages = useMemo(() => Math.ceil(listPosts.length / postsPerPage), [listPosts]);
+  // Paginated slice of listPosts
+  const totalPages = Math.ceil(listPosts.length / POSTS_PER_PAGE);
   const paginatedPosts = useMemo(() => {
-    const startIndex = (currentPage - 1) * postsPerPage;
-    return listPosts.slice(startIndex, startIndex + postsPerPage);
+    const start = (currentPage - 1) * POSTS_PER_PAGE;
+    return listPosts.slice(start, start + POSTS_PER_PAGE);
   }, [listPosts, currentPage]);
 
   // Trigger copy URL slug action
   const handleCopyLink = () => {
-    const url = `${window.location.origin}/blog/${activePost?.slug}`;
+    const url = `${window.location.origin}/journal/${activePost?.slug}`;
     navigator.clipboard.writeText(url);
     setCopiedSlug(true);
     setTimeout(() => setCopiedSlug(false), 2000);
@@ -305,7 +299,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
 
   // Launch social triggers
   const handleShareSocial = (platform: "twitter" | "facebook") => {
-    const url = encodeURIComponent(`${window.location.origin}/blog/${activePost?.slug}`);
+    const url = encodeURIComponent(`${window.location.origin}/journal/${activePost?.slug}`);
     const text = encodeURIComponent(activePost?.title || "");
     const shareUrl = platform === "twitter" 
       ? `https://twitter.com/intent/tweet?url=${url}&text=${text}`
@@ -350,7 +344,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
         { type: "paragraph", content: "Write comprehensive research breakdown paragraphs. Avoid fluff." }
       ]);
       setFormFaqs([
-        { question: "Is this transaction secure?", answer: "Yes, IDsvault secure broker-held flow ensures assets are fully isolated before releasing trust funds." }
+        { question: "Is this transaction secure?", answer: "Yes, IDsvault secure escrow ensures assets are fully isolated before releasing trust funds." }
       ]);
     }
   };
@@ -501,7 +495,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
             IDsVault Editorial Strategy
           </h1>
           <p className="text-sm text-gray-400 mt-1 max-w-2xl font-sans">
-            Guiding founders, startups, and virtual asset managers through secure ownership, valuation models, and legal digital brand clearances in India and globally.
+            Guiding founders, startups, and virtual asset managers through secure ownership, valuation models, and legal digital brand clearances in India.
           </p>
         </div>
 
@@ -540,7 +534,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
         <motion.div 
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border border-white/[0.08] bg-[#0E0E10] p-8 max-w-4xl mx-auto space-y-6 text-left font-sans"
+          className="rounded-2xl border border-white/[0.08] bg-surface p-8 max-w-4xl mx-auto space-y-6 text-left font-sans"
         >
           <div className="flex justify-between items-center pb-4 border-b border-white/[0.05]">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -569,7 +563,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                     setFormSlug(e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, ""));
                   }
                 }}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
               />
             </div>
 
@@ -580,7 +574,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                 placeholder="buy-telegram-usernames-securely"
                 value={formSlug}
                 onChange={(e) => setFormSlug(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
               />
             </div>
           </div>
@@ -591,7 +585,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
               <select
                 value={formCategory}
                 onChange={(e) => setFormCategory(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
               >
                 <option value="Instagram">Instagram</option>
                 <option value="X-Platform">X-Platform</option>
@@ -612,7 +606,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                 placeholder="6 min read"
                 value={formReadTime}
                 onChange={(e) => setFormReadTime(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
               />
             </div>
 
@@ -622,7 +616,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                   type="checkbox"
                   checked={formFeatured}
                   onChange={(e) => setFormFeatured(e.target.checked)}
-                  className="rounded bg-[#151517] border border-white/[0.08] active:border-emerald-500 text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4"
+                  className="rounded bg-raised border border-white/[0.08] active:border-emerald-500 text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4"
                 />
                 <span>Featured Hero Post</span>
               </label>
@@ -632,7 +626,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                   type="checkbox"
                   checked={formStatus === "draft"}
                   onChange={(e) => setFormStatus(e.target.checked ? "draft" : "published")}
-                  className="rounded bg-[#151517] border border-white/[0.08] text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4"
+                  className="rounded bg-raised border border-white/[0.08] text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4"
                 />
                 <span>Draft Status</span>
               </label>
@@ -652,7 +646,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                   placeholder="e.g. Primary Instagram Valuation Guide | IDsvault"
                   value={formMetaTitle}
                   onChange={(e) => setFormMetaTitle(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg bg-[#101011] border border-white/[0.06] text-white focus:border-emerald-500/50 outline-none font-sans"
+                  className="w-full px-3 py-2 text-xs rounded-lg bg-surface border border-white/[0.06] text-white focus:border-emerald-500/50 outline-none font-sans"
                 />
               </div>
 
@@ -663,7 +657,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                   placeholder="Keep under 160 characters to optimize SERPs snippets listings."
                   value={formMetaDescription}
                   onChange={(e) => setFormMetaDescription(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg bg-[#101011] border border-white/[0.06] text-white focus:border-emerald-500/50 outline-none font-sans"
+                  className="w-full px-3 py-2 text-xs rounded-lg bg-surface border border-white/[0.06] text-white focus:border-emerald-500/50 outline-none font-sans"
                 />
               </div>
             </div>
@@ -677,7 +671,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
               placeholder="Write a high-authority research paragraph setting up the target digital assets context..."
               value={formIntro}
               onChange={(e) => setFormIntro(e.target.value)}
-              className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans leading-relaxed"
+              className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans leading-relaxed"
             />
           </div>
 
@@ -729,7 +723,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
 
             <div className="space-y-3">
               {formSections.map((sec, idx) => (
-                <div key={idx} className="p-4 rounded-lg bg-[#111113] border border-white/[0.04] space-y-3 flex flex-col">
+                <div key={idx} className="p-4 rounded-lg bg-surface border border-white/[0.04] space-y-3 flex flex-col">
                   <div className="flex justify-between items-center">
                     <span className="text-[9px] font-bold uppercase font-mono px-2 py-0.5 rounded bg-white/[0.05] text-gray-400">
                       Block {idx + 1}: {sec.type}
@@ -753,7 +747,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                             placeholder="Bullet factor text details..."
                             value={item}
                             onChange={(e) => updateFormSectionListItem(idx, itemIdx, e.target.value)}
-                            className="flex-grow px-3 py-1.5 text-xs rounded bg-[#151517] border border-white/[0.06] text-white focus:outline-none focus:border-purple-500/40"
+                            className="flex-grow px-3 py-1.5 text-xs rounded bg-raised border border-white/[0.06] text-white focus:outline-none focus:border-purple-500/40"
                           />
                         </div>
                       ))}
@@ -771,7 +765,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                       placeholder={sec.type === "heading2" ? "Enter Section Heading text..." : "Enter analytical body copy details..."}
                       value={sec.content || ""}
                       onChange={(e) => updateFormSectionText(idx, e.target.value)}
-                      className="w-full px-3 py-2 text-xs rounded bg-[#151517] border border-white/[0.06] text-white focus:outline-none focus:border-blue-500/40 leading-relaxed font-sans"
+                      className="w-full px-3 py-2 text-xs rounded bg-raised border border-white/[0.06] text-white focus:outline-none focus:border-blue-500/40 leading-relaxed font-sans"
                     />
                   )}
                 </div>
@@ -804,20 +798,20 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
           {/* Breadcrumb Navigation System */}
           <nav className="flex items-center gap-1.5 text-gray-500 text-[10px] font-mono tracking-wide uppercase select-none">
             <button 
-              onClick={() => onNavigate("home")} 
+              onClick={() => navigate("/")} 
               className="hover:text-blue-400 cursor-pointer transition-colors"
             >
               Home
             </button>
             <ChevronRight className="h-3 w-3" />
-            <button 
+            <button
               onClick={() => {
                 setActiveSlug(null);
                 setActiveCategory("All");
-              }} 
+              }}
               className="hover:text-blue-400 cursor-pointer transition-colors"
             >
-              Blog
+              Journal
             </button>
             <ChevronRight className="h-3 w-3" />
             <button 
@@ -857,7 +851,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
             {/* Authoring Info Line */}
             <div className="flex flex-wrap items-center gap-y-3 gap-6 text-xs text-gray-400 border-y border-white/[0.06] py-3.5">
               <div className="flex items-center gap-2">
-                <div className="h-7 w-7 rounded-lg bg-[#151518] border border-white/[0.08] flex items-center justify-center text-[10px] font-mono font-bold text-blue-400 select-none">
+                <div className="h-7 w-7 rounded-lg bg-raised border border-white/[0.08] flex items-center justify-center text-[10px] font-mono font-bold text-blue-400 select-none">
                   {activePost.author.avatar}
                 </div>
                 <div className="text-left leading-tight">
@@ -867,12 +861,12 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
               </div>
 
               <div className="flex items-center gap-1.5 text-[10px] text-gray-500 font-mono">
-                <Calendar className="h-3.5 w-3.5 text-gray-650" />
+                <Calendar className="h-3.5 w-3.5 text-gray-500" />
                 <span>{activePost.publishedAt}</span>
               </div>
 
               <div className="flex items-center gap-1.5 text-[10px] text-gray-500 font-mono">
-                <Clock className="h-3.5 w-3.5 text-gray-650" />
+                <Clock className="h-3.5 w-3.5 text-gray-500" />
                 <span>{activePost.readTime}</span>
               </div>
 
@@ -991,7 +985,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                       );
                     case "table":
                       return (
-                        <div key={idx} className="overflow-x-auto rounded-xl border border-white/[0.05] bg-[#0E0E10] my-4 select-text">
+                        <div key={idx} className="overflow-x-auto rounded-xl border border-white/[0.05] bg-surface my-4 select-text">
                           <table className="w-full text-left border-collapse text-xs">
                             <thead>
                               <tr className="border-b border-white/[0.06] bg-white/[0.02]">
@@ -1025,7 +1019,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                           </div>
                           <button
                             onClick={() => {
-                              onNavigate("request");
+                              navigate("/advisory");
                               window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             className="h-9 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-[10px] text-white font-bold uppercase tracking-wider transition-all select-none cursor-pointer text-center shrink-0"
@@ -1054,7 +1048,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                       return (
                         <div 
                           key={i} 
-                          className="rounded-lg border border-white/[0.05] bg-[#0A0A0B] overflow-hidden"
+                          className="rounded-lg border border-white/[0.05] bg-canvas overflow-hidden"
                         >
                           <button
                             onClick={() => setActiveFaqIndex(isOpen ? null : i)}
@@ -1072,7 +1066,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: "auto" }}
                                 exit={{ opacity: 0, height: 0 }}
-                                className="border-t border-white/[0.04] p-4 text-xs text-gray-400 select-text leading-relaxed bg-[#0F0F10]/40 font-normal"
+                                className="border-t border-white/[0.04] p-4 text-xs text-gray-400 select-text leading-relaxed bg-surface/40 font-normal"
                               >
                                 {faq.answer}
                               </motion.div>
@@ -1087,14 +1081,14 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
 
               {/* Avoid Dangerous Platforms Claim warning Disclaimer */}
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] text-[10px] text-gray-500 leading-relaxed max-w-2xl font-sans mt-4">
-                <strong>Safety & Regulatory Notice:</strong> IDsvault is an independent digital assets broker facilitating administrative assignment contracts of high-value handles. We hold no official affiliation, sponsorship, license, or association with Instagram, Twitter/X, Telegram, or any associated parent organizations. Transactions are secured solely through broker-held funds in our designated broker account.
+                <strong>Safety & Regulatory Notice:</strong> IDsvault is an independent digital assets broker facilitating administrative assignment contracts of high-value handles. We hold no official affiliation, sponsorship, license, or association with Instagram, Twitter/X, Telegram, or any associated parent organizations. Transactions are secured solely through licensed domestic client-trust escrow holding parameters.
               </div>
 
             </div>
 
             {/* Right Column: Sticky Sidebar Table of Contents */}
             <aside className="hidden lg:block lg:col-span-1 space-y-6 select-none font-sans">
-              <div className="sticky top-24 border border-white/[0.04] bg-[#0A0A0B]/80 backdrop-blur-md p-5 rounded-2xl space-y-4">
+              <div className="sticky top-24 border border-white/[0.04] bg-canvas/80 backdrop-blur-md p-5 rounded-2xl space-y-4">
                 
                 {/* TOC links */}
                 <div className="space-y-2">
@@ -1129,7 +1123,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                 <div className="pt-4 border-t border-white/[0.05] space-y-3">
                   <h4 className="text-[9px] font-bold text-[#10B981] uppercase tracking-widest font-mono flex items-center gap-1">
                     <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
                     </span>
                     <span>Broker Desk Live</span>
@@ -1139,7 +1133,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                   </p>
                   <button
                     onClick={() => {
-                      onNavigate("request");
+                      navigate("/source");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold uppercase tracking-wider rounded transition-colors cursor-pointer select-none text-center"
@@ -1169,7 +1163,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                       setActiveSlug(post.slug);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="group border border-white/[0.06] hover:border-white/[0.12] bg-[#0E0E10] p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer text-left space-y-2.5 flex flex-col justify-between"
+                    className="group border border-white/[0.06] hover:border-white/[0.12] bg-surface p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer text-left space-y-2.5 flex flex-col justify-between"
                   >
                     <div>
                       <span className="text-[8px] font-mono font-bold uppercase text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 inline-block mb-1">
@@ -1182,9 +1176,9 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                         {post.introduction}
                       </p>
                     </div>
-                    <div className="flex items-center justify-between text-[9px] text-[#9CA3AF] font-mono select-none pt-2 border-t border-white/[0.04]">
+                    <div className="flex items-center justify-between text-[9px] text-muted font-mono select-none pt-2 border-t border-white/[0.04]">
                       <span>{post.publishedAt}</span>
-                      <span className="flex items-center gap-1 text-blue-440 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-wider">
+                      <span className="flex items-center gap-1 text-blue-400 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-wider">
                         Read Guide <ChevronRight className="h-3 w-3" />
                       </span>
                     </div>
@@ -1212,7 +1206,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                 placeholder="Search premium identity valuation, legal guides, security rules..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl bg-[#0E0E10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
+                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
               />
               {searchQuery && (
                 <button
@@ -1235,7 +1229,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                     className={`px-3.5 py-1.5 text-[10px] uppercase tracking-wider font-mono font-bold rounded-full border transition-all cursor-pointer ${
                       isActive
                         ? "bg-blue-600 text-white border-blue-500/30"
-                        : "bg-[#0E0E10] text-[#9CA3AF] border-white/[0.04] hover:text-white hover:border-white/[0.1]"
+                        : "bg-surface text-muted border-white/[0.04] hover:text-white hover:border-white/[0.1]"
                     }`}
                   >
                     {cat}
@@ -1251,7 +1245,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               onClick={() => setActiveSlug(featuredPost.slug)}
-              className="group border border-white/[0.08] bg-[#0E0E10] hover:border-white/[0.14] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/[0.02] transition-all duration-300 cursor-pointer text-left"
+              className="group border border-white/[0.08] bg-surface hover:border-white/[0.14] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/[0.02] transition-all duration-300 cursor-pointer text-left"
             >
               <div className="flex-grow space-y-4 flex flex-col justify-between">
                 <div>
@@ -1262,7 +1256,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                     </span>
                     <span className="text-[10px] font-mono text-gray-500">{featuredPost.category}</span>
                   </div>
-                  <h2 className="text-xl md:text-2.5xl font-extrabold text-white group-hover:text-blue-400 transition-colors tracking-tight leading-tight font-sans">
+                  <h2 className="text-xl md:text-2xl font-extrabold text-white group-hover:text-blue-400 transition-colors tracking-tight leading-tight font-sans">
                     {featuredPost.title}
                   </h2>
                   <p className="text-gray-400 text-xs mt-2.5 max-w-3xl leading-relaxed font-sans font-normal line-clamp-3">
@@ -1287,7 +1281,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
               </div>
 
               {/* Glowing decorative preview button on featured card */}
-              <div className="md:w-48 bg-[#070708] border border-white/[0.05] rounded-xl flex flex-col justify-center items-center gap-1 p-6 select-none shrink-0 group-hover:border-blue-500/20 group-hover:bg-[#0C0C0F] transition-all">
+              <div className="md:w-48 bg-[#070708] border border-white/[0.05] rounded-xl flex flex-col justify-center items-center gap-1 p-6 select-none shrink-0 group-hover:border-blue-500/20 group-hover:bg-canvas transition-all">
                 <span className="p-3 bg-blue-500/5 text-blue-500 rounded-full border border-blue-500/10 group-hover:bg-blue-500/10 group-hover:text-blue-400 transition-all">
                   <Eye className="h-5 w-5" />
                 </span>
@@ -1300,9 +1294,9 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
           {filteredPosts.length === 0 ? (
             <div className="p-16 border border-dashed border-white/[0.06] rounded-2xl text-center space-y-3 max-w-md mx-auto">
               <AlertCircle className="h-8 w-8 text-gray-500 mx-auto" />
-              <h3 className="text-sm font-bold text-white tracking-tight">Zero Strategic Matching</h3>
+              <h3 className="text-sm font-bold text-white tracking-tight">No articles found</h3>
               <p className="text-xs text-gray-400 leading-relaxed font-normal">
-                No articles matched your keyword query. Refine terms or filter by categories.
+                No articles matched your search. Try different terms or reset the category filter.
               </p>
               <button
                 onClick={() => {
@@ -1311,105 +1305,113 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigate, onBrowseListing,
                 }}
                 className="px-3.5 py-2 rounded bg-white/[0.04] text-[10px] text-gray-200 uppercase tracking-wider font-bold hover:bg-white/[0.08]"
               >
-                Reset Search Filters
+                Reset Filters
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {paginatedPosts.map((post, idx) => (
-                <motion.article
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: Math.min(idx * 0.05, 0.45) }}
-                  key={post.id}
-                  onClick={() => {
-                    setActiveSlug(post.slug);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                  className="group border border-white/[0.06] hover:border-white/[0.12] bg-[#0E0E10] p-6 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/[0.01] transition-all duration-300 cursor-pointer text-left flex flex-col justify-between"
-                  id={`article_card_${post.slug}`}
-                >
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center select-none mb-1">
-                      <span className="text-[8px] font-mono font-bold uppercase text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
-                        {post.category}
-                      </span>
-                      {post.status === "draft" && (
-                        <span className="text-[8px] font-mono font-bold uppercase text-amber-400 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
-                          DRAFT NODE
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {paginatedPosts.map((post, idx) => (
+                  <motion.article
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: Math.min(idx * 0.05, 0.2) }}
+                    key={post.id}
+                    onClick={() => {
+                      setActiveSlug(post.slug);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className="group border border-white/[0.06] hover:border-white/[0.12] bg-surface p-6 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/[0.01] transition-all duration-300 cursor-pointer text-left flex flex-col justify-between"
+                    id={`article_card_${post.slug}`}
+                  >
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center select-none mb-1">
+                        <span className="text-[8px] font-mono font-bold uppercase text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
+                          {post.category}
+                        </span>
+                        {post.status === "draft" && (
+                          <span className="text-[8px] font-mono font-bold uppercase text-amber-400 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+                            DRAFT
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors leading-snug tracking-tight font-sans">
+                        {post.title}
+                      </h3>
+
+                      <p className="text-gray-400 text-xs font-sans font-normal leading-relaxed line-clamp-3">
+                        {post.introduction}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 mt-4 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-muted font-mono select-none">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-3.5 w-3.5 text-gray-500" />
+                        <span>{post.readTime}</span>
+                      </div>
+
+                      {/* Admin editing suite controls */}
+                      {cmsMode ? (
+                        <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                          <button
+                            onClick={() => handleBeginCMS(post)}
+                            className="h-6 w-6 rounded bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/25 transition-colors cursor-pointer"
+                            title="Edit article"
+                          >
+                            <Edit className="h-3 w-3" />
+                          </button>
+                          <button
+                            onClick={(e) => handleDeletePost(post.id, e)}
+                            className="h-6 w-6 rounded bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 hover:bg-red-500/25 transition-colors cursor-pointer"
+                            title="Delete article"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="flex items-center gap-0.5 text-blue-400 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-widest leading-none pt-0.5">
+                          Read <ChevronRight className="h-3.5 w-3.5" />
                         </span>
                       )}
                     </div>
-                    
-                    <h3 className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors leading-snug tracking-tight font-sans">
-                      {post.title}
-                    </h3>
-                    
-                    <p className="text-gray-400 text-xs font-sans font-normal leading-relaxed line-clamp-3">
-                      {post.introduction}
-                    </p>
-                  </div>
+                  </motion.article>
+                ))}
+              </div>
 
-                  <div className="pt-4 mt-4 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-[#9CA3AF] font-mono select-none">
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5 text-gray-500" />
-                      <span>{post.readTime}</span>
-                    </div>
-                    
-                    {/* Admin editing suite controls */}
-                    {cmsMode ? (
-                      <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          onClick={() => handleBeginCMS(post)}
-                          className="h-6 w-6 rounded bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/25 transition-colors cursor-pointer"
-                          title="Edit Editorial metadata and body content"
-                        >
-                          <Edit className="h-3 w-3" />
-                        </button>
-                        <button
-                          onClick={(e) => handleDeletePost(post.id, e)}
-                          className="h-6 w-6 rounded bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 hover:bg-red-500/25 transition-colors cursor-pointer"
-                          title="Permanently remove article"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
-                    ) : (
-                      <span className="flex items-center gap-0.5 text-blue-400 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-widest leading-none pt-0.5">
-                        Read Guide <ChevronRight className="h-3.5 w-3.5" />
-                      </span>
-                    )}
-                  </div>
-                </motion.article>
-              ))}
-            </div>
-          )}
-
-          {/* Simple and elegant pagination controls */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between border-t border-white/[0.06] pt-6 mt-8 select-none">
-              <button
-                disabled={currentPage === 1}
-                onClick={() => {
-                  setCurrentPage((p) => Math.max(p - 1, 1));
-                }}
-                className="px-4 py-2 text-xs font-semibold rounded bg-[#0E0E10] border border-white/[0.08] hover:border-white/[0.15] text-[#F5F5F7] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
-              >
-                &larr; Previous Page
-              </button>
-              <span className="text-xs text-gray-400 font-mono">
-                Page <strong className="text-white">{currentPage}</strong> of <strong className="text-white">{totalPages}</strong>
-              </span>
-              <button
-                disabled={currentPage === totalPages}
-                onClick={() => {
-                  setCurrentPage((p) => Math.min(p + 1, totalPages));
-                }}
-                className="px-4 py-2 text-xs font-semibold rounded bg-[#0E0E10] border border-white/[0.08] hover:border-white/[0.15] text-[#F5F5F7] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
-              >
-                Next Page &rarr;
-              </button>
-            </div>
+              {/* Pagination controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 pt-4 select-none">
+                  <button
+                    onClick={() => { setCurrentPage(p => Math.max(p - 1, 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    disabled={currentPage === 1}
+                    className="h-8 px-4 rounded-lg border border-white/[0.08] text-xs font-bold text-gray-400 hover:text-white hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                  >
+                    ← Prev
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                    <button
+                      key={page}
+                      onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                      className={`h-8 w-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        page === currentPage
+                          ? "bg-blue-600 text-white border border-blue-500/30"
+                          : "border border-white/[0.08] text-gray-400 hover:text-white hover:border-white/[0.15]"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => { setCurrentPage(p => Math.min(p + 1, totalPages)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    disabled={currentPage === totalPages}
+                    className="h-8 px-4 rounded-lg border border-white/[0.08] text-xs font-bold text-gray-400 hover:text-white hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                  >
+                    Next →
+                  </button>
+                </div>
+              )}
+            </>
           )}
 
         </div>

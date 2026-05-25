@@ -4,16 +4,16 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { 
-  ShieldCheck, 
-  MessageCircle, 
-  Mail, 
-  AlertTriangle, 
-  BadgePercent, 
-  Lock, 
-  Landmark, 
-  Check, 
-  Loader2, 
+import {
+  ShieldCheck,
+  MessageCircle,
+  Mail,
+  AlertTriangle,
+  BadgePercent,
+  Lock,
+  Landmark,
+  Check,
+  Loader2,
   ChevronLeft,
   Calendar,
   Globe,
@@ -23,7 +23,7 @@ import {
 import { Listing, Urgency } from "../types";
 import { maskUsername, buildWhatsAppHandoff, WHATSAPP_NUMBER, formatINR, getEstimatedRange } from "../data";
 import { motion, AnimatePresence } from "motion/react";
-import { TurnstileWidget } from "./TurnstileWidget";
+import { SEO } from "./SEO";
 
 interface ListingDetailProps {
   listing: Listing;
@@ -36,8 +36,7 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  
+
   // Bot Honeypot state
   const [honeypot, setHoneypot] = useState("");
 
@@ -59,13 +58,7 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 1. Interactive Turnstile verification
-    if (!turnstileToken) {
-      alert("Please solve the Cloudflare security validation gate before submitting.");
-      return;
-    }
-
-    // 2. Anti-Bot Honeypot Defense Triggered
+    // 1. Anti-Bot Honeypot Defense
     if (honeypot) {
       console.warn("Anti-bot defense triggered: Honeypot check detected input.");
       alert("Submission blocked. Automated request signature detected.");
@@ -117,7 +110,39 @@ Urgency: Standard`;
 
   const maskedTitle = maskUsername(listing.username);
 
+  const listingSchema = listing.askingPrice > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": `@${listing.username} — Premium ${listing.platform} Handle`,
+        "description": listing.description || `Premium ${listing.platform} username available via IDsvault broker-assisted transfer.`,
+        "url": `https://idsvault.com/asset/${listing.slug}`,
+        "brand": {
+          "@type": "Organization",
+          "name": "IDsvault",
+          "url": "https://idsvault.com"
+        },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": listing.askingPrice,
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "IDsvault"
+          }
+        }
+      }
+    : undefined;
+
   return (
+    <>
+    <SEO
+      title={`Buy @${listing.username} on ${listing.platform}`}
+      description={`Premium @${listing.username} ${listing.platform} handle — ${listing.askingPrice > 0 ? `${formatINR(listing.askingPrice)} asking price. ` : ""}Broker-verified. Payment held by broker until transfer confirmed. IDsvault Hyderabad.`}
+      canonical={`/asset/${listing.slug}`}
+      structuredData={listingSchema}
+    />
     <div className="max-w-7xl mx-auto px-6 py-12 text-left">
       
       {/* Premium Back Trigger */}
@@ -127,7 +152,7 @@ Urgency: Standard`;
         id="detail_back_trigger"
       >
         <ChevronLeft className="h-4 w-4 text-gray-500 group-hover:-translate-x-0.5 transition-transform animate-in" />
-        <span>Back to Namespace Registry</span>
+        <span>Back to Inventory</span>
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -136,7 +161,7 @@ Urgency: Standard`;
         <section className="lg:col-span-7 space-y-6">
           
           {/* Gallery style premium card */}
-          <article className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] relative overflow-hidden">
+          <article className="p-8 rounded-2xl bg-surface border border-white/[0.08] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-[80px] rounded-full pointer-events-none" />
             
             <header className="flex flex-wrap items-center gap-3">
@@ -149,27 +174,27 @@ Urgency: Standard`;
             </header>
 
             <div className="space-y-4 pt-10 pb-12">
-              <span className="text-[10px] font-bold text-gray-500 block uppercase tracking-widest font-mono">Masked Identifier</span>
+              <span className="text-[10px] font-bold text-gray-500 block uppercase tracking-widest font-mono">Handle</span>
               <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
                 @{maskedTitle}
               </h1>
-              <p className="text-xs text-blue-400 font-mono tracking-wide">Registry ID: Reference Block #{listing.id}-SVX</p>
+              <p className="text-xs text-blue-400 font-mono tracking-wide">Ref #{listing.id}</p>
             </div>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-white/[0.06] text-xs">
-              <div className="p-3 bg-[#151517] rounded-xl border border-white/[0.04] space-y-1">
+              <div className="p-3 bg-raised rounded-xl border border-white/[0.04] space-y-1">
                 <span className="text-[9px] text-gray-500 uppercase font-mono block">Audit Status</span>
                 <span className="text-white font-bold flex items-center gap-1.5 font-mono text-[11px]">
                   <ShieldCheck className="h-4.5 w-4.5 text-[#10B981]" /> Approved
                 </span>
               </div>
-              <div className="p-3 bg-[#151517] rounded-xl border border-white/[0.04] space-y-1">
+              <div className="p-3 bg-raised rounded-xl border border-white/[0.04] space-y-1">
                 <span className="text-[9px] text-gray-500 uppercase font-mono block">Transfer ETA</span>
                 <span className="text-white font-semibold font-mono text-[11px]">
                   &lt; 24h Handover
                 </span>
               </div>
-              <div className="p-3 bg-[#151517] rounded-xl border border-white/[0.04] col-span-2 sm:col-span-1 space-y-1">
+              <div className="p-3 bg-raised rounded-xl border border-white/[0.04] col-span-2 sm:col-span-1 space-y-1">
                 <span className="text-[9px] text-gray-500 uppercase font-mono block">Credibility Rate</span>
                 <span className="text-white font-bold font-mono text-[11px] text-blue-400">
                   A+ Grade Desk
@@ -179,35 +204,35 @@ Urgency: Standard`;
           </article>
 
           {/* Broker Assessment Context Form */}
-          <article className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4 text-left">
-            <h2 className="text-xs font-bold text-white uppercase tracking-widest font-mono">Desk Coordinator Assessment</h2>
-            <p className="text-xs text-[#9CA3AF] leading-relaxed">
-              {listing.description} This namespace has successfully satisfied our strict criteria and verified ownership controls. The seller is currently under administrative contract, guarding ownership markers and linked configuration coordinates under human broker supervision.
+          <article className="p-8 rounded-2xl bg-surface border border-white/[0.08] space-y-4 text-left">
+            <h2 className="text-xs font-bold text-white uppercase tracking-widest font-mono">About this Handle</h2>
+            <p className="text-xs text-muted leading-relaxed">
+              {listing.description}
             </p>
           </article>
 
           {/* Structured Workflow Protective list */}
-          <article className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+          <article className="p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest font-mono">Compliance Framework</h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div className="p-4 rounded-xl bg-[#151517] border border-white/[0.04] space-y-2">
+              <div className="p-4 rounded-xl bg-raised border border-white/[0.04] space-y-2">
                 <Lock className="h-4 w-4 text-blue-500" />
-                <h4 className="font-bold text-white text-[11px] tracking-tight">Ledger Isolation</h4>
+                <h4 className="font-bold text-white text-[11px] tracking-tight">Payment Held by Broker</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
-                  Your payment coordinates are guarded. Fund release occurs strictly once ownership transfer is verified.
+                  Payment is held in the broker's registered business account. Funds are released only after the transfer is confirmed.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#151517] border border-white/[0.04] space-y-2">
+              <div className="p-4 rounded-xl bg-raised border border-white/[0.04] space-y-2">
                 <Fingerprint className="h-4 w-4 text-[#10B981]" />
-                <h4 className="font-bold text-white text-[11px] tracking-tight">Vetted Tokens</h4>
+                <h4 className="font-bold text-white text-[11px] tracking-tight">Ownership Confirmed</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
-                  Sellers verify active ownership properties with bio token validations prior to coordinate listing approvals.
+                  Sellers demonstrate active account access before listing. We verify ownership before any handle goes live.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#151517] border border-white/[0.04] space-y-2">
+              <div className="p-4 rounded-xl bg-raised border border-white/[0.04] space-y-2">
                 <Landmark className="h-4 w-4 text-purple-400" />
                 <h4 className="font-bold text-white text-[11px] tracking-tight">Anti-Clawback</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
@@ -220,17 +245,17 @@ Urgency: Standard`;
 
         {/* Sticky Trust Checkout sidebar */}
         <section className="lg:col-span-5">
-          <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.08] sticky top-24 space-y-6">
+          <div className="p-6 rounded-2xl bg-raised border border-white/[0.08] sticky top-24 space-y-6">
             
             <div className="space-y-1">
-              <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest font-mono block">Secure Bidding Desk</span>
-              <h3 className="text-lg font-bold text-white">Initialize Proposal</h3>
-              <p className="text-xs text-[#9CA3AF]">Submit custom valuation offers in compliance with our structured payment workflow.</p>
+              <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest font-mono block">Offer Desk</span>
+              <h3 className="text-lg font-bold text-white">Make an Offer</h3>
+              <p className="text-xs text-muted">Submit custom valuation offers in compliance with our structured payment workflow.</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.04] space-y-1.5">
+            <div className="p-4 rounded-xl bg-surface border border-white/[0.04] space-y-1.5">
               <span className="text-[9px] text-gray-500 uppercase font-mono block">Estimated Range</span>
-              <p className="text-sm font-bold font-mono text-emerald-450">
+              <p className="text-sm font-bold font-mono text-emerald-400">
                 {getEstimatedRange(listing.askingPrice)}
               </p>
             </div>
@@ -262,12 +287,12 @@ Urgency: Standard`;
                     placeholder="e.g. 500000"
                     value={offer}
                     onChange={(e) => setOffer(e.target.value)}
-                    className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-[#0F0F10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                    className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                     id="detail_input_offer"
                   />
                 </div>
                 {listing.askingPrice > 0 && (
-                  <p className="text-[9px] text-[#9CA3AF] mt-1.5">
+                  <p className="text-[9px] text-muted mt-1.5">
                     Target Asking Valuation: {formatINR(listing.askingPrice)}
                   </p>
                 )}
@@ -275,7 +300,7 @@ Urgency: Standard`;
 
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                  Representative Full Name
+                  Your Full Name
                 </label>
                 <input
                   type="text"
@@ -283,14 +308,14 @@ Urgency: Standard`;
                   placeholder="e.g. Michael Jenkins"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-[#0F0F10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                   id="detail_input_name"
                 />
               </div>
 
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                  Business E-mail Node
+                  Your Email Address
                 </label>
                 <input
                   type="email"
@@ -298,14 +323,14 @@ Urgency: Standard`;
                   placeholder="e.g. representative@entity.co"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-[#0F0F10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                   id="detail_input_email"
                 />
               </div>
 
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                  WhatsApp Contact Coordinates
+                  WhatsApp Number
                 </label>
                 <input
                   type="tel"
@@ -313,13 +338,10 @@ Urgency: Standard`;
                   placeholder="e.g. +91 98765 43210"
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-[#0F0F10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                   id="detail_input_whatsapp"
                 />
               </div>
-
-              {/* Active Cloudflare Turnstile Verification */}
-              <TurnstileWidget onVerify={setTurnstileToken} actionName="proposal_submission" />
 
               <div className="grid grid-cols-2 gap-3">
                 <button
@@ -335,7 +357,7 @@ Urgency: Standard`;
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting || !turnstileToken}
+                  disabled={isSubmitting}
                   className="py-3 px-2 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-1 active:scale-95"
                   id="detail_submit_cta"
                 >
@@ -347,7 +369,7 @@ Urgency: Standard`;
                   ) : (
                     <>
                       <span>Make Offer</span>
-                      {cooldown > 0 && <span className="font-mono text-[8 offices] text-blue-305">({cooldown}s)</span>}
+                      {cooldown > 0 && <span className="font-mono text-[8px] text-blue-300">({cooldown}s)</span>}
                     </>
                   )}
                 </button>
@@ -357,7 +379,7 @@ Urgency: Standard`;
             {/* Support Message */}
             <div className="pt-2 border-t border-white/[0.06] text-center select-none">
               <p className="text-[10px] text-gray-500">
-                Need bespoke corporate legal contracts? Direct secure liaison with our Hyderabad Desk consultancy hotline is online.
+                Questions? Message our Hyderabad desk on WhatsApp or email broker@idsvault.com.
               </p>
             </div>
 
@@ -375,7 +397,7 @@ Urgency: Standard`;
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white block"
+              className="p-8 rounded-2xl bg-surface border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white block"
               id="detail_success_modal"
             >
               <div className="h-12 w-12 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center mx-auto mb-2">
@@ -383,9 +405,9 @@ Urgency: Standard`;
               </div>
               
               <div className="space-y-1.5">
-                <h3 className="font-extrabold text-xl text-white tracking-tight">Bid Proposals Locked</h3>
+                <h3 className="font-extrabold text-xl text-white tracking-tight">Offer Received</h3>
                 <p className="text-xs text-gray-400 leading-relaxed font-normal">
-                  Your acquisition bid has been authenticated. To allocate your dedicated broker coordinator and initiate manual coordinate checks, initiate the direct communication handshake.
+                  Open WhatsApp to send your offer to our Hyderabad desk. We'll confirm receipt and come back to you same day.
                 </p>
               </div>
 
@@ -397,7 +419,7 @@ Urgency: Standard`;
                   className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer outline-none"
                   onClick={() => setSuccessOverlay(null)}
                 >
-                  Launch Custom WhatsApp Workspace
+                  Open WhatsApp Conversation
                 </a>
                 <a
                   href={successOverlay.mailto}
@@ -405,7 +427,7 @@ Urgency: Standard`;
                   onClick={() => setSuccessOverlay(null)}
                 >
                   <Mail className="h-3.5 w-3.5" />
-                  No WhatsApp? Mail Coordinator Fallback
+                  Prefer email? Write to broker@idsvault.com
                 </a>
               </div>
 
@@ -413,7 +435,7 @@ Urgency: Standard`;
                 onClick={() => setSuccessOverlay(null)}
                 className="text-[10px] text-gray-500 hover:text-gray-300 uppercase tracking-wider block mx-auto cursor-pointer font-bold select-none pt-2"
               >
-                Close Portal & Browse Directory
+                Close
               </button>
             </motion.div>
           </div>
@@ -421,5 +443,6 @@ Urgency: Standard`;
       </AnimatePresence>
 
     </div>
+    </>
   );
 };

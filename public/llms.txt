@@ -1,26 +1,90 @@
-# IDsvault Model Context & Business Posture Information
+# IDsvault
 
-IDsvault is an independent, premium digital identity brokerage marketplace coordinating human-assisted transfers of high-value social media handles (@usernames) and brandable digital names.
+> A broker-advised digital identity facilitation desk for Telegram usernames, domain names, Discord servers, and YouTube channels. Based in Hyderabad, Telangana, India. Serving buyers and sellers across India.
 
-## Core Business Identity & Posture
-- **Independence:** IDsvault is NOT an official partner, agent, or affiliate of Instagram (Meta), X (Twitter), Discord, or Telegram.
-- **Escrow Operations:** IDsvault is NOT a licensed escrow bank or guaranteed automated transfer service. Instead, it provides human broker-supervised custody and step-by-step transaction workflow coordination.
-- **Service Offering:** Direct concierge brokering, off-market identifier sourcing campaigns, digital custody validation, and custom secure handovers.
+## What We Do
 
-## Legal & Compliance Guidelines
-- **KYC Compliance:** KYC required for deals above $1,000 USD equivalent. Payment is processed via UPI, Bank transfer, Wise, SWIFT, or crypto (USDC/USDT). There is a full refund commitment if the handle transfer fails.
-- **Escrow/Broker Protection:** For all deal sizes, funds are held in IDsvault's designated broker account — separate from operating funds — until the buyer confirms full ownership on the live transfer call.
-- **Anti-Bypass Asset Shielding:** Public listings on IDsvault are strictly masked to prevent listing hijackings, speculative buyouts, and security extortion tactics. Real handles are only disclosed under secured broker-monitored environments.
-- **Risk Disclosures:** Digital namespace transaction operations run contrary to standard platforms' direct Terms of Service. IDsvault offers zero warranties against subsequent host platform reset campaigns, account de-activations, or subsequent recovery updates.
-- **Prohibited Actions:** Strictly excludes identifiers sourced from phishing, extortion, trademarks infringement, or unauthorized security breaches.
+IDsvault is a digital identity advisory and transfer facilitation desk. We do not own or sell digital assets. We facilitate private agreements between independent parties — coordinating ownership verification, payment, and transfer under a structured, broker-supervised process. Every transaction is managed personally by the IDsvault broker.
+
+We are an independent desk. We are not affiliated with Telegram, any domain registrar, Discord, Google, or any platform whose assets we facilitate.
+
+## Asset Categories
+
+### Full Brokerage (public inventory)
+- Telegram usernames (live supervised transfer, no platform enforcement risk)
+- Domain names (.com, .in, and selected extensions)
+- Discord servers (ownership transfer via admin delegation)
+- YouTube channels (Google Brand Account authority transfer)
+
+### Private Advisory (application-only, no public listings)
+- Instagram handles — platform ToS prohibit transfers; risk disclosed in writing before any engagement
+- X (Twitter) usernames — same disclosure requirement
+- Complex or high-value acquisitions requiring off-market sourcing
 
 ## How a Transaction Works
-1. Selection & Verification: Target handle is vetted and sourced.
-2. WhatsApp / Live Call Setup: Broker coordinates live call with both buyer and seller present.
-3. Buyer Payment: Buyer sends payment to IDsvault via UPI, bank transfer, or crypto — never directly to the seller.
-4. Transfer & Handover: Under strict live supervision, the credential/username handover is moderated.
-5. Payout Release: After buyer confirms successful ownership, the broker releases funds to the seller. Full refund if coordinate transfer fails.
 
-## API & Marketplace Access Rules
-- Sourcing campaigns are conducted discretely.
-- Live brokers coordinate secure handshakes on WhatsApp or secure alternative channels (+91 98765 43210 / desk@idsvault.com).
+1. Buyer inquires via the IDsvault website or WhatsApp (+91 93929 74031)
+2. Seller ownership is verified by the broker before any listing is published
+3. Deal terms agreed between buyer and seller through IDsvault as intermediary
+4. Buyer sends payment to IDsvault via UPI or bank transfer — never directly to seller
+5. Live supervised transfer: seller, buyer, and broker on a simultaneous call
+6. Buyer confirms full account access and changes all credentials
+7. IDsvault releases payment from designated broker account to seller
+
+## Payment & Fees
+
+- Payment via UPI or bank transfer (NEFT/RTGS/IMPS) to IDsvault registered business current account
+- INR pricing. No crypto, no international wire, no third-party escrow platforms.
+- Full refund if transfer fails at any step — within 3 business hours
+- KYC required for transactions above ₹85,000
+- GST-compliant tax invoice issued for every transaction
+
+## Commission Structure
+
+- 15% + GST for deals under Rs 5,00,000
+- 12% + GST for deals Rs 5,00,000 to Rs 20,00,000
+- 10% + GST for deals above Rs 20,00,000
+- Negotiable for deals above Rs 85,00,000
+
+All fees disclosed before any payment is made. No hidden charges.
+
+## Platform Risk Disclosure
+
+Telegram username transfers are done on a live supervised call. No platform enforcement risk.
+
+Domain, Discord, and YouTube transfers carry standard secondary-market risk only.
+
+Instagram and X handle transfers are prohibited by those platforms Terms of Service. We advise clients of this risk explicitly and in writing before any advisory engagement begins. We do not list these publicly.
+
+## Contact
+
+WhatsApp: +91 93929 74031
+Email: broker@idsvault.com
+Location: Hyderabad, Telangana, India
+Service area: India only
+
+## Response Times
+
+Business hours (IST): within 4 hours
+After hours: within 24 hours
+
+## Legal
+
+IDsvault is a registered business in Hyderabad, India. All transactions are governed by Indian law, Hyderabad jurisdiction. GST-compliant invoicing on all fees. KYC required above defined thresholds per PMLA guidelines.
+
+## Frequently Asked Questions
+
+**Is IDsvault a marketplace or exchange?**
+No. IDsvault is a facilitation desk, not a marketplace. We do not list assets from anonymous sellers, we do not operate an open exchange, and we do not take custody of digital assets. We facilitate supervised private transactions between verified parties.
+
+**How does broker-held payment work?**
+You pay IDsvault via UPI or bank transfer — not the seller. We hold the full amount in our designated business account, separate from operating funds, until you confirm ownership on the live call. If the transfer fails, full refund within 3 business hours.
+
+**What happens if the transfer fails?**
+Full refund within 3 business hours. No questions.
+
+**Where are you based?**
+Hyderabad, Telangana, India. We serve buyers and sellers across India.
+
+**Is IDsvault affiliated with any platform?**
+No. We are an independent intermediary. All platform trademarks belong to their respective owners.

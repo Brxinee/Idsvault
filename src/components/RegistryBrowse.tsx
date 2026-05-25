@@ -4,6 +4,8 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
+import { usePageTitle } from "../hooks/usePageTitle";
+import { SEO } from "./SEO";
 import { 
   Search, 
   ShieldAlert, 
@@ -28,7 +30,21 @@ interface RegistryBrowseProps {
 }
 
 export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSelectListing }) => {
+  usePageTitle("Browse Handles");
   const [search, setSearch] = useState("");
+
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Browse Premium Handles — IDsvault",
+    "description": "Broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Broker-held payment on every deal.",
+    "url": "https://idsvault.com/inventory",
+    "provider": {
+      "@type": "Organization",
+      "name": "IDsvault",
+      "url": "https://idsvault.com"
+    }
+  };
   const [selectedPlatform, setSelectedPlatform] = useState<string>("all");
   const [selectedRarity, setSelectedRarity] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("price-asc");
@@ -113,17 +129,23 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-8 text-left">
-      
+      <SEO
+        title="Browse Handles"
+        description="Browse broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Broker-held payment on every deal. Hyderabad broker-assisted."
+        canonical="/inventory"
+        structuredData={collectionSchema}
+      />
+
       {/* Visual Header */}
       <div className="space-y-2 border-b border-white/[0.06] pb-6">
-        <h1 className="text-3xl font-extrabold text-white tracking-tight">Vetted Namespace Registry</h1>
+        <h1 className="text-3xl font-extrabold text-white tracking-tight">Available Handles</h1>
         <p className="text-xs text-gray-400">
-          Discover premium, short, and brandable digital usernames audited manually for absolute custody access.
+          Browse broker-verified Instagram, X, and Telegram handles available for sale. Ownership confirmed on every listing.
         </p>
       </div>
 
       {/* Advanced Filter, Search, and Sort Panel */}
-      <div className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+      <div className="p-4 rounded-xl bg-surface border border-white/[0.08] space-y-4">
         
         <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
           
@@ -138,7 +160,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none placeholder:text-gray-500 transition-colors focus:ring-1 focus:ring-blue-500/20"
+              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none placeholder:text-gray-500 transition-colors focus:ring-1 focus:ring-blue-500/20"
               id="registry_search_input"
             />
             {search && (
@@ -161,8 +183,8 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                   onClick={() => handlePlatformChange(p)}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all duration-200 cursor-pointer select-none border ${
                     isActive
-                      ? "bg-blue-600 border-blue-500 text-white shadow-[0_2px_10px_rgba(59,130,246,0.2)]"
-                      : "bg-[#151517] text-gray-400 border-white/[0.06] hover:text-white hover:border-white/[0.12]"
+                      ? "bg-blue-600 border-blue-500 text-white"
+                      : "bg-raised text-gray-400 border-white/[0.06] hover:text-white hover:border-white/[0.12]"
                   }`}
                   id={`chip_platform_${p}`}
                 >
@@ -176,7 +198,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
           <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
             
             {/* Sorting SELECT dropdown */}
-            <div className="flex items-center gap-2 bg-[#151517] border border-white/[0.08] px-3 py-2 rounded-lg text-xs hover:border-white/[0.15] transition-colors relative">
+            <div className="flex items-center gap-2 bg-raised border border-white/[0.08] px-3 py-2 rounded-lg text-xs hover:border-white/[0.15] transition-colors relative">
               <ArrowUpDown className="h-3.5 w-3.5 text-gray-500" />
               <select
                 value={sortBy}
@@ -207,7 +229,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
               <SlidersHorizontal className="h-3.5 w-3.5" />
               <span>Filters</span>
               {selectedRarity !== "all" && (
-                <span className="h-2 w-2 rounded-full bg-blue-550" />
+                <span className="h-2 w-2 rounded-full bg-blue-500" />
               )}
             </button>
 
@@ -228,7 +250,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-2">
                 <div className="space-y-2">
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Rarity Badge Segment</h4>
+                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Handle Type</h4>
                   <div className="flex flex-wrap gap-1.5">
                     {uniqueRarities.map((r) => {
                       const isMatch = selectedRarity === r;
@@ -242,7 +264,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                           className={`px-2.5 py-1 text-[10px] font-medium rounded-md transition-colors cursor-pointer border ${
                             isMatch
                               ? "bg-emerald-500/10 border-emerald-500/30 text-[#10B981]"
-                              : "bg-[#151517] text-gray-400 border-white/[0.06] hover:text-white"
+                              : "bg-raised text-gray-400 border-white/[0.06] hover:text-white"
                           }`}
                         >
                           {r === "all" ? "All Rarities" : r}
@@ -253,9 +275,9 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                 </div>
 
                 <div className="space-y-2">
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500 font-mono">Operations Audit Rules</h4>
+                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500 font-mono">About Filtering</h4>
                   <p className="text-[10px] text-gray-500 leading-relaxed">
-                    Filters are processed locally inside our securely isolated workspace sandbox to keep search queries secure.
+                    All filters run in your browser. No search queries are sent to any server.
                   </p>
                 </div>
 
@@ -288,24 +310,24 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             {[...Array(6)].map((_, idx) => (
               <div 
                 key={idx}
-                className="h-60 rounded-xl bg-[#0F0F10] border border-white/[0.06] p-6 space-y-6 flex flex-col justify-between animate-pulse"
+                className="h-60 rounded-xl bg-surface border border-white/[0.06] p-6 space-y-6 flex flex-col justify-between animate-pulse"
               >
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <div className="h-5 w-16 bg-[#151517] rounded" />
-                    <div className="h-5 w-24 bg-[#151517] rounded" />
+                    <div className="h-5 w-16 bg-raised rounded" />
+                    <div className="h-5 w-24 bg-raised rounded" />
                   </div>
                   <div className="space-y-2">
-                    <div className="h-8 w-40 bg-[#151517] rounded" />
-                    <div className="h-4 w-28 bg-[#151517] rounded" />
+                    <div className="h-8 w-40 bg-raised rounded" />
+                    <div className="h-4 w-28 bg-raised rounded" />
                   </div>
                 </div>
                 <div className="flex justify-between items-center pt-4 border-t border-white/[0.04]">
                   <div className="space-y-1">
-                    <div className="h-2 w-12 bg-[#151517] rounded" />
-                    <div className="h-5 w-20 bg-[#151517] rounded" />
+                    <div className="h-2 w-12 bg-raised rounded" />
+                    <div className="h-5 w-20 bg-raised rounded" />
                   </div>
-                  <div className="h-8 w-24 bg-[#151517] rounded" />
+                  <div className="h-8 w-24 bg-raised rounded" />
                 </div>
               </div>
             ))}
@@ -319,21 +341,21 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             id="browse_listings_grid"
           >
             {paginatedListings.length === 0 ? (
-              <div className="col-span-full py-16 px-6 text-center text-xs text-gray-500 rounded-2xl bg-[#0F0F10] border border-white/[0.08] flex flex-col items-center justify-center space-y-4 max-w-lg mx-auto" id="results_empty_state">
+              <div className="col-span-full py-16 px-6 text-center text-xs text-gray-500 rounded-2xl bg-surface border border-white/[0.08] flex flex-col items-center justify-center space-y-4 max-w-lg mx-auto" id="results_empty_state">
                 <div className="h-14 w-14 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
                   <ShieldAlert className="h-6 w-6 stroke-1.5" />
                 </div>
                 <div className="space-y-2 max-w-sm">
-                  <h3 className="text-white font-bold text-sm">No Namespace Listings Found</h3>
-                  <p className="text-[#9CA3AF] text-[11px] leading-relaxed">
-                    We couldn't locate any active vetted assets matching your search metrics. You can clear current filters or commission a custom sourcing task below.
+                  <h3 className="text-white font-bold text-sm">No Handles Found</h3>
+                  <p className="text-muted text-[11px] leading-relaxed">
+                    No listings match your current filters. Try clearing your search or changing the platform filter. If you're looking for a specific handle, use our sourcing service.
                   </p>
                 </div>
                 <button
                   onClick={clearFormFilters}
                   className="px-4 py-2 text-[10px] font-bold uppercase rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-white transition-colors cursor-pointer"
                 >
-                  Clear Dynamic Criteria
+                  Clear All Filters
                 </button>
               </div>
             ) : (
@@ -345,35 +367,35 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                     key={item.id}
                     whileHover={{ y: -6, scale: 1.01 }}
                     transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] hover:border-[#D4AF37]/30 flex flex-col justify-between h-64 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65)] group relative overflow-hidden transition-all duration-300"
+                    className="p-6 rounded-2xl bg-surface border border-white/[0.08] hover:border-white/[0.15] flex flex-col justify-between h-60 hover:shadow-[0_12px_30px_rgba(0,0,0,0.55)] group relative overflow-hidden"
                   >
-                    {/* Glowing golden light overlay on hover */}
-                    <div className="absolute -top-12 -right-12 h-24 w-24 rounded-full bg-[#D4AF37]/5 blur-xl group-hover:scale-150 transition-all duration-500 pointer-events-none" />
+                    {/* Tiny neon border line on hover */}
+                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="space-y-4">
                       
                       {/* Badge header */}
                       <div className="flex items-center justify-between">
-                        <span className="text-[9px] uppercase tracking-widest font-mono font-extrabold text-blue-450 bg-blue-500/10 border border-blue-500/15 px-3 py-1 rounded-full">
+                        <span className="text-[9px] uppercase tracking-wider font-mono font-extrabold text-blue-400 bg-blue-500/10 border border-blue-500/15 px-2.5 py-0.5 rounded-full">
                           {item.platform}
                         </span>
                         
-                        <span className="flex items-center gap-1.5 text-[9px] font-mono font-bold tracking-wide text-[#30D158] bg-emerald-500/5 px-2.5 py-1 rounded border border-emerald-500/10">
-                          <BadgeCheck className="h-3.5 w-3.5 stroke-[2]" />
-                          Verified Desk Hold
+                        <span className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/15">
+                          <BadgeCheck className="h-3 w-3 stroke-[2.5]" />
+                          Vetted Custody
                         </span>
                       </div>
 
                       {/* Username Title & Badge list */}
-                      <div className="space-y-2.5 text-left">
-                        <h3 className="text-2xl sm:text-3xl font-mono font-bold text-white tracking-widest group-hover:text-[#D4AF37] transition-all">
+                      <div className="space-y-2.5">
+                                <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors">
                           @{masked}
                         </h3>
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-1.5">
                           {badges.map((b, idx) => (
                             <span
                               key={idx}
-                              className={`text-[8.5px] font-mono font-extrabold px-2 py-0.5 rounded border tracking-wide uppercase ${b.style}`}
+                              className={`text-[8px] font-extrabold px-2 py-0.5 rounded-full border tracking-wide uppercase ${b.style}`}
                             >
                               {b.label}
                             </span>
@@ -384,25 +406,22 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                     </div>
 
                     {/* Footer values layout */}
-                    <div className="flex items-end justify-between pt-4 border-t border-white/[0.05] mt-4 z-10">
-                      <div className="text-left">
-                        <span className="text-[8px] font-mono font-semibold tracking-widest text-[#8E8E93] block mb-1">
-                          BROKER CLASSIFICATION VALUE
+                    <div className="flex items-end justify-between pt-4 border-t border-white/[0.06] mt-4 z-10">
+                      <div>
+                        <span className="text-[8px] font-bold uppercase tracking-widest text-muted block mb-0.5">
+                          Asking Price
                         </span>
-                        <span className="text-xl font-extrabold text-white font-mono block">
-                          {item.askingPrice > 0 ? formatINR(item.askingPrice) : "Price on Request"}
-                        </span>
-                        <span className="block text-[8px] text-gray-550 font-mono mt-0.5">
-                          Audit Ref: IDSV-{item.id}
+                        <span className="text-xl font-extrabold text-emerald-400 font-mono">
+                          {formatINR(item.askingPrice)}
                         </span>
                       </div>
 
                       <button
                         onClick={() => onSelectListing(item.slug)}
-                        className="h-9 px-4 rounded-xl bg-white hover:bg-[#D4AF37] text-black transition-all duration-300 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer select-none active:scale-95 shadow-lg"
+                        className="h-8 px-4 rounded-lg bg-white hover:bg-gray-200 text-black transition-colors text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer select-none"
                       >
-                        <span>Acquire Asset</span>
-                        <ArrowRight className="h-3.5 w-3.5" />
+                        <span>View &amp; Offer</span>
+                        <ArrowRight className="h-3 w-3" />
                       </button>
                     </div>
                   </motion.article>
@@ -424,7 +443,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             Prev Page
           </button>
           
-          <span className="text-xs font-mono font-medium text-gray-450 uppercase tracking-widest">
+          <span className="text-xs font-mono font-medium text-gray-400 uppercase tracking-widest">
             Page {page} of {totalPages}
           </span>
           

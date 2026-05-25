@@ -4,29 +4,25 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import { 
-  ShieldCheck, 
-  ShieldAlert, 
-  Key, 
-  Download, 
-  Trash2, 
-  Clock, 
-  CheckCircle2, 
-  AlertTriangle, 
+import {
+  ShieldCheck,
+  ShieldAlert,
+  Key,
+  Download,
+  Clock,
+  AlertTriangle,
   Layers3,
   Search,
-  ArrowUpDown,
   KanbanSquare,
   FileSpreadsheet,
   ChevronRight,
-  TrendingUp,
   Inbox,
-  User,
   Filter
 } from "lucide-react";
+import { User } from "@supabase/supabase-js";
 import { Listing, Lead, SourcingRequest, SystemLog, DealStatus } from "../types";
 import { formatINR } from "../data";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { supabase, isSupabaseConfigured } from "../lib/supabase";
 
 interface AdminDashboardProps {
@@ -49,7 +45,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onAuthChange
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [sessionUser, setSessionUser] = useState<any>(null);
+  const [sessionUser, setSessionUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -61,69 +57,64 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [proposalsSearch, setProposalsSearch] = useState("");
   const [kanbanPlatformFilter, setKanbanPlatformFilter] = useState<string>("all");
 
+  // ─── Auth mode detection ────────────────────────────────────────────────────
+  // Priority: Supabase (full DB auth) → VITE_ADMIN_PASSWORD (env-var auth)
+  const envAdminPassword = (import.meta.env.VITE_ADMIN_PASSWORD || "").trim();
+  const useEnvAuth = !isSupabaseConfigured && Boolean(envAdminPassword);
+
   // Load and subscribe to authentication sessions on mount
   useEffect(() => {
-    if (!isSupabaseConfigured || !supabase) {
-      // Check if offline mock admin is unlocked
-      const mockUnlocked = localStorage.getItem("idsvault_mock_admin_unlocked") === "true";
-      if (mockUnlocked) {
+    if (isSupabaseConfigured && supabase) {
+      // ── Supabase auth path ──────────────────────────────────────────────────
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          setSessionUser(session.user);
+          checkAdminRole(session.user.id);
+        } else {
+          setIsLoading(false);
+        }
+      });
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (session) {
+          setSessionUser(session.user);
+          checkAdminRole(session.user.id);
+        } else {
+          setSessionUser(null);
+          setIsAuthenticated(false);
+          if (onAuthChange) onAuthChange(false);
+          setIsLoading(false);
+        }
+      });
+
+      return () => { subscription.unsubscribe(); };
+
+    } else if (useEnvAuth) {
+      // ── Env-var password auth path ──────────────────────────────────────────
+      // Restore session from sessionStorage (expires when tab closes)
+      const saved = sessionStorage.getItem("idsvault_admin_session");
+      if (saved === "authenticated") {
         setIsAuthenticated(true);
         if (onAuthChange) onAuthChange(true);
       }
       setIsLoading(false);
-      return;
+
+    } else {
+      // Neither Supabase nor env password configured
+      setIsLoading(false);
     }
-
-    // Hydrate current session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setSessionUser(session.user);
-        checkAdminRole(session.user.id);
-      } else {
-        const mockUnlocked = localStorage.getItem("idsvault_mock_admin_unlocked") === "true";
-        if (mockUnlocked) {
-          setIsAuthenticated(true);
-          if (onAuthChange) onAuthChange(true);
-        }
-        setIsLoading(false);
-      }
-    });
-
-    // Listen to changes in session tokens
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        setSessionUser(session.user);
-        checkAdminRole(session.user.id);
-      } else {
-        setSessionUser(null);
-        // Retain mock login if it was set
-        const mockUnlocked = localStorage.getItem("idsvault_mock_admin_unlocked") === "true";
-        if (mockUnlocked) {
-          setIsAuthenticated(true);
-          if (onAuthChange) onAuthChange(true);
-        } else {
-          setIsAuthenticated(false);
-          if (onAuthChange) onAuthChange(false);
-        }
-        setIsLoading(false);
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
   }, []);
 
-  // Secure role checker querying database
+  // Secure role checker querying Supabase database
   const checkAdminRole = async (userId: string) => {
     try {
       setIsLoading(true);
       setRoleError("");
       const { data, error } = await supabase!
-          .from("users")
-          .select("role")
-          .eq("id", userId)
-          .single();
+        .from("users")
+        .select("role")
+        .eq("id", userId)
+        .single();
 
       if (error) {
         console.error("Profile security audit error:", error);
@@ -155,39 +146,39 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setLoginError("");
     setRoleError("");
 
-    const bypassPassword = (import.meta.env.VITE_ADMIN_BYPASS_PASSWORD || "admin").trim();
-
-    // Prioritize mock master admin login bypass
-    if (email.trim() === "admin@idsvault.com" && (password === bypassPassword || password === "admin")) {
-      setIsAuthenticated(true);
-      localStorage.setItem("idsvault_mock_admin_unlocked", "true");
-      if (onAuthChange) onAuthChange(true);
-      onAddLog("DEMO_ADMIN_AUTHENTICATED", "Authorized administrative console accessed via secure bypass credentials.");
-      setIsLoading(false);
-      return;
-    }
-
-    if (!isSupabaseConfigured || !supabase) {
-      setLoginError("Offline Demo Mode: Use 'admin@idsvault.com' and your configured secure password to unlock.");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        setLoginError(error.message);
-        onAddLog("LOGIN_FAILURE", `Unauthenticated admin query: ${email} - Error: ${error.message}`);
+    if (isSupabaseConfigured && supabase) {
+      // ── Supabase sign-in ────────────────────────────────────────────────────
+      try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          setLoginError(error.message);
+          onAddLog("LOGIN_FAILURE", `Failed login attempt for: ${email}`);
+          setIsLoading(false);
+        } else {
+          onAddLog("ADMIN_AUTHENTICATED", "Administrative console accessed via Supabase session.");
+          // onAuthStateChange listener triggers checkAdminRole automatically
+        }
+      } catch (err) {
+        setLoginError("An unexpected error occurred. Please try again.");
         setIsLoading(false);
-      } else {
-        onAddLog("ADMIN_AUTHENTICATED", "Authorized administrative console accessed by session credentials.");
       }
-    } catch (err) {
-      setLoginError("An unexpected system exception occurred during authentication.");
+
+    } else if (useEnvAuth) {
+      // ── Env-var password sign-in ────────────────────────────────────────────
+      if (password === envAdminPassword) {
+        sessionStorage.setItem("idsvault_admin_session", "authenticated");
+        setIsAuthenticated(true);
+        if (onAuthChange) onAuthChange(true);
+        onAddLog("ADMIN_AUTHENTICATED", "Administrative console accessed via environment credentials.");
+      } else {
+        setLoginError("Incorrect password. Please try again.");
+        onAddLog("LOGIN_FAILURE", "Failed env-password admin login attempt.");
+      }
+      setIsLoading(false);
+
+    } else {
+      // Nothing configured
+      setLoginError("Admin access is not configured. Set VITE_ADMIN_PASSWORD (or VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY) in your Vercel environment variables.");
       setIsLoading(false);
     }
   };
@@ -197,35 +188,51 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     if (supabase) {
       await supabase.auth.signOut();
     }
-    localStorage.removeItem("idsvault_mock_admin_unlocked");
+    sessionStorage.removeItem("idsvault_admin_session");
     setSessionUser(null);
     setIsAuthenticated(false);
     if (onAuthChange) onAuthChange(false);
-    onAddLog("ADMIN_SESSION_CLOSED", "Lead controller session closed voluntarily.");
+    onAddLog("ADMIN_SESSION_CLOSED", "Admin session closed voluntarily.");
     setIsLoading(false);
   };
 
+  /**
+   * Escapes a value for safe CSV inclusion.
+   * Wraps in double-quotes and escapes any embedded double-quotes.
+   */
+  const csvEscape = (value: string | number | null | undefined): string => {
+    const str = value === null || value === undefined ? "" : String(value);
+    return `"${str.replace(/"/g, '""')}"`;
+  };
+
   const triggerCSVDownload = (type: "listings" | "proposals" | "requests") => {
-    let output = "";
-    let fileName = `idsvault_export_${type}_${Date.now()}.csv`;
+    // Guard: only allow authenticated admins to export
+    if (!isAuthenticated) {
+      console.error("CSV export blocked: user is not authenticated.");
+      return;
+    }
+
+    let rows: string[][] = [];
+    const fileName = `idsvault_export_${type}_${Date.now()}.csv`;
 
     if (type === "listings") {
-      output = "ID,Username,Platform,Asking Price,Min Price,Status,Created Time\n";
+      rows.push(["ID", "Username", "Platform", "Asking Price", "Min Price", "Status", "Created Time"]);
       listings.forEach((v) => {
-        output += `"${v.id}","${v.username}","${v.platform}",${v.askingPrice},${v.minPrice},"${v.status}","${v.createdTime}"\n`;
+        rows.push([v.id, v.username, v.platform, String(v.askingPrice), String(v.minPrice), v.status, v.createdTime]);
       });
     } else if (type === "proposals") {
-      output = "ID,Listing,Buyer Name,Email,WhatsApp,Offer Price,Urgency,Status\n";
+      rows.push(["ID", "Listing", "Buyer Name", "Email", "WhatsApp", "Offer Price", "Urgency", "Status"]);
       leads.forEach((v) => {
-        output += `"${v.id}","${v.listingSlug}","${v.buyerName}","${v.buyerEmail}","${v.whatsapp}",${v.offer},"${v.urgency}","${v.status}"\n`;
+        rows.push([v.id, v.listingSlug, v.buyerName, v.buyerEmail, v.whatsapp, String(v.offer), v.urgency, v.status]);
       });
     } else if (type === "requests") {
-      output = "ID,Desired,Platform,Budget,Urgency,Alternatives,WhatsApp,Email\n";
+      rows.push(["ID", "Desired", "Platform", "Budget", "Urgency", "Alternatives", "WhatsApp", "Email"]);
       requests.forEach((v) => {
-        output += `"${v.id}","${v.desiredUsername}","${v.platform}",${v.budget},"${v.urgency}","${v.alternatives}","${v.whatsapp}","${v.email}"\n`;
+        rows.push([v.id, v.desiredUsername, v.platform, String(v.budget), v.urgency, v.alternatives, v.whatsapp, v.email]);
       });
     }
 
+    const output = rows.map((row) => row.map(csvEscape).join(",")).join("\n");
     const encoded = "data:text/csv;charset=utf-8," + encodeURIComponent(output);
     const trigger = document.createElement("a");
     trigger.setAttribute("href", encoded);
@@ -236,9 +243,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     onAddLog("CSV_EXPORTED", `Catalog dataset [${type.toUpperCase()}] downloaded to CSV archive.`);
   };
 
-  const handleStatusShift = (slug: string, newStatus: DealStatus) => {
+  const handleStatusShift = async (slug: string, newStatus: DealStatus) => {
+    // Update local state immediately for responsive UI
     onUpdateListingStatus(slug, newStatus);
-    onAddLog("STATUS_MODIFIED", `Vetted handle @${slug} status adjusted strictly to platform code: [${newStatus}]`);
+    onAddLog("STATUS_MODIFIED", `Vetted handle @${slug} status adjusted to: [${newStatus}]`);
+
+    // Persist to Supabase if configured
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { error } = await supabase
+          .from("listings")
+          .update({ status: newStatus })
+          .eq("slug", slug);
+        if (error) {
+          console.error("Failed to persist status update to database:", error.message);
+          onAddLog("STATUS_SYNC_ERROR", `DB sync failed for @${slug}: ${error.message}`);
+        }
+      } catch (err) {
+        console.error("Unexpected error persisting status update:", err);
+      }
+    }
   };
 
   // Filtered inventory elements for tabular search
@@ -274,7 +298,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <motion.article 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6 shadow-2xl relative overflow-hidden"
+          className="p-8 rounded-2xl bg-surface border border-white/[0.08] space-y-6 shadow-2xl relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-[50px] rounded-full pointer-events-none" />
           
@@ -297,7 +321,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 placeholder="Enter admin email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
               />
             </div>
 
@@ -311,7 +335,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
               />
             </div>
 
@@ -329,15 +353,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
             )}
 
-            {!isSupabaseConfigured && (
-              <div className="p-3.5 rounded bg-amber-500/5 border border-amber-500/15 text-[10px] text-amber-400 font-medium flex flex-col gap-1 text-left leading-relaxed font-sans">
-                <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[9px] mb-1">
-                  <ShieldAlert className="h-4 w-4 text-amber-500 shrink-0" />
-                  <span>SUPABASE OFFLINE</span>
-                </div>
-                <span>To switch from client state to real authentication, define <strong>VITE_SUPABASE_URL</strong> and <strong>VITE_SUPABASE_ANON_KEY</strong> environment secrets.</span>
-              </div>
-            )}
+            {/* Database config error only shown after a failed submit attempt via loginError */}
 
             <button
               type="submit"
@@ -363,7 +379,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/[0.06] pb-6 font-sans">
         <div>
           <h1 className="text-2xl font-extrabold text-white tracking-tight animate-in">Registry CRM Terminal</h1>
-          <p className="text-xs text-[#9CA3AF] mt-1">Manual operations pipeline control, asset validation, and secure CSV logs export.</p>
+          <p className="text-xs text-muted mt-1">Manual operations pipeline control, asset validation, and secure CSV logs export.</p>
         </div>
         <div className="flex items-center gap-3 select-none">
           <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/20 text-[10px] font-mono font-bold uppercase text-emerald-400">
@@ -381,33 +397,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* Corporate Dashboard Metrics */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 select-none">
-        <div className="p-5 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-2">
+        <div className="p-5 rounded-xl bg-surface border border-white/[0.08] space-y-2">
           <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block font-mono">Vetted Assets count</span>
           <p className="text-3xl font-extrabold text-white font-mono leading-none">{listings.length}</p>
         </div>
-        <div className="p-5 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-2">
+        <div className="p-5 rounded-xl bg-surface border border-white/[0.08] space-y-2">
           <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block font-mono">Book Value Assets</span>
           <p className="text-2xl font-extrabold text-[#10B981] font-mono leading-none">{formatINR(totalValuation)}</p>
         </div>
-        <div className="p-5 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-2">
+        <div className="p-5 rounded-xl bg-surface border border-white/[0.08] space-y-2">
           <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block font-mono">Proposals Recorded</span>
           <p className="text-3xl font-extrabold text-white font-mono leading-none">{totalOffersCount}</p>
         </div>
-        <div className="p-5 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-2">
+        <div className="p-5 rounded-xl bg-surface border border-white/[0.08] space-y-2">
           <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block font-mono">Commission Searches</span>
           <p className="text-3xl font-extrabold text-blue-400 font-mono leading-none">{pendingRequestsCount}</p>
         </div>
       </section>
 
       {/* STATUS KANBAN BOARD */}
-      <section className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6">
+      <section className="p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 select-none">
           <div className="space-y-1">
             <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2 font-sans">
               <KanbanSquare className="h-4 w-4 text-blue-400" />
               Interactive Deal Flow Pipeline
             </h3>
-            <p className="text-[11px] text-[#9CA3AF] font-sans">Instantly advance identifiers through distinct transaction lifecycle coordinates.</p>
+            <p className="text-[11px] text-muted font-sans">Instantly advance identifiers through distinct transaction lifecycle coordinates.</p>
           </div>
 
           {/* Quick Platform Filter */}
@@ -416,7 +432,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <select
               value={kanbanPlatformFilter}
               onChange={(e) => setKanbanPlatformFilter(e.target.value)}
-              className="bg-[#151517] border border-white/[0.08] text-white py-1 px-2 rounded-lg text-[10px] outline-none cursor-pointer"
+              className="bg-raised border border-white/[0.08] text-white py-1 px-2 rounded-lg text-[10px] outline-none cursor-pointer"
             >
               <option value="all">All Platforms</option>
               <option value="instagram">Instagram</option>
@@ -430,9 +446,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           
           {/* Column 1: LIVE */}
-          <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
+          <div className="rounded-xl bg-raised/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
-              <span className="text-[10px] font-bold text-emerald-450 uppercase tracking-widest font-mono">● LIVE INDEX</span>
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">● LIVE INDEX</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
                 ({listings.filter(v => v.status === DealStatus.Live && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter)).length})
               </span>
@@ -441,7 +457,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               {listings
                 .filter(v => v.status === DealStatus.Live && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
-                  <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs space-y-2">
+                  <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-white">@{item.username}</span>
                       <span className="text-[8px] uppercase tracking-wider font-mono text-blue-400 bg-blue-500/10 px-1.5 rounded">{item.platform}</span>
@@ -461,7 +477,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Column 2: OFFERS PENDING */}
-          <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
+          <div className="rounded-xl bg-raised/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
               <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest font-mono">● ACTIVE BIDS</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
@@ -472,7 +488,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               {listings
                 .filter(v => v.status === DealStatus.OfferPending && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
-                  <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs space-y-2">
+                  <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-white">@{item.username}</span>
                       <span className="text-[8px] uppercase tracking-wider font-mono text-blue-400 bg-blue-500/10 px-1.5 rounded">{item.platform}</span>
@@ -500,7 +516,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Column 3: SOLD */}
-          <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
+          <div className="rounded-xl bg-raised/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest font-mono">● RELEASED / SOLD</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
@@ -511,7 +527,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               {listings
                 .filter(v => v.status === DealStatus.Sold && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
-                  <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs opacity-65 space-y-1">
+                  <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs opacity-65 space-y-1">
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-white line-through">@{item.username}</span>
                       <span className="text-[8px] uppercase tracking-wider font-mono text-gray-500 bg-white/5 px-1.5 rounded">{item.platform}</span>
@@ -523,9 +539,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Column 4: QUARANTINED */}
-          <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
+          <div className="rounded-xl bg-raised/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
-              <span className="text-[10px] font-bold text-red-405 uppercase tracking-widest font-mono">● QUARANTINED</span>
+              <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest font-mono">● QUARANTINED</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
                 ({listings.filter(v => v.status === DealStatus.Quarantined && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter)).length})
               </span>
@@ -534,8 +550,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               {listings
                 .filter(v => v.status === DealStatus.Quarantined && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
-                  <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs space-y-1">
-                    <span className="font-bold text-red-550">@{item.username}</span>
+                  <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs space-y-1">
+                    <span className="font-bold text-red-500">@{item.username}</span>
                     <p className="text-[9px] text-gray-505">Auditing Infractions</p>
                     <button 
                       onClick={() => handleStatusShift(item.slug, DealStatus.Live)}
@@ -555,7 +571,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Listings inventory table - Left (7 cols) */}
-        <section className="lg:col-span-7 p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+        <section className="lg:col-span-7 p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 select-none">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
               <Layers3 className="h-4 w-4 text-gray-400" />
@@ -577,7 +593,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               placeholder="Search catalog entries..."
               value={inventorySearch}
               onChange={(e) => setInventorySearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/30 outline-none placeholder:text-gray-600 font-mono"
+              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/30 outline-none placeholder:text-gray-600 font-mono"
             />
           </div>
 
@@ -595,7 +611,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/[0.04] font-normal font-mono">
                 {filteredInventoryTable.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-6 text-center text-gray-650 text-[11px]">
+                    <td colSpan={5} className="py-6 text-center text-gray-500 text-[11px]">
                       No matching namespaces located in our tables database cache files.
                     </td>
                   </tr>
@@ -620,7 +636,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <select
                           value={item.status}
                           onChange={(e) => handleStatusShift(item.slug, e.target.value as DealStatus)}
-                          className="bg-[#151517] border border-white/[0.12] text-white py-1 px-1.5 rounded-md text-[10px] outline-none cursor-pointer"
+                          className="bg-raised border border-white/[0.12] text-white py-1 px-1.5 rounded-md text-[10px] outline-none cursor-pointer"
                         >
                           <option value={DealStatus.Live}>Live</option>
                           <option value={DealStatus.OfferPending}>Offers</option>
@@ -637,7 +653,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </section>
 
         {/* Custom Sourcing Outreach Campaign tracker - Right (5 cols) */}
-        <section className="lg:col-span-5 p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+        <section className="lg:col-span-5 p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
           <header className="flex items-center justify-between select-none">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
               <Clock className="h-4 w-4 text-gray-400" />
@@ -680,7 +696,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* Proposals Pipeline Table */}
-        <section className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+        <section className="p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 select-none font-sans">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
               <Inbox className="h-4 w-4 text-gray-400" />
@@ -702,7 +718,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               placeholder="Search incoming leads profiles..."
               value={proposalsSearch}
               onChange={(e) => setProposalsSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/35 outline-none placeholder:text-gray-600 font-mono"
+              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/35 outline-none placeholder:text-gray-600 font-mono"
             />
           </div>
 
@@ -719,7 +735,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/[0.04] font-normal font-mono text-[11px]">
                 {filteredProposalsTable.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="py-6 text-center text-gray-650">
+                    <td colSpan={4} className="py-6 text-center text-gray-500">
                       No proposals index found matching search coordinates.
                     </td>
                   </tr>
@@ -739,7 +755,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </section>
 
         {/* Live Cryptographic Timeline Audit System Logs */}
-        <section className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+        <section className="p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
           <header className="flex items-center justify-between select-none">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
               <AlertTriangle className="h-4 w-4 text-amber-500" />
@@ -749,7 +765,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           <div className="space-y-3.5 max-h-72 overflow-y-auto pr-1">
             {logs.map((log, index) => (
-              <div key={index} className="p-3.5 rounded-xl bg-[#151517] border border-white/[0.04] space-y-1.5 text-[10px] font-mono leading-relaxed">
+              <div key={index} className="p-3.5 rounded-xl bg-raised border border-white/[0.04] space-y-1.5 text-[10px] font-mono leading-relaxed">
                 <div className="flex items-center justify-between border-b border-white/[0.04] pb-1.5">
                   <span className="text-blue-400 font-extrabold uppercase tracking-wider">{log.action}</span>
                   <span className="text-gray-500 text-[8px]">{log.timestamp}</span>
