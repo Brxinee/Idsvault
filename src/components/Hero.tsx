@@ -159,7 +159,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="relative overflow-hidden bg-[#050505] text-white">
+    <div className="relative overflow-hidden bg-canvas text-white">
 
       <SEO
         canonical="/"
@@ -177,7 +177,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/[0.06] bg-[#131316] text-[#6E6E78] font-mono text-[10px] font-medium uppercase tracking-wider"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/[0.06] bg-surface text-faint font-mono text-[10px] font-medium uppercase tracking-wider"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -194,7 +194,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.08]"
             >
               Buy the handle.<br />
-              <span className="text-[#C9A961]">
+              <span className="text-accent">
                 Skip the scam.
               </span>
             </motion.h1>
@@ -203,7 +203,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-[#A1A1A9] text-base leading-relaxed max-w-lg"
+              className="text-muted text-base leading-relaxed max-w-lg"
             >
               Broker-verified Instagram, X, and Telegram usernames. Your money stays with the
               broker until the transfer is done — on a live call, with both parties present.
@@ -215,22 +215,22 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-x-6 gap-y-3 pt-1 text-xs text-[#6E6E78]"
+            className="flex flex-wrap gap-x-6 gap-y-3 pt-1 text-xs text-faint"
           >
             <div className="flex items-center gap-2">
-              <BadgeCheck className="h-4 w-4 text-[#C9A961] shrink-0" />
+              <BadgeCheck className="h-4 w-4 text-accent shrink-0" />
               <span>Seller ownership verified before listing</span>
             </div>
             <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-[#C9A961] shrink-0" />
+              <Users className="h-4 w-4 text-accent shrink-0" />
               <span>Named broker on every deal</span>
             </div>
             <div className="flex items-center gap-2">
-              <Lock className="h-4 w-4 text-[#C9A961] shrink-0" />
+              <Lock className="h-4 w-4 text-accent shrink-0" />
               <span>Broker holds funds until you confirm ownership</span>
             </div>
             <div className="flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-[#C9A961] shrink-0" />
+              <ShieldCheck className="h-4 w-4 text-accent shrink-0" />
               <span>Full refund if transfer fails</span>
             </div>
           </motion.div>
@@ -244,7 +244,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
           >
             <Link
               to="/inventory"
-              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-accent hover:bg-accent-light text-canvas text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
               id="hero_primary_cta"
             >
               <span>Browse Handles</span>
@@ -252,7 +252,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             </Link>
             <Link
               to="/sell"
-              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#131316] hover:bg-[#1C1C20] border border-[#26262B] hover:border-[#3A3A42] text-[#A1A1A9] hover:text-white text-xs font-medium uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
+              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-surface hover:bg-overlay border border-[#26262B] hover:border-[#3A3A42] text-muted hover:text-white text-xs font-medium uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
               id="hero_secondary_cta"
             >
               <span>Sell Yours</span>
@@ -270,7 +270,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="absolute top-2 w-[85%] p-5 rounded-2xl bg-[#151517]/90 border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.5)] space-y-4 backdrop-blur-sm z-20"
+              className="absolute top-2 w-[85%] p-5 rounded-2xl bg-raised/90 border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.5)] space-y-4 backdrop-blur-sm z-20"
             >
               <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
                 <div className="flex items-center gap-2">
@@ -289,7 +289,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                 </div>
                 <div className="text-right">
                   <p className="text-[8px] text-gray-500 uppercase font-mono">Asking Price</p>
-                  <p className="text-base font-extrabold text-[#C9A961] font-mono">₹15,00,000</p>
+                  <p className="text-base font-extrabold text-accent font-mono">₹15,00,000</p>
                 </div>
               </div>
 
@@ -309,7 +309,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-6 w-[85%] p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] shadow-lg space-y-3 z-10 scale-[0.95]"
+              className="absolute bottom-6 w-[85%] p-4 rounded-xl bg-surface border border-white/[0.06] shadow-lg space-y-3 z-10 scale-[0.95]"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -327,7 +327,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                   <p className="text-[9px] text-gray-500 font-mono">Hyderabad Operations Desk</p>
                 </div>
               </div>
-              <div className="bg-[#151517] p-2.5 rounded-lg border border-white/[0.04] text-[9px] text-gray-400 text-left leading-relaxed">
+              <div className="bg-raised p-2.5 rounded-lg border border-white/[0.04] text-[9px] text-gray-400 text-left leading-relaxed">
                 "Seller ownership for @nexus verified. Ready to start the live transfer — both parties confirmed."
               </div>
             </motion.div>
@@ -338,7 +338,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
       </section>
 
       {/* ── THE PROBLEM ─────────────────────────────────── */}
-      <section className="border-t border-white/[0.06] bg-[#0A0A0B] py-16 px-6">
+      <section className="border-t border-white/[0.06] bg-canvas py-16 px-6">
         <div className="max-w-4xl mx-auto space-y-8 text-left">
           <div className="flex items-start gap-4">
             <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 shrink-0 mt-1">
@@ -349,7 +349,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
                 Direct DM deals get scammed. Every time.
               </h2>
-              <p className="text-sm text-[#9CA3AF] leading-relaxed max-w-2xl">
+              <p className="text-sm text-muted leading-relaxed max-w-2xl">
                 Someone quotes you a price on Telegram or WhatsApp. You send the money. They transfer the handle. Two days later they use account recovery to take it back — and you have no recourse. This is not rare. It happens constantly in the handle trading space.
               </p>
             </div>
@@ -373,24 +373,24 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
       </section>
 
       {/* ── HOW IT WORKS (3 steps) ──────────────────────── */}
-      <section className="border-t border-white/[0.06] bg-[#0F0F10] py-20 px-6">
+      <section className="border-t border-white/[0.06] bg-surface py-20 px-6">
         <div className="max-w-5xl mx-auto space-y-12">
 
           <div className="text-center space-y-3">
             <span className="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest font-mono">How It Works</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Three steps, no surprises</h2>
-            <p className="text-sm text-[#9CA3AF] max-w-md mx-auto leading-relaxed">
+            <p className="text-sm text-muted max-w-md mx-auto leading-relaxed">
               Every deal follows the same process. Neither side can skip a step.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
 
-            <div className="relative p-6 rounded-2xl bg-[#151517] border border-white/[0.06] space-y-4 text-left">
+            <div className="relative p-6 rounded-2xl bg-raised border border-white/[0.06] space-y-4 text-left">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-3xl font-black text-white/10">01</span>
-                <div className="p-2.5 rounded-xl bg-[#C9A961]/10 border border-[#C9A961]/20">
-                  <Wallet className="h-5 w-5 text-[#C9A961]" />
+                <div className="p-2.5 rounded-xl bg-accent/10 border border-accent/20">
+                  <Wallet className="h-5 w-5 text-accent" />
                 </div>
               </div>
               <div>
@@ -399,7 +399,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               </div>
             </div>
 
-            <div className="relative p-6 rounded-2xl bg-[#151517] border border-white/[0.06] space-y-4 text-left">
+            <div className="relative p-6 rounded-2xl bg-raised border border-white/[0.06] space-y-4 text-left">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-3xl font-black text-white/10">02</span>
                 <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
@@ -412,7 +412,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               </div>
             </div>
 
-            <div className="relative p-6 rounded-2xl bg-[#151517] border border-white/[0.06] space-y-4 text-left">
+            <div className="relative p-6 rounded-2xl bg-raised border border-white/[0.06] space-y-4 text-left">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-3xl font-black text-white/10">03</span>
                 <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
@@ -435,7 +435,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
       </section>
 
       {/* ── WHY USE A BROKER ────────────────────────────── */}
-      <section className="bg-[#050505] border-b border-white/[0.06] py-20 px-6">
+      <section className="bg-canvas border-b border-white/[0.06] py-20 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           <div className="lg:col-span-4 space-y-4 text-left">
@@ -445,49 +445,49 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             <h2 className="text-3xl font-extrabold text-white tracking-tight leading-[1.12]">
               Direct deals get scammed. Brokered deals don't.
             </h2>
-            <p className="text-sm text-[#9CA3AF] leading-relaxed">
+            <p className="text-sm text-muted leading-relaxed">
               When you buy directly, the seller can take your money and recover the account. When you sell directly, the buyer can chargeback after transfer. A broker eliminates both risks.
             </p>
           </div>
 
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
 
-            <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
+            <div className="p-6 rounded-2xl bg-raised border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <BadgeCheck className="h-4 w-4 text-emerald-400" />
                 Seller verified before listing
               </h4>
-              <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
+              <p className="text-[11px] text-muted leading-relaxed">
                 We confirm real account access before accepting any listing. No anonymous sellers, no fake inventory.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
+            <div className="p-6 rounded-2xl bg-raised border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <Users className="h-4 w-4 text-blue-400" />
                 Broker on every live transfer
               </h4>
-              <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
+              <p className="text-[11px] text-muted leading-relaxed">
                 Our Hyderabad broker supervises the handover on a live call. No unsupervised transfers — ever.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
+            <div className="p-6 rounded-2xl bg-raised border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <Lock className="h-4 w-4 text-[#10B981]" />
                 Broker holds funds until you confirm
               </h4>
-              <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
+              <p className="text-[11px] text-muted leading-relaxed">
                 Your payment stays with the broker until you confirm full account access on the live call. Seller only gets paid when you're satisfied.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
+            <div className="p-6 rounded-2xl bg-raised border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-amber-400" />
                 Chargeback &amp; recovery protection
               </h4>
-              <p className="text-[11px] text-[#9CA3AF] leading-relaxed">
+              <p className="text-[11px] text-muted leading-relaxed">
                 Sellers protected from chargebacks. Buyers protected from post-sale account recovery. Broker-held payment and live supervised transfer prevents both.
               </p>
             </div>
@@ -499,18 +499,18 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
       {/* ── FEATURED LISTINGS ───────────────────────────── */}
       {featuredListings.length > 0 && (
-        <section className="bg-[#0F0F10] border-b border-white/[0.06] py-20 px-6">
+        <section className="bg-surface border-b border-white/[0.06] py-20 px-6">
           <div className="max-w-7xl mx-auto space-y-10">
 
             <div className="flex items-end justify-between">
               <div className="space-y-2">
-                <span className="text-[10px] font-extrabold text-[#C9A961] uppercase tracking-widest font-mono">Available Now</span>
+                <span className="text-[10px] font-extrabold text-accent uppercase tracking-widest font-mono">Available Now</span>
                 <h2 className="text-2xl font-extrabold text-white tracking-tight">Handles for sale — buy instagram username india, telegram, and more</h2>
                 <p className="text-xs text-gray-400">Ownership verified · Payment held by broker · Live supervised transfer</p>
               </div>
               <Link
                 to="/inventory"
-                className="hidden sm:flex items-center gap-1 text-xs font-medium text-[#6E6E78] hover:text-white transition-colors uppercase tracking-wider"
+                className="hidden sm:flex items-center gap-1 text-xs font-medium text-faint hover:text-white transition-colors uppercase tracking-wider"
               >
                 View all
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -526,10 +526,10 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                     key={item.id}
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.2 }}
-                    className="p-5 rounded-2xl bg-[#0A0A0B] border border-white/[0.08] hover:border-white/[0.14] flex flex-col justify-between gap-4 group relative overflow-hidden cursor-pointer"
+                    className="p-5 rounded-2xl bg-canvas border border-white/[0.08] hover:border-white/[0.14] flex flex-col justify-between gap-4 group relative overflow-hidden cursor-pointer"
                     onClick={() => onSelectListing(item.slug)}
                   >
-                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#C9A961] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
@@ -543,7 +543,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                       </div>
 
                       <div>
-                        <h3 className="text-xl font-extrabold text-white tracking-tight group-hover:text-[#C9A961] transition-colors">
+                        <h3 className="text-xl font-extrabold text-white tracking-tight group-hover:text-accent transition-colors">
                           @{masked}
                         </h3>
                         <div className="flex flex-wrap gap-1 mt-1.5">
@@ -575,7 +575,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             <div className="text-center pt-2">
               <Link
                 to="/inventory"
-                className="inline-flex items-center gap-2 h-10 px-6 rounded-lg border border-[#26262B] hover:border-[#3A3A42] text-xs font-medium text-[#A1A1A9] hover:text-white transition-all uppercase tracking-wider"
+                className="inline-flex items-center gap-2 h-10 px-6 rounded-lg border border-[#26262B] hover:border-[#3A3A42] text-xs font-medium text-muted hover:text-white transition-all uppercase tracking-wider"
               >
                 Browse full inventory
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -587,14 +587,14 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
       )}
 
       {/* ── FOUNDER NOTE ────────────────────────────────── */}
-      <section className="bg-[#050505] py-20 px-6">
+      <section className="bg-canvas py-20 px-6">
         <div className="max-w-3xl mx-auto text-left space-y-6">
-          <span className="text-[10px] font-bold text-[#C9A961] tracking-widest uppercase font-mono">From the desk</span>
+          <span className="text-[10px] font-bold text-accent tracking-widest uppercase font-mono">From the desk</span>
           <blockquote className="text-xl sm:text-2xl font-semibold text-white leading-relaxed tracking-tight">
             "We started this because we watched too many people get burned by handle dealers with no accountability. A broker changes the incentive structure — the seller only gets paid when the buyer is satisfied. That's it."
           </blockquote>
           <div className="flex items-center gap-3 pt-2">
-            <div className="h-10 w-10 rounded-full bg-[#C9A961]/10 border border-[#C9A961]/20 flex items-center justify-center font-bold text-sm text-[#C9A961] font-mono">
+            <div className="h-10 w-10 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center font-bold text-sm text-accent font-mono">
               SR
             </div>
             <div>
@@ -609,8 +609,8 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               { val: "1:1", label: "Named broker per deal" },
               { val: "4hr", label: "Response within 4 hours during business hours (IST)" },
             ].map(({ val, label }) => (
-              <div key={label} className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] space-y-1">
-                <p className="text-xl font-extrabold text-[#C9A961] font-mono">{val}</p>
+              <div key={label} className="p-4 rounded-xl bg-surface border border-white/[0.06] space-y-1">
+                <p className="text-xl font-extrabold text-accent font-mono">{val}</p>
                 <p className="text-[10px] text-gray-400 leading-snug">{label}</p>
               </div>
             ))}
@@ -619,7 +619,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
       </section>
 
       {/* ── FAQ ─────────────────────────────────────────── */}
-      <section className="bg-[#0F0F10] border-t border-white/[0.06] py-20 px-6" id="faq">
+      <section className="bg-surface border-t border-white/[0.06] py-20 px-6" id="faq">
         <div className="max-w-3xl mx-auto space-y-10">
 
           <div className="text-center space-y-3">
@@ -633,7 +633,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               return (
                 <div
                   key={idx}
-                  className="rounded-xl border border-white/[0.06] bg-[#0A0A0B] overflow-hidden"
+                  className="rounded-xl border border-white/[0.06] bg-canvas overflow-hidden"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
@@ -677,18 +677,18 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
       </section>
 
       {/* ── FINAL CTA BAND ──────────────────────────────── */}
-      <section className="bg-[#050505] border-t border-white/[0.06] py-20 px-6">
+      <section className="bg-canvas border-t border-white/[0.06] py-20 px-6">
         <div className="max-w-3xl mx-auto text-center space-y-6">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Ready to buy or sell a handle?
           </h2>
-          <p className="text-sm text-[#9CA3AF] leading-relaxed max-w-lg mx-auto">
+          <p className="text-sm text-muted leading-relaxed max-w-lg mx-auto">
             Message our Hyderabad desk on WhatsApp or browse verified listings now. No commitment required — just tell us what you're looking for.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/inventory"
-              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-accent hover:bg-accent-light text-canvas text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
             >
               Browse Handles
               <ArrowRight className="h-4 w-4 opacity-70 group-hover:translate-x-1 transition-transform" />
@@ -697,7 +697,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               href="https://wa.me/919392974031?text=Hi+IDsvault%2C+I+want+to+buy+or+sell+a+handle"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-[#131316] hover:bg-[#1C1C20] border border-[#26262B] hover:border-[#3A3A42] text-white text-xs font-medium uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
+              className="w-full sm:w-auto h-12 px-8 rounded-xl bg-surface hover:bg-overlay border border-[#26262B] hover:border-[#3A3A42] text-white text-xs font-medium uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
             >
               <MessageCircle className="h-4 w-4 text-emerald-400" />
               WhatsApp Broker

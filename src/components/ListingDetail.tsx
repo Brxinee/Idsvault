@@ -161,7 +161,7 @@ Urgency: Standard`;
         <section className="lg:col-span-7 space-y-6">
           
           {/* Gallery style premium card */}
-          <article className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] relative overflow-hidden">
+          <article className="p-8 rounded-2xl bg-surface border border-white/[0.08] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-[80px] rounded-full pointer-events-none" />
             
             <header className="flex flex-wrap items-center gap-3">
@@ -182,19 +182,19 @@ Urgency: Standard`;
             </div>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-white/[0.06] text-xs">
-              <div className="p-3 bg-[#151517] rounded-xl border border-white/[0.04] space-y-1">
+              <div className="p-3 bg-raised rounded-xl border border-white/[0.04] space-y-1">
                 <span className="text-[9px] text-gray-500 uppercase font-mono block">Audit Status</span>
                 <span className="text-white font-bold flex items-center gap-1.5 font-mono text-[11px]">
                   <ShieldCheck className="h-4.5 w-4.5 text-[#10B981]" /> Approved
                 </span>
               </div>
-              <div className="p-3 bg-[#151517] rounded-xl border border-white/[0.04] space-y-1">
+              <div className="p-3 bg-raised rounded-xl border border-white/[0.04] space-y-1">
                 <span className="text-[9px] text-gray-500 uppercase font-mono block">Transfer ETA</span>
                 <span className="text-white font-semibold font-mono text-[11px]">
                   &lt; 24h Handover
                 </span>
               </div>
-              <div className="p-3 bg-[#151517] rounded-xl border border-white/[0.04] col-span-2 sm:col-span-1 space-y-1">
+              <div className="p-3 bg-raised rounded-xl border border-white/[0.04] col-span-2 sm:col-span-1 space-y-1">
                 <span className="text-[9px] text-gray-500 uppercase font-mono block">Credibility Rate</span>
                 <span className="text-white font-bold font-mono text-[11px] text-blue-400">
                   A+ Grade Desk
@@ -204,19 +204,19 @@ Urgency: Standard`;
           </article>
 
           {/* Broker Assessment Context Form */}
-          <article className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4 text-left">
+          <article className="p-8 rounded-2xl bg-surface border border-white/[0.08] space-y-4 text-left">
             <h2 className="text-xs font-bold text-white uppercase tracking-widest font-mono">Desk Coordinator Assessment</h2>
-            <p className="text-xs text-[#9CA3AF] leading-relaxed">
+            <p className="text-xs text-muted leading-relaxed">
               {listing.description} This namespace has successfully satisfied our strict criteria and verified ownership controls. The seller is currently under administrative contract, guarding ownership markers and linked configuration coordinates under human broker supervision.
             </p>
           </article>
 
           {/* Structured Workflow Protective list */}
-          <article className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+          <article className="p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest font-mono">Compliance Framework</h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div className="p-4 rounded-xl bg-[#151517] border border-white/[0.04] space-y-2">
+              <div className="p-4 rounded-xl bg-raised border border-white/[0.04] space-y-2">
                 <Lock className="h-4 w-4 text-blue-500" />
                 <h4 className="font-bold text-white text-[11px] tracking-tight">Ledger Isolation</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
@@ -224,7 +224,7 @@ Urgency: Standard`;
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#151517] border border-white/[0.04] space-y-2">
+              <div className="p-4 rounded-xl bg-raised border border-white/[0.04] space-y-2">
                 <Fingerprint className="h-4 w-4 text-[#10B981]" />
                 <h4 className="font-bold text-white text-[11px] tracking-tight">Vetted Tokens</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
@@ -232,7 +232,7 @@ Urgency: Standard`;
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#151517] border border-white/[0.04] space-y-2">
+              <div className="p-4 rounded-xl bg-raised border border-white/[0.04] space-y-2">
                 <Landmark className="h-4 w-4 text-purple-400" />
                 <h4 className="font-bold text-white text-[11px] tracking-tight">Anti-Clawback</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
@@ -245,15 +245,15 @@ Urgency: Standard`;
 
         {/* Sticky Trust Checkout sidebar */}
         <section className="lg:col-span-5">
-          <div className="p-6 rounded-2xl bg-[#151517] border border-white/[0.08] sticky top-24 space-y-6">
+          <div className="p-6 rounded-2xl bg-raised border border-white/[0.08] sticky top-24 space-y-6">
             
             <div className="space-y-1">
               <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest font-mono block">Secure Bidding Desk</span>
               <h3 className="text-lg font-bold text-white">Initialize Proposal</h3>
-              <p className="text-xs text-[#9CA3AF]">Submit custom valuation offers in compliance with our structured payment workflow.</p>
+              <p className="text-xs text-muted">Submit custom valuation offers in compliance with our structured payment workflow.</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.04] space-y-1.5">
+            <div className="p-4 rounded-xl bg-surface border border-white/[0.04] space-y-1.5">
               <span className="text-[9px] text-gray-500 uppercase font-mono block">Estimated Range</span>
               <p className="text-sm font-bold font-mono text-emerald-400">
                 {getEstimatedRange(listing.askingPrice)}
@@ -287,12 +287,12 @@ Urgency: Standard`;
                     placeholder="e.g. 500000"
                     value={offer}
                     onChange={(e) => setOffer(e.target.value)}
-                    className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-[#0F0F10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                    className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                     id="detail_input_offer"
                   />
                 </div>
                 {listing.askingPrice > 0 && (
-                  <p className="text-[9px] text-[#9CA3AF] mt-1.5">
+                  <p className="text-[9px] text-muted mt-1.5">
                     Target Asking Valuation: {formatINR(listing.askingPrice)}
                   </p>
                 )}
@@ -308,7 +308,7 @@ Urgency: Standard`;
                   placeholder="e.g. Michael Jenkins"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-[#0F0F10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                   id="detail_input_name"
                 />
               </div>
@@ -323,7 +323,7 @@ Urgency: Standard`;
                   placeholder="e.g. representative@entity.co"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-[#0F0F10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                   id="detail_input_email"
                 />
               </div>
@@ -338,7 +338,7 @@ Urgency: Standard`;
                   placeholder="e.g. +91 98765 43210"
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-[#0F0F10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                   id="detail_input_whatsapp"
                 />
               </div>
@@ -397,7 +397,7 @@ Urgency: Standard`;
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white block"
+              className="p-8 rounded-2xl bg-surface border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white block"
               id="detail_success_modal"
             >
               <div className="h-12 w-12 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center mx-auto mb-2">

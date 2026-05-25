@@ -299,12 +299,12 @@ export default function App() {
   // ─── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="bg-[#050505] text-white min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-white relative font-sans">
+    <div className="bg-canvas text-white min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-white relative font-sans">
 
       {/* Skip to content — accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-[#C9A961] focus:text-[#0A0A0B] focus:text-xs focus:font-bold focus:uppercase focus:tracking-wider"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-accent focus:text-canvas focus:text-xs focus:font-bold focus:uppercase focus:tracking-wider"
       >
         Skip to content
       </a>
@@ -407,18 +407,18 @@ export default function App() {
       <CookieConsent />
 
       {/* Mobile sticky CTA — Browse / Sell dual buttons */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-[#050505]/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden">
+      <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-canvas/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden">
         <div className="max-w-md mx-auto grid grid-cols-2 gap-3">
           <a
             href="/inventory"
-            className="h-11 rounded-xl bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]"
+            className="h-11 rounded-xl bg-accent hover:bg-accent-light text-canvas text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]"
             onClick={(e) => { e.preventDefault(); navigate("/inventory"); }}
           >
             Browse Handles
           </a>
           <a
             href="/sell"
-            className="h-11 rounded-xl bg-[#131316] border border-[#26262B] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-95"
+            className="h-11 rounded-xl bg-surface border border-[#26262B] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-95"
             onClick={(e) => { e.preventDefault(); navigate("/sell"); }}
           >
             Sell Yours
@@ -441,13 +441,13 @@ export default function App() {
       {/* Consent banner */}
       <AnimatePresence>
         {showConsent && (
-          <div className="fixed bottom-22 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-[150] p-6 rounded-2xl bg-[#151517]/95 backdrop-blur-xl border border-white/[0.08] shadow-[0_15px_40px_rgba(0,0,0,0.7)] space-y-4 text-left font-sans">
+          <div className="fixed bottom-22 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-[150] p-6 rounded-2xl bg-raised/95 backdrop-blur-xl border border-white/[0.08] shadow-[0_15px_40px_rgba(0,0,0,0.7)] space-y-4 text-left font-sans">
             <div className="space-y-1.5">
               <h4 className="text-xs font-bold text-white tracking-tight flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-blue-500" />
                 <span>Analytics Consent</span>
               </h4>
-              <p className="text-[10px] text-[#9CA3AF] leading-relaxed font-normal">
+              <p className="text-[10px] text-muted leading-relaxed font-normal">
                 We use Google Analytics to understand how visitors use this site. No personal data is sold or shared with advertisers. You can decline and the site works fully.
               </p>
             </div>

@@ -53,10 +53,10 @@ export const CookieConsent: React.FC = () => {
       aria-live="polite"
       className="fixed bottom-16 md:bottom-6 left-0 right-0 z-[200] flex justify-center px-4 pointer-events-none"
     >
-      <div className="pointer-events-auto w-full max-w-lg bg-[#131316] border border-white/[0.10] rounded-2xl shadow-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div className="pointer-events-auto w-full max-w-lg bg-surface border border-white/[0.10] rounded-2xl shadow-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
         {/* Icon */}
-        <div className="p-2 rounded-lg bg-[#C9A961]/10 border border-[#C9A961]/20 shrink-0">
-          <Cookie className="h-4 w-4 text-[#C9A961]" />
+        <div className="p-2 rounded-lg bg-accent/10 border border-accent/20 shrink-0">
+          <Cookie className="h-4 w-4 text-accent" />
         </div>
 
         {/* Text */}
@@ -80,7 +80,7 @@ export const CookieConsent: React.FC = () => {
           </button>
           <button
             onClick={handleAllow}
-            className="h-8 px-3 rounded-lg text-[11px] font-bold text-[#0A0A0B] bg-[#C9A961] hover:bg-[#D4B670] transition-colors"
+            className="h-8 px-3 rounded-lg text-[11px] font-bold text-canvas bg-accent hover:bg-accent-light transition-colors"
           >
             Allow
           </button>

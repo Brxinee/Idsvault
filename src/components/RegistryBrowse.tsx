@@ -145,7 +145,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
       </div>
 
       {/* Advanced Filter, Search, and Sort Panel */}
-      <div className="p-4 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+      <div className="p-4 rounded-xl bg-surface border border-white/[0.08] space-y-4">
         
         <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
           
@@ -160,7 +160,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none placeholder:text-gray-500 transition-colors focus:ring-1 focus:ring-blue-500/20"
+              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none placeholder:text-gray-500 transition-colors focus:ring-1 focus:ring-blue-500/20"
               id="registry_search_input"
             />
             {search && (
@@ -184,7 +184,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all duration-200 cursor-pointer select-none border ${
                     isActive
                       ? "bg-blue-600 border-blue-500 text-white"
-                      : "bg-[#151517] text-gray-400 border-white/[0.06] hover:text-white hover:border-white/[0.12]"
+                      : "bg-raised text-gray-400 border-white/[0.06] hover:text-white hover:border-white/[0.12]"
                   }`}
                   id={`chip_platform_${p}`}
                 >
@@ -198,7 +198,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
           <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
             
             {/* Sorting SELECT dropdown */}
-            <div className="flex items-center gap-2 bg-[#151517] border border-white/[0.08] px-3 py-2 rounded-lg text-xs hover:border-white/[0.15] transition-colors relative">
+            <div className="flex items-center gap-2 bg-raised border border-white/[0.08] px-3 py-2 rounded-lg text-xs hover:border-white/[0.15] transition-colors relative">
               <ArrowUpDown className="h-3.5 w-3.5 text-gray-500" />
               <select
                 value={sortBy}
@@ -264,7 +264,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                           className={`px-2.5 py-1 text-[10px] font-medium rounded-md transition-colors cursor-pointer border ${
                             isMatch
                               ? "bg-emerald-500/10 border-emerald-500/30 text-[#10B981]"
-                              : "bg-[#151517] text-gray-400 border-white/[0.06] hover:text-white"
+                              : "bg-raised text-gray-400 border-white/[0.06] hover:text-white"
                           }`}
                         >
                           {r === "all" ? "All Rarities" : r}
@@ -310,24 +310,24 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             {[...Array(6)].map((_, idx) => (
               <div 
                 key={idx}
-                className="h-60 rounded-xl bg-[#0F0F10] border border-white/[0.06] p-6 space-y-6 flex flex-col justify-between animate-pulse"
+                className="h-60 rounded-xl bg-surface border border-white/[0.06] p-6 space-y-6 flex flex-col justify-between animate-pulse"
               >
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <div className="h-5 w-16 bg-[#151517] rounded" />
-                    <div className="h-5 w-24 bg-[#151517] rounded" />
+                    <div className="h-5 w-16 bg-raised rounded" />
+                    <div className="h-5 w-24 bg-raised rounded" />
                   </div>
                   <div className="space-y-2">
-                    <div className="h-8 w-40 bg-[#151517] rounded" />
-                    <div className="h-4 w-28 bg-[#151517] rounded" />
+                    <div className="h-8 w-40 bg-raised rounded" />
+                    <div className="h-4 w-28 bg-raised rounded" />
                   </div>
                 </div>
                 <div className="flex justify-between items-center pt-4 border-t border-white/[0.04]">
                   <div className="space-y-1">
-                    <div className="h-2 w-12 bg-[#151517] rounded" />
-                    <div className="h-5 w-20 bg-[#151517] rounded" />
+                    <div className="h-2 w-12 bg-raised rounded" />
+                    <div className="h-5 w-20 bg-raised rounded" />
                   </div>
-                  <div className="h-8 w-24 bg-[#151517] rounded" />
+                  <div className="h-8 w-24 bg-raised rounded" />
                 </div>
               </div>
             ))}
@@ -341,13 +341,13 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             id="browse_listings_grid"
           >
             {paginatedListings.length === 0 ? (
-              <div className="col-span-full py-16 px-6 text-center text-xs text-gray-500 rounded-2xl bg-[#0F0F10] border border-white/[0.08] flex flex-col items-center justify-center space-y-4 max-w-lg mx-auto" id="results_empty_state">
+              <div className="col-span-full py-16 px-6 text-center text-xs text-gray-500 rounded-2xl bg-surface border border-white/[0.08] flex flex-col items-center justify-center space-y-4 max-w-lg mx-auto" id="results_empty_state">
                 <div className="h-14 w-14 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
                   <ShieldAlert className="h-6 w-6 stroke-1.5" />
                 </div>
                 <div className="space-y-2 max-w-sm">
                   <h3 className="text-white font-bold text-sm">No Handles Found</h3>
-                  <p className="text-[#9CA3AF] text-[11px] leading-relaxed">
+                  <p className="text-muted text-[11px] leading-relaxed">
                     No listings match your current filters. Try clearing your search or changing the platform filter. If you're looking for a specific handle, use our sourcing service.
                   </p>
                 </div>
@@ -367,7 +367,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                     key={item.id}
                     whileHover={{ y: -6, scale: 1.01 }}
                     transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] hover:border-white/[0.15] flex flex-col justify-between h-60 hover:shadow-[0_12px_30px_rgba(0,0,0,0.55)] group relative overflow-hidden"
+                    className="p-6 rounded-2xl bg-surface border border-white/[0.08] hover:border-white/[0.15] flex flex-col justify-between h-60 hover:shadow-[0_12px_30px_rgba(0,0,0,0.55)] group relative overflow-hidden"
                   >
                     {/* Tiny neon border line on hover */}
                     <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -408,7 +408,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                     {/* Footer values layout */}
                     <div className="flex items-end justify-between pt-4 border-t border-white/[0.06] mt-4 z-10">
                       <div>
-                        <span className="text-[8px] font-bold uppercase tracking-widest text-[#9CA3AF] block mb-0.5">
+                        <span className="text-[8px] font-bold uppercase tracking-widest text-muted block mb-0.5">
                           Asking Price
                         </span>
                         <span className="text-xl font-extrabold text-emerald-400 font-mono">

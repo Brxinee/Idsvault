@@ -534,7 +534,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
         <motion.div 
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border border-white/[0.08] bg-[#0E0E10] p-8 max-w-4xl mx-auto space-y-6 text-left font-sans"
+          className="rounded-2xl border border-white/[0.08] bg-surface p-8 max-w-4xl mx-auto space-y-6 text-left font-sans"
         >
           <div className="flex justify-between items-center pb-4 border-b border-white/[0.05]">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -563,7 +563,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                     setFormSlug(e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, ""));
                   }
                 }}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
               />
             </div>
 
@@ -574,7 +574,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                 placeholder="buy-telegram-usernames-securely"
                 value={formSlug}
                 onChange={(e) => setFormSlug(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
               />
             </div>
           </div>
@@ -585,7 +585,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
               <select
                 value={formCategory}
                 onChange={(e) => setFormCategory(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
               >
                 <option value="Instagram">Instagram</option>
                 <option value="X-Platform">X-Platform</option>
@@ -606,7 +606,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                 placeholder="6 min read"
                 value={formReadTime}
                 onChange={(e) => setFormReadTime(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans"
               />
             </div>
 
@@ -616,7 +616,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                   type="checkbox"
                   checked={formFeatured}
                   onChange={(e) => setFormFeatured(e.target.checked)}
-                  className="rounded bg-[#151517] border border-white/[0.08] active:border-emerald-500 text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4"
+                  className="rounded bg-raised border border-white/[0.08] active:border-emerald-500 text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4"
                 />
                 <span>Featured Hero Post</span>
               </label>
@@ -626,7 +626,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                   type="checkbox"
                   checked={formStatus === "draft"}
                   onChange={(e) => setFormStatus(e.target.checked ? "draft" : "published")}
-                  className="rounded bg-[#151517] border border-white/[0.08] text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4"
+                  className="rounded bg-raised border border-white/[0.08] text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4"
                 />
                 <span>Draft Status</span>
               </label>
@@ -646,7 +646,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                   placeholder="e.g. Primary Instagram Valuation Guide | IDsvault"
                   value={formMetaTitle}
                   onChange={(e) => setFormMetaTitle(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg bg-[#101011] border border-white/[0.06] text-white focus:border-emerald-500/50 outline-none font-sans"
+                  className="w-full px-3 py-2 text-xs rounded-lg bg-surface border border-white/[0.06] text-white focus:border-emerald-500/50 outline-none font-sans"
                 />
               </div>
 
@@ -657,7 +657,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                   placeholder="Keep under 160 characters to optimize SERPs snippets listings."
                   value={formMetaDescription}
                   onChange={(e) => setFormMetaDescription(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg bg-[#101011] border border-white/[0.06] text-white focus:border-emerald-500/50 outline-none font-sans"
+                  className="w-full px-3 py-2 text-xs rounded-lg bg-surface border border-white/[0.06] text-white focus:border-emerald-500/50 outline-none font-sans"
                 />
               </div>
             </div>
@@ -671,7 +671,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
               placeholder="Write a high-authority research paragraph setting up the target digital assets context..."
               value={formIntro}
               onChange={(e) => setFormIntro(e.target.value)}
-              className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans leading-relaxed"
+              className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-emerald-500/50 outline-none font-sans leading-relaxed"
             />
           </div>
 
@@ -723,7 +723,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
 
             <div className="space-y-3">
               {formSections.map((sec, idx) => (
-                <div key={idx} className="p-4 rounded-lg bg-[#111113] border border-white/[0.04] space-y-3 flex flex-col">
+                <div key={idx} className="p-4 rounded-lg bg-surface border border-white/[0.04] space-y-3 flex flex-col">
                   <div className="flex justify-between items-center">
                     <span className="text-[9px] font-bold uppercase font-mono px-2 py-0.5 rounded bg-white/[0.05] text-gray-400">
                       Block {idx + 1}: {sec.type}
@@ -747,7 +747,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                             placeholder="Bullet factor text details..."
                             value={item}
                             onChange={(e) => updateFormSectionListItem(idx, itemIdx, e.target.value)}
-                            className="flex-grow px-3 py-1.5 text-xs rounded bg-[#151517] border border-white/[0.06] text-white focus:outline-none focus:border-purple-500/40"
+                            className="flex-grow px-3 py-1.5 text-xs rounded bg-raised border border-white/[0.06] text-white focus:outline-none focus:border-purple-500/40"
                           />
                         </div>
                       ))}
@@ -765,7 +765,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                       placeholder={sec.type === "heading2" ? "Enter Section Heading text..." : "Enter analytical body copy details..."}
                       value={sec.content || ""}
                       onChange={(e) => updateFormSectionText(idx, e.target.value)}
-                      className="w-full px-3 py-2 text-xs rounded bg-[#151517] border border-white/[0.06] text-white focus:outline-none focus:border-blue-500/40 leading-relaxed font-sans"
+                      className="w-full px-3 py-2 text-xs rounded bg-raised border border-white/[0.06] text-white focus:outline-none focus:border-blue-500/40 leading-relaxed font-sans"
                     />
                   )}
                 </div>
@@ -851,7 +851,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
             {/* Authoring Info Line */}
             <div className="flex flex-wrap items-center gap-y-3 gap-6 text-xs text-gray-400 border-y border-white/[0.06] py-3.5">
               <div className="flex items-center gap-2">
-                <div className="h-7 w-7 rounded-lg bg-[#151518] border border-white/[0.08] flex items-center justify-center text-[10px] font-mono font-bold text-blue-400 select-none">
+                <div className="h-7 w-7 rounded-lg bg-raised border border-white/[0.08] flex items-center justify-center text-[10px] font-mono font-bold text-blue-400 select-none">
                   {activePost.author.avatar}
                 </div>
                 <div className="text-left leading-tight">
@@ -985,7 +985,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                       );
                     case "table":
                       return (
-                        <div key={idx} className="overflow-x-auto rounded-xl border border-white/[0.05] bg-[#0E0E10] my-4 select-text">
+                        <div key={idx} className="overflow-x-auto rounded-xl border border-white/[0.05] bg-surface my-4 select-text">
                           <table className="w-full text-left border-collapse text-xs">
                             <thead>
                               <tr className="border-b border-white/[0.06] bg-white/[0.02]">
@@ -1048,7 +1048,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                       return (
                         <div 
                           key={i} 
-                          className="rounded-lg border border-white/[0.05] bg-[#0A0A0B] overflow-hidden"
+                          className="rounded-lg border border-white/[0.05] bg-canvas overflow-hidden"
                         >
                           <button
                             onClick={() => setActiveFaqIndex(isOpen ? null : i)}
@@ -1066,7 +1066,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: "auto" }}
                                 exit={{ opacity: 0, height: 0 }}
-                                className="border-t border-white/[0.04] p-4 text-xs text-gray-400 select-text leading-relaxed bg-[#0F0F10]/40 font-normal"
+                                className="border-t border-white/[0.04] p-4 text-xs text-gray-400 select-text leading-relaxed bg-surface/40 font-normal"
                               >
                                 {faq.answer}
                               </motion.div>
@@ -1088,7 +1088,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
 
             {/* Right Column: Sticky Sidebar Table of Contents */}
             <aside className="hidden lg:block lg:col-span-1 space-y-6 select-none font-sans">
-              <div className="sticky top-24 border border-white/[0.04] bg-[#0A0A0B]/80 backdrop-blur-md p-5 rounded-2xl space-y-4">
+              <div className="sticky top-24 border border-white/[0.04] bg-canvas/80 backdrop-blur-md p-5 rounded-2xl space-y-4">
                 
                 {/* TOC links */}
                 <div className="space-y-2">
@@ -1163,7 +1163,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                       setActiveSlug(post.slug);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="group border border-white/[0.06] hover:border-white/[0.12] bg-[#0E0E10] p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer text-left space-y-2.5 flex flex-col justify-between"
+                    className="group border border-white/[0.06] hover:border-white/[0.12] bg-surface p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer text-left space-y-2.5 flex flex-col justify-between"
                   >
                     <div>
                       <span className="text-[8px] font-mono font-bold uppercase text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 inline-block mb-1">
@@ -1176,7 +1176,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                         {post.introduction}
                       </p>
                     </div>
-                    <div className="flex items-center justify-between text-[9px] text-[#9CA3AF] font-mono select-none pt-2 border-t border-white/[0.04]">
+                    <div className="flex items-center justify-between text-[9px] text-muted font-mono select-none pt-2 border-t border-white/[0.04]">
                       <span>{post.publishedAt}</span>
                       <span className="flex items-center gap-1 text-blue-400 group-hover:translate-x-1 transition-transform uppercase font-bold text-[8px] tracking-wider">
                         Read Guide <ChevronRight className="h-3 w-3" />
@@ -1206,7 +1206,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                 placeholder="Search premium identity valuation, legal guides, security rules..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl bg-[#0E0E10] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
+                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
               />
               {searchQuery && (
                 <button
@@ -1229,7 +1229,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                     className={`px-3.5 py-1.5 text-[10px] uppercase tracking-wider font-mono font-bold rounded-full border transition-all cursor-pointer ${
                       isActive
                         ? "bg-blue-600 text-white border-blue-500/30"
-                        : "bg-[#0E0E10] text-[#9CA3AF] border-white/[0.04] hover:text-white hover:border-white/[0.1]"
+                        : "bg-surface text-muted border-white/[0.04] hover:text-white hover:border-white/[0.1]"
                     }`}
                   >
                     {cat}
@@ -1245,7 +1245,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               onClick={() => setActiveSlug(featuredPost.slug)}
-              className="group border border-white/[0.08] bg-[#0E0E10] hover:border-white/[0.14] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/[0.02] transition-all duration-300 cursor-pointer text-left"
+              className="group border border-white/[0.08] bg-surface hover:border-white/[0.14] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/[0.02] transition-all duration-300 cursor-pointer text-left"
             >
               <div className="flex-grow space-y-4 flex flex-col justify-between">
                 <div>
@@ -1281,7 +1281,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
               </div>
 
               {/* Glowing decorative preview button on featured card */}
-              <div className="md:w-48 bg-[#070708] border border-white/[0.05] rounded-xl flex flex-col justify-center items-center gap-1 p-6 select-none shrink-0 group-hover:border-blue-500/20 group-hover:bg-[#0C0C0F] transition-all">
+              <div className="md:w-48 bg-[#070708] border border-white/[0.05] rounded-xl flex flex-col justify-center items-center gap-1 p-6 select-none shrink-0 group-hover:border-blue-500/20 group-hover:bg-canvas transition-all">
                 <span className="p-3 bg-blue-500/5 text-blue-500 rounded-full border border-blue-500/10 group-hover:bg-blue-500/10 group-hover:text-blue-400 transition-all">
                   <Eye className="h-5 w-5" />
                 </span>
@@ -1321,7 +1321,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                       setActiveSlug(post.slug);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="group border border-white/[0.06] hover:border-white/[0.12] bg-[#0E0E10] p-6 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/[0.01] transition-all duration-300 cursor-pointer text-left flex flex-col justify-between"
+                    className="group border border-white/[0.06] hover:border-white/[0.12] bg-surface p-6 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/[0.01] transition-all duration-300 cursor-pointer text-left flex flex-col justify-between"
                     id={`article_card_${post.slug}`}
                   >
                     <div className="space-y-3">
@@ -1345,7 +1345,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                       </p>
                     </div>
 
-                    <div className="pt-4 mt-4 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-[#9CA3AF] font-mono select-none">
+                    <div className="pt-4 mt-4 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-muted font-mono select-none">
                       <div className="flex items-center gap-1">
                         <Clock className="h-3.5 w-3.5 text-gray-500" />
                         <span>{post.readTime}</span>

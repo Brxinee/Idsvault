@@ -152,12 +152,12 @@ export const ProcessPage: React.FC = () => {
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
-      <div className="min-h-screen bg-[#050505] text-white">
+      <div className="min-h-screen bg-canvas text-white">
 
         {/* ── Hero ── */}
         <section className="border-b border-white/[0.06] py-20 px-6">
           <div className="max-w-3xl mx-auto text-center space-y-5">
-            <span className="inline-block px-2.5 py-1 rounded bg-[#C9A961]/10 text-[#C9A961] text-[10px] font-extrabold uppercase tracking-widest font-mono">
+            <span className="inline-block px-2.5 py-1 rounded bg-accent/10 text-accent text-[10px] font-extrabold uppercase tracking-widest font-mono">
               How It Works
             </span>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1]">
@@ -170,11 +170,11 @@ export const ProcessPage: React.FC = () => {
         </section>
 
         {/* ── Guarantee strip ── */}
-        <section className="border-b border-white/[0.06] bg-[#0A0A0B] py-6 px-6">
+        <section className="border-b border-white/[0.06] bg-canvas py-6 px-6">
           <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4">
             {guarantees.map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2.5 text-sm text-gray-300">
-                <Icon className="h-4 w-4 text-[#C9A961] shrink-0" />
+                <Icon className="h-4 w-4 text-accent shrink-0" />
                 <span>{text}</span>
               </div>
             ))}
@@ -189,7 +189,7 @@ export const ProcessPage: React.FC = () => {
               return (
                 <div
                   key={step.num}
-                  className="rounded-2xl bg-[#0F0F10] border border-white/[0.06] p-7 space-y-4"
+                  className="rounded-2xl bg-surface border border-white/[0.06] p-7 space-y-4"
                 >
                   {/* Header */}
                   <div className="flex items-start gap-4">
@@ -201,7 +201,7 @@ export const ProcessPage: React.FC = () => {
                         <span className="font-mono text-[10px] font-bold text-white/20 tracking-widest">{step.num}</span>
                         <h2 className="font-bold text-white text-base">{step.title}</h2>
                       </div>
-                      <p className="text-sm text-[#C9A961] font-medium">{step.subtitle}</p>
+                      <p className="text-sm text-accent font-medium">{step.subtitle}</p>
                     </div>
                   </div>
 
@@ -214,7 +214,7 @@ export const ProcessPage: React.FC = () => {
                       <div className="rounded-xl overflow-hidden border border-white/[0.06]">
                         <table className="w-full text-xs">
                           <thead>
-                            <tr className="bg-[#131316] border-b border-white/[0.06]">
+                            <tr className="bg-surface border-b border-white/[0.06]">
                               <th className="text-left px-4 py-2.5 text-gray-400 font-semibold">Transaction value</th>
                               <th className="text-left px-4 py-2.5 text-gray-400 font-semibold">KYC requirement</th>
                             </tr>
@@ -239,7 +239,7 @@ export const ProcessPage: React.FC = () => {
                       <ul className="space-y-1">
                         {step.paymentMethods.map((m) => (
                           <li key={m} className="flex items-center gap-2 text-sm text-gray-300">
-                            <span className="h-1 w-1 rounded-full bg-[#C9A961] shrink-0" />
+                            <span className="h-1 w-1 rounded-full bg-accent shrink-0" />
                             {m}
                           </li>
                         ))}
@@ -269,7 +269,7 @@ export const ProcessPage: React.FC = () => {
         </section>
 
         {/* ── Timelines ── */}
-        <section className="border-t border-white/[0.06] bg-[#0A0A0B] py-16 px-6">
+        <section className="border-t border-white/[0.06] bg-canvas py-16 px-6">
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-2xl font-extrabold text-white">Typical timelines</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -278,7 +278,7 @@ export const ProcessPage: React.FC = () => {
                 { label: "Standard deal with KYC", time: "24 – 48 hours", eg: "Domain or Discord server, ₹85K–₹8.5L" },
                 { label: "Complex or high-value deal", time: "48 – 72 hours", eg: "YouTube channel, premium handle above ₹8.5L" },
               ].map(({ label, time, eg }) => (
-                <div key={label} className="p-5 rounded-2xl bg-[#0F0F10] border border-white/[0.06] space-y-2">
+                <div key={label} className="p-5 rounded-2xl bg-surface border border-white/[0.06] space-y-2">
                   <p className="text-[11px] text-gray-500 font-semibold uppercase tracking-wider">{label}</p>
                   <p className="text-xl font-extrabold text-white font-mono">{time}</p>
                   <p className="text-xs text-gray-500">{eg}</p>
@@ -298,7 +298,7 @@ export const ProcessPage: React.FC = () => {
             <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-[#0F0F10] border-b border-white/[0.06]">
+                  <tr className="bg-surface border-b border-white/[0.06]">
                     <th className="text-left px-5 py-3.5 text-gray-400 font-semibold">Deal value (INR)</th>
                     <th className="text-left px-5 py-3.5 text-gray-400 font-semibold">Commission</th>
                     <th className="text-right px-5 py-3.5 text-gray-400 font-semibold">GST</th>
@@ -313,7 +313,7 @@ export const ProcessPage: React.FC = () => {
                   ].map(({ range, rate, gst }) => (
                     <tr key={range} className="hover:bg-white/[0.02] transition-colors">
                       <td className="px-5 py-3.5 font-mono text-white/80">{range}</td>
-                      <td className="px-5 py-3.5 font-bold text-[#C9A961]">{rate}</td>
+                      <td className="px-5 py-3.5 font-bold text-accent">{rate}</td>
                       <td className="px-5 py-3.5 text-right text-gray-400">{gst}</td>
                     </tr>
                   ))}
@@ -324,14 +324,14 @@ export const ProcessPage: React.FC = () => {
         </section>
 
         {/* ── CTA ── */}
-        <section className="border-t border-white/[0.06] bg-[#0A0A0B] py-16 px-6">
+        <section className="border-t border-white/[0.06] bg-canvas py-16 px-6">
           <div className="max-w-xl mx-auto text-center space-y-6">
             <h2 className="text-2xl font-extrabold text-white">Ready to start?</h2>
             <p className="text-sm text-gray-400">Browse what's available, or contact the broker directly on WhatsApp.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 to="/inventory"
-                className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl bg-[#C9A961] text-[#0A0A0B] font-bold text-sm hover:bg-[#D4B670] transition-colors"
+                className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl bg-accent text-canvas font-bold text-sm hover:bg-accent-light transition-colors"
               >
                 Browse Inventory <ArrowRight className="h-4 w-4" />
               </Link>
@@ -339,7 +339,7 @@ export const ProcessPage: React.FC = () => {
                 href="https://wa.me/919392974031?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%20transfer%20process"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl bg-[#131316] border border-white/[0.08] text-white font-semibold text-sm hover:border-white/[0.16] transition-colors"
+                className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl bg-surface border border-white/[0.08] text-white font-semibold text-sm hover:border-white/[0.16] transition-colors"
               >
                 <MessageCircle className="h-4 w-4 text-[#25D366]" />
                 WhatsApp Broker

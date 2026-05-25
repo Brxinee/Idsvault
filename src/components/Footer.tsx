@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/[0.06] bg-[#050505] py-16 px-6 mt-auto">
+    <footer className="border-t border-white/[0.06] bg-canvas py-16 px-6 mt-auto">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-sm text-gray-400">
 
         {/* Brand */}

@@ -203,7 +203,7 @@ WhatsApp: ${whatsapp}`;
         </div>
 
         <article
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08]"
+          className="p-8 rounded-2xl bg-surface border border-white/[0.08]"
           id="sell_form"
         >
           <form
@@ -231,7 +231,7 @@ WhatsApp: ${whatsapp}`;
                         onChange={(e) =>
                           setUsername(e.target.value.replace(/\s+/g, ""))
                         }
-                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                       />
                     </div>
                     {usernameError && (
@@ -250,7 +250,7 @@ WhatsApp: ${whatsapp}`;
                       onChange={(e) =>
                         setPlatform(e.target.value as Platform)
                       }
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none cursor-pointer"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none cursor-pointer"
                     >
                       <option value={Platform.Telegram}>Telegram</option>
                       <option value={Platform.Instagram}>Instagram</option>
@@ -279,7 +279,7 @@ WhatsApp: ${whatsapp}`;
                         placeholder="e.g. 1500000"
                         value={askingPrice}
                         onChange={(e) => setAskingPrice(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                       />
                     </div>
                   </div>
@@ -299,7 +299,7 @@ WhatsApp: ${whatsapp}`;
                         placeholder="e.g. 1200000"
                         value={minPrice}
                         onChange={(e) => setMinPrice(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                       />
                     </div>
                   </div>
@@ -335,7 +335,7 @@ WhatsApp: ${whatsapp}`;
                       placeholder="e.g. Rahul Sharma"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                     />
                   </div>
 
@@ -349,7 +349,7 @@ WhatsApp: ${whatsapp}`;
                       placeholder="+91 91111 22222"
                       value={whatsapp}
                       onChange={(e) => setWhatsapp(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                     />
                   </div>
                 </div>
@@ -367,7 +367,7 @@ WhatsApp: ${whatsapp}`;
                     className={`p-6 rounded-xl border border-dashed text-center flex flex-col justify-center items-center gap-2.5 cursor-pointer transition-colors ${
                       isHoveringDrag
                         ? "border-blue-500 bg-blue-500/5 text-blue-300"
-                        : "border-white/10 hover:border-white/20 bg-[#151517]"
+                        : "border-white/10 hover:border-white/20 bg-raised"
                     }`}
                   >
                     <input
@@ -408,7 +408,7 @@ WhatsApp: ${whatsapp}`;
                 </div>
 
                 {/* Seller indemnity declarations */}
-                <div className="space-y-3 p-4 rounded-xl bg-[#151517] border border-white/[0.06]">
+                <div className="space-y-3 p-4 rounded-xl bg-raised border border-white/[0.06]">
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                     Seller declarations (required)
                   </p>
@@ -510,7 +510,7 @@ WhatsApp: ${whatsapp}`;
         </article>
 
         {/* Context note */}
-        <div className="mt-6 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] text-xs text-gray-400 space-y-1 leading-relaxed">
+        <div className="mt-6 p-4 rounded-xl bg-surface border border-white/[0.06] text-xs text-gray-400 space-y-1 leading-relaxed">
           <p className="font-semibold text-white text-[11px]">
             What happens after you submit
           </p>
@@ -530,7 +530,7 @@ WhatsApp: ${whatsapp}`;
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white"
+                className="p-8 rounded-2xl bg-surface border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white"
                 id="sell_success_modal"
               >
                 <div className="h-12 w-12 bg-[#10B981]/10 rounded-full flex items-center justify-center mx-auto">

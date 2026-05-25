@@ -159,7 +159,7 @@ Timeline: ${urgency}`;
         </div>
 
         <article
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08]"
+          className="p-8 rounded-2xl bg-surface border border-white/[0.08]"
           id="advisory_form"
         >
           <form
@@ -191,7 +191,7 @@ Timeline: ${urgency}`;
                             e.target.value.replace(/[^a-zA-Z0-9_.]/g, "")
                           )
                         }
-                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                       />
                     </div>
                   </div>
@@ -206,7 +206,7 @@ Timeline: ${urgency}`;
                         setPlatform(e.target.value as Platform);
                         setRiskAcknowledged(false);
                       }}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none cursor-pointer"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none cursor-pointer"
                     >
                       <option value={Platform.Instagram}>Instagram</option>
                       <option value={Platform.X}>X / Twitter</option>
@@ -232,7 +232,7 @@ Timeline: ${urgency}`;
                         placeholder="e.g. 500000"
                         value={budget}
                         onChange={(e) => setBudget(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                        className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                       />
                     </div>
                     <p className="text-[10px] text-gray-600 mt-1">
@@ -247,7 +247,7 @@ Timeline: ${urgency}`;
                     <select
                       value={urgency}
                       onChange={(e) => setUrgency(e.target.value as Urgency)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none cursor-pointer"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none cursor-pointer"
                     >
                       <option value={Urgency.Immediate}>
                         Urgent (within 48 hours)
@@ -302,7 +302,7 @@ Timeline: ${urgency}`;
                         onChange={(e) =>
                           setRiskAcknowledged(e.target.checked)
                         }
-                        className="mt-0.5 h-3.5 w-3.5 rounded border-amber-500/50 bg-[#151517] text-amber-500 accent-amber-500 cursor-pointer shrink-0"
+                        className="mt-0.5 h-3.5 w-3.5 rounded border-amber-500/50 bg-raised text-amber-500 accent-amber-500 cursor-pointer shrink-0"
                       />
                       <span className="text-[11px] text-gray-300 leading-relaxed group-hover:text-white transition-colors">
                         I have read the platform risk disclosure above. I
@@ -335,7 +335,7 @@ Timeline: ${urgency}`;
                     placeholder="e.g. zenithmedia, zenithcorp"
                     value={alternatives}
                     onChange={(e) => setAlternatives(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                   />
                 </div>
 
@@ -351,7 +351,7 @@ Timeline: ${urgency}`;
                       placeholder="+91 91111 22222"
                       value={whatsapp}
                       onChange={(e) => setWhatsapp(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                     />
                   </div>
 
@@ -365,7 +365,7 @@ Timeline: ${urgency}`;
                       placeholder="you@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                     />
                   </div>
                 </div>
@@ -398,7 +398,7 @@ Timeline: ${urgency}`;
         </article>
 
         {/* Info note */}
-        <div className="mt-6 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] text-xs text-gray-400 space-y-1 leading-relaxed">
+        <div className="mt-6 p-4 rounded-xl bg-surface border border-white/[0.06] text-xs text-gray-400 space-y-1 leading-relaxed">
           <p className="font-semibold text-white text-[11px]">
             What happens after you submit
           </p>
@@ -418,7 +418,7 @@ Timeline: ${urgency}`;
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white"
+                className="p-8 rounded-2xl bg-surface border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white"
               >
                 <div className="h-12 w-12 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto">
                   <Send className="h-5 w-5 text-blue-400" />

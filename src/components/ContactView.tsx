@@ -99,13 +99,13 @@ Message Details: ${message}`;
         <div className="md:col-span-5 space-y-6">
           <div className="space-y-3">
             <h1 className="text-3xl font-extrabold text-white tracking-tight leading-tight">Hyderabad Desk</h1>
-            <p className="text-xs text-[#9CA3AF] leading-relaxed">
+            <p className="text-xs text-muted leading-relaxed">
               Connect directly with our manual brokerage team. We enforce pristine, human-guided security checks for escrow transactions and off-market asset acquisitions.
             </p>
           </div>
 
           <div className="space-y-4 pt-4">
-            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06]">
+            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-surface border border-white/[0.06]">
               <MapPin className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Location Hub</p>
@@ -113,7 +113,7 @@ Message Details: ${message}`;
               </div>
             </div>
 
-            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06]">
+            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-surface border border-white/[0.06]">
               <Mail className="h-5 w-5 text-[#10B981] shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">General Email</p>
@@ -121,7 +121,7 @@ Message Details: ${message}`;
               </div>
             </div>
 
-            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06]">
+            <div className="flex items-start gap-3.5 p-4 rounded-xl bg-surface border border-white/[0.06]">
               <Clock className="h-5 w-5 text-purple-400 shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest font-mono">Desk Availability</p>
@@ -133,7 +133,7 @@ Message Details: ${message}`;
 
         {/* Right Side: Contact Submission Workstation */}
         <div className="md:col-span-7">
-          <div className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08]" id="contact_desktop_container">
+          <div className="p-8 rounded-2xl bg-surface border border-white/[0.08]" id="contact_desktop_container">
             <h3 className="font-extrabold text-white text-lg tracking-tight mb-6">Select Inquiry Focus</h3>
             
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -158,7 +158,7 @@ Message Details: ${message}`;
                       className={`py-2 px-3 rounded-lg text-[11px] font-medium border transition-colors select-none text-center cursor-pointer ${
                         inquiryType === topic.id
                           ? "bg-blue-600/10 border-blue-500 text-blue-400 font-bold"
-                          : "bg-[#151517] border-white/[0.04] text-gray-400 hover:border-white/10"
+                          : "bg-raised border-white/[0.04] text-gray-400 hover:border-white/10"
                       }`}
                     >
                       {topic.label}
@@ -179,7 +179,7 @@ Message Details: ${message}`;
                     placeholder="e.g. Anand Kumar"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                   />
                 </div>
 
@@ -194,7 +194,7 @@ Message Details: ${message}`;
                       placeholder="e.g. anand@kumarholdings.in"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
                     />
                   </div>
 
@@ -208,7 +208,7 @@ Message Details: ${message}`;
                       placeholder="e.g. +91 93929 74031"
                       value={whatsapp}
                       onChange={(e) => setWhatsapp(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
                     />
                   </div>
                 </div>
@@ -223,7 +223,7 @@ Message Details: ${message}`;
                     placeholder="Provide specific handle names, platforms, budgets or target timelines..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none resize-none leading-relaxed"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none resize-none leading-relaxed"
                   />
                 </div>
               </div>
@@ -265,7 +265,7 @@ Message Details: ${message}`;
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white block"
+              className="p-8 rounded-2xl bg-surface border border-white/[0.12] max-w-md w-full text-center space-y-6 text-white block"
               id="contact_success_modal"
             >
               <div className="h-12 w-12 bg-[#10B981]/10 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-2">

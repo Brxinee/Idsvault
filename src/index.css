@@ -2,31 +2,95 @@
 @import "./tokens.css";
 
 @theme {
+  /* ── Fonts ─────────────────────────────────── */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* ── Surface scale → bg-canvas, bg-surface, bg-raised, bg-overlay ── */
+  --color-canvas:       #050505;
+  --color-surface:      #0F0F10;
+  --color-raised:       #151517;
+  --color-overlay:      #1C1C20;
+
+  /* ── Accent → bg-accent, text-accent, border-accent ── */
+  --color-accent:       #C9A961;
+  --color-accent-light: #D4B670;
+  --color-accent-dim:   #A88940;
+
+  /* ── Primary action → bg-action, text-action ── */
+  --color-action:       #2563EB;
+  --color-action-hover: #1D4ED8;
+
+  /* ── Text → text-ink, text-muted, text-faint ── */
+  --color-ink:          #F5F5F7;
+  --color-muted:        #A1A1A9;
+  --color-faint:        #6E6E78;
+  --color-ghost:        #3F3F46;
+
+  /* ── Status ─────────────────────────────────── */
+  --color-success:      #34D399;
+  --color-warning:      #FBBF24;
+  --color-danger:       #F87171;
+  --color-info:         #60A5FA;
+
+  /* ── Focus ring ─────────────────────────────── */
+  --color-focus:        #2563EB;
 }
 
 @layer base {
+  html {
+    font-size: 16px;
+  }
+
   body {
-    background-color: var(--color-bg);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     font-family: var(--font-sans);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  /* Display headings — heavier Inter weight for editorial impact */
+  h1, h2 {
+    font-feature-settings: "kern" 1, "liga" 1, "dlig" 1;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h3, h4 {
+    font-feature-settings: "kern" 1, "liga" 1;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  /* Monospace — price values, handles, IDs */
+  code, kbd, pre, [class*="font-mono"] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "kern" 0, "tnum" 1;
+  }
+
+  /* Global focus-visible ring — keyboard nav is visible everywhere */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Respect prefers-reduced-motion — Phase 2 requirement */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-/* Scrollbar — neutral, no brand colour */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-surface);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-raised);
-}
+/* Scrollbar — neutral, matches surface scale */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--color-canvas); }
+::-webkit-scrollbar-thumb  { background: var(--color-surface); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-raised); }

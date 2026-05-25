@@ -492,7 +492,7 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
 
         <div className="space-y-2">
           {faqItems.map((item, index) => (
-            <div key={index} className="border border-white/[0.06] rounded-xl bg-[#0A0A0B] overflow-hidden">
+            <div key={index} className="border border-white/[0.06] rounded-xl bg-canvas overflow-hidden">
               <button
                 className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.01] transition-colors cursor-pointer gap-4"
                 onClick={() => setActiveFaq(activeFaq === index ? null : index)}
@@ -548,11 +548,11 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
 
       <header className="space-y-3 pb-6 border-b border-white/[0.06]">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-[#131316] border border-white/[0.08]">
-            <FileText className="h-5 w-5 text-[#C9A961]" />
+          <div className="p-2 rounded-lg bg-surface border border-white/[0.08]">
+            <FileText className="h-5 w-5 text-accent" />
           </div>
           <div>
-            <p className="text-[10px] font-bold text-[#C9A961] uppercase tracking-widest font-mono">IDsvault Policy</p>
+            <p className="text-[10px] font-bold text-accent uppercase tracking-widest font-mono">IDsvault Policy</p>
             <h1 className="text-2xl font-extrabold text-white tracking-tight">{content.title}</h1>
           </div>
         </div>

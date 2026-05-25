@@ -144,12 +144,12 @@ export const TrustPage: React.FC = () => {
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
-      <div className="min-h-screen bg-[#050505] text-white">
+      <div className="min-h-screen bg-canvas text-white">
 
         {/* ── Hero ── */}
         <section className="border-b border-white/[0.06] py-20 px-6">
           <div className="max-w-3xl mx-auto space-y-5">
-            <span className="inline-block px-2.5 py-1 rounded bg-[#C9A961]/10 text-[#C9A961] text-[10px] font-extrabold uppercase tracking-widest font-mono">
+            <span className="inline-block px-2.5 py-1 rounded bg-accent/10 text-accent text-[10px] font-extrabold uppercase tracking-widest font-mono">
               Trust Framework
             </span>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1]">
@@ -158,7 +158,7 @@ export const TrustPage: React.FC = () => {
             <p className="text-lg text-gray-400 leading-relaxed">
               In a market full of anonymous brokers and Telegram-group deal-makers, we do something different: we show everything. Real name, real address, real process, real paperwork.
             </p>
-            <div className="p-4 rounded-xl bg-[#C9A961]/5 border border-[#C9A961]/20 text-sm text-gray-300 leading-relaxed">
+            <div className="p-4 rounded-xl bg-accent/5 border border-accent/20 text-sm text-gray-300 leading-relaxed">
               <strong className="text-white">The founder IS the trust mechanism.</strong> There is no brand behind a curtain. Sanjay Reddy is directly reachable on WhatsApp before, during, and after every deal. His name is on the engagement letter. His account holds your payment.
             </div>
           </div>
@@ -172,10 +172,10 @@ export const TrustPage: React.FC = () => {
               {pillars.map(({ icon: Icon, title, body }) => (
                 <div
                   key={title}
-                  className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.06] space-y-3 hover:border-white/[0.1] transition-colors"
+                  className="p-6 rounded-2xl bg-surface border border-white/[0.06] space-y-3 hover:border-white/[0.1] transition-colors"
                 >
-                  <div className="p-2 rounded-lg bg-[#C9A961]/10 border border-[#C9A961]/20 w-fit">
-                    <Icon className="h-4 w-4 text-[#C9A961]" />
+                  <div className="p-2 rounded-lg bg-accent/10 border border-accent/20 w-fit">
+                    <Icon className="h-4 w-4 text-accent" />
                   </div>
                   <h3 className="font-bold text-white text-sm">{title}</h3>
                   <p className="text-xs text-gray-400 leading-relaxed">{body}</p>
@@ -186,7 +186,7 @@ export const TrustPage: React.FC = () => {
         </section>
 
         {/* ── What we won't do ── */}
-        <section className="border-t border-white/[0.06] bg-[#0A0A0B] py-16 px-6">
+        <section className="border-t border-white/[0.06] bg-canvas py-16 px-6">
           <div className="max-w-3xl mx-auto space-y-8">
             <div className="space-y-2">
               <h2 className="text-2xl font-extrabold text-white">What we will never do</h2>
@@ -216,7 +216,7 @@ export const TrustPage: React.FC = () => {
               {verifications.map(({ label, value, note }) => (
                 <div
                   key={label}
-                  className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-8 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06]"
+                  className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-8 p-4 rounded-xl bg-surface border border-white/[0.06]"
                 >
                   <div className="sm:w-44 shrink-0">
                     <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">{label}</p>
@@ -232,7 +232,7 @@ export const TrustPage: React.FC = () => {
         </section>
 
         {/* ── Founder contact ── */}
-        <section className="border-t border-white/[0.06] bg-[#0A0A0B] py-16 px-6">
+        <section className="border-t border-white/[0.06] bg-canvas py-16 px-6">
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-2xl font-extrabold text-white">Reach the broker directly</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -240,36 +240,36 @@ export const TrustPage: React.FC = () => {
                 href="https://wa.me/919392974031?text=Hi%2C%20I%20want%20to%20verify%20IDsvault%20before%20proceeding"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] hover:border-white/[0.12] transition-colors group"
+                className="flex items-center gap-3 p-4 rounded-xl bg-surface border border-white/[0.06] hover:border-white/[0.12] transition-colors group"
               >
                 <MessageCircle className="h-5 w-5 text-[#25D366] shrink-0" />
                 <div>
                   <p className="text-xs text-gray-500">WhatsApp</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#C9A961] transition-colors">+91 93929 74031</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-accent transition-colors">+91 93929 74031</p>
                 </div>
               </a>
               <a
                 href="tel:+919392974031"
-                className="flex items-center gap-3 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] hover:border-white/[0.12] transition-colors group"
+                className="flex items-center gap-3 p-4 rounded-xl bg-surface border border-white/[0.06] hover:border-white/[0.12] transition-colors group"
               >
                 <Phone className="h-5 w-5 text-blue-400 shrink-0" />
                 <div>
                   <p className="text-xs text-gray-500">Phone</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#C9A961] transition-colors">+91 93929 74031</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-accent transition-colors">+91 93929 74031</p>
                 </div>
               </a>
               <a
                 href="mailto:broker@idsvault.com"
-                className="flex items-center gap-3 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06] hover:border-white/[0.12] transition-colors group"
+                className="flex items-center gap-3 p-4 rounded-xl bg-surface border border-white/[0.06] hover:border-white/[0.12] transition-colors group"
               >
                 <Mail className="h-5 w-5 text-purple-400 shrink-0" />
                 <div>
                   <p className="text-xs text-gray-500">Email</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#C9A961] transition-colors">broker@idsvault.com</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-accent transition-colors">broker@idsvault.com</p>
                 </div>
               </a>
             </div>
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-[#0F0F10] border border-white/[0.06]">
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-surface border border-white/[0.06]">
               <MapPin className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
               <div>
                 <p className="text-xs text-gray-500 mb-1">Registered office</p>
@@ -278,7 +278,7 @@ export const TrustPage: React.FC = () => {
                   href="https://maps.google.com/?q=Hyderabad,Telangana,India"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-[#C9A961] transition-colors mt-1"
+                  className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-accent transition-colors mt-1"
                 >
                   View on Google Maps <ExternalLink className="h-3 w-3" />
                 </a>
@@ -309,13 +309,13 @@ export const TrustPage: React.FC = () => {
         </section>
 
         {/* ── CTA ── */}
-        <section className="border-t border-white/[0.06] bg-[#0A0A0B] py-14 px-6">
+        <section className="border-t border-white/[0.06] bg-canvas py-14 px-6">
           <div className="max-w-xl mx-auto text-center space-y-5">
             <h2 className="text-2xl font-extrabold text-white">See the process in full</h2>
             <p className="text-sm text-gray-400">Six steps, zero ambiguity. Understand exactly what happens from inquiry to confirmed transfer.</p>
             <Link
               to="/process"
-              className="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-[#C9A961] text-[#0A0A0B] font-bold text-sm hover:bg-[#D4B670] transition-colors"
+              className="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent text-canvas font-bold text-sm hover:bg-accent-light transition-colors"
             >
               How It Works <ArrowRight className="h-4 w-4" />
             </Link>

@@ -30,7 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-white/[0.06] bg-[#050505]/75 backdrop-blur-xl">
+    <header className="sticky top-0 z-[100] border-b border-white/[0.06] bg-canvas/75 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
@@ -39,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
           className="flex items-center gap-2.5 text-white font-semibold tracking-tight cursor-pointer hover:opacity-90 group transition-all"
           id="nav_logo"
         >
-          <div className="h-8 w-8 rounded-lg bg-[#0F0F10] border border-white/[0.08] flex items-center justify-center group-hover:border-blue-500/30 transition-all">
+          <div className="h-8 w-8 rounded-lg bg-surface border border-white/[0.08] flex items-center justify-center group-hover:border-blue-500/30 transition-all">
             <Shield className="h-4 w-4 text-blue-500" />
           </div>
           <div className="flex flex-col items-start leading-none gap-0.5">
@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-[#0F0F10] border border-white/[0.04]">
+        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-surface border border-white/[0.04]">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -82,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={onContactBroker}
-            className="relative group h-9 px-4 text-xs font-semibold rounded-lg bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] transition-all cursor-pointer select-none active:scale-95 flex items-center gap-1.5"
+            className="relative group h-9 px-4 text-xs font-semibold rounded-lg bg-accent hover:bg-accent-light text-canvas transition-all cursor-pointer select-none active:scale-95 flex items-center gap-1.5"
             id="nav_inquire_cta"
           >
             Inquire
@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="md:hidden border-b border-white/[0.06] bg-[#0F0F10] overflow-hidden"
+            className="md:hidden border-b border-white/[0.06] bg-surface overflow-hidden"
             id="mobile_drawer"
           >
             <div className="px-6 py-6 space-y-4 flex flex-col">
@@ -131,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
               <div className="pt-4 border-t border-white/[0.06] grid grid-cols-2 gap-3">
                 <Link
                   to="/inventory"
-                  className="h-10 text-center text-xs font-bold rounded-lg bg-[#C9A961] hover:bg-[#D4B670] text-[#0A0A0B] cursor-pointer flex items-center justify-center gap-1"
+                  className="h-10 text-center text-xs font-bold rounded-lg bg-accent hover:bg-accent-light text-canvas cursor-pointer flex items-center justify-center gap-1"
                 >
                   Browse Handles
                 </Link>

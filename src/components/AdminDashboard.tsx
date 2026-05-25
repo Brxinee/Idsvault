@@ -298,7 +298,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <motion.article 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-8 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6 shadow-2xl relative overflow-hidden"
+          className="p-8 rounded-2xl bg-surface border border-white/[0.08] space-y-6 shadow-2xl relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-[50px] rounded-full pointer-events-none" />
           
@@ -321,7 +321,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 placeholder="Enter admin email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
               />
             </div>
 
@@ -335,7 +335,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-sans"
               />
             </div>
 
@@ -379,7 +379,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/[0.06] pb-6 font-sans">
         <div>
           <h1 className="text-2xl font-extrabold text-white tracking-tight animate-in">Registry CRM Terminal</h1>
-          <p className="text-xs text-[#9CA3AF] mt-1">Manual operations pipeline control, asset validation, and secure CSV logs export.</p>
+          <p className="text-xs text-muted mt-1">Manual operations pipeline control, asset validation, and secure CSV logs export.</p>
         </div>
         <div className="flex items-center gap-3 select-none">
           <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/20 text-[10px] font-mono font-bold uppercase text-emerald-400">
@@ -397,33 +397,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* Corporate Dashboard Metrics */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 select-none">
-        <div className="p-5 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-2">
+        <div className="p-5 rounded-xl bg-surface border border-white/[0.08] space-y-2">
           <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block font-mono">Vetted Assets count</span>
           <p className="text-3xl font-extrabold text-white font-mono leading-none">{listings.length}</p>
         </div>
-        <div className="p-5 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-2">
+        <div className="p-5 rounded-xl bg-surface border border-white/[0.08] space-y-2">
           <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block font-mono">Book Value Assets</span>
           <p className="text-2xl font-extrabold text-[#10B981] font-mono leading-none">{formatINR(totalValuation)}</p>
         </div>
-        <div className="p-5 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-2">
+        <div className="p-5 rounded-xl bg-surface border border-white/[0.08] space-y-2">
           <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block font-mono">Proposals Recorded</span>
           <p className="text-3xl font-extrabold text-white font-mono leading-none">{totalOffersCount}</p>
         </div>
-        <div className="p-5 rounded-xl bg-[#0F0F10] border border-white/[0.08] space-y-2">
+        <div className="p-5 rounded-xl bg-surface border border-white/[0.08] space-y-2">
           <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block font-mono">Commission Searches</span>
           <p className="text-3xl font-extrabold text-blue-400 font-mono leading-none">{pendingRequestsCount}</p>
         </div>
       </section>
 
       {/* STATUS KANBAN BOARD */}
-      <section className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-6">
+      <section className="p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 select-none">
           <div className="space-y-1">
             <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2 font-sans">
               <KanbanSquare className="h-4 w-4 text-blue-400" />
               Interactive Deal Flow Pipeline
             </h3>
-            <p className="text-[11px] text-[#9CA3AF] font-sans">Instantly advance identifiers through distinct transaction lifecycle coordinates.</p>
+            <p className="text-[11px] text-muted font-sans">Instantly advance identifiers through distinct transaction lifecycle coordinates.</p>
           </div>
 
           {/* Quick Platform Filter */}
@@ -432,7 +432,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <select
               value={kanbanPlatformFilter}
               onChange={(e) => setKanbanPlatformFilter(e.target.value)}
-              className="bg-[#151517] border border-white/[0.08] text-white py-1 px-2 rounded-lg text-[10px] outline-none cursor-pointer"
+              className="bg-raised border border-white/[0.08] text-white py-1 px-2 rounded-lg text-[10px] outline-none cursor-pointer"
             >
               <option value="all">All Platforms</option>
               <option value="instagram">Instagram</option>
@@ -446,7 +446,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           
           {/* Column 1: LIVE */}
-          <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
+          <div className="rounded-xl bg-raised/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
               <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">● LIVE INDEX</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
@@ -457,7 +457,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               {listings
                 .filter(v => v.status === DealStatus.Live && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
-                  <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs space-y-2">
+                  <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-white">@{item.username}</span>
                       <span className="text-[8px] uppercase tracking-wider font-mono text-blue-400 bg-blue-500/10 px-1.5 rounded">{item.platform}</span>
@@ -477,7 +477,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Column 2: OFFERS PENDING */}
-          <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
+          <div className="rounded-xl bg-raised/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
               <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest font-mono">● ACTIVE BIDS</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
@@ -488,7 +488,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               {listings
                 .filter(v => v.status === DealStatus.OfferPending && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
-                  <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs space-y-2">
+                  <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-white">@{item.username}</span>
                       <span className="text-[8px] uppercase tracking-wider font-mono text-blue-400 bg-blue-500/10 px-1.5 rounded">{item.platform}</span>
@@ -516,7 +516,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Column 3: SOLD */}
-          <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
+          <div className="rounded-xl bg-raised/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest font-mono">● RELEASED / SOLD</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
@@ -527,7 +527,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               {listings
                 .filter(v => v.status === DealStatus.Sold && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
-                  <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs opacity-65 space-y-1">
+                  <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs opacity-65 space-y-1">
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-white line-through">@{item.username}</span>
                       <span className="text-[8px] uppercase tracking-wider font-mono text-gray-500 bg-white/5 px-1.5 rounded">{item.platform}</span>
@@ -539,7 +539,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Column 4: QUARANTINED */}
-          <div className="rounded-xl bg-[#151517]/80 p-4 space-y-3.5 min-h-[220px]">
+          <div className="rounded-xl bg-raised/80 p-4 space-y-3.5 min-h-[220px]">
             <header className="flex items-center justify-between border-b border-white/[0.04] pb-2">
               <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest font-mono">● QUARANTINED</span>
               <span className="text-[10px] font-mono text-gray-500 font-bold">
@@ -550,7 +550,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               {listings
                 .filter(v => v.status === DealStatus.Quarantined && (kanbanPlatformFilter === "all" || v.platform === kanbanPlatformFilter))
                 .map(item => (
-                  <div key={item.id} className="p-3 rounded-lg bg-[#0F0F10] border border-white/[0.06] text-xs space-y-1">
+                  <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs space-y-1">
                     <span className="font-bold text-red-500">@{item.username}</span>
                     <p className="text-[9px] text-gray-505">Auditing Infractions</p>
                     <button 
@@ -571,7 +571,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Listings inventory table - Left (7 cols) */}
-        <section className="lg:col-span-7 p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+        <section className="lg:col-span-7 p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 select-none">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
               <Layers3 className="h-4 w-4 text-gray-400" />
@@ -593,7 +593,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               placeholder="Search catalog entries..."
               value={inventorySearch}
               onChange={(e) => setInventorySearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/30 outline-none placeholder:text-gray-600 font-mono"
+              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/30 outline-none placeholder:text-gray-600 font-mono"
             />
           </div>
 
@@ -636,7 +636,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <select
                           value={item.status}
                           onChange={(e) => handleStatusShift(item.slug, e.target.value as DealStatus)}
-                          className="bg-[#151517] border border-white/[0.12] text-white py-1 px-1.5 rounded-md text-[10px] outline-none cursor-pointer"
+                          className="bg-raised border border-white/[0.12] text-white py-1 px-1.5 rounded-md text-[10px] outline-none cursor-pointer"
                         >
                           <option value={DealStatus.Live}>Live</option>
                           <option value={DealStatus.OfferPending}>Offers</option>
@@ -653,7 +653,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </section>
 
         {/* Custom Sourcing Outreach Campaign tracker - Right (5 cols) */}
-        <section className="lg:col-span-5 p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+        <section className="lg:col-span-5 p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
           <header className="flex items-center justify-between select-none">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
               <Clock className="h-4 w-4 text-gray-400" />
@@ -696,7 +696,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* Proposals Pipeline Table */}
-        <section className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+        <section className="p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 select-none font-sans">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
               <Inbox className="h-4 w-4 text-gray-400" />
@@ -718,7 +718,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               placeholder="Search incoming leads profiles..."
               value={proposalsSearch}
               onChange={(e) => setProposalsSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-[#151517] border border-white/[0.08] text-white focus:border-blue-500/35 outline-none placeholder:text-gray-600 font-mono"
+              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/35 outline-none placeholder:text-gray-600 font-mono"
             />
           </div>
 
@@ -755,7 +755,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </section>
 
         {/* Live Cryptographic Timeline Audit System Logs */}
-        <section className="p-6 rounded-2xl bg-[#0F0F10] border border-white/[0.08] space-y-4">
+        <section className="p-6 rounded-2xl bg-surface border border-white/[0.08] space-y-4">
           <header className="flex items-center justify-between select-none">
             <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
               <AlertTriangle className="h-4 w-4 text-amber-500" />
@@ -765,7 +765,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           <div className="space-y-3.5 max-h-72 overflow-y-auto pr-1">
             {logs.map((log, index) => (
-              <div key={index} className="p-3.5 rounded-xl bg-[#151517] border border-white/[0.04] space-y-1.5 text-[10px] font-mono leading-relaxed">
+              <div key={index} className="p-3.5 rounded-xl bg-raised border border-white/[0.04] space-y-1.5 text-[10px] font-mono leading-relaxed">
                 <div className="flex items-center justify-between border-b border-white/[0.04] pb-1.5">
                   <span className="text-blue-400 font-extrabold uppercase tracking-wider">{log.action}</span>
                   <span className="text-gray-500 text-[8px]">{log.timestamp}</span>
