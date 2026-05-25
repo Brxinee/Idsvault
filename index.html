@@ -1,46 +1,58 @@
 <!doctype html>
-<html lang="en" class="bg-[#050505] text-white">
+<html lang="en-IN" class="bg-[#050505] text-white">
   <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0MWNQ7TSQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-Q0MWNQ7TSQ');
-</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050505" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
     <!-- Base title/meta — overridden per-route by react-helmet-async -->
-    <title>IDsvault — Buy &amp; Sell Premium Usernames | Instagram, X, Telegram</title>
-    <meta name="description" content="Buy or sell premium Instagram handles, X usernames, and Telegram channels through IDsvault — India's broker-assisted marketplace. Payment held in escrow. Hyderabad desk." />
-    <meta name="keywords" content="buy premium instagram username, sell instagram handle, premium usernames india, x twitter username broker, telegram handle marketplace, username escrow india" />
+    <title>IDsvault — Digital Identity Advisory &amp; Transfer Desk | Hyderabad, India</title>
+    <meta name="description" content="India's broker-advised digital identity facilitation desk. Premium Telegram usernames, domain names, Discord servers, and YouTube channels. Payment held in designated broker account until transfer confirmed. Hyderabad, Telangana." />
+    <meta name="keywords" content="buy telegram username india, sell premium domain india, discord server transfer india, youtube channel broker india, digital identity broker hyderabad" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://idsvault.com" />
+
+    <!-- Open Graph -->
     <meta property="og:type"        content="website" />
-    <meta property="og:title"       content="IDsvault — Buy &amp; Sell Premium Usernames" />
-    <meta property="og:description" content="Broker-verified Instagram handles, X usernames, and Telegram channels. Payment held in escrow until transfer is complete." />
+    <meta property="og:title"       content="IDsvault — Digital Identity Advisory &amp; Transfer Desk" />
+    <meta property="og:description" content="Broker-advised transfer facilitation for Telegram usernames, domains, Discord servers, and YouTube channels. India only. Hyderabad desk." />
     <meta property="og:url"         content="https://idsvault.com" />
     <meta property="og:site_name"   content="IDsvault" />
     <meta property="og:image"       content="https://idsvault.com/cover.png" />
+
+    <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
-    <meta name="twitter:title"       content="IDsvault — Buy &amp; Sell Premium Usernames" />
-    <meta name="twitter:description" content="Buy or sell premium Instagram handles, X usernames, and Telegram channels. Broker-verified. Payment in escrow. Hyderabad, India." />
+    <meta name="twitter:title"       content="IDsvault — Digital Identity Advisory &amp; Transfer Desk" />
+    <meta name="twitter:description" content="India's broker-advised facilitation desk for premium digital handles. Payment held by broker until transfer confirmed. Hyderabad, India." />
     <meta name="twitter:image"       content="https://idsvault.com/cover.png" />
 
-    <!-- Google Fonts Pairings -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- GA4 Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8L9EQTY2P3"></script>
+    <!-- GA4 Analytics — consent-gated per DPDPA 2023 -->
     <script>
+      // Default consent denied until user accepts — DPDPA 2023 compliance
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8L9EQTY2P3"></script>
+    <script>
       gtag('js', new Date());
       gtag('config', 'G-8L9EQTY2P3', { 'send_page_view': true });
+
+      // Call this after user grants consent
+      window.grantAnalyticsConsent = function() {
+        gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      };
 
       window.trackIDsVaultEvent = function(eventName, eventParams) {
         if (typeof gtag === 'function') {
@@ -50,11 +62,9 @@
     </script>
 
     <!-- JSON-LD injected per-route by react-helmet-async (see src/components/SEO.tsx) -->
-    
   </head>
   <body class="bg-[#050505] text-[#F3F4F6] selection:bg-blue-500/20 selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

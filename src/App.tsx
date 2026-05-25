@@ -28,6 +28,8 @@ const BlogView       = lazy(() => import("./components/BlogView").then(m => ({ d
 import { RegulatoryInfo } from "./components/RegulatoryInfo";
 import { AboutPage } from "./components/AboutPage";
 import { ContactView } from "./components/ContactView";
+import { ProcessPage } from "./components/ProcessPage";
+import { TrustPage } from "./components/TrustPage";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -50,6 +52,8 @@ function viewToPath(view: string): string {
     journal:   "/journal",
     faq:       "/faq",
     about:     "/about",
+    process:   "/process",
+    trust:     "/trust",
     contact:   "/contact",
     admin:     "/admin",
   };
@@ -373,7 +377,9 @@ export default function App() {
                   />
                 }
               />
-              <Route path="/about" element={<AboutPage />} />
+              <Route path="/about"   element={<AboutPage />} />
+              <Route path="/process" element={<ProcessPage />} />
+              <Route path="/trust"   element={<TrustPage />} />
               <Route path="/faq" element={<RegulatoryInfo segment="faq" />} />
               <Route path="/policy/:segment" element={<PolicyRoute />} />
 

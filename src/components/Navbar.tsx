@@ -14,10 +14,10 @@ interface NavbarProps {
 
 const navItems = [
   { label: "Inventory", to: "/inventory" },
-  { label: "Sell",      to: "/sell" },
-  { label: "Advisory",  to: "/advisory" },
+  { label: "Process",   to: "/process" },
+  { label: "Trust",     to: "/trust" },
+  { label: "Journal",   to: "/journal" },
   { label: "About",     to: "/about" },
-  { label: "Contact",   to: "/contact" },
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
