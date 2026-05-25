@@ -17,6 +17,8 @@ type Segment =
   | "policy-grievance"
   | "policy-accessibility"
   | "policy-imprint"
+  | "policy-acceptable-use"
+  | "policy-trademark"
   | "faq";
 
 interface RegulatoryInfoProps {
@@ -128,7 +130,7 @@ const policyContent: Record<string, PolicyDoc> = {
         body: "Most disputes are resolved quickly because we have records of everything — WhatsApp messages, call logs, ownership verification steps, and payment release confirmations. If you have a concern about a deal, contact broker@idsvault.com with your deal reference. We aim to respond within 24 hours."
       },
       {
-        heading: "Escrow disputes",
+        heading: "Broker-held payment disputes",
         body: "Since IDsvault holds the funds directly in our designated broker account, payment disputes do not require a third-party process. Contact broker@idsvault.com with your deal reference number. We maintain records of all WhatsApp conversations, call logs, and transfer confirmations. Most disputes are resolved within 24 hours."
       },
       {
@@ -285,7 +287,7 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "India grievance officer",
-        body: "In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, IDsvault maintains a designated Grievance Officer. Contact: broker@idsvault.com, Hyderabad, Telangana, India. The Grievance Officer will acknowledge complaints within 24 hours and resolve them within 30 days."
+        body: "In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, IDsvault maintains a designated Grievance Officer.\n\nName: Sanjay Reddy\nDesignation: Lead Broker & Grievance Officer\nEmail: broker@idsvault.com\nPhone: +91 93929 74031\nAddress: Hyderabad, Telangana — 500 081, India\n\nThe Grievance Officer will acknowledge complaints within 24 hours and work to resolve them within 15 business days."
       },
       {
         heading: "Escalation",
@@ -318,6 +320,66 @@ const policyContent: Record<string, PolicyDoc> = {
       {
         heading: "Request accommodations",
         body: "If you need information in a different format — large print, plain text, or another accessible format — contact broker@idsvault.com. We will do our best to accommodate you promptly. For deal-specific assistance, our broker desk can manage the entire process over WhatsApp or phone if the website is not accessible to you."
+      }
+    ]
+  },
+  "policy-acceptable-use": {
+    title: "Acceptable Use Policy",
+    description: "What IDsvault will and will not facilitate — conduct rules for buyers and sellers.",
+    canonical: "/policy/acceptable-use",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "What we facilitate",
+        body: "IDsvault facilitates the supervised transfer of: Telegram usernames (officially transferable, no platform restriction), domain names (standard secondary-market transfers), Discord server ownership transfers, and YouTube channel transfers via Google Brand Account delegation. These are handled with full documentation and broker oversight."
+      },
+      {
+        heading: "What we do not facilitate",
+        body: "IDsvault will refuse service for the following, without exception:\n\n• Assets obtained through hacking, phishing, social engineering, or account recovery exploits\n• Handles or accounts that impersonate real individuals, brands, or public figures\n• Assets that infringe registered trademarks in India or internationally\n• Assets containing slurs, hate speech, or content prohibited under Indian IT Rules 2021\n• Transactions where the buyer's intended use is impersonation, fraud, or misrepresentation\n• Assets linked to unlawful activity of any kind\n• Parties on Indian government sanctions lists or UNSC consolidated list"
+      },
+      {
+        heading: "Instagram and X — advisory only",
+        body: "Instagram and X (Twitter) explicitly prohibit username transfers in their Terms of Service. IDsvault does not publicly list handles from these platforms. We only engage with Instagram and X handles on a private advisory basis, and only after the client has signed a written risk acknowledgement confirming they understand and accept the platform enforcement risk."
+      },
+      {
+        heading: "Seller responsibilities",
+        body: "Sellers must: (1) be the original and lawful owner of the asset; (2) not have obtained the asset through any unauthorised method; (3) warrant that the asset does not infringe any third-party trademark; (4) indemnify IDsvault against any third-party claims arising from the listing or transfer of the asset."
+      },
+      {
+        heading: "Buyer responsibilities",
+        body: "Buyers must: (1) confirm their identity as required under our KYC policy; (2) ensure their intended use of the asset does not infringe any third-party trademark or violate any applicable law; (3) not misrepresent their identity or intended use to IDsvault."
+      },
+      {
+        heading: "Enforcement",
+        body: "Violation of this policy may result in immediate termination of service, forfeiture of any deposits, and reporting to relevant law enforcement authorities. False declarations are a material breach of our Terms of Service."
+      }
+    ]
+  },
+  "policy-trademark": {
+    title: "Trademark Complaint Procedure",
+    description: "How to submit a trademark complaint if you believe an IDsvault listing infringes your registered trademark.",
+    canonical: "/policy/trademark",
+    updated: "May 2025",
+    sections: [
+      {
+        heading: "Before you file",
+        body: "IDsvault pre-screens listings against the Indian Trade Marks Registry (ipindiaservices.gov.in) and WIPO databases before publishing. If you believe a listing still infringes your registered trademark, follow the procedure below."
+      },
+      {
+        heading: "How to file a trademark complaint",
+        body: "Send a written notice to broker@idsvault.com with the subject line 'Trademark Complaint'. Your notice must include:\n\n1. Your full legal name and contact information\n2. The registered trademark you claim is infringed (provide TM registration number and jurisdiction)\n3. The specific IDsvault listing you are complaining about (URL or handle)\n4. A statement explaining how the listing infringes your mark\n5. A declaration under penalty of perjury that the information is accurate and you are the rights holder or authorised agent\n\nWe cannot act on anonymous complaints or complaints without a trademark registration reference."
+      },
+      {
+        heading: "What happens after you file",
+        body: "We will acknowledge receipt within 24 hours. Valid notices with a verified trademark registration will result in the listing being temporarily suspended within 48 hours while we investigate. We will contact the seller and provide them an opportunity to respond. Incomplete notices will be returned for additional information."
+      },
+      {
+        heading: "Seller response",
+        body: "If a listing is suspended following a trademark complaint, the seller will be notified and may provide a counter-statement with evidence that the handle does not infringe the claimed mark. We will mediate where possible. If the complaint is valid, the listing will be permanently delisted and any pending deal will be cancelled with a full buyer refund."
+      },
+      {
+        heading: "Repeat infringement",
+        body: "Sellers who repeatedly list trademark-infringing assets will be permanently banned from IDsvault. We cooperate fully with trademark owners pursuing legal remedies through Indian courts or the Trade Marks Registry."
       }
     ]
   },

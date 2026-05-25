@@ -80,8 +80,10 @@ export const Footer: React.FC = () => {
           <ul className="space-y-2 text-xs">
             <li><Link to="/policy/terms"   className="hover:text-white transition-colors">Terms of Service</Link></li>
             <li><Link to="/policy/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-            <li><Link to="/policy/risk-disclosure" className="hover:text-white transition-colors">Risk Disclosure</Link></li>
-            <li><Link to="/policy/imprint" className="hover:text-white transition-colors">Imprint</Link></li>
+            <li><Link to="/policy/risk-disclosure"  className="hover:text-white transition-colors">Risk Disclosure</Link></li>
+            <li><Link to="/policy/acceptable-use"   className="hover:text-white transition-colors">Acceptable Use</Link></li>
+            <li><Link to="/policy/trademark"        className="hover:text-white transition-colors">Trademark</Link></li>
+            <li><Link to="/policy/imprint"          className="hover:text-white transition-colors">Imprint</Link></li>
             <li className="pt-3 border-t border-white/[0.04]">
               <Link to="/admin" className="hover:text-white text-[10px] text-gray-600 transition-colors">
                 Admin Console

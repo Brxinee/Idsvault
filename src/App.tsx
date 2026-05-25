@@ -30,6 +30,7 @@ import { AboutPage } from "./components/AboutPage";
 import { ContactView } from "./components/ContactView";
 import { ProcessPage } from "./components/ProcessPage";
 import { TrustPage } from "./components/TrustPage";
+import { CookieConsent } from "./components/CookieConsent";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -382,6 +383,8 @@ export default function App() {
               <Route path="/trust"   element={<TrustPage />} />
               <Route path="/faq" element={<RegulatoryInfo segment="faq" />} />
               <Route path="/policy/:segment" element={<PolicyRoute />} />
+              <Route path="/policy/acceptable-use" element={<RegulatoryInfo segment="policy-acceptable-use" />} />
+              <Route path="/policy/trademark" element={<RegulatoryInfo segment="policy-trademark" />} />
 
               {/* ── Legacy redirects (backward compat) ── */}
               <Route path="/browse" element={<Navigate to="/inventory" replace />} />
@@ -399,6 +402,9 @@ export default function App() {
       </main>
 
       <Footer />
+
+      {/* DPDPA 2023 cookie consent banner */}
+      <CookieConsent />
 
       {/* Mobile sticky CTA — Browse / Sell dual buttons */}
       <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-[#050505]/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden">
