@@ -431,14 +431,15 @@ def filter_candidates(pool: list) -> list:
 def make_session() -> requests.Session:
     s = requests.Session()
     s.headers.update({
-        "Accept":                  "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language":         "en-US,en;q=0.5",
-        "Accept-Encoding":         "gzip, deflate, br",
-        "Connection":              "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Sec-Fetch-Dest":          "document",
-        "Sec-Fetch-Mode":          "navigate",
-        "Sec-Fetch-Site":          "none",
+        "Accept":          "*/*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection":      "keep-alive",
+        # Instagram's own web app ID — same one the browser uses when
+        # the frontend JS calls this endpoint, so it's treated as a
+        # normal web client request rather than a scraper.
+        "X-IG-App-ID":     "936619743392459",
+        "X-Requested-With": "XMLHttpRequest",
     })
     return s
 
@@ -447,12 +448,19 @@ def check_username(session: requests.Session, username: str) -> str:
     """
     Returns: 'available' | 'taken' | 'skip'
 
+    Uses Instagram's internal profile-info endpoint which reliably
+    returns HTTP 404 for non-existent usernames and HTTP 200 + JSON
+    for existing profiles — unlike the profile page URL which returns
+    HTTP 200 for everything since Instagram became a fully client-side
+    React app.
+
     HTTP 404  → available
-    HTTP 200  → taken (profile exists)
-    HTTP 429  → rate-limited: sleep then retry once
-    Other     → skip (network err / unexpected status)
+    HTTP 200  → taken (profile exists, JSON body with 'data' key)
+    HTTP 429  → rate-limited: sleep then retry
+    HTTP 401/403 → session needs refresh, skip for now
+    Other     → skip
     """
-    url = f"https://www.instagram.com/{username}/"
+    url = f"https://www.instagram.com/api/v1/users/web_profile_info/?username={username}"
     session.headers.update({"User-Agent": random.choice(USER_AGENTS)})
 
     for attempt in range(3):
@@ -463,10 +471,6 @@ def check_username(session: requests.Session, username: str) -> str:
                 return "available"
 
             if resp.status_code == 200:
-                # Extra guard: some 200s are "page not found" HTML shells
-                body = resp.text.lower()
-                if "page not found" in body or "this page isn" in body:
-                    return "available"
                 return "taken"
 
             if resp.status_code == 429:
@@ -474,6 +478,10 @@ def check_username(session: requests.Session, username: str) -> str:
                 print(f"\n  ⚠️  Rate-limited (429). Sleeping {wait}s …", flush=True)
                 time.sleep(wait)
                 continue   # retry same username
+
+            if resp.status_code in (401, 403):
+                print(f"\n  ⚠️  Auth required ({resp.status_code}). Skipping {username}.", flush=True)
+                return "skip"
 
             # Unexpected status
             print(f"  ⚠️  HTTP {resp.status_code} for {username}", flush=True)
