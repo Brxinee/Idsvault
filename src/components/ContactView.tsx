@@ -269,7 +269,7 @@ Message: ${message}`;
       <article className="p-4 rounded-xl bg-blue-500/[0.012] border border-blue-500/10 text-xs text-gray-400 flex items-start gap-3 select-none leading-relaxed">
         <ShieldCheck className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
         <p>
-          All enquiries are handled confidentially by Sanjay Reddy (Lead Broker & Grievance Officer). We do not share your contact details with third parties.
+          All enquiries are handled confidentially by Jogdhande Nikhil Patil (Lead Broker & Grievance Officer). We do not share your contact details with third parties.
         </p>
       </article>
 

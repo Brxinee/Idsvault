@@ -43,11 +43,11 @@ const policyContent: Record<string, PolicyDoc> = {
     sections: [
       {
         heading: "What IDsvault is",
-        body: "IDsvault is a private broker-assisted desk based in Hyderabad, India. We facilitate the supervised transfer of digital handles — Telegram usernames, domain names, Discord communities, and selected YouTube channels — between private parties. We are not an open marketplace. Every deal goes through a named human broker."
+        body: "IDsvault is a private broker-assisted desk based in Hyderabad, India. We facilitate the supervised transfer of digital handles — Telegram usernames, Instagram handles, X (Twitter) usernames, and brandable domains — between private parties. We are not an open marketplace. Every deal goes through a named human broker."
       },
       {
         heading: "What we list publicly",
-        body: "Our public inventory covers Telegram usernames (broker-supervised live transfer), domain names, Discord server ownership transfers, and YouTube Brand Account transfers. Instagram and X (Twitter) handles are handled on a private advisory basis only — they are never publicly listed — because both platforms prohibit username transfers in their Terms of Service. We disclose this risk in writing before any advisory engagement begins."
+        body: "Our public inventory covers Telegram usernames (broker-supervised live transfer), domain names (brandable domains). Instagram and X (Twitter) handles are handled on a private advisory basis only — they are never publicly listed — because both platforms prohibit username transfers in their Terms of Service. We disclose this risk in writing before any advisory engagement begins."
       },
       {
         heading: "How payment works",
@@ -63,7 +63,7 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "Limitations",
-        body: "IDsvault is not affiliated with Telegram, Instagram, X (Twitter), Discord, YouTube, or any domain registrar. All platform trademarks belong to their respective owners. We cannot guarantee that a platform will not change its policies after a transfer is completed. Our liability is limited to the amount of brokerage fees we collected on the specific deal in question."
+        body: "IDsvault is not affiliated with Telegram, Instagram, X (Twitter), or any domain registrar. All platform trademarks belong to their respective owners. We cannot guarantee that a platform will not change its policies after a transfer is completed. Our liability is limited to the amount of brokerage fees we collected on the specific deal in question."
       }
     ]
   },
@@ -160,14 +160,6 @@ const policyContent: Record<string, PolicyDoc> = {
       {
         heading: "Domain names",
         body: "Domain transfers are standard secondary-market transactions processed through registrar transfer protocols. The primary risks are expiry (if a domain is not renewed), trademark disputes if a brand later claims the domain, and country-code domain restrictions that vary by TLD. We verify that the seller has full transfer authority before listing."
-      },
-      {
-        heading: "Discord servers",
-        body: "Discord server ownership transfers are done by transferring admin rights and then the original owner leaving. Discord does not have a formal secondary market policy prohibiting this, but Discord can suspend servers for Terms of Service violations. We verify server standing before brokering."
-      },
-      {
-        heading: "YouTube channels",
-        body: "YouTube channel transfers are done through Google Brand Account authority delegation. Google does not explicitly prohibit this but may flag account ownership changes. The new owner should immediately update recovery details and connect a primary Google account."
       },
       {
         heading: "Instagram and X (Twitter) — advisory only",
@@ -287,7 +279,7 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "India grievance officer",
-        body: "In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, IDsvault maintains a designated Grievance Officer.\n\nName: Sanjay Reddy\nDesignation: Lead Broker & Grievance Officer\nEmail: broker@idsvault.com\nPhone: +91 93929 74031\nAddress: Hyderabad, Telangana — 500 081, India\n\nThe Grievance Officer will acknowledge complaints within 24 hours and work to resolve them within 15 business days."
+        body: "In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, IDsvault maintains a designated Grievance Officer.\n\nName: Jogdhande Nikhil Patil\nDesignation: Lead Broker & Grievance Officer\nEmail: broker@idsvault.com\nPhone: +91 93929 74031\nAddress: Hyderabad, Telangana — 500 081, India\n\nThe Grievance Officer will acknowledge complaints within 24 hours and work to resolve them within 15 business days."
       },
       {
         heading: "Escalation",
@@ -331,7 +323,7 @@ const policyContent: Record<string, PolicyDoc> = {
     sections: [
       {
         heading: "What we facilitate",
-        body: "IDsvault facilitates the supervised transfer of: Telegram usernames (officially transferable, no platform restriction), domain names (standard secondary-market transfers), Discord server ownership transfers, and YouTube channel transfers via Google Brand Account delegation. These are handled with full documentation and broker oversight."
+        body: "IDsvault facilitates the supervised transfer of: Telegram usernames (officially transferable, no platform restriction), domain names (standard secondary-market transfers), Instagram handles and X usernames (private advisory basis only, with written risk acknowledgment). All transfers are handled with full documentation and broker oversight."
       },
       {
         heading: "What we do not facilitate",
@@ -399,7 +391,7 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "Platform independence",
-        body: "IDsvault is an independent intermediary. We are not affiliated with, endorsed by, or officially connected to Telegram, Instagram, X (Twitter), Discord, YouTube, or any domain registrar. All platform names and trademarks are the property of their respective owners."
+        body: "IDsvault is an independent intermediary. We are not affiliated with, endorsed by, or officially connected to Telegram, Instagram, X (Twitter), or any domain registrar. All platform names and trademarks are the property of their respective owners."
       },
       {
         heading: "Governing jurisdiction",
@@ -452,7 +444,7 @@ const faqItems = [
   },
   {
     q: "Is IDsvault affiliated with Telegram, Instagram, or any platform?",
-    a: "No. IDsvault is an independent intermediary. We are not affiliated with, endorsed by, or officially connected to Telegram, Instagram, X (Twitter), Discord, YouTube, or any domain registrar. All platform trademarks belong to their respective owners."
+    a: "No. IDsvault is an independent intermediary. We are not affiliated with, endorsed by, or officially connected to Telegram, Instagram, X (Twitter), or any domain registrar. All platform trademarks belong to their respective owners."
   },
   {
     q: "What happens if IDsvault shuts down mid-deal?",
@@ -545,6 +537,11 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
   return (
     <div className="max-w-3xl mx-auto px-6 py-12 text-left space-y-8">
       <SEO title={`${content.title} — IDsvault`} description={content.description} canonical={content.canonical} />
+
+      <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-500/5 border border-amber-500/25 text-amber-400 text-xs font-semibold">
+        <span className="shrink-0">⚠</span>
+        <span>Draft — under legal review. This document has not been reviewed by a qualified legal professional and is subject to change.</span>
+      </div>
 
       <header className="space-y-3 pb-6 border-b border-white/[0.06]">
         <div className="flex items-center gap-3">

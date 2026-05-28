@@ -11,7 +11,7 @@ export const ProcessView: React.FC = () => {
     {
       no: "01",
       title: "Direct Inquiry & Review",
-      desc: "An inquiry is filed or submitted. Our managing broker Vinay Naidu reviews the handle's market history and reaches out within 4 hours, establishing direct direct phone communication."
+      desc: "An inquiry is filed or submitted. Our managing broker Jogdhande Nikhil Patil reviews the handle's market history and reaches out within 4 hours, establishing direct direct phone communication."
     },
     {
       no: "02",

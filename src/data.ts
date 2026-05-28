@@ -7,7 +7,7 @@ import { Platform, DealStatus, Listing, Lead, SourcingRequest, SystemLog, Urgenc
 
 // Business configuration keys with dynamic env overrides for true production readiness
 export const WHATSAPP_NUMBER = "919392974031";
-export const SUPPORT_EMAIL = "support@idsvault.com";
+export const SUPPORT_EMAIL = "broker@idsvault.com";
 
 export const initialListings: Listing[] = [
   {
@@ -42,7 +42,7 @@ export const initialListings: Listing[] = [
     askingPrice: 0, // Price on Request
     minPrice: 750000,
     status: DealStatus.Live,
-    description: "Highly authoritative brand name on Telegram suitable for Web3, channels registry, or corporate bots.",
+    description: "Highly authoritative brand name on Telegram suitable for fintech, channels registry, or corporate bots.",
     slug: "telegram-vault",
     createdTime: "2026-05-22T09:15:00Z"
   },
@@ -186,7 +186,7 @@ export function getBadgesForHandle(handle: string, platform: Platform): TagDef[]
     list.push({ label: "SHORT", style: "text-blue-400 bg-blue-500/10 border-blue-500/20" });
   }
 
-  const isFinance = ["pay", "bank", "vault", "crypto", "yield", "defi", "apex"].some(v => handle.toLowerCase().includes(v));
+  const isFinance = ["pay", "bank", "vault", "yield", "apex"].some(v => handle.toLowerCase().includes(v));
   if (isFinance) {
     list.push({ label: "FINANCE", style: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" });
   }

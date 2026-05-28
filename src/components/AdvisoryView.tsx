@@ -96,7 +96,7 @@ export const AdvisoryView: React.FC = () => {
             <div className="space-y-1">
               <h4 className="text-sm font-bold text-white tracking-tight">Sourcing Brief Received Coordinates</h4>
               <p className="text-xs text-[#A1A1A9] leading-relaxed font-normal">
-                Thank you. Vinay Naidu will review your brand handle specifications and initiate secure communication under NDA within 4 hours.
+                Thank you. Jogdhande Nikhil Patil will review your brand handle specifications and initiate secure communication under NDA within 4 hours.
               </p>
             </div>
             <p className="text-[10px] font-mono text-[#6E6E78]">Reference Reference: SECURE-DESK-{Math.floor(Math.random() * 8999) + 1000}-TS</p>
@@ -109,7 +109,7 @@ export const AdvisoryView: React.FC = () => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Vinay Naidu"
+                  placeholder="e.g. Jogdhande Nikhil Patil"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full h-11 px-4 bg-[#0A0A0B] border border-[#26262B] text-white text-xs rounded-xl focus:border-[#C9A961] focus:outline-none transition-all placeholder:text-gray-650"
@@ -198,7 +198,7 @@ export const AdvisoryView: React.FC = () => {
                 id="acknowledgedRiskAdvisory"
                 checked={formData.acknowledgedRisk}
                 onChange={(e) => setFormData({ ...formData, acknowledgedRisk: e.target.checked })}
-                className="h-4.5 w-4.5 rounded text-[#C9A961] bg-[#141416] border-[#26262B] focus:ring-0 active:scale-95 cursor-pointer accent-[#C9A961]"
+                className="h-[18px] w-[18px] rounded text-[#C9A961] bg-[#141416] border-[#26262B] focus:ring-0 active:scale-95 cursor-pointer accent-[#C9A961]"
               />
               <label htmlFor="acknowledgedRiskAdvisory" className="text-[11px] text-gray-300 font-sans cursor-pointer">
                 I acknowledge the target service transfer risks. I agree that IDsvault acts solely as a consult private brokerage desk. I accept that all transactions are subjected to 18% GST under Hyderabad (Telangana) court jurisdiction limits.

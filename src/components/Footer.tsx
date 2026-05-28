@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
             <span className="font-semibold text-lg text-white">IDsvault</span>
           </Link>
           <p className="text-xs text-gray-500 leading-relaxed">
-            India-based broker-advised transfer desk for Telegram usernames, domains, Discord communities, and selected YouTube channels. Solo-operated from Hyderabad.
+            India-based broker-advised transfer desk for Telegram usernames, Instagram handles, X (Twitter) usernames, and brandable domains. Solo-operated from Hyderabad.
           </p>
           <div className="text-[11px] text-gray-500 space-y-2 pt-2">
             <div className="flex items-center gap-2">
@@ -118,7 +118,7 @@ export const Footer: React.FC = () => {
       {/* Bottom bar */}
       <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-white/[0.04] space-y-3">
         <p className="text-[10px] text-gray-600 leading-relaxed max-w-3xl">
-          IDsvault facilitates private transfer agreements. We do not own digital assets. All transactions governed by Indian law, Hyderabad jurisdiction. Platform trademarks (Instagram, X, Telegram, YouTube, Discord) belong to their respective owners. IDsvault is not affiliated with Meta, X Corp, Telegram, Google, or Discord.
+          IDsvault facilitates private transfer agreements. We do not own digital assets. All transactions governed by Indian law, Hyderabad jurisdiction. Platform trademarks (Instagram, X, Telegram) belong to their respective owners. IDsvault is not affiliated with Meta, X Corp, or Telegram.
         </p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[10px] text-gray-600">
           <p>© {year} IDsvault. All rights reserved. Independent brokerage.</p>
