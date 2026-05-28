@@ -11,8 +11,9 @@ import { useEffect } from "react";
  * this hook provides a lightweight fallback for components
  * that don't use the SEO wrapper.
  */
-export function usePageTitle(title: string) {
+export function usePageTitle(title?: string) {
   useEffect(() => {
+    if (!title) return;
     const prev = document.title;
     document.title = `${title} — IDsvault`;
     return () => {

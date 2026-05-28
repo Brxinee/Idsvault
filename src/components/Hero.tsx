@@ -155,13 +155,15 @@ const faqItems = [
 ];
 
 export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing }) => {
-  usePageTitle();
+  usePageTitle("Buy & Sell Premium Handles");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <div className="relative overflow-hidden bg-canvas text-white">
 
       <SEO
+        title="Buy & Sell Premium Social Media Handles"
+        description="Broker-verified Instagram, X, and Telegram username transfers. Your money stays with the broker until the transfer is done — on a live call, with both parties present."
         canonical="/"
         structuredData={homepageSchema}
       />
