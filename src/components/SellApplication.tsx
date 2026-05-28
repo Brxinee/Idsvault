@@ -153,7 +153,7 @@ WhatsApp: ${whatsapp}`;
     <>
       <SEO
         title="Sell Your Handle"
-        description="List your premium Telegram username, domain, Discord server, or YouTube channel for sale through IDsvault's broker-supervised transfer process. Hyderabad desk."
+        description="List your premium Telegram username, Instagram handle, X (Twitter) username, or brandable domain for sale through IDsvault's broker-supervised transfer process. Hyderabad desk."
         canonical="/sell"
       />
       <div className="max-w-xl mx-auto px-6 py-12 text-left">
@@ -256,7 +256,7 @@ WhatsApp: ${whatsapp}`;
                       <option value={Platform.Instagram}>Instagram</option>
                       <option value={Platform.X}>X / Twitter</option>
                       <option value={Platform.Brandable}>
-                        Domain / Discord / YouTube
+                        Brandable Domain
                       </option>
                     </select>
                   </div>

@@ -40,7 +40,7 @@ const homepageSchema = [
     "name": "IDsvault",
     "url": "https://idsvault.com",
     "logo": "https://idsvault.com/logo.png",
-    "description": "India-based broker-advised digital identity facilitation desk for Telegram usernames, domain names, Discord servers, and YouTube channels. Escrow-free — broker holds funds in designated account. Based in Hyderabad, Telangana.",
+    "description": "India-based broker-advised digital identity facilitation desk for Telegram usernames, Instagram handles, X (Twitter) usernames, and brandable domains. Broker holds buyer funds in registered business account until live transfer is confirmed. Based in Hyderabad, Telangana.",
     "areaServed": "IN",
     "address": {
       "@type": "PostalAddress",
@@ -299,7 +299,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                   <span>Seller ownership verified</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping mx-0.75" />
+                  <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping mx-1" />
                   <span className="font-semibold text-white">Payment held by broker · Transfer pending</span>
                 </div>
               </div>
@@ -598,7 +598,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               SR
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">Sanjay Reddy</p>
+              <p className="text-sm font-semibold text-white">Jogdhande Nikhil Patil</p>
               <p className="text-xs text-gray-500">Lead Broker · Hyderabad Desk</p>
             </div>
           </div>

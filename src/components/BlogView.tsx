@@ -84,7 +84,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
   const [formDirectAnswer, setFormDirectAnswer] = useState("");
   const [formFeatured, setFormFeatured] = useState(false);
   const [formStatus, setFormStatus] = useState<"published" | "draft">("published");
-  const [formAuthorName, setFormAuthorName] = useState("Sanjay Reddy");
+  const [formAuthorName, setFormAuthorName] = useState("Jogdhande Nikhil Patil");
   const [formAuthorRole, setFormAuthorRole] = useState("Lead Identity Broker");
 
   // Custom lists of sections and faqs in editing
@@ -142,7 +142,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
         "@context": "https://schema.org",
         "@type": "Blog",
         "name": "IDsvault Strategy Library",
-        "description": "High-authority guides, valuation frameworks, escrow checklists, and strategy audits for Premium Usernames.",
+        "description": "High-authority guides, valuation frameworks, transfer checklists, and strategy audits for Premium Usernames.",
         "publisher": {
           "@type": "Organization",
           "name": "IDsvault Hub",
@@ -337,14 +337,14 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
       setFormDirectAnswer("");
       setFormFeatured(false);
       setFormStatus("published");
-      setFormAuthorName("Sanjay Reddy");
+      setFormAuthorName("Jogdhande Nikhil Patil");
       setFormAuthorRole("Lead Identity Broker");
       setFormSections([
         { type: "heading2", content: "Key Strategy Analysis" },
         { type: "paragraph", content: "Write comprehensive research breakdown paragraphs. Avoid fluff." }
       ]);
       setFormFaqs([
-        { question: "Is this transaction secure?", answer: "Yes, IDsvault secure escrow ensures assets are fully isolated before releasing trust funds." }
+        { question: "Is this transaction secure?", answer: "Yes, IDsvault broker-held payment ensures funds are held in the registered business account and only released after the buyer confirms full ownership on the live transfer call." }
       ]);
     }
   };
@@ -491,7 +491,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
             </span>
             <span className="text-[10px] text-gray-500 font-mono">SEO & AI Engine Optimized</span>
           </div>
-          <h1 className="text-3.5xl font-extrabold text-white tracking-tight font-sans">
+          <h1 className="text-3xl font-extrabold text-white tracking-tight font-sans">
             IDsVault Editorial Strategy
           </h1>
           <p className="text-sm text-gray-400 mt-1 max-w-2xl font-sans">
@@ -929,7 +929,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                 <div className="p-6 rounded-2xl bg-amber-500/[0.02] border border-amber-500/15 relative overflow-hidden select-text font-sans">
                   <div className="absolute top-0 bottom-0 left-0 w-1 bg-amber-500" />
                   <div className="flex items-center gap-2 mb-2 select-none">
-                    <Sparkles className="h-4.5 w-4.5 text-amber-500 animate-pulse" />
+                    <Sparkles className="h-[18px] w-[18px] text-amber-500 animate-pulse" />
                     <span className="text-[9px] font-bold text-amber-400 uppercase tracking-widest font-mono">
                       Query Direct Answer (AI Overview & GEO Summary)
                     </span>
@@ -1081,7 +1081,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
 
               {/* Avoid Dangerous Platforms Claim warning Disclaimer */}
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] text-[10px] text-gray-500 leading-relaxed max-w-2xl font-sans mt-4">
-                <strong>Safety & Regulatory Notice:</strong> IDsvault is an independent digital assets broker facilitating administrative assignment contracts of high-value handles. We hold no official affiliation, sponsorship, license, or association with Instagram, Twitter/X, Telegram, or any associated parent organizations. Transactions are secured solely through licensed domestic client-trust escrow holding parameters.
+                <strong>Safety & Regulatory Notice:</strong> IDsvault is an independent digital assets broker facilitating administrative assignment contracts of high-value handles. We hold no official affiliation, sponsorship, license, or association with Instagram, Twitter/X, Telegram, or any associated parent organizations. Transactions are secured through broker-held payment in a registered business account with supervised live transfer.
               </div>
 
             </div>
@@ -1133,7 +1133,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                   </p>
                   <button
                     onClick={() => {
-                      navigate("/source");
+                      navigate("/advisory");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold uppercase tracking-wider rounded transition-colors cursor-pointer select-none text-center"
@@ -1151,7 +1151,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
           {relatedPosts.length > 0 && (
             <section className="pt-10 border-t border-white/[0.06] space-y-6 font-sans">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <Layers className="h-4.5 w-4.5 text-blue-500" />
+                <Layers className="h-[18px] w-[18px] text-blue-500" />
                 <span>Related Insights & Strategies</span>
               </h3>
               

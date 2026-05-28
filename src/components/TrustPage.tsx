@@ -29,7 +29,7 @@ const pillars = [
   {
     icon: Users,
     title: "One named broker. Every deal.",
-    body: "IDsvault is operated by Sanjay Reddy from Hyderabad. Not a team, not an algorithm. One person who is directly accountable on every transaction. You can reach the broker by name, on WhatsApp, before you pay a single rupee.",
+    body: "IDsvault is operated by Jogdhande Nikhil Patil from Hyderabad. Not a team, not an algorithm. One person who is directly accountable on every transaction. You can reach the broker by name, on WhatsApp, before you pay a single rupee.",
   },
   {
     icon: Lock,
@@ -91,7 +91,7 @@ const verifications = [
   },
   {
     label: "Grievance Officer",
-    value: "Sanjay Reddy",
+    value: "Jogdhande Nikhil Patil",
     note: "broker@idsvault.com · +91 93929 74031 · Response within 24 hours",
   },
   {
@@ -110,7 +110,7 @@ export const TrustPage: React.FC = () => {
     "name": "IDsvault",
     "url": "https://idsvault.com",
     "areaServed": "IN",
-    "description": "India-based digital identity advisory and transfer facilitation desk. Solo-operated by Sanjay Reddy, Hyderabad.",
+    "description": "India-based digital identity advisory and transfer facilitation desk. Solo-operated by Jogdhande Nikhil Patil, Hyderabad.",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Hyderabad",
@@ -127,7 +127,7 @@ export const TrustPage: React.FC = () => {
     },
     "founder": {
       "@type": "Person",
-      "name": "Sanjay Reddy",
+      "name": "Jogdhande Nikhil Patil",
       "jobTitle": "Lead Broker",
     },
   };
@@ -159,7 +159,7 @@ export const TrustPage: React.FC = () => {
               In a market full of anonymous brokers and Telegram-group deal-makers, we do something different: we show everything. Real name, real address, real process, real paperwork.
             </p>
             <div className="p-4 rounded-xl bg-accent/5 border border-accent/20 text-sm text-gray-300 leading-relaxed">
-              <strong className="text-white">The founder IS the trust mechanism.</strong> There is no brand behind a curtain. Sanjay Reddy is directly reachable on WhatsApp before, during, and after every deal. His name is on the engagement letter. His account holds your payment.
+              <strong className="text-white">The broker IS the trust mechanism.</strong> There is no brand behind a curtain. Jogdhande Nikhil Patil is directly reachable on WhatsApp before, during, and after every deal. His name is on the engagement letter. His account holds your payment.
             </div>
           </div>
         </section>
@@ -295,7 +295,7 @@ export const TrustPage: React.FC = () => {
               <div className="space-y-2">
                 <p className="text-sm font-semibold text-white">Platform risk — read before proceeding</p>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  Telegram username transfers are officially supported by the platform. Domain, Discord, and YouTube transfers carry standard secondary-market risk only. Instagram and X handle transfers are prohibited by those platforms' Terms of Service — we do not list these publicly and only engage on a private advisory basis with written risk acknowledgment.
+                  Telegram username transfers are officially supported by the platform. Brandable domain transfers carry standard secondary-market risk only. Instagram and X handle transfers are prohibited by those platforms' Terms of Service — we do not list these publicly and only engage on a private advisory basis with written risk acknowledgment.
                 </p>
                 <Link
                   to="/policy/risk-disclosure"

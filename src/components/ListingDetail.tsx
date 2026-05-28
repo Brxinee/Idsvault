@@ -148,7 +148,7 @@ Urgency: Standard`;
       {/* Premium Back Trigger */}
       <button
         onClick={onNavigateBack}
-        className="text-xs text-gray-405 hover:text-white mb-8 uppercase tracking-widest font-extrabold flex items-center gap-1.5 cursor-pointer transition-colors group select-none"
+        className="text-xs text-gray-400 hover:text-white mb-8 uppercase tracking-widest font-extrabold flex items-center gap-1.5 cursor-pointer transition-colors group select-none"
         id="detail_back_trigger"
       >
         <ChevronLeft className="h-4 w-4 text-gray-500 group-hover:-translate-x-0.5 transition-transform animate-in" />
@@ -185,7 +185,7 @@ Urgency: Standard`;
               <div className="p-3 bg-raised rounded-xl border border-white/[0.04] space-y-1">
                 <span className="text-[9px] text-gray-500 uppercase font-mono block">Audit Status</span>
                 <span className="text-white font-bold flex items-center gap-1.5 font-mono text-[11px]">
-                  <ShieldCheck className="h-4.5 w-4.5 text-[#10B981]" /> Approved
+                  <ShieldCheck className="h-[18px] w-[18px] text-[#10B981]" /> Approved
                 </span>
               </div>
               <div className="p-3 bg-raised rounded-xl border border-white/[0.04] space-y-1">

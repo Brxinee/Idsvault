@@ -13,8 +13,8 @@ import {
   Search, 
   Sparkles, 
   RefreshCw, 
-  Cloud, 
-  Check, 
+  HardDrive,
+  Check,
   X, 
   AlertCircle,
   FileCheck,
@@ -27,14 +27,14 @@ import { KeepNote, KeepChecklistItem } from "../types";
 const DEFAULT_NOTES: KeepNote[] = [
   {
     id: "note-1",
-    title: "🔒 INSTAGRAM ESCROW HANDOVER PROTOCOL",
+    title: "🔒 INSTAGRAM TRANSFER HANDOVER PROTOCOL",
     content: "Official operational guidelines for secure high-AOV instagram handles. Never skip OGE metadata verification.",
     isPinned: true,
     isArchived: false,
     color: "amber",
-    label: "Escrow Checklist",
+    label: "Transfer Checklist",
     image: null,
-    isGoogleSynced: true,
+    isGoogleSynced: false,
     lastUpdated: new Date().toLocaleDateString(),
     checklist: [
       { id: "item-1", text: "Generate secure Bio challenge token & check 15-min scan", done: true },
@@ -53,7 +53,7 @@ const DEFAULT_NOTES: KeepNote[] = [
     color: "blue",
     label: "Sourcing",
     image: null,
-    isGoogleSynced: true,
+    isGoogleSynced: false,
     lastUpdated: new Date().toLocaleDateString(),
     checklist: [
       { id: "item-2-1", text: "Negotiate deal status with owner of @pay", done: false },
@@ -70,7 +70,7 @@ const DEFAULT_NOTES: KeepNote[] = [
     color: "green",
     label: "Registry",
     image: null,
-    isGoogleSynced: true,
+    isGoogleSynced: false,
     lastUpdated: new Date().toLocaleDateString(),
     checklist: null
   }
@@ -85,7 +85,7 @@ const COLORS_LIST = [
   { value: "red", label: "Alert Rose", bg: "bg-rose-950/20", border: "border-rose-500/30", text: "text-rose-400" }
 ];
 
-const LABELS_LIST = ["All", "Escrow Checklist", "Sourcing", "Registry", "Personal"];
+const LABELS_LIST = ["All", "Transfer Checklist", "Sourcing", "Registry", "Personal"];
 
 export const KeepDesk: React.FC = () => {
   const [notes, setNotes] = useState<KeepNote[]>(() => {
@@ -111,7 +111,7 @@ export const KeepDesk: React.FC = () => {
   // New Note Creator Form parameters
   const [newTitle, setNewTitle] = useState("");
   const [newContent, setNewContent] = useState("");
-  const [newLabel, setNewLabel] = useState("Escrow Checklist");
+  const [newLabel, setNewLabel] = useState("Transfer Checklist");
   const [newColor, setNewColor] = useState("dark");
   const [newIsPinned, setNewIsPinned] = useState(false);
   const [newIsChecklist, setNewIsChecklist] = useState(false);
@@ -173,7 +173,7 @@ export const KeepDesk: React.FC = () => {
     setIsSyncingMock(true);
     setTimeout(() => {
       setIsSyncingMock(false);
-      setNotes(prev => prev.map(n => ({ ...n, isGoogleSynced: true })));
+      setNotes(prev => prev.map(n => ({ ...n, isGoogleSynced: false })));
     }, 1500);
   };
 
@@ -217,7 +217,7 @@ export const KeepDesk: React.FC = () => {
     setNewTitle("");
     setNewContent("");
     setNewColor("dark");
-    setNewLabel("Escrow Checklist");
+    setNewLabel("Transfer Checklist");
     setNewIsPinned(false);
     setNewIsChecklist(false);
     setNewChecklistItems([""]);
@@ -288,10 +288,10 @@ export const KeepDesk: React.FC = () => {
       setNewColor("green");
       setNewIsChecklist(true);
       setNewChecklistItems(["Verify challenge string 'IDSV-KEEP-98' is in seller bio", "Execute API crawler verify scan", "Perform trademark search with legal archives"]);
-    } else if (type === "escrow") {
-      setNewTitle("⛓️ Private Escrow re-linking sequence");
+    } else if (type === "transfer") {
+      setNewTitle("⛓️ Live Transfer Call Sequence");
       setNewContent("Platform checklist sequencing:");
-      setNewLabel("Escrow Checklist");
+      setNewLabel("Transfer Checklist");
       setNewColor("amber");
       setNewIsChecklist(true);
       setNewChecklistItems(["Buyer completes secure token bank wire hold", "Seller provides credentials in secure session", "Confirm Original Email (OGE) is changed & 2FA re-bound", "Transfer the custody hold payout directly to seller"]);
@@ -346,7 +346,7 @@ export const KeepDesk: React.FC = () => {
               <span>Keep Vault Desk</span>
             </h1>
             <p className="text-xs sm:text-sm text-[#8E8E93] max-w-2xl font-normal leading-relaxed">
-              An isolated, premium identity-auditing organizer configured for tracking secure username transactions. Perfect for saving private sourcing leads, verification bio challenge coordinates, and live escrow checklists.
+              An isolated, premium identity-auditing organizer configured for tracking secure username transactions. Perfect for saving private sourcing leads, verification bio challenge coordinates, and live transfer checklists.
             </p>
           </div>
 
@@ -369,13 +369,13 @@ export const KeepDesk: React.FC = () => {
           </div>
         </div>
 
-        {/* Info Notification regarding the standard Enterprise scope limits */}
+        {/* Local storage notice */}
         <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 text-left flex items-start gap-3">
           <AlertCircle className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-white">OAuth Security Restriction Context Notice</p>
+            <p className="text-xs font-semibold text-white">Notes saved locally in your browser</p>
             <p className="text-[11px] text-[#8E8E93] leading-relaxed font-normal">
-              IDsVault incorporates OAuth authentication for Google Cloud. Note that Google's standard developer guidelines restrict public production registration of Google Keep scopes exclusively to enterprise-managed Google Workspace domains. To prevent sync downtime, your notes are automatically secured in isolated, persistent sandboxed browser store.
+              All notes are stored in your browser's local storage only. They are not synced to any cloud service. Clearing browser data will remove your notes.
             </p>
           </div>
         </div>
@@ -396,9 +396,9 @@ export const KeepDesk: React.FC = () => {
             {/* Visual indicators of Drag Hover */}
             {isDraggingOver && (
               <div className="absolute inset-0 bg-[#050505]/80 flex flex-col items-center justify-center pointer-events-none z-20">
-                <Cloud className="h-10 w-10 text-[#D4AF37] animate-bounce mb-2" />
+                <HardDrive className="h-10 w-10 text-[#D4AF37] animate-bounce mb-2" />
                 <p className="text-xs font-bold text-white uppercase tracking-wider">Drop verification image file here</p>
-                <p className="text-[10px] text-gray-400">Perfect for license validations, screenshots & escrow contracts</p>
+                <p className="text-[10px] text-gray-400">Perfect for license validations, screenshots & transfer documentation</p>
               </div>
             )}
 
@@ -488,7 +488,7 @@ export const KeepDesk: React.FC = () => {
                   value={newContent}
                   onChange={(e) => setNewContent(e.target.value)}
                   onFocus={() => setIsExpandingCreator(true)}
-                  className="bg-transparent text-xs text-[#8E8E93] outline-none w-full placeholder-gray-500 font-sans leading-relaxed resize-none h-18 font-medium"
+                  className="bg-transparent text-xs text-[#8E8E93] outline-none w-full placeholder-gray-500 font-sans leading-relaxed resize-none h-[72px] font-medium"
                 />
               )}
             </div>
@@ -528,7 +528,7 @@ export const KeepDesk: React.FC = () => {
                         <button
                           key={c.value}
                           onClick={() => setNewColor(c.value)}
-                          className={`h-4.5 w-4.5 rounded-full border ring-2 ring-transparent hover:scale-110 active:scale-90 transition-all ${
+                          className={`h-[18px] w-[18px] rounded-full border ring-2 ring-transparent hover:scale-110 active:scale-90 transition-all ${
                             c.value === "dark" ? "bg-gray-900 border-white/20" : 
                             c.value === "amber" ? "bg-amber-600 border-amber-400" :
                             c.value === "blue" ? "bg-[#1E40AF] border-blue-400" :
@@ -590,10 +590,10 @@ export const KeepDesk: React.FC = () => {
                   </button>
 
                   <button 
-                    onClick={() => handleLoadTemplate("escrow")}
+                    onClick={() => handleLoadTemplate("transfer")}
                     className="px-2.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/25 text-[#D4AF37] text-[9px] font-bold font-mono tracking-wider uppercase border border-amber-500/15 cursor-pointer"
                   >
-                    + Escrow Sequence
+                    + Transfer Sequence
                   </button>
 
                   <button 
@@ -683,7 +683,7 @@ export const KeepDesk: React.FC = () => {
 
             {filteredNotes.length === 0 ? (
               <div className="py-16 text-center border border-dashed border-white/[0.06] rounded-2xl bg-[#0F0F10] space-y-3">
-                <Cloud className="h-10 w-10 text-gray-600 mx-auto" />
+                <HardDrive className="h-10 w-10 text-gray-600 mx-auto" />
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest font-mono">No active notes cataloged</p>
                 <p className="text-[11px] text-gray-500 max-w-sm mx-auto">
                   Create a new note, insert checklist parameters, or click templates to preload digital identity handshakes.
@@ -816,10 +816,7 @@ const NoteCard: React.FC<NoteCardProps> = ({
           <span className="text-[8px] font-mono text-gray-500 font-semibold">{note.lastUpdated}</span>
           <span className="text-white/10">•</span>
           <div className="flex items-center gap-1">
-            <Cloud className={`h-3 w-3 ${note.isGoogleSynced ? "text-[#30D158]" : "text-gray-500 animate-pulse"}`} />
-            <span className="text-[8px] font-mono uppercase tracking-wider text-gray-500">
-              {note.isGoogleSynced ? "Secured" : "Queued"}
-            </span>
+            <span className="text-[8px] font-mono uppercase tracking-wider text-gray-500">Saved locally</span>
           </div>
         </div>
 

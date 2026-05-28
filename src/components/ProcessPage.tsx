@@ -275,8 +275,8 @@ export const ProcessPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 { label: "Simple deal (no KYC required)", time: "Same day – 24 hours", eg: "Telegram username under ₹85,000" },
-                { label: "Standard deal with KYC", time: "24 – 48 hours", eg: "Domain or Discord server, ₹85K–₹8.5L" },
-                { label: "Complex or high-value deal", time: "48 – 72 hours", eg: "YouTube channel, premium handle above ₹8.5L" },
+                { label: "Standard deal with KYC", time: "24 – 48 hours", eg: "Telegram username or domain, ₹85K–₹8.5L" },
+                { label: "Complex or high-value deal", time: "48 – 72 hours", eg: "Premium Instagram or X handle above ₹8.5L" },
               ].map(({ label, time, eg }) => (
                 <div key={label} className="p-5 rounded-2xl bg-surface border border-white/[0.06] space-y-2">
                   <p className="text-[11px] text-gray-500 font-semibold uppercase tracking-wider">{label}</p>

@@ -47,7 +47,7 @@ export const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ view, activeListing 
           "@type": "ListItem",
           "position": 3,
           "name": `@${activeListing.username} Sourcing`,
-          "item": `https://idsvault.com/handle/${activeListing.slug}`
+          "item": `https://idsvault.com/asset/${activeListing.slug}`
         }
       );
     } else if (view === "sell") {
@@ -62,14 +62,14 @@ export const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ view, activeListing 
         "@type": "ListItem",
         "position": 2,
         "name": "Sourcing Campaigns",
-        "item": "https://idsvault.com/request"
+        "item": "https://idsvault.com/advisory"
       });
     } else if (view === "blog") {
       breadcrumbs.itemListElement.push({
         "@type": "ListItem",
         "position": 2,
         "name": "Strategy Library",
-        "item": "https://idsvault.com/blog"
+        "item": "https://idsvault.com/journal"
       });
     } else if (view === "contact") {
       breadcrumbs.itemListElement.push({
@@ -167,7 +167,7 @@ export const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ view, activeListing 
         "sku": activeListing.id,
         "offers": {
           "@type": "Offer",
-          "url": `https://idsvault.com/handle/${activeListing.slug}`,
+          "url": `https://idsvault.com/asset/${activeListing.slug}`,
           "priceCurrency": "INR",
           "price": activeListing.askingPrice || 500000,
           "priceSpecification": {

@@ -16,7 +16,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-05-20",
     readTime: "7 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -90,7 +90,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-05-18",
     readTime: "6 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -170,7 +170,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-05-12",
     readTime: "10 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -257,7 +257,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-05-08",
     readTime: "5 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -329,7 +329,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-05-03",
     readTime: "7 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -365,7 +365,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-04-30",
     readTime: "8 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -405,7 +405,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-04-28",
     readTime: "6 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -483,7 +483,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-04-20",
     readTime: "5 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -519,7 +519,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-04-18",
     readTime: "6 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -591,7 +591,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-04-12",
     readTime: "7 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -632,7 +632,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-04-10",
     readTime: "8 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -668,7 +668,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-04-05",
     readTime: "6 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -740,7 +740,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-03-28",
     readTime: "6 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },
@@ -776,7 +776,7 @@ export const initialBlogPosts: BlogPost[] = [
     publishedAt: "2026-03-25",
     readTime: "8 min read",
     author: {
-      name: "Sanjay Reddy",
+      name: "Jogdhande Nikhil Patil",
       role: "Lead Identity Broker",
       avatar: "SR"
     },

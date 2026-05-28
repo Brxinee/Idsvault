@@ -24,7 +24,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate }) => {
           Independent, high-touch brand handle advisory.
         </h1>
         <p className="text-[#A1A1A9] text-base md:text-lg leading-relaxed font-normal">
-          Founded and personally operated by Vinay Naidu from Hyderabad. IDsvault replaces anonymous trading platforms with legal structure, active custody, and live-supervised transacting.
+          Founded and personally operated by Jogdhande Nikhil Patil from Hyderabad. IDsvault replaces anonymous trading platforms with legal structure, active custody, and live-supervised transacting.
         </p>
       </header>
 
@@ -38,7 +38,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate }) => {
               <User className="h-10 w-10 text-[#C9A961]" />
             </div>
             <div className="text-center relative z-20">
-              <h3 className="text-sm font-semibold text-white tracking-tight">Vinay Naidu</h3>
+              <h3 className="text-sm font-semibold text-white tracking-tight">Jogdhande Nikhil Patil</h3>
               <p className="text-[10px] text-[#A1A1A9] font-mono uppercase tracking-wider mt-1">Managing Broker & Founder</p>
             </div>
           </div>
@@ -61,7 +61,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate }) => {
               In 2024, after witnessing numerous domestic startups, venture funds, and micro-influencers lose high-value social namespaces to Telegram phishers, middleman scams, or complex platform locks, I set out to construct a transparent alternative. 
             </p>
             <p>
-              The digital handle market is broken: it thrives on anonymous usernames, crypto payouts, and unvetted escrow schemes that have high legal risks under Indian law. There is no automated algorithmic clearing engine that can override Instagram or X's underlying security terms. Real trust requires human vigilance.
+              The digital handle market is broken: it thrives on anonymous usernames, non-standard payment methods, and unvetted transfer schemes that have high legal risks under Indian law. There is no automated algorithmic clearing engine that can override Instagram or X's underlying security terms. Real trust requires human vigilance.
             </p>
             <p>
               IDsvault was constructed as a solo boutique brokerage desk. I review every handle listed, coordinate the KYC clearances personally, and stay present on live calls to verify and secure administrative transfers before distributing seller capital.
