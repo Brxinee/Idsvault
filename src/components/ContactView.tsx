@@ -75,7 +75,7 @@ Message: ${message}`;
     <>
     <SEO
       title="Contact Our Desk"
-      description="Get in touch with IDsvault's Hyderabad broker desk. WhatsApp, email, or phone — we respond same day to buying and selling enquiries."
+      description="Contact IDsvault's Hyderabad broker desk by email at broker@idsvault.com. We respond same day to buying and selling enquiries for Instagram, X, Telegram handles and domains."
       canonical="/contact"
     />
     <div className="max-w-4xl mx-auto px-6 py-12 text-left space-y-10">

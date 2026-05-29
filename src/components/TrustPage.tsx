@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "./SEO";
 import {
   Shield,
   BadgeCheck,
@@ -29,7 +29,7 @@ const pillars = [
   {
     icon: Users,
     title: "One named broker. Every deal.",
-    body: "IDsvault is operated by Jogdhande Nikhil Patil from Hyderabad. Not a team, not an algorithm. One person who is directly accountable on every transaction. You can reach the broker by name, on WhatsApp, before you pay a single rupee.",
+    body: "IDsvault is operated by Jogdhande Nikhil Patil from Hyderabad. Not a team, not an algorithm. One person who is directly accountable on every transaction. You can reach the broker by name, at broker@idsvault.com, before you pay a single rupee.",
   },
   {
     icon: Lock,
@@ -128,21 +128,18 @@ export const TrustPage: React.FC = () => {
     "founder": {
       "@type": "Person",
       "name": "Jogdhande Nikhil Patil",
-      "jobTitle": "Lead Broker",
+      "jobTitle": "Lead Identity Broker",
     },
   };
 
   return (
     <>
-      <Helmet>
-        <title>Trust Framework — IDsvault | How We Protect Every Transaction</title>
-        <meta
-          name="description"
-          content="How IDsvault protects buyers and sellers: named broker accountability, broker-held payment, live transfer call, verified listings, India-registered business."
-        />
-        <link rel="canonical" href="https://idsvault.com/trust" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO
+        title="Trust Framework — IDsvault | How We Protect Every Transaction"
+        description="How IDsvault protects buyers and sellers: named broker accountability, broker-held payment, live transfer call, verified listings, India-registered business."
+        canonical="/trust"
+        structuredData={jsonLd}
+      />
 
       <div className="min-h-screen bg-canvas text-white">
 
@@ -159,7 +156,7 @@ export const TrustPage: React.FC = () => {
               In a market full of anonymous brokers and Telegram-group deal-makers, we do something different: we show everything. Real name, real address, real process, real paperwork.
             </p>
             <div className="p-4 rounded-xl bg-accent/5 border border-accent/20 text-sm text-gray-300 leading-relaxed">
-              <strong className="text-white">The broker IS the trust mechanism.</strong> There is no brand behind a curtain. Jogdhande Nikhil Patil is directly reachable on WhatsApp before, during, and after every deal. His name is on the engagement letter. His account holds your payment.
+              <strong className="text-white">The founder IS the trust mechanism.</strong> There is no brand behind a curtain. Jogdhande Nikhil Patil is directly reachable at broker@idsvault.com before, during, and after every deal. His name is on the engagement letter. His account holds your payment.
             </div>
           </div>
         </section>

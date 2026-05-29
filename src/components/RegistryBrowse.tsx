@@ -130,7 +130,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-8 text-left">
       <SEO
-        title="Browse Handles"
+        title="Buy Premium Instagram, X & Telegram Handles in India | IDsvault Inventory"
         description="Browse broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Broker-held payment on every deal. Hyderabad broker-assisted."
         canonical="/inventory"
         structuredData={collectionSchema}

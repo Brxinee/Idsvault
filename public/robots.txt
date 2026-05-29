@@ -1,5 +1,132 @@
+# IDsvault — robots.txt
+# Digital Identity Advisory & Transfer Desk | Hyderabad, India
+# https://idsvault.com
+
+# ── All crawlers (default) ──────────────────────────────────────────────────
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Crawl-delay: 2
 
+# ── Google ──────────────────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /keep
+
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /admin
+
+User-agent: Googlebot-Video
+Allow: /
+
+# ── Bing / Microsoft ────────────────────────────────────────────────────────
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /keep
+Crawl-delay: 2
+
+User-agent: MSNBot
+Allow: /
+Disallow: /admin
+
+# ── Other major search engines ───────────────────────────────────────────────
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin
+
+# ── AI training and inference crawlers ───────────────────────────────────────
+# These crawlers power ChatGPT, Perplexity, Claude, Gemini, and similar AI
+# assistants. Allowing them helps IDsvault appear in AI-generated answers.
+
+User-agent: GPTBot
+Allow: /
+Disallow: /admin
+Disallow: /keep
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+
+User-agent: YouBot
+Allow: /
+Disallow: /admin
+
+User-agent: Applebot
+Allow: /
+Disallow: /admin
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin
+
+User-agent: FacebookBot
+Allow: /
+Disallow: /admin
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /admin
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin
+
+# ── SEO and analytics crawlers ───────────────────────────────────────────────
+User-agent: AhrefsBot
+Allow: /journal
+Allow: /inventory
+Allow: /
+Disallow: /admin
+Crawl-delay: 5
+
+User-agent: SemrushBot
+Allow: /journal
+Allow: /inventory
+Allow: /
+Disallow: /admin
+Crawl-delay: 5
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# ── Sitemap locations ────────────────────────────────────────────────────────
 Sitemap: https://idsvault.com/sitemap.xml

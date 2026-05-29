@@ -352,6 +352,15 @@ export default function App() {
                   />
                 }
               />
+              <Route path="/journal/:slug"
+                element={
+                  <BlogView
+                    onNavigate={handleNavigate}
+                    onBrowseListing={handleSelectListing}
+                    isAdmin={isAdminLoggedIn}
+                  />
+                }
+              />
               <Route path="/contact" element={<ContactView />} />
               <Route path="/admin"
                 element={

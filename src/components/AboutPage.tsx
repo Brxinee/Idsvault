@@ -29,7 +29,7 @@ export const AboutPage: React.FC = () => {
     <div className="relative overflow-hidden bg-canvas text-white">
       <SEO
         title="About IDsvault — Hyderabad Broker Desk"
-        description="IDsvault is a solo-operated digital identity facilitation desk based in Hyderabad. One named broker, every deal, personally."
+        description="IDsvault is India's broker-supervised desk for buying and selling premium Instagram usernames, X handles, Telegram usernames, and brandable domains. Based in Hyderabad, Telangana. Broker: Jogdhande Nikhil Patil."
         canonical="/about"
         structuredData={{
           "@context": "https://schema.org",
