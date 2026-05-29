@@ -108,7 +108,7 @@ Timeline: ${urgency}`;
   return (
     <>
       <SEO
-        title="Private Advisory — Off-Market Sourcing"
+        title="Buy Instagram & X Handles Off-Market — Private Advisory | IDsvault"
         description="Can't find the handle you need in our inventory? Submit a sourcing request. Our Hyderabad broker will reach out to find it for you."
         canonical="/advisory"
       />

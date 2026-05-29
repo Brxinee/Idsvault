@@ -162,6 +162,8 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
     <div className="relative overflow-hidden bg-canvas text-white">
 
       <SEO
+        title="Buy & Sell Premium Instagram, X & Telegram Handles in India"
+        description="India's broker-supervised digital identity desk. Buy or sell premium Instagram usernames, X handles, Telegram usernames & brandable domains. INR payment, Hyderabad broker, full fund protection."
         canonical="/"
         structuredData={homepageSchema}
       />

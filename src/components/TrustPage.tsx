@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "./SEO";
 import {
   Shield,
   BadgeCheck,
@@ -29,7 +29,7 @@ const pillars = [
   {
     icon: Users,
     title: "One named broker. Every deal.",
-    body: "IDsvault is operated by Sanjay Reddy from Hyderabad. Not a team, not an algorithm. One person who is directly accountable on every transaction. You can reach the broker by name, on WhatsApp, before you pay a single rupee.",
+    body: "IDsvault is operated by Jogdhande Nikhil Patil from Hyderabad. Not a team, not an algorithm. One person who is directly accountable on every transaction. You can reach the broker by name, at broker@idsvault.com, before you pay a single rupee.",
   },
   {
     icon: Lock,
@@ -91,7 +91,7 @@ const verifications = [
   },
   {
     label: "Grievance Officer",
-    value: "Sanjay Reddy",
+    value: "Jogdhande Nikhil Patil",
     note: "broker@idsvault.com · +91 93929 74031 · Response within 24 hours",
   },
   {
@@ -110,7 +110,7 @@ export const TrustPage: React.FC = () => {
     "name": "IDsvault",
     "url": "https://idsvault.com",
     "areaServed": "IN",
-    "description": "India-based digital identity advisory and transfer facilitation desk. Solo-operated by Sanjay Reddy, Hyderabad.",
+    "description": "India-based digital identity advisory and transfer facilitation desk. Solo-operated by Jogdhande Nikhil Patil, Hyderabad.",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Hyderabad",
@@ -127,22 +127,19 @@ export const TrustPage: React.FC = () => {
     },
     "founder": {
       "@type": "Person",
-      "name": "Sanjay Reddy",
-      "jobTitle": "Lead Broker",
+      "name": "Jogdhande Nikhil Patil",
+      "jobTitle": "Lead Identity Broker",
     },
   };
 
   return (
     <>
-      <Helmet>
-        <title>Trust Framework — IDsvault | How We Protect Every Transaction</title>
-        <meta
-          name="description"
-          content="How IDsvault protects buyers and sellers: named broker accountability, broker-held payment, live transfer call, verified listings, India-registered business."
-        />
-        <link rel="canonical" href="https://idsvault.com/trust" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO
+        title="Trust Framework — IDsvault | How We Protect Every Transaction"
+        description="How IDsvault protects buyers and sellers: named broker accountability, broker-held payment, live transfer call, verified listings, India-registered business."
+        canonical="/trust"
+        structuredData={jsonLd}
+      />
 
       <div className="min-h-screen bg-canvas text-white">
 

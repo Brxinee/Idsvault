@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "./SEO";
 import {
   Search,
   FileText,
@@ -31,7 +31,7 @@ const steps = [
     bg: "bg-blue-500/10 border-blue-500/20",
     title: "Inquiry",
     subtitle: "Tell us what you're looking for",
-    body: "Contact us via WhatsApp, Telegram, or the inquiry form. No commitment required at this stage. Share the handle or asset you want — or describe what you're looking for and we'll check availability.",
+    body: "Contact us via email at broker@idsvault.com or the inquiry form. No commitment required at this stage. Share the handle or asset you want — or describe what you're looking for and we'll check availability.",
     detail: "We respond within 4 business hours (IST). After hours: within 24 hours.",
     forBuyers: true,
     forSellers: false,
@@ -142,15 +142,12 @@ export const ProcessPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>How It Works — IDsvault | Broker-Supervised Transfer Process</title>
-        <meta
-          name="description"
-          content="IDsvault's 6-step verified transfer process: inquiry, ownership verification, KYC, payment to broker, live transfer call, and confirmed release. India only."
-        />
-        <link rel="canonical" href="https://idsvault.com/process" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO
+        title="How It Works — IDsvault | Broker-Supervised Transfer Process"
+        description="IDsvault's 6-step verified transfer process: inquiry, ownership verification, KYC, payment to broker, live transfer call, and confirmed release. India only."
+        canonical="/process"
+        structuredData={jsonLd}
+      />
 
       <div className="min-h-screen bg-canvas text-white">
 
