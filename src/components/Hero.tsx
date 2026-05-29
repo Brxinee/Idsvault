@@ -22,7 +22,7 @@ import {
   Wallet
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { formatINR, getBadgesForHandle, maskUsername } from "../data";
+import { formatINR, getBadgesForHandle } from "../data";
 import { Listing } from "../types";
 import { usePageTitle } from "../hooks/usePageTitle";
 import { SEO } from "./SEO";
@@ -522,7 +522,6 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {featuredListings.map((item) => {
                 const badges = getBadgesForHandle(item.username, item.platform);
-                const masked = maskUsername(item.username);
                 return (
                   <motion.article
                     key={item.id}
@@ -546,7 +545,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
                       <div>
                         <h3 className="text-xl font-extrabold text-white tracking-tight group-hover:text-accent transition-colors">
-                          @{masked}
+                          @{item.username}
                         </h3>
                         <div className="flex flex-wrap gap-1 mt-1.5">
                           {badges.slice(0, 2).map((b, idx) => (

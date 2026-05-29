@@ -21,7 +21,7 @@ import {
   UserCheck
 } from "lucide-react";
 import { Listing, Urgency } from "../types";
-import { maskUsername, buildWhatsAppHandoff, WHATSAPP_NUMBER, formatINR, getEstimatedRange } from "../data";
+import { buildWhatsAppHandoff, WHATSAPP_NUMBER, formatINR, getEstimatedRange } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { SEO } from "./SEO";
 
@@ -108,7 +108,7 @@ Urgency: Standard`;
     }, 1500);
   };
 
-  const maskedTitle = maskUsername(listing.username);
+  const displayTitle = listing.username;
 
   const listingSchema = listing.askingPrice > 0
     ? {
@@ -176,7 +176,7 @@ Urgency: Standard`;
             <div className="space-y-4 pt-10 pb-12">
               <span className="text-[10px] font-bold text-gray-500 block uppercase tracking-widest font-mono">Handle</span>
               <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
-                @{maskedTitle}
+                @{displayTitle}
               </h1>
               <p className="text-xs text-blue-400 font-mono tracking-wide">Ref #{listing.id}</p>
             </div>

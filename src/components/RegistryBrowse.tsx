@@ -21,7 +21,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { Listing, Platform } from "../types";
-import { maskUsername, getBadgesForHandle, formatINR } from "../data";
+import { getBadgesForHandle, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 
 interface RegistryBrowseProps {
@@ -361,7 +361,6 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             ) : (
               paginatedListings.map((item) => {
                 const badges = getBadgesForHandle(item.username, item.platform);
-                const masked = maskUsername(item.username);
                 return (
                   <motion.article
                     key={item.id}
@@ -389,7 +388,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                       {/* Username Title & Badge list */}
                       <div className="space-y-2.5">
                                 <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors">
-                          @{masked}
+                          @{item.username}
                         </h3>
                         <div className="flex flex-wrap gap-1.5">
                           {badges.map((b, idx) => (
