@@ -15,10 +15,10 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
+  // React 19 requires explicit class field declaration for state/props
+  // on subclasses — the base Component type no longer implicitly injects them.
+  declare props: Readonly<Props>;
+  state: State = { hasError: false, error: null };
 
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };

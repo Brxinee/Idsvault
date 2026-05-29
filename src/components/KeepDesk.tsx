@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { usePageTitle } from "../hooks/usePageTitle";
 import { 
   Shield, 
   Pin, 
@@ -88,6 +89,7 @@ const COLORS_LIST = [
 const LABELS_LIST = ["All", "Escrow Checklist", "Sourcing", "Registry", "Personal"];
 
 export const KeepDesk: React.FC = () => {
+  usePageTitle("Broker Desk — Private Notes");
   const [notes, setNotes] = useState<KeepNote[]>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("idsvault_keep_notes");

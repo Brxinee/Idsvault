@@ -58,8 +58,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [kanbanPlatformFilter, setKanbanPlatformFilter] = useState<string>("all");
 
   // ─── Auth mode detection ────────────────────────────────────────────────────
-  // Priority: Supabase (full DB auth) → VITE_ADMIN_PASSWORD (env-var auth)
-  const envAdminPassword = (import.meta.env.VITE_ADMIN_PASSWORD || "").trim();
+  // Priority: Supabase (full DB auth) → VITE_ADMIN_BYPASS_PASSWORD (env-var auth)
+  const envAdminPassword = (import.meta.env.VITE_ADMIN_BYPASS_PASSWORD || "").trim();
   const useEnvAuth = !isSupabaseConfigured && Boolean(envAdminPassword);
 
   // Load and subscribe to authentication sessions on mount
@@ -178,7 +178,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
     } else {
       // Nothing configured
-      setLoginError("Admin access is not configured. Set VITE_ADMIN_PASSWORD (or VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY) in your Vercel environment variables.");
+      setLoginError("Admin access is not configured. Set VITE_ADMIN_BYPASS_PASSWORD (or VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY) in your Vercel environment variables.");
       setIsLoading(false);
     }
   };
