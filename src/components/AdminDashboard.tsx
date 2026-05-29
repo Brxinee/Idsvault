@@ -552,7 +552,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 .map(item => (
                   <div key={item.id} className="p-3 rounded-lg bg-surface border border-white/[0.06] text-xs space-y-1">
                     <span className="font-bold text-red-500">@{item.username}</span>
-                    <p className="text-[9px] text-gray-505">Auditing Infractions</p>
+                    <p className="text-[9px] text-gray-500">Auditing Infractions</p>
                     <button 
                       onClick={() => handleStatusShift(item.slug, DealStatus.Live)}
                       className="text-[9px] text-blue-400 hover:underline cursor-pointer font-bold"
@@ -718,7 +718,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               placeholder="Search incoming leads profiles..."
               value={proposalsSearch}
               onChange={(e) => setProposalsSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/35 outline-none placeholder:text-gray-600 font-mono"
+              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/30 outline-none placeholder:text-gray-600 font-mono"
             />
           </div>
 

@@ -256,7 +256,7 @@ WhatsApp: ${whatsapp}`;
                       <option value={Platform.Instagram}>Instagram</option>
                       <option value={Platform.X}>X / Twitter</option>
                       <option value={Platform.Brandable}>
-                        Domain / Discord / YouTube
+                        Brandable Domain
                       </option>
                     </select>
                   </div>

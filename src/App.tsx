@@ -5,7 +5,7 @@
 
 import { useState, useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from "react-router-dom";
-import { MessageSquare, ShieldCheck } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { Platform, DealStatus, Listing, Lead, SourcingRequest, SystemLog, Urgency } from "./types";
 import {
   initialListings,
@@ -32,7 +32,6 @@ import { ProcessPage } from "./components/ProcessPage";
 import { TrustPage } from "./components/TrustPage";
 import { KeepDesk } from "./components/KeepDesk";
 import { CookieConsent } from "./components/CookieConsent";
-import { SchemaMarkup } from "./components/SchemaMarkup";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -175,25 +174,11 @@ export default function App() {
     }
   }, []);
 
-  // Consent banner
-  const [showConsent, setShowConsent] = useState<boolean>(false);
-  useEffect(() => {
-    if (!localStorage.getItem("idsvault_consent_shield")) {
-      setShowConsent(true);
-    }
-  }, []);
-
   // ─── Helpers ───────────────────────────────────────────────────────────────
 
   const addLog = (action: string, detail: string) => {
     const timeNow = new Date().toISOString().replace("T", " ").slice(0, 19);
     setLogs((prev) => [{ timestamp: timeNow, action: action.toUpperCase(), detail }, ...prev]);
-  };
-
-  const handleConsentAnswer = (granted: boolean) => {
-    localStorage.setItem("idsvault_consent_shield", granted ? "granted" : "denied");
-    setShowConsent(false);
-    addLog("CONSENT", `Analytics consent: ${granted ? "granted" : "declined"}`);
   };
 
   /** Legacy-style navigation used by components that still carry onNavigate prop */
@@ -298,14 +283,6 @@ export default function App() {
   };
 
   const featuredListings = listings.filter((l) => l.status === DealStatus.Live).slice(0, 4);
-
-  // Active listing for schema markup (derived from /asset/:slug route)
-  const activeListingSlug = location.pathname.startsWith("/asset/")
-    ? location.pathname.replace("/asset/", "")
-    : null;
-  const activeListing = activeListingSlug
-    ? listings.find((l) => l.slug === activeListingSlug) ?? null
-    : null;
 
   // ─── Render ────────────────────────────────────────────────────────────────
 
@@ -424,9 +401,6 @@ export default function App() {
 
       <Footer />
 
-      {/* Dynamic per-route JSON-LD schema injection */}
-      <SchemaMarkup activeListing={activeListing} />
-
       {/* DPDPA 2023 cookie consent banner */}
       <CookieConsent />
 
@@ -461,37 +435,6 @@ export default function App() {
       >
         <MessageSquare className="h-5 w-5 text-white" />
       </a>
-
-      {/* Consent banner */}
-      <AnimatePresence>
-        {showConsent && (
-          <div className="fixed bottom-22 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-[150] p-6 rounded-2xl bg-raised/95 backdrop-blur-xl border border-white/[0.08] shadow-[0_15px_40px_rgba(0,0,0,0.7)] space-y-4 text-left font-sans">
-            <div className="space-y-1.5">
-              <h4 className="text-xs font-bold text-white tracking-tight flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-blue-500" />
-                <span>Analytics Consent</span>
-              </h4>
-              <p className="text-[10px] text-muted leading-relaxed font-normal">
-                We use Google Analytics to understand how visitors use this site. No personal data is sold or shared with advertisers. You can decline and the site works fully.
-              </p>
-            </div>
-            <div className="flex items-center justify-end gap-3 pt-1 select-none">
-              <button
-                onClick={() => handleConsentAnswer(false)}
-                className="px-3 py-1.5 text-[10px] text-gray-400 hover:text-white uppercase font-bold tracking-wider cursor-pointer font-sans"
-              >
-                Decline
-              </button>
-              <button
-                onClick={() => handleConsentAnswer(true)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-[10px] text-white font-bold rounded-lg uppercase tracking-wider transition-colors cursor-pointer select-none active:scale-95 text-center"
-              >
-                Allow Analytics
-              </button>
-            </div>
-          </div>
-        )}
-      </AnimatePresence>
 
     </div>
   );
