@@ -86,12 +86,6 @@ export const initialLogs: SystemLog[] = [
   }
 ];
 
-// Helper functions for masking usernames to prevent direct deal bypass
-export function maskUsername(handle: string): string {
-  if (handle.length <= 2) return `${handle.charAt(0)}*`;
-  return `${handle.slice(0, 2)}***${handle.slice(-1)}`;
-}
-
 // Format INR correctly inside JSX
 export function formatINR(val: number): string {
   if (!val || val === 0) return "Price on Request";

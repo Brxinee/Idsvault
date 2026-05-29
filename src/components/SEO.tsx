@@ -10,8 +10,8 @@ interface SEOProps {
   title: string;
   description?: string;
   canonical?: string;
-  /** Optional JSON-LD structured data object */
-  structuredData?: Record<string, unknown>;
+  /** Optional JSON-LD structured data — a single schema object or an array of them */
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const SITE_NAME = "IDsvault";

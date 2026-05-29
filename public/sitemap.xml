@@ -66,6 +66,38 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- ── Live inventory (handle listings) ── -->
+  <url>
+    <loc>https://idsvault.com/asset/instagram-oncewrong</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://idsvault.com/asset/instagram-goalgrip</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://idsvault.com/asset/instagram-offsmell</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://idsvault.com/asset/instagram-xbigbull</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://idsvault.com/asset/instagram-deshlaughs</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- ── Policy & legal pages ── -->
   <url>
     <loc>https://idsvault.com/policy/terms</loc>
