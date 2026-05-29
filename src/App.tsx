@@ -32,6 +32,7 @@ import { ProcessPage } from "./components/ProcessPage";
 import { TrustPage } from "./components/TrustPage";
 import { KeepDesk } from "./components/KeepDesk";
 import { CookieConsent } from "./components/CookieConsent";
+import { SchemaMarkup } from "./components/SchemaMarkup";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -298,6 +299,14 @@ export default function App() {
 
   const featuredListings = listings.filter((l) => l.status === DealStatus.Live).slice(0, 4);
 
+  // Active listing for schema markup (derived from /asset/:slug route)
+  const activeListingSlug = location.pathname.startsWith("/asset/")
+    ? location.pathname.replace("/asset/", "")
+    : null;
+  const activeListing = activeListingSlug
+    ? listings.find((l) => l.slug === activeListingSlug) ?? null
+    : null;
+
   // ─── Render ────────────────────────────────────────────────────────────────
 
   return (
@@ -414,6 +423,9 @@ export default function App() {
       </main>
 
       <Footer />
+
+      {/* Dynamic per-route JSON-LD schema injection */}
+      <SchemaMarkup activeListing={activeListing} />
 
       {/* DPDPA 2023 cookie consent banner */}
       <CookieConsent />
