@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { 
   BookOpen, 
   Search, 
@@ -46,6 +46,7 @@ interface BlogViewProps {
 
 export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = false }) => {
   const navigate = useNavigate();
+  const { slug: urlSlug } = useParams<{ slug?: string }>();
   // Load blog posts from local storage or fall back to initial seeded database
   const [posts, setPosts] = useState<BlogPost[]>(() => {
     const saved = localStorage.getItem("idsvault_blogs_db");
@@ -64,8 +65,17 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
     localStorage.setItem("idsvault_blogs_db", JSON.stringify(posts));
   }, [posts]);
 
-  // Views and navigation inside Blog
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  // Views and navigation inside Blog — initialise from URL param for deep-linking
+  const [activeSlug, setActiveSlug] = useState<string | null>(urlSlug ?? null);
+
+  // Keep URL in sync with active post
+  useEffect(() => {
+    if (activeSlug) {
+      navigate(`/journal/${activeSlug}`, { replace: true });
+    } else if (urlSlug) {
+      navigate("/journal", { replace: true });
+    }
+  }, [activeSlug]); // eslint-disable-line react-hooks/exhaustive-deps
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
