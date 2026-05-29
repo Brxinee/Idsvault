@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { SEO } from "./SEO";
 import { 
   BookOpen, 
   Search, 
@@ -47,22 +48,43 @@ interface BlogViewProps {
 export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = false }) => {
   const navigate = useNavigate();
   const { slug: urlSlug } = useParams<{ slug?: string }>();
-  // Load blog posts from local storage or fall back to initial seeded database
+  // Load blog posts from local storage or fall back to initial seeded database.
+  //
+  // The bundled `initialBlogPosts` is the source of truth. We version the seed so
+  // that whenever the shipped posts change (count or content), returning visitors
+  // get the fresh set instead of being stuck on a stale localStorage cache.
+  // Admin-authored posts that aren't part of the seed (matched by slug) are kept.
   const [posts, setPosts] = useState<BlogPost[]>(() => {
-    const saved = localStorage.getItem("idsvault_blogs_db");
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error("Failed to parse saved blogs", e);
+    const SEED_VERSION = `v${initialBlogPosts.length}`;
+    try {
+      const savedVersion = localStorage.getItem("idsvault_blogs_seed_version");
+      const saved = localStorage.getItem("idsvault_blogs_db");
+
+      if (saved && savedVersion === SEED_VERSION) {
+        const parsed: BlogPost[] = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
+
+      // Stale or missing cache → re-seed from the bundled posts, preserving any
+      // admin-authored extras (slugs that don't exist in the seed).
+      if (saved) {
+        const parsed: BlogPost[] = JSON.parse(saved);
+        const seedSlugs = new Set(initialBlogPosts.map(p => p.slug));
+        const adminExtras = Array.isArray(parsed)
+          ? parsed.filter(p => p && p.slug && !seedSlugs.has(p.slug))
+          : [];
+        return [...initialBlogPosts, ...adminExtras];
+      }
+    } catch (e) {
+      console.error("Failed to parse saved blogs — re-seeding", e);
     }
     return initialBlogPosts;
   });
 
-  // Persist edits
+  // Persist edits + keep the seed version in sync
   useEffect(() => {
     localStorage.setItem("idsvault_blogs_db", JSON.stringify(posts));
+    localStorage.setItem("idsvault_blogs_seed_version", `v${initialBlogPosts.length}`);
   }, [posts]);
 
   // Views and navigation inside Blog — initialised from the URL for deep-linking
@@ -491,7 +513,22 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 relative">
-      
+
+      {/* Per-route SEO: individual post meta when a post is open, listing meta otherwise */}
+      {activePost ? (
+        <SEO
+          title={activePost.metaTitle || activePost.title}
+          description={activePost.metaDescription}
+          canonical={`/journal/${activePost.slug}`}
+        />
+      ) : (
+        <SEO
+          title="Journal — Premium Username & Digital Identity Guides"
+          description="IDsvault's journal: India-specific guides on buying and selling premium Instagram, X, and Telegram handles and brandable domains — valuation, transfers, KYC, and fraud prevention."
+          canonical="/journal"
+        />
+      )}
+
       {/* Editorial Header Panel */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/[0.06] pb-8 mb-10 gap-4">
         <div>
