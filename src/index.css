@@ -94,3 +94,93 @@
 ::-webkit-scrollbar-track  { background: var(--color-canvas); }
 ::-webkit-scrollbar-thumb  { background: var(--color-surface); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-raised); }
+
+/* ───────────────────────────────────────────────────────────
+   Device hardening — consistent rendering across phones/tablets
+   ─────────────────────────────────────────────────────────── */
+html {
+  -webkit-text-size-adjust: 100%;   /* stop mobile Safari/Chrome auto-inflating text */
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;               /* no accidental horizontal scroll on small screens */
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;      /* no rubber-band / pull-to-refresh flashes */
+}
+
+/* Media always scales down to its container — never overflows a phone */
+img, svg, video, canvas, picture {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Comfortable tap targets on touch devices */
+@media (pointer: coarse) {
+  button, a[role="button"], [role="button"], .tap-target {
+    min-height: 40px;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   Selection / long-press lock
+   Disable text selection + the iOS long-press "Copy / Look Up"
+   callout everywhere, EXCEPT real input surfaces where typing
+   and selection are required.
+   ─────────────────────────────────────────────────────────── */
+html {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+input,
+textarea,
+select,
+[contenteditable="true"],
+.allow-select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
+/* Block long-press image-save / drag-out */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  user-drag: none;
+}
+
+/* ───────────────────────────────────────────────────────────
+   Screenshot / capture protection (best-effort)
+   `.screenshot-private` marks sensitive content (handles, prices).
+   Fully visible during normal browsing; blacked out when:
+     • the page is printed or saved to PDF        → @media print
+     • the window loses focus / visibility         → html.capture-armed
+       (fires for many desktop screenshot & screen-recording tools)
+   NOTE: OS/hardware screenshots on phones cannot be blocked by any
+   website — that is a browser security boundary, not a bug.
+   ─────────────────────────────────────────────────────────── */
+.screenshot-private {
+  transition: filter 0.04s linear;
+}
+
+html.capture-armed .screenshot-private {
+  filter: blur(14px) brightness(0);   /* collapses to a solid black, edgeless block */
+  pointer-events: none;
+}
+
+@media print {
+  .screenshot-private,
+  .screenshot-private * {
+    filter: blur(16px) brightness(0) !important;
+    color: transparent !important;
+    text-shadow: none !important;
+    background: #000 !important;
+  }
+}

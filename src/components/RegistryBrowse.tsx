@@ -387,7 +387,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
 
                       {/* Username Title & Badge list */}
                       <div className="space-y-2.5">
-                                <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors">
+                                <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors screenshot-private">
                           @{item.username}
                         </h3>
                         <div className="flex flex-wrap gap-1.5">
@@ -410,7 +410,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                         <span className="text-[8px] font-bold uppercase tracking-widest text-muted block mb-0.5">
                           Asking Price
                         </span>
-                        <span className="text-xl font-extrabold text-emerald-400 font-mono">
+                        <span className="text-xl font-extrabold text-emerald-400 font-mono screenshot-private">
                           {formatINR(item.askingPrice)}
                         </span>
                       </div>
