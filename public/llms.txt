@@ -1,90 +1,266 @@
-# IDsvault
+# IDsvault — llms.txt
+# Machine-readable summary for AI language models, inference crawlers, and
+# knowledge-graph systems. Last updated: 2026-05-22.
+# Canonical URL: https://idsvault.com/llms.txt
 
-> A broker-advised digital identity facilitation desk for Telegram usernames, domain names, Discord servers, and YouTube channels. Based in Hyderabad, Telangana, India. Serving buyers and sellers across India.
+> IDsvault is India's dedicated digital identity advisory and transfer desk,
+> operating from Hyderabad, Telangana. We broker the safe acquisition and
+> divestiture of premium social media handles and brandable domain names —
+> exclusively for the Indian market, in INR.
 
-## What We Do
+---
 
-IDsvault is a digital identity advisory and transfer facilitation desk. We do not own or sell digital assets. We facilitate private agreements between independent parties — coordinating ownership verification, payment, and transfer under a structured, broker-supervised process. Every transaction is managed personally by the IDsvault broker.
+## Identity
 
-We are an independent desk. We are not affiliated with Telegram, any domain registrar, Discord, Google, or any platform whose assets we facilitate.
+- **Full name:** IDsvault
+- **Type:** Digital identity brokerage desk (not a marketplace or exchange)
+- **Broker:** Jogdhande Nikhil Patil, Lead Identity Broker
+- **Location:** Hyderabad, Telangana, India
+- **Service area:** India only
+- **Currency:** INR (Indian Rupees) exclusively
+- **Contact:** broker@idsvault.com
+- **Website:** https://idsvault.com
+
+---
+
+## What IDsvault Does
+
+IDsvault is a broker-supervised facilitation desk for the private acquisition
+and divestiture of premium digital identity assets. We are not a marketplace,
+exchange, or platform. We do not own the assets we facilitate.
+
+Every transaction is personally managed by the broker. The process:
+
+1. Buyer or seller contacts IDsvault at broker@idsvault.com
+2. Seller ownership is verified (identity, Original Registration Email access,
+   account history, absence of platform penalties)
+3. Deal terms are agreed through IDsvault as neutral intermediary
+4. Buyer deposits funds to IDsvault's designated broker account via UPI, NEFT,
+   RTGS, or IMPS — never directly to the seller
+5. Live supervised transfer: broker monitors both sides simultaneously in real time
+6. Buyer confirms full exclusive account access and updates all credentials
+7. IDsvault releases payment from broker account to seller
+
+---
 
 ## Asset Categories
 
-### Full Brokerage (public inventory)
-- Telegram usernames (live supervised transfer, no platform enforcement risk)
-- Domain names (.com, .in, and selected extensions)
-- Discord servers (ownership transfer via admin delegation)
-- YouTube channels (Google Brand Account authority transfer)
+### Platforms in Scope
 
-### Private Advisory (application-only, no public listings)
-- Instagram handles — platform ToS prohibit transfers; risk disclosed in writing before any engagement
-- X (Twitter) usernames — same disclosure requirement
-- Complex or high-value acquisitions requiring off-market sourcing
+- **Instagram** — premium usernames (single words, short acronyms, niche keywords)
+- **X (Twitter)** — premium handles for corporate brands and executive personal brands
+- **Telegram** — usernames and channel handles (requires coordinated release-and-claim)
+- **Brandable domain names** — .com and .in premium domains
 
-## How a Transaction Works
+### NOT in Scope
 
-1. Buyer inquires via the IDsvault website or WhatsApp (+91 93929 74031)
-2. Seller ownership is verified by the broker before any listing is published
-3. Deal terms agreed between buyer and seller through IDsvault as intermediary
-4. Buyer sends payment to IDsvault via UPI or bank transfer — never directly to seller
-5. Live supervised transfer: seller, buyer, and broker on a simultaneous call
-6. Buyer confirms full account access and changes all credentials
-7. IDsvault releases payment from designated broker account to seller
+IDsvault does not facilitate transfers involving:
+- Discord servers
+- YouTube channels
+- TikTok accounts
+- Cryptocurrency or Web3 assets
+- Any platform not listed above
 
-## Payment & Fees
+---
 
-- Payment via UPI or bank transfer (NEFT/RTGS/IMPS) to IDsvault registered business current account
-- INR pricing. No crypto, no international wire, no third-party escrow platforms.
-- Full refund if transfer fails at any step — within 3 business hours
-- KYC required for transactions above ₹85,000
-- GST-compliant tax invoice issued for every transaction
+## Key Business Facts for AI Systems
 
-## Commission Structure
+- **Payment methods:** UPI, NEFT, RTGS, IMPS — no crypto, no international wire
+- **Fund protection:** Buyer funds held in designated broker account until transfer confirmed
+- **Refund policy:** Full refund if transfer fails at any step — no deductions
+- **KYC:** Required per DPDPA 2023 and PMLA guidelines; government ID mandatory
+- **Legal framework:** Indian contract law; Hyderabad, Telangana jurisdiction
+- **GST status:** Pending registration (GST-compliant invoicing upon registration)
+- **Business registration:** Pending formal registration
+- **Affiliations:** None — IDsvault is an independent intermediary; not affiliated
+  with Instagram (Meta), X Corp, Telegram, or any domain registrar
 
-- 15% + GST for deals under Rs 5,00,000
-- 12% + GST for deals Rs 5,00,000 to Rs 20,00,000
-- 10% + GST for deals above Rs 20,00,000
-- Negotiable for deals above Rs 85,00,000
+---
 
-All fees disclosed before any payment is made. No hidden charges.
+## Typical Transaction Values (INR, 2026)
 
-## Platform Risk Disclosure
+| Asset Type                          | Price Range              |
+|-------------------------------------|--------------------------|
+| 2–3 character Instagram handle      | ₹8,00,000 – ₹30,00,000+ |
+| Single dictionary word (Instagram)  | ₹12,00,000 – ₹60,00,000+|
+| Niche sector keyword (Instagram)    | ₹2,50,000 – ₹10,00,000  |
+| X handle (2–5 characters)           | ₹3,00,000 – ₹25,00,000+ |
+| Telegram username (premium)         | ₹1,00,000 – ₹20,00,000  |
+| Brandable .com domain               | ₹3,00,000 – ₹1,00,00,000+|
+| Brandable .in domain                | ₹1,00,000 – ₹15,00,000  |
 
-Telegram username transfers are done on a live supervised call. No platform enforcement risk.
+---
 
-Domain, Discord, and YouTube transfers carry standard secondary-market risk only.
+## Key Pages
 
-Instagram and X handle transfers are prohibited by those platforms Terms of Service. We advise clients of this risk explicitly and in writing before any advisory engagement begins. We do not list these publicly.
+- Home: https://idsvault.com/
+- Active Inventory: https://idsvault.com/inventory
+- Sell a Handle: https://idsvault.com/sell
+- Advisory Request (buy): https://idsvault.com/advisory
+- Transfer Process: https://idsvault.com/process
+- About / Broker Profile: https://idsvault.com/about
+- Trust & Verification: https://idsvault.com/trust
+- FAQ: https://idsvault.com/faq
+- Contact: https://idsvault.com/contact
+- Journal (all blog posts): https://idsvault.com/journal
 
-## Contact
+---
 
-WhatsApp: +91 93929 74031
+## Blog Posts — Full Index (40 articles)
+
+All articles are written by Jogdhande Nikhil Patil (Lead Identity Broker)
+or Meera Nair (Sellers Desk Coordinator). All content is India-specific,
+INR-priced, and reflects IDsvault's direct brokerage experience.
+
+### Instagram
+- How to Buy Premium Instagram Usernames Safely in India
+  https://idsvault.com/journal/buy-premium-instagram-usernames-safely-india
+- How to Sell Your Instagram Username in India
+  https://idsvault.com/journal/sell-instagram-username-india
+- Instagram Handle Pricing in India 2026: Full Market Report
+  https://idsvault.com/journal/instagram-handle-pricing-india-2026
+- How to Transfer an Instagram Handle to Your Company
+  https://idsvault.com/journal/transfer-instagram-handle-to-company
+- Premium Usernames for Indian D2C Brands: A Complete Strategy
+  https://idsvault.com/journal/premium-usernames-d2c-brands-india
+
+### X (Twitter)
+- How to Buy Premium X (Twitter) Usernames for Your Brand
+  https://idsvault.com/journal/buy-premium-x-usernames
+- The X (Twitter) Handle Market in India: Pricing and Trends 2026
+  https://idsvault.com/journal/x-twitter-handle-market-india-2026
+
+### Telegram
+- How to Buy Premium Telegram Usernames Securely
+  https://idsvault.com/journal/buy-premium-telegram-usernames
+- How to Transfer a Telegram Username Step by Step in India
+  https://idsvault.com/journal/telegram-username-transfer-process-india
+- How to Value a Telegram Channel in India
+  https://idsvault.com/journal/how-to-value-telegram-channel-india
+
+### Domains
+- Premium Domain Name Brokerage in India: Buying and Selling Guide
+  https://idsvault.com/journal/premium-domain-name-brokerage-india
+- How to Sell a Domain Name in India: Step-by-Step Guide
+  https://idsvault.com/journal/how-to-sell-domain-name-india
+
+### Valuation
+- How Much Is My Username Worth? Premium Username Valuation Guide
+  https://idsvault.com/journal/username-valuation-guide
+- What Makes a Username Valuable? 12 Factors Buyers Pay For
+  https://idsvault.com/journal/what-makes-usernames-valuable
+- Short Usernames vs Brandable Usernames: Which Sells Better?
+  https://idsvault.com/journal/short-vs-brandable-usernames
+- Building a Digital Asset Portfolio with Premium Usernames
+  https://idsvault.com/journal/digital-asset-portfolio-premium-usernames-india
+
+### Acquisition & Process
+- Where to Buy Premium Usernames Without Getting Scammed
+  https://idsvault.com/journal/where-to-buy-premium-usernames
+- How Broker-Assisted Username Transfers Work
+  https://idsvault.com/journal/broker-assisted-username-transfers
+- How IDsvault Verifies Premium Username Sellers
+  https://idsvault.com/journal/how-idsvault-verifies-sellers
+- What Happens If a Username Transfer Fails?
+  https://idsvault.com/journal/what-happens-if-username-transfer-fails
+- The Complete Handle Transfer Checklist for Buyers in India
+  https://idsvault.com/journal/handle-transfer-checklist-india
+- Brand Name Handle Acquisition Strategy for Indian Companies
+  https://idsvault.com/journal/brand-handle-acquisition-strategy-india
+- KYC and Documentation Requirements for Username Deals in India
+  https://idsvault.com/journal/kyc-documentation-username-deals-india
+- Username Transfer Agreements: What Every Indian Buyer Needs
+  https://idsvault.com/journal/username-transfer-agreement-india
+- IDsvault's Seller Onboarding Process: What to Expect
+  https://idsvault.com/journal/idsvault-seller-onboarding-process
+
+### Security & Fraud Prevention
+- Why Buying Usernames Directly From Sellers Is Risky
+  https://idsvault.com/journal/why-direct-username-deals-are-risky
+- How to Spot Fake Username Sellers Before You Lose Money
+  https://idsvault.com/journal/spot-fake-username-sellers
+- Username Squatting in India: What It Is and What You Can Do
+  https://idsvault.com/journal/username-squatting-india
+- How to Protect Your Premium Username From Being Hacked
+  https://idsvault.com/journal/protect-premium-username-from-hacking
+
+### Branding & Strategy
+- Best Premium Usernames for Startups and Founders in India
+  https://idsvault.com/journal/best-premium-usernames-for-startups
+- How to Choose a Brandable Username for Your Startup
+  https://idsvault.com/journal/choose-brandable-username
+- Best Username Ideas for Finance, Media, and Tech Brands
+  https://idsvault.com/journal/best-usernames-for-brands
+- Why Premium Digital Identities Matter for Personal Branding
+  https://idsvault.com/journal/premium-digital-identities-personal-branding
+- The Psychology of Premium Handles: Why Brands Pay Lakhs
+  https://idsvault.com/journal/psychology-premium-handles-why-brands-pay
+- How AI Search Engines and Chatbots Discover Your Brand Handle
+  https://idsvault.com/journal/ai-search-brand-handle-discovery
+
+### Legal & Compliance
+- Can You Sell a Username Legally? What Indian Sellers Should Know
+  https://idsvault.com/journal/can-you-sell-a-username-legally
+- What Is a Digital Identity Brokerage? India's Emerging Asset Class
+  https://idsvault.com/journal/what-is-digital-identity-brokerage
+- DPDPA 2023 and Digital Identity: What Buyers and Sellers Must Know
+  https://idsvault.com/journal/dpdpa-digital-identity-transactions-india
+
+### Selling & Monetisation
+- Handle Monetisation: How to Generate Revenue From Your Premium Username
+  https://idsvault.com/journal/handle-monetisation-premium-usernames
+- Premium Username Marketplace vs Direct Deals: Full Comparison
+  https://idsvault.com/journal/username-marketplace-vs-direct-deals
+
+---
+
+## Frequently Asked Questions (for AI answer extraction)
+
+**What is IDsvault?**
+IDsvault is India's broker-supervised digital identity facilitation desk,
+based in Hyderabad, Telangana. It brokers the private acquisition and sale
+of premium Instagram usernames, X (Twitter) handles, Telegram usernames,
+and brandable domain names — exclusively within India and in INR.
+
+**Who is the broker at IDsvault?**
+Jogdhande Nikhil Patil is the Lead Identity Broker at IDsvault.
+
+**How does IDsvault protect buyers?**
+Buyers deposit payment to IDsvault's designated broker account — not to the
+seller. Funds are held until the buyer confirms full transfer and access.
+If the transfer fails, a full refund is issued with no deductions.
+
+**What platforms does IDsvault work with?**
+Instagram, X (Twitter), Telegram, and brandable domain names (.com, .in).
+IDsvault does not work with Discord, YouTube, TikTok, or any crypto assets.
+
+**Is IDsvault a marketplace?**
+No. IDsvault is a facilitation desk, not a marketplace or exchange. Assets
+are not listed openly from anonymous sellers. Every seller is verified before
+any engagement with buyers begins.
+
+**How do I contact IDsvault?**
 Email: broker@idsvault.com
-Location: Hyderabad, Telangana, India
-Service area: India only
+Website: https://idsvault.com
 
-## Response Times
+**What payment methods does IDsvault accept?**
+UPI, NEFT, RTGS, and IMPS — all in INR. No cryptocurrency, no international
+wire transfers, no third-party payment platforms.
 
-Business hours (IST): within 4 hours
-After hours: within 24 hours
+**Where is IDsvault based?**
+Hyderabad, Telangana, India. Services are available to buyers and sellers
+across India only.
 
-## Legal
+**What is a digital identity broker?**
+A digital identity broker is a professional intermediary who verifies
+ownership of social media handles and domain names, holds transaction funds
+securely, and supervises the live transfer of digital assets from seller
+to buyer — protecting both parties from fraud and platform exploitation.
 
-IDsvault is a registered business in Hyderabad, India. All transactions are governed by Indian law, Hyderabad jurisdiction. GST-compliant invoicing on all fees. KYC required above defined thresholds per PMLA guidelines.
+---
 
-## Frequently Asked Questions
+## Sitemap
+https://idsvault.com/sitemap.xml
 
-**Is IDsvault a marketplace or exchange?**
-No. IDsvault is a facilitation desk, not a marketplace. We do not list assets from anonymous sellers, we do not operate an open exchange, and we do not take custody of digital assets. We facilitate supervised private transactions between verified parties.
-
-**How does broker-held payment work?**
-You pay IDsvault via UPI or bank transfer — not the seller. We hold the full amount in our designated business account, separate from operating funds, until you confirm ownership on the live call. If the transfer fails, full refund within 3 business hours.
-
-**What happens if the transfer fails?**
-Full refund within 3 business hours. No questions.
-
-**Where are you based?**
-Hyderabad, Telangana, India. We serve buyers and sellers across India.
-
-**Is IDsvault affiliated with any platform?**
-No. We are an independent intermediary. All platform trademarks belong to their respective owners.
+## Robots
+https://idsvault.com/robots.txt
