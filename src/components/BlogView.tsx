@@ -729,7 +729,9 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
               <label className="block text-[10px] font-bold text-amber-400 uppercase tracking-widest font-mono">
                 GEO Direct Answer Block (Google AI Overview, Perplexity Matcher)
               </label>
-              <HelpCircle className="h-3 w-3 text-gray-500" title="This block will be dynamically extracted by AI indexers querying this exact intent." />
+              <span title="This block will be dynamically extracted by AI indexers querying this exact intent.">
+                <HelpCircle className="h-3 w-3 text-gray-500" />
+              </span>
             </div>
             <textarea
               rows={2}

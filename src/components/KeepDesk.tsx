@@ -272,7 +272,7 @@ export const KeepDesk: React.FC = () => {
     setNewChecklistItems(updated.length > 0 ? updated : [""]);
   };
 
-  const handleLoadTemplate = (type: "sourcing" | "verification" | "escrow") => {
+  const handleLoadTemplate = (type: "sourcing" | "verification" | "escrow" | "transfer") => {
     setIsExpandingCreator(true);
     if (type === "sourcing") {
       setNewTitle("🎯 Sourcing: Handle Inquiry Tracker");
