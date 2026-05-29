@@ -32,6 +32,7 @@ import { ProcessPage } from "./components/ProcessPage";
 import { TrustPage } from "./components/TrustPage";
 import { KeepDesk } from "./components/KeepDesk";
 import { CookieConsent } from "./components/CookieConsent";
+import { ScreenshotGuard } from "./components/ScreenshotGuard";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -403,6 +404,9 @@ export default function App() {
 
       {/* DPDPA 2023 cookie consent banner */}
       <CookieConsent />
+
+      {/* Best-effort screenshot / capture protection */}
+      <ScreenshotGuard />
 
       {/* Mobile sticky CTA — Browse / Sell dual buttons */}
       <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-canvas/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden">

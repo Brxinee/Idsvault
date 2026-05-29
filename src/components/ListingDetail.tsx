@@ -175,7 +175,7 @@ Urgency: Standard`;
 
             <div className="space-y-4 pt-10 pb-12">
               <span className="text-[10px] font-bold text-gray-500 block uppercase tracking-widest font-mono">Handle</span>
-              <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight screenshot-private">
                 @{displayTitle}
               </h1>
               <p className="text-xs text-blue-400 font-mono tracking-wide">Ref #{listing.id}</p>
@@ -255,7 +255,7 @@ Urgency: Standard`;
 
             <div className="p-4 rounded-xl bg-surface border border-white/[0.04] space-y-1.5">
               <span className="text-[9px] text-gray-500 uppercase font-mono block">Estimated Range</span>
-              <p className="text-sm font-bold font-mono text-emerald-400">
+              <p className="text-sm font-bold font-mono text-emerald-400 screenshot-private">
                 {getEstimatedRange(listing.askingPrice)}
               </p>
             </div>
@@ -292,7 +292,7 @@ Urgency: Standard`;
                   />
                 </div>
                 {listing.askingPrice > 0 && (
-                  <p className="text-[9px] text-muted mt-1.5">
+                  <p className="text-[9px] text-muted mt-1.5 screenshot-private">
                     Target Asking Valuation: {formatINR(listing.askingPrice)}
                   </p>
                 )}

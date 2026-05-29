@@ -544,7 +544,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                       </div>
 
                       <div>
-                        <h3 className="text-xl font-extrabold text-white tracking-tight group-hover:text-accent transition-colors">
+                        <h3 className="text-xl font-extrabold text-white tracking-tight group-hover:text-accent transition-colors screenshot-private">
                           @{item.username}
                         </h3>
                         <div className="flex flex-wrap gap-1 mt-1.5">
@@ -560,7 +560,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                     <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
                       <div>
                         <span className="text-[8px] font-bold uppercase tracking-widest text-gray-500 block">Asking Price</span>
-                        <span className="text-base font-extrabold text-emerald-400 font-mono">
+                        <span className="text-base font-extrabold text-emerald-400 font-mono screenshot-private">
                           {formatINR(item.askingPrice)}
                         </span>
                       </div>
