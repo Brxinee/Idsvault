@@ -12,134 +12,77 @@ export const SUPPORT_EMAIL = "broker@idsvault.com";
 export const initialListings: Listing[] = [
   {
     id: "ID-1001",
-    username: "apex",
+    username: "oncewrong",
     platform: Platform.Instagram,
-    category: "Short OG",
-    askingPrice: 1250000, // ₹12.5 Lakhs
-    minPrice: 950000,
+    category: "Brandable Word",
+    askingPrice: 22000, // ₹22,000
+    minPrice: 18000,
     status: DealStatus.Live,
-    description: "Vetted corporate-ready single-word domain on Instagram under broker contract with clean origin records.",
-    slug: "instagram-apex",
-    createdTime: "2026-05-20T10:00:00Z"
+    description: "Memorable, easy-to-recall Instagram handle suited to a content, lifestyle, or personal brand. Ownership verified and held under broker contract.",
+    slug: "instagram-oncewrong",
+    createdTime: "2026-05-29T09:00:00Z"
   },
   {
     id: "ID-1002",
-    username: "nexus",
-    platform: Platform.X,
-    category: "Tech Brandable",
-    askingPrice: 580000, // ₹5.8 Lakhs
-    minPrice: 450000,
+    username: "goalgrip",
+    platform: Platform.Instagram,
+    category: "Sports Brandable",
+    askingPrice: 29000, // ₹29,000
+    minPrice: 23000,
     status: DealStatus.Live,
-    description: "Ultra-clean tech startup moniker on X (Twitter). Sourced via supervised verification audits.",
-    slug: "x-nexus",
-    createdTime: "2026-05-21T11:30:00Z"
+    description: "Punchy sports-themed Instagram handle ideal for a football, fitness, or sports-content brand. Ownership verified and held under broker contract.",
+    slug: "instagram-goalgrip",
+    createdTime: "2026-05-29T09:10:00Z"
   },
   {
     id: "ID-1003",
-    username: "vault",
-    platform: Platform.Telegram,
-    category: "Fintech Core",
-    askingPrice: 0, // Price on Request
-    minPrice: 750000,
+    username: "offsmell",
+    platform: Platform.Instagram,
+    category: "Brandable Word",
+    askingPrice: 40000, // ₹40,000
+    minPrice: 32000,
     status: DealStatus.Live,
-    description: "Highly authoritative brand name on Telegram suitable for fintech, channels registry, or corporate bots.",
-    slug: "telegram-vault",
-    createdTime: "2026-05-22T09:15:00Z"
+    description: "Distinctive, brandable Instagram handle suited to a fragrance, lifestyle, or creative brand. Clean origin, held under broker contract.",
+    slug: "instagram-offsmell",
+    createdTime: "2026-05-29T09:20:00Z"
   },
   {
     id: "ID-1004",
-    username: "prime",
-    platform: Platform.Brandable,
-    category: "Elite Label",
-    askingPrice: 1400000, // ₹14 Lakhs
-    minPrice: 1100000,
+    username: "xbigbull",
+    platform: Platform.Instagram,
+    category: "Finance Brandable",
+    askingPrice: 20000, // ₹20,000
+    minPrice: 15000,
     status: DealStatus.Live,
-    description: "Premium dictionary branding. Fully prepared for corporate infrastructure deployment and domain matching.",
-    slug: "brandable-prime",
-    createdTime: "2026-05-22T14:45:00Z"
+    description: "Markets-themed Instagram handle ideal for a trading, finance, or investing-content brand. Ownership verified and held under broker contract.",
+    slug: "instagram-xbigbull",
+    createdTime: "2026-05-29T09:30:00Z"
   },
   {
     id: "ID-1005",
-    username: "quantum",
+    username: "deshlaughs",
     platform: Platform.Instagram,
-    category: "Acronym/Short",
-    askingPrice: 1850000, // ₹18.5 Lakhs
-    minPrice: 1550000,
+    category: "Comedy / Desi",
+    askingPrice: 18000, // ₹18,000
+    minPrice: 12000,
     status: DealStatus.Live,
-    description: "Extremely secure, single-word high-liquidity handle on Instagram. Ownership verified by broker desk.",
-    slug: "instagram-quantum",
-    createdTime: "2026-05-23T08:00:00Z"
-  },
-  {
-    id: "ID-1006",
-    username: "yield",
-    platform: Platform.X,
-    category: "Finance Label",
-    askingPrice: 420000, // ₹4.2 Lakhs
-    minPrice: 350000,
-    status: DealStatus.OfferPending,
-    description: "High commercial interest fintech moniker. Ideal for digital media or investment community setup.",
-    slug: "x-yield",
-    createdTime: "2026-05-23T09:20:00Z"
+    description: "Ready-made comedy Instagram handle for a desi humour or entertainment brand. Clean ownership, held under broker contract.",
+    slug: "instagram-deshlaughs",
+    createdTime: "2026-05-29T09:40:00Z"
   }
 ];
 
-export const initialLeads: Lead[] = [
-  {
-    id: "lead-101",
-    listingSlug: "instagram-apex",
-    buyerName: "Michael Desai",
-    buyerEmail: "m.desai@apexventures.in",
-    whatsapp: "+91 98220 11223",
-    offer: 1100000, // ₹11 Lakhs
-    urgency: Urgency.Immediate,
-    notes: "Allocated corporate funding ready. Awaiting supervised transfer session.",
-    status: "BROKER_ASSIGNED",
-    createdTime: "2026-05-23T10:15:00Z"
-  },
-  {
-    id: "lead-102",
-    listingSlug: "x-nexus",
-    buyerName: "Sarah Jenkins",
-    buyerEmail: "s.jenkins@nexuslabs.co",
-    whatsapp: "+91 70112 55555",
-    offer: 520000, // ₹5.2 Lakhs
-    urgency: Urgency.Standard,
-    notes: "Requires owner verification of the original handle register date.",
-    status: "UNDER_REVIEW",
-    createdTime: "2026-05-23T11:45:00Z"
-  }
-];
+// No fabricated leads — real buyer enquiries populate this at runtime.
+export const initialLeads: Lead[] = [];
 
-export const initialRequests: SourcingRequest[] = [
-  {
-    id: "req-201",
-    desiredUsername: "peak",
-    platform: Platform.X,
-    budget: 450000, // ₹4.5 Lakhs
-    urgency: Urgency.Standard,
-    alternatives: "peaknow, peakventures, peakindia",
-    whatsapp: "+91 99881 22334",
-    email: "p.desai@peakenergy.in",
-    createdTime: "2026-05-23T12:00:00Z"
-  }
-];
+// No fabricated sourcing requests — real advisory enquiries populate this at runtime.
+export const initialRequests: SourcingRequest[] = [];
 
 export const initialLogs: SystemLog[] = [
   {
-    timestamp: "2026-05-23 12:43:19",
+    timestamp: "2026-05-29 09:00:00",
     action: "SYSTEM_BOOT",
     detail: "IDsvault security ledger initialized with compliance keys and secure endpoints."
-  },
-  {
-    timestamp: "2026-05-23 12:05:14",
-    action: "OWNERSHIP_VERIFIED",
-    detail: "@nexus ownership validated on X Platform via token verification handshake: SV-192-38B."
-  },
-  {
-    timestamp: "2026-05-23 11:32:00",
-    action: "PROPOSAL_LOGGED",
-    detail: "Proposal of ₹11,00,000 recorded for @apex from authenticated corporate buyer: m.desai@apexventures.in."
   }
 ];
 
