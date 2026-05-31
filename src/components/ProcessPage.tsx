@@ -203,35 +203,37 @@ export const ProcessPage: React.FC = () => {
                   </div>
 
                   {/* Body */}
-                  <p className="text-sm text-gray-400 leading-relaxed pl-[52px]">{step.body}</p>
+                  <p className="text-sm text-gray-400 leading-relaxed sm:pl-[52px]">{step.body}</p>
 
                   {/* KYC table */}
                   {step.kycTable && (
-                    <div className="pl-[52px]">
+                    <div className="sm:pl-[52px]">
                       <div className="rounded-xl overflow-hidden border border-white/[0.06]">
-                        <table className="w-full text-xs">
-                          <thead>
-                            <tr className="bg-surface border-b border-white/[0.06]">
-                              <th className="text-left px-4 py-2.5 text-gray-400 font-semibold">Transaction value</th>
-                              <th className="text-left px-4 py-2.5 text-gray-400 font-semibold">KYC requirement</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {step.kycTable.map((row) => (
-                              <tr key={row.range} className="border-b border-white/[0.04] last:border-0">
-                                <td className="px-4 py-2.5 font-mono text-white/70">{row.range}</td>
-                                <td className="px-4 py-2.5 text-gray-300">{row.req}</td>
+                        <div className="overflow-x-auto">
+                          <table className="min-w-[380px] w-full text-xs">
+                            <thead>
+                              <tr className="bg-surface border-b border-white/[0.06]">
+                                <th className="text-left px-4 py-2.5 text-gray-400 font-semibold whitespace-nowrap">Transaction value</th>
+                                <th className="text-left px-4 py-2.5 text-gray-400 font-semibold whitespace-nowrap">KYC requirement</th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                            </thead>
+                            <tbody>
+                              {step.kycTable.map((row) => (
+                                <tr key={row.range} className="border-b border-white/[0.04] last:border-0">
+                                  <td className="px-4 py-2.5 font-mono text-white/70 whitespace-nowrap">{row.range}</td>
+                                  <td className="px-4 py-2.5 text-gray-300">{row.req}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   )}
 
                   {/* Payment methods */}
                   {step.paymentMethods && (
-                    <div className="pl-[52px] space-y-2">
+                    <div className="sm:pl-[52px] space-y-2">
                       <p className="text-[11px] text-gray-500 uppercase tracking-widest font-bold">Accepted payment methods</p>
                       <ul className="space-y-1">
                         {step.paymentMethods.map((m) => (
@@ -246,7 +248,7 @@ export const ProcessPage: React.FC = () => {
 
                   {/* Note / detail */}
                   {step.note && (
-                    <div className="pl-[52px]">
+                    <div className="sm:pl-[52px]">
                       <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
                         <AlertTriangle className="h-3.5 w-3.5 text-amber-400 mt-0.5 shrink-0" />
                         <p className="text-xs text-amber-200/70">{step.note}</p>
@@ -254,10 +256,10 @@ export const ProcessPage: React.FC = () => {
                     </div>
                   )}
                   {step.detail && (
-                    <p className="pl-[52px] text-xs text-gray-500 leading-relaxed">{step.detail}</p>
+                    <p className="sm:pl-[52px] text-xs text-gray-500 leading-relaxed">{step.detail}</p>
                   )}
                   {step.sellerNote && (
-                    <p className="pl-[52px] text-xs text-gray-500 leading-relaxed">{step.sellerNote}</p>
+                    <p className="sm:pl-[52px] text-xs text-gray-500 leading-relaxed">{step.sellerNote}</p>
                   )}
                 </div>
               );
@@ -293,29 +295,31 @@ export const ProcessPage: React.FC = () => {
               <p className="text-sm text-gray-400">All fees are disclosed before any payment is made. GST-compliant invoice issued on every transaction.</p>
             </div>
             <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-surface border-b border-white/[0.06]">
-                    <th className="text-left px-5 py-3.5 text-gray-400 font-semibold">Deal value (INR)</th>
-                    <th className="text-left px-5 py-3.5 text-gray-400 font-semibold">Commission</th>
-                    <th className="text-right px-5 py-3.5 text-gray-400 font-semibold">GST</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/[0.04]">
-                  {[
-                    { range: "Under ₹5,00,000", rate: "15%", gst: "18% on fee" },
-                    { range: "₹5,00,000 – ₹20,00,000", rate: "12%", gst: "18% on fee" },
-                    { range: "Above ₹20,00,000", rate: "10%", gst: "18% on fee" },
-                    { range: "Above ₹85,00,000", rate: "Negotiable", gst: "18% on fee" },
-                  ].map(({ range, rate, gst }) => (
-                    <tr key={range} className="hover:bg-white/[0.02] transition-colors">
-                      <td className="px-5 py-3.5 font-mono text-white/80">{range}</td>
-                      <td className="px-5 py-3.5 font-bold text-accent">{rate}</td>
-                      <td className="px-5 py-3.5 text-right text-gray-400">{gst}</td>
+              <div className="overflow-x-auto">
+                <table className="min-w-[420px] w-full text-sm">
+                  <thead>
+                    <tr className="bg-surface border-b border-white/[0.06]">
+                      <th className="text-left px-5 py-3.5 text-gray-400 font-semibold whitespace-nowrap">Deal value (INR)</th>
+                      <th className="text-left px-5 py-3.5 text-gray-400 font-semibold whitespace-nowrap">Commission</th>
+                      <th className="text-right px-5 py-3.5 text-gray-400 font-semibold whitespace-nowrap">GST</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.04]">
+                    {[
+                      { range: "Under ₹5,00,000", rate: "15%", gst: "18% on fee" },
+                      { range: "₹5,00,000 – ₹20,00,000", rate: "12%", gst: "18% on fee" },
+                      { range: "Above ₹20,00,000", rate: "10%", gst: "18% on fee" },
+                      { range: "Above ₹85,00,000", rate: "Negotiable", gst: "18% on fee" },
+                    ].map(({ range, rate, gst }) => (
+                      <tr key={range} className="hover:bg-white/[0.02] transition-colors">
+                        <td className="px-5 py-3.5 font-mono text-white/80 whitespace-nowrap">{range}</td>
+                        <td className="px-5 py-3.5 font-bold text-accent">{rate}</td>
+                        <td className="px-5 py-3.5 text-right text-gray-400">{gst}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>

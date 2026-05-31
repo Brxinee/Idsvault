@@ -119,6 +119,17 @@ img, svg, video, canvas, picture {
   height: auto;
 }
 
+/* Text always wraps — prevents long URLs or mono strings from blowing layout */
+p, li, span, td, th, label, blockquote {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* All tables inside scrollable containers must stay on one row per column */
+.overflow-x-auto table {
+  border-collapse: collapse;
+}
+
 /* Comfortable tap targets on touch devices */
 @media (pointer: coarse) {
   button, a[role="button"], [role="button"], .tap-target {
