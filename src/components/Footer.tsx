@@ -54,10 +54,6 @@ export const Footer: React.FC = () => {
                 broker@idsvault.com
               </a>
             </div>
-            <div className="pt-1 text-[10px] text-gray-600 font-mono">
-              GSTIN: Applied / [XX XXXXX XXXXX XX]
-              <span className="block text-[9px] text-gray-700 mt-0.5">to be updated on registration</span>
-            </div>
           </div>
         </div>
 

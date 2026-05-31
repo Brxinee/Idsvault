@@ -34,7 +34,7 @@ const pillars = [
   {
     icon: Lock,
     title: "Your money stays with us until transfer is done",
-    body: "Buyer payment goes to IDsvault's registered business current account — never to the seller. We hold it there, separately from operating funds, until you confirm full access on the live call. The seller gets nothing until you have everything.",
+    body: "Buyer payment goes to IDsvault's designated broker account — never to the seller. We hold it there, separately from operating funds, until you confirm full access on the live call. The seller gets nothing until you have everything.",
   },
   {
     icon: BadgeCheck,
@@ -43,8 +43,8 @@ const pillars = [
   },
   {
     icon: Shield,
-    title: "India-registered business. Proper paperwork.",
-    body: "IDsvault is a registered business in Hyderabad, Telangana. We issue GST-compliant tax invoices on every transaction. Our registered address is published below and verifiable on Google Maps. There is no anonymity here.",
+    title: "Real identity. Full accountability.",
+    body: "IDsvault is operated personally by Jogdhande Nikhil Patil from Hyderabad, Telangana. Every deal is in his name — not behind a corporate entity. His contact details are public, his desk address is real, and a broker invoice is issued for every transaction. There is no anonymity here.",
   },
   {
     icon: FileText,
@@ -75,17 +75,12 @@ const wontDo = [
 
 const verifications = [
   {
-    label: "Business registration",
-    value: "Hyderabad, Telangana, India",
-    note: "Sole Proprietorship / OPC — registration details in footer",
+    label: "Broker",
+    value: "Jogdhande Nikhil Patil",
+    note: "Sole operator — directly reachable before, during, and after every deal",
   },
   {
-    label: "GST registration",
-    value: "GSTIN: Applied / [to be updated]",
-    note: "SAC 998311 — Management & advisory consulting",
-  },
-  {
-    label: "Registered address",
+    label: "Desk address",
     value: "Hyderabad, Telangana — 500 081",
     note: "Verifiable on Google Maps",
   },
@@ -136,7 +131,7 @@ export const TrustPage: React.FC = () => {
     <>
       <SEO
         title="Trust Framework — IDsvault | How We Protect Every Transaction"
-        description="How IDsvault protects buyers and sellers: named broker accountability, broker-held payment, live transfer call, verified listings, India-registered business."
+        description="How IDsvault protects buyers and sellers: named broker accountability, broker-held payment, live transfer call, verified listings, full refund commitment."
         canonical="/trust"
         structuredData={jsonLd}
       />
@@ -269,7 +264,7 @@ export const TrustPage: React.FC = () => {
             <div className="flex items-start gap-3 p-4 rounded-xl bg-surface border border-white/[0.06]">
               <MapPin className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
               <div>
-                <p className="text-xs text-gray-500 mb-1">Registered office</p>
+                <p className="text-xs text-gray-500 mb-1">Desk address</p>
                 <p className="text-sm text-white">Hyderabad, Telangana — 500 081, India</p>
                 <a
                   href="https://maps.google.com/?q=Hyderabad,Telangana,India"

@@ -230,7 +230,7 @@ Urgency: Standard`;
                 <Lock className="h-4 w-4 text-blue-500" />
                 <h4 className="font-bold text-white text-[11px] tracking-tight">Payment Held by Broker</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
-                  Payment is held in the broker's registered business account. Funds are released only after the transfer is confirmed.
+                  Payment is held in the broker's designated account. Funds are released only after the transfer is confirmed.
                 </p>
               </div>
 
@@ -274,7 +274,7 @@ Urgency: Standard`;
             <div className="font-mono text-[34px] font-extrabold text-emerald-400 tracking-[-0.01em] leading-none screenshot-private">
               {formatINR(listing.askingPrice)}
             </div>
-            <div className="text-xs text-faint mt-2">Commission 12% + 18% GST · paid by buyer</div>
+            <div className="text-xs text-faint mt-2">Commission 12% · paid by buyer</div>
 
             <div className="h-px bg-white/[0.06] my-[22px]" />
 
@@ -372,13 +372,9 @@ Urgency: Standard`;
                     <span>Broker commission (12%)</span>
                     <span className="font-mono">{formatINR(Math.round(listing.askingPrice * 0.12))}</span>
                   </div>
-                  <div className="flex justify-between py-1.5">
-                    <span>GST (18%)</span>
-                    <span className="font-mono">{formatINR(Math.round(listing.askingPrice * 0.12 * 0.18))}</span>
-                  </div>
                   <div className="flex justify-between pt-3 mt-1.5 border-t border-white/[0.06] text-white font-semibold">
                     <span>Total to custody</span>
-                    <span className="font-mono screenshot-private">{formatINR(Math.round(listing.askingPrice * (1 + 0.12 * 1.18)))}</span>
+                    <span className="font-mono screenshot-private">{formatINR(Math.round(listing.askingPrice * 1.12))}</span>
                   </div>
                 </div>
               )}

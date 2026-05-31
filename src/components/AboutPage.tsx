@@ -142,7 +142,7 @@ export const AboutPage: React.FC = () => {
               },
               {
                 icon: <Lock className="h-4 w-4 text-blue-400" />,
-                text: "Payment goes to IDsvault's registered business account — not to the seller"
+                text: "Payment goes to IDsvault's designated broker account — not to the seller"
               },
               {
                 icon: <Phone className="h-4 w-4 text-accent" />,
@@ -158,7 +158,7 @@ export const AboutPage: React.FC = () => {
               },
               {
                 icon: <FileText className="h-4 w-4 text-accent" />,
-                text: "GST-compliant tax invoice issued for every transaction"
+                text: "Broker invoice issued for every transaction"
               }
             ].map((item, idx) => (
               <div key={idx} className="flex items-start gap-3 p-4 rounded-xl bg-surface border border-white/[0.06]">
@@ -201,17 +201,16 @@ export const AboutPage: React.FC = () => {
             </div>
             <div className="space-y-3">
               <span className="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest font-mono">Legal standing</span>
-              <h2 className="text-2xl font-extrabold text-white tracking-tight">Registered business, Indian law</h2>
+              <h2 className="text-2xl font-extrabold text-white tracking-tight">Individual operator, Indian law</h2>
               <p className="text-sm text-muted leading-relaxed max-w-2xl">
-                IDsvault is a registered business in Hyderabad operating under Indian law. Governed by the IT Act 2000, Consumer Protection Act 2019, and DPDPA 2023. GST registration applied. All transactions invoiced.
+                IDsvault is a sole-operated brokerage desk in Hyderabad operating under Indian law. Governed by the IT Act 2000, Consumer Protection Act 2019, and DPDPA 2023. All transactions invoiced.
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
                 {[
                   "IT Act 2000",
                   "Consumer Protection Act 2019",
                   "DPDPA 2023",
-                  "PMLA / AML-KYC",
-                  "GST-compliant invoicing"
+                  "PMLA / AML-KYC"
                 ].map((item) => (
                   <span key={item} className="text-[10px] font-mono font-semibold text-gray-400 bg-surface border border-white/[0.06] px-2.5 py-1 rounded-full">
                     {item}

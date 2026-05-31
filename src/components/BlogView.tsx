@@ -377,7 +377,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
         { type: "paragraph", content: "Write comprehensive research breakdown paragraphs. Avoid fluff." }
       ]);
       setFormFaqs([
-        { question: "Is this transaction secure?", answer: "Yes, IDsvault broker-held payment ensures funds are held in the registered business account and only released after the buyer confirms full ownership on the live transfer call." }
+        { question: "Is this transaction secure?", answer: "Yes, IDsvault broker-held payment ensures funds are held in the designated broker account and only released after the buyer confirms full ownership on the live transfer call." }
       ]);
     }
   };
@@ -1131,7 +1131,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
 
               {/* Avoid Dangerous Platforms Claim warning Disclaimer */}
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] text-[10px] text-gray-500 leading-relaxed max-w-2xl font-sans mt-4">
-                <strong>Safety & Regulatory Notice:</strong> IDsvault is an independent digital assets broker facilitating administrative assignment contracts of high-value handles. We hold no official affiliation, sponsorship, license, or association with Instagram, Twitter/X, Telegram, or any associated parent organizations. Transactions are secured through broker-held payment in a registered business account with supervised live transfer.
+                <strong>Safety & Regulatory Notice:</strong> IDsvault is an independent digital identity broker facilitating supervised transfer agreements for high-value handles. We hold no official affiliation, sponsorship, license, or association with Instagram, Twitter/X, Telegram, or any associated parent organizations. Transactions are secured through broker-held payment in a dedicated broker account with supervised live transfer.
               </div>
 
             </div>

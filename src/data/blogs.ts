@@ -1350,8 +1350,7 @@ export const initialBlogPosts: BlogPost[] = [
           "Digital Asset Transfer Agreement: Names both parties, describes the asset (platform, username), agrees the transfer date, price, and payment mechanism.",
           "IP Assignment Clause: Transfers any copyright or design rights in original content, profile imagery, or brand elements associated with the handle.",
           "Representations and Warranties: Seller confirms sole ownership, absence of IP disputes, no active platform penalties, and full authority to transfer.",
-          "Indemnity Clause: Seller indemnifies buyer against any claims arising from pre-transfer account use.",
-          "GST Documentation: For high-value transfers, GST may apply to the brokerage service component."
+          "Indemnity Clause: Seller indemnifies buyer against any claims arising from pre-transfer account use."
         ]
       },
       {
@@ -1377,8 +1376,8 @@ export const initialBlogPosts: BlogPost[] = [
         answer: "Platforms can action accounts that breach their ToS. However, cleanly executed broker-supervised transfers that do not involve ToS-triggering behaviour (such as mass follower farming, impersonation, or spam) rarely attract platform attention. IDsvault's transfer process is designed to minimise platform risk."
       },
       {
-        question: "Is username selling subject to GST in India?",
-        answer: "The brokerage service fee charged by IDsvault is subject to GST. The handle sale itself, characterised as a capital asset transfer, follows income tax capital gains treatment rather than GST. Consult a qualified CA for your specific situation."
+        question: "Does a username sale have tax implications in India?",
+        answer: "High-value username sales may be treated as capital gains on digital assets under the Income Tax Act. Sellers receiving significant amounts from handle transfers should consult a chartered accountant to determine applicable tax treatment."
       }
     ],
     relatedSlugs: ["username-valuation-guide", "what-is-digital-identity-brokerage", "sell-instagram-username-india"]
@@ -2028,8 +2027,7 @@ export const initialBlogPosts: BlogPost[] = [
         items: [
           "WHOIS verification: Always confirm the registrant's identity matches the seller's. Hidden WHOIS (privacy protection) can obscure ownership — IDsvault requests WHOIS unlocking as part of verification.",
           "Trademark clearance: Before purchasing a category domain, conduct an IP Class search to ensure the domain word doesn't conflict with existing registered trademarks.",
-          "Transfer lock period: ICANN mandates a 60-day transfer lock after domain acquisition. Plan brand launch timelines accordingly.",
-          "GST on domain transactions: Domain brokerage services are subject to GST. The domain transfer itself is treated as an asset purchase."
+          "Transfer lock period: ICANN mandates a 60-day transfer lock after domain acquisition. Plan brand launch timelines accordingly."
         ]
       }
     ],
@@ -2086,7 +2084,7 @@ export const initialBlogPosts: BlogPost[] = [
           "Government-issued photo ID: Aadhaar card, PAN card, or passport. One document required for transactions below ₹5,00,000.",
           "PAN card: Mandatory for all transactions above ₹5,00,000 for income tax reporting purposes.",
           "Bank account or UPI details: Required to establish the payment trail and enable refund processing if needed.",
-          "Business registration documents: For corporate buyers — GST registration, MCA incorporation certificate, or equivalent."
+          "Business registration documents: For corporate buyers — MCA incorporation certificate or equivalent."
         ]
       },
       {
@@ -2581,7 +2579,7 @@ export const initialBlogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "IDsvault's standard transfer agreement has been developed specifically for Indian digital identity transactions. It covers platform-specific nuances (like ORE transfer protocols for Instagram vs Telegram), addresses Indian legal requirements (PAN documentation, GST treatment), and has been tested through actual transactions. A custom agreement drafted without this context often misses critical clauses."
+        content: "IDsvault's standard transfer agreement has been developed specifically for Indian digital identity transactions. It covers platform-specific nuances (like ORE transfer protocols for Instagram vs Telegram), addresses Indian legal requirements (PAN documentation), and has been tested through actual transactions. A custom agreement drafted without this context often misses critical clauses."
       },
       {
         type: "heading2",
