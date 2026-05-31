@@ -164,10 +164,10 @@ Urgency: Standard`;
         <span>Back to Inventory</span>
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-start">
+
         {/* Vetted Gallery and Metadata Presentation */}
-        <section className="lg:col-span-7 space-y-6">
+        <section className="md:col-span-7 space-y-6">
           
           {/* Gallery style premium card */}
           <article className="p-8 rounded-2xl bg-surface border border-white/[0.08] relative overflow-hidden">
@@ -185,7 +185,7 @@ Urgency: Standard`;
 
             <div className="space-y-4 pt-10 pb-12">
               <span className="text-[10px] font-bold text-gray-500 block uppercase tracking-widest font-mono">Handle</span>
-              <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight screenshot-private">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight screenshot-private">
                 @{displayTitle}
               </h1>
               <p className="text-xs text-blue-400 font-mono tracking-wide">Ref #{listing.id}</p>
@@ -254,7 +254,7 @@ Urgency: Standard`;
         </section>
 
         {/* Sticky Trust Checkout sidebar */}
-        <section className="lg:col-span-5">
+        <section className="md:col-span-5">
           <div className="p-6 rounded-2xl bg-surface border border-white/[0.10] sticky top-24 shadow-[0_2px_8px_rgba(0,0,0,0.45),0_0_0_1px_rgba(255,255,255,0.04)]">
 
             {/* Custody-secured pill */}

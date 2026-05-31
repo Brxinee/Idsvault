@@ -941,13 +941,13 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
           </header>
 
           {/* Grid Layout: Main Article vs Sticky Sidebar TOC */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 pt-4">
-            
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pt-4">
+
             {/* Left/Middle Column (TOC compilation, intro, sections, faqs) */}
-            <div className="lg:col-span-3 space-y-8 leading-relaxed text-[#D1D5DB] text-[14.5px]">
-              
+            <div className="md:col-span-3 space-y-8 leading-relaxed text-[#D1D5DB] text-[14.5px]">
+
               {/* Table of contents mapping for small screens */}
-              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] lg:hidden mb-6 space-y-2">
+              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] md:hidden mb-6 space-y-2">
                 <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Table of Contents</h4>
                 <ul className="text-xs space-y-1.5 text-blue-400 font-sans">
                   {activePost.sections.filter(s => s.type === "heading2").map((s, i) => (
@@ -1137,7 +1137,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
             </div>
 
             {/* Right Column: Sticky Sidebar Table of Contents */}
-            <aside className="hidden lg:block lg:col-span-1 space-y-6 select-none font-sans">
+            <aside className="hidden md:block md:col-span-1 space-y-6 select-none font-sans">
               <div className="sticky top-24 border border-white/[0.04] bg-canvas/80 backdrop-blur-md p-5 rounded-2xl space-y-4">
                 
                 {/* TOC links */}

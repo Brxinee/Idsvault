@@ -156,10 +156,10 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
       {/* Advanced Filter, Search, and Sort Panel */}
       <div className="p-4 rounded-xl bg-surface border border-white/[0.08] space-y-4">
         
-        <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-          
+        <div className="flex flex-col md:flex-row gap-3 md:items-center justify-between">
+
           {/* Instant Search input */}
-          <div className="relative w-full lg:max-w-sm">
+          <div className="relative w-full md:max-w-xs lg:max-w-sm shrink-0">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
             <input
               type="text"
@@ -183,7 +183,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
           </div>
 
           {/* Quick Platform chips */}
-          <div className="flex flex-wrap items-center gap-1.5 w-full lg:w-auto">
+          <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
             {["all", "instagram", "x", "telegram", "brandable"].map((p) => {
               const isActive = selectedPlatform === p;
               return (
@@ -204,7 +204,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
           </div>
 
           {/* Sort Menu and Filter Trigger */}
-          <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
+          <div className="flex items-center gap-3 w-full md:w-auto justify-end shrink-0">
             
             {/* Sorting SELECT dropdown */}
             <div className="flex items-center gap-2 bg-raised border border-white/[0.08] px-3 py-2 rounded-lg text-xs hover:border-white/[0.15] transition-colors relative">
