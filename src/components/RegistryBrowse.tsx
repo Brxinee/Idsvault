@@ -23,10 +23,19 @@ import {
 import { Listing, Platform } from "../types";
 import { getBadgesForHandle, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import { PlatformPill } from "./PlatformPill";
 
 interface RegistryBrowseProps {
   listings: Listing[];
   onSelectListing: (slug: string) => void;
+}
+
+/** Cursor-follow glow: sets CSS vars consumed by the .ids-card::after gradient. */
+function handleCardGlow(e: React.MouseEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  el.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+  el.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
 }
 
 export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSelectListing }) => {
@@ -308,26 +317,27 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             id="loading_skeletons_grid"
           >
             {[...Array(6)].map((_, idx) => (
-              <div 
+              <div
                 key={idx}
-                className="h-60 rounded-xl bg-surface border border-white/[0.06] p-6 space-y-6 flex flex-col justify-between animate-pulse"
+                className="h-60 rounded-2xl bg-surface border border-white/[0.08] p-6 flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <div className="h-5 w-16 bg-raised rounded" />
-                    <div className="h-5 w-24 bg-raised rounded" />
+                    <div className="skeleton h-6 w-24 !rounded-full" />
+                    <div className="skeleton h-[22px] w-[88px] !rounded-full" />
                   </div>
-                  <div className="space-y-2">
-                    <div className="h-8 w-40 bg-raised rounded" />
-                    <div className="h-4 w-28 bg-raised rounded" />
+                  <div className="space-y-2.5">
+                    <div className="skeleton h-8 w-2/5" />
+                    <div className="skeleton h-4 w-4/5" />
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="skeleton h-[22px] w-16 !rounded-full" />
+                    <div className="skeleton h-[22px] w-16 !rounded-full" />
                   </div>
                 </div>
                 <div className="flex justify-between items-center pt-4 border-t border-white/[0.04]">
-                  <div className="space-y-1">
-                    <div className="h-2 w-12 bg-raised rounded" />
-                    <div className="h-5 w-20 bg-raised rounded" />
-                  </div>
-                  <div className="h-8 w-24 bg-raised rounded" />
+                  <div className="skeleton h-7 w-28" />
+                  <div className="skeleton h-9 w-24" />
                 </div>
               </div>
             ))}
@@ -361,33 +371,39 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
             ) : (
               paginatedListings.map((item) => {
                 const badges = getBadgesForHandle(item.username, item.platform);
+                const isLive = item.status === "LIVE";
                 return (
-                  <motion.article
+                  <article
                     key={item.id}
-                    whileHover={{ y: -6, scale: 1.01 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="p-6 rounded-2xl bg-surface border border-white/[0.08] hover:border-white/[0.15] flex flex-col justify-between h-60 hover:shadow-[0_12px_30px_rgba(0,0,0,0.55)] group relative overflow-hidden"
+                    onMouseMove={handleCardGlow}
+                    onClick={() => onSelectListing(item.slug)}
+                    className="ids-card p-6 rounded-2xl bg-surface border border-white/[0.10] flex flex-col justify-between min-h-60 group cursor-pointer"
                   >
-                    {/* Tiny neon border line on hover */}
-                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {/* Gold left-rail revealed on hover */}
+                    <span className="ids-card__rail" />
 
-                    <div className="space-y-4">
-                      
+                    <div className="space-y-4 relative z-[2]">
+
                       {/* Badge header */}
                       <div className="flex items-center justify-between">
-                        <span className="text-[9px] uppercase tracking-wider font-mono font-extrabold text-blue-400 bg-blue-500/10 border border-blue-500/15 px-2.5 py-0.5 rounded-full">
-                          {item.platform}
-                        </span>
-                        
-                        <span className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/15">
-                          <BadgeCheck className="h-3 w-3 stroke-[2.5]" />
-                          Vetted Custody
-                        </span>
+                        <PlatformPill platform={item.platform} />
+
+                        {isLive ? (
+                          <span className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.1em] text-info bg-info/[0.08] px-2 py-0.5 rounded-full border border-info/20">
+                            <span className="live-dot live-dot--info" style={{ width: 5, height: 5 }} />
+                            Live
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/15">
+                            <BadgeCheck className="h-3 w-3 stroke-[2.5]" />
+                            Vetted Custody
+                          </span>
+                        )}
                       </div>
 
                       {/* Username Title & Badge list */}
                       <div className="space-y-2.5">
-                                <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors screenshot-private">
+                        <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-accent transition-colors screenshot-private">
                           @{item.username}
                         </h3>
                         <div className="flex flex-wrap gap-1.5">
@@ -405,9 +421,9 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                     </div>
 
                     {/* Footer values layout */}
-                    <div className="flex items-end justify-between pt-4 border-t border-white/[0.06] mt-4 z-10">
+                    <div className="flex items-end justify-between pt-4 border-t border-white/[0.06] mt-4 relative z-[2]">
                       <div>
-                        <span className="text-[8px] font-bold uppercase tracking-widest text-muted block mb-0.5">
+                        <span className="text-[9px] font-mono font-bold uppercase tracking-[0.15em] text-faint block mb-0.5">
                           Asking Price
                         </span>
                         <span className="text-xl font-extrabold text-emerald-400 font-mono screenshot-private">
@@ -416,14 +432,14 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
                       </div>
 
                       <button
-                        onClick={() => onSelectListing(item.slug)}
-                        className="h-8 px-4 rounded-lg bg-white hover:bg-gray-200 text-black transition-colors text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer select-none"
+                        onClick={(e) => { e.stopPropagation(); onSelectListing(item.slug); }}
+                        className="btn-sheen h-8 px-4 rounded-lg bg-ink hover:bg-white text-[#0a0a0a] transition-colors text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer select-none"
                       >
                         <span>View &amp; Offer</span>
                         <ArrowRight className="h-3 w-3" />
                       </button>
                     </div>
-                  </motion.article>
+                  </article>
                 );
               })
             )}

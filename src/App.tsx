@@ -288,7 +288,10 @@ export default function App() {
   // ─── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="bg-canvas text-white min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-white relative font-sans">
+    <div className="text-white min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-white relative font-sans">
+
+      {/* Drifting ambient glow — gold + blue radial fields behind all content */}
+      <div className="ambient" aria-hidden="true" />
 
       {/* Skip to content — accessibility */}
       <a

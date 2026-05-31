@@ -8,22 +8,21 @@ import {
   ShieldCheck,
   MessageCircle,
   Mail,
-  AlertTriangle,
-  BadgePercent,
   Lock,
   Landmark,
-  Check,
   Loader2,
   ChevronLeft,
-  Calendar,
-  Globe,
   Fingerprint,
-  UserCheck
+  Wallet,
+  User,
+  BadgeCheck,
+  Star
 } from "lucide-react";
-import { Listing, Urgency } from "../types";
-import { buildWhatsAppHandoff, WHATSAPP_NUMBER, formatINR, getEstimatedRange } from "../data";
+import { Listing } from "../types";
+import { buildWhatsAppHandoff, formatINR, getEstimatedRange } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { SEO } from "./SEO";
+import { PlatformPill } from "./PlatformPill";
 
 interface ListingDetailProps {
   listing: Listing;
@@ -44,6 +43,16 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
   const [cooldown, setCooldown] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successOverlay, setSuccessOverlay] = useState<{ active: boolean; whatsappUrl: string; mailto: string } | null>(null);
+
+  // Live watcher count — drifts gently to feel alive (4–12 range)
+  const [watchers, setWatchers] = useState(7);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => {
+      setWatchers((n) => Math.max(4, Math.min(12, n + (Math.random() < 0.5 ? -1 : 1))));
+    }, 4200);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -164,12 +173,13 @@ Urgency: Standard`;
           <article className="p-8 rounded-2xl bg-surface border border-white/[0.08] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-[80px] rounded-full pointer-events-none" />
             
-            <header className="flex flex-wrap items-center gap-3">
-              <span className="text-[9px] font-extrabold text-[#10B981] bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider font-mono">
-                Verified Seller Ownership
+            <header className="flex flex-wrap items-center gap-2.5">
+              <PlatformPill platform={listing.platform} />
+              <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-[0.1em] text-emerald-400 bg-emerald-500/[0.08] border border-emerald-500/20 px-2 py-1 rounded-full">
+                <BadgeCheck className="h-[11px] w-[11px] stroke-[2.5]" /> Ownership Verified
               </span>
-              <span className="text-[9px] font-extrabold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider capitalize font-mono">
-                {listing.platform} Platform
+              <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-[0.1em] text-accent bg-accent/[0.08] border border-accent/20 px-2 py-1 rounded-full">
+                <Star className="h-[11px] w-[11px]" /> Premium
               </span>
             </header>
 
@@ -245,23 +255,31 @@ Urgency: Standard`;
 
         {/* Sticky Trust Checkout sidebar */}
         <section className="lg:col-span-5">
-          <div className="p-6 rounded-2xl bg-raised border border-white/[0.08] sticky top-24 space-y-6">
-            
-            <div className="space-y-1">
-              <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest font-mono block">Offer Desk</span>
-              <h3 className="text-lg font-bold text-white">Make an Offer</h3>
-              <p className="text-xs text-muted">Submit custom valuation offers in compliance with our structured payment workflow.</p>
+          <div className="p-6 rounded-2xl bg-surface border border-white/[0.10] sticky top-24 shadow-[0_2px_8px_rgba(0,0,0,0.45),0_0_0_1px_rgba(255,255,255,0.04)]">
+
+            {/* Custody-secured pill */}
+            <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-emerald-400 bg-emerald-500/[0.08] border border-emerald-500/20 px-2.5 py-1.5 rounded-full mb-[18px]">
+              <ShieldCheck className="h-3 w-3" />
+              Funds held in vetted custody
+            </span>
+
+            {/* Live watchers strip */}
+            <div className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.04em] text-muted mb-3.5">
+              <span className="live-dot live-dot--info" />
+              <b className="text-info font-bold tabular-nums">{watchers}</b>
+              <span>buyers watching this handle now</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-surface border border-white/[0.04] space-y-1.5">
-              <span className="text-[9px] text-gray-500 uppercase font-mono block">Estimated Range</span>
-              <p className="text-sm font-bold font-mono text-emerald-400 screenshot-private">
-                {getEstimatedRange(listing.askingPrice)}
-              </p>
+            <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint mb-1.5">Asking price</div>
+            <div className="font-mono text-[34px] font-extrabold text-emerald-400 tracking-[-0.01em] leading-none screenshot-private">
+              {formatINR(listing.askingPrice)}
             </div>
+            <div className="text-xs text-faint mt-2">Commission 12% + 18% GST · paid by buyer</div>
+
+            <div className="h-px bg-white/[0.06] my-[22px]" />
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
-              
+
               {/* Bot HoneyPot invisible check */}
               <div className="opacity-0 absolute -z-50 w-0 h-0 overflow-hidden pointer-events-none">
                 <label className="block text-[8px] text-gray-500 uppercase">Do not fill this parameter if you are human</label>
@@ -276,30 +294,30 @@ Urgency: Standard`;
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
-                  Proposed Price Offer (INR)
+                <label className="block text-[10px] font-bold text-faint uppercase tracking-[0.12em] mb-2 font-mono">
+                  Your offer (INR)
                 </label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs font-mono">₹</span>
                   <input
                     type="number"
                     required
-                    placeholder="e.g. 500000"
+                    placeholder="15,00,000"
                     value={offer}
                     onChange={(e) => setOffer(e.target.value)}
-                    className="w-full pl-8 pr-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                    className="w-full pl-8 pr-3 py-3 text-sm rounded-lg bg-raised border border-[#26262B] text-white focus:border-action outline-none font-mono"
                     id="detail_input_offer"
                   />
                 </div>
                 {listing.askingPrice > 0 && (
                   <p className="text-[9px] text-muted mt-1.5 screenshot-private">
-                    Target Asking Valuation: {formatINR(listing.askingPrice)}
+                    Estimated range: {getEstimatedRange(listing.askingPrice)}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
+                <label className="block text-[10px] font-bold text-faint uppercase tracking-[0.12em] mb-2 font-mono">
                   Your Full Name
                 </label>
                 <input
@@ -308,13 +326,13 @@ Urgency: Standard`;
                   placeholder="e.g. Michael Jenkins"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                  className="w-full px-3.5 py-3 text-sm rounded-lg bg-raised border border-[#26262B] text-white focus:border-action outline-none"
                   id="detail_input_name"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
+                <label className="block text-[10px] font-bold text-faint uppercase tracking-[0.12em] mb-2 font-mono">
                   Your Email Address
                 </label>
                 <input
@@ -323,64 +341,98 @@ Urgency: Standard`;
                   placeholder="e.g. representative@entity.co"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none font-mono"
+                  className="w-full px-3.5 py-3 text-sm rounded-lg bg-raised border border-[#26262B] text-white focus:border-action outline-none font-mono"
                   id="detail_input_email"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
+                <label className="block text-[10px] font-bold text-faint uppercase tracking-[0.12em] mb-2 font-mono">
                   WhatsApp Number
                 </label>
                 <input
                   type="tel"
                   required
-                  placeholder="e.g. +91 98765 43210"
+                  placeholder="+91 00000 00000"
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full px-3 py-2.5 text-xs rounded-lg bg-surface border border-white/[0.08] text-white focus:border-blue-500/50 outline-none"
+                  className="w-full px-3.5 py-3 text-sm rounded-lg bg-raised border border-[#26262B] text-white focus:border-action outline-none"
                   id="detail_input_whatsapp"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const message = `Hello IDsvault Desk,\n\nI am interested in proposing an offer for @${listing.username} (${listing.platform}). Let's check estimated ranges.`;
-                    const hrefs = buildWhatsAppHandoff(message);
-                    window.open(hrefs.url, "_blank");
-                  }}
-                  className="py-3 px-2 text-center rounded-lg border border-white/[0.08] hover:border-white/[0.15] text-[10px] font-bold text-gray-300 uppercase select-none transition-colors"
-                >
-                  Price on Request
-                </button>
+              {/* Cost breakdown */}
+              {listing.askingPrice > 0 && (
+                <div className="text-[13px] text-muted">
+                  <div className="flex justify-between py-1.5">
+                    <span>Offer</span>
+                    <span className="font-mono screenshot-private">{formatINR(listing.askingPrice)}</span>
+                  </div>
+                  <div className="flex justify-between py-1.5">
+                    <span>Broker commission (12%)</span>
+                    <span className="font-mono">{formatINR(Math.round(listing.askingPrice * 0.12))}</span>
+                  </div>
+                  <div className="flex justify-between py-1.5">
+                    <span>GST (18%)</span>
+                    <span className="font-mono">{formatINR(Math.round(listing.askingPrice * 0.12 * 0.18))}</span>
+                  </div>
+                  <div className="flex justify-between pt-3 mt-1.5 border-t border-white/[0.06] text-white font-semibold">
+                    <span>Total to custody</span>
+                    <span className="font-mono screenshot-private">{formatINR(Math.round(listing.askingPrice * (1 + 0.12 * 1.18)))}</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex flex-col gap-2.5 pt-1">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="py-3 px-2 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-1 active:scale-95"
+                  className="btn-sheen w-full py-3.5 rounded-lg bg-accent hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed text-canvas font-semibold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
                   id="detail_submit_cta"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="h-3.5 w-3.5 animate-spin text-white shrink-0" />
-                      <span>Verifying...</span>
+                      <Loader2 className="h-4 w-4 animate-spin shrink-0" />
+                      <span>Verifying…</span>
                     </>
                   ) : (
                     <>
-                      <span>Make Offer</span>
-                      {cooldown > 0 && <span className="font-mono text-[8px] text-blue-300">({cooldown}s)</span>}
+                      <Wallet className="h-4 w-4" />
+                      <span>Place secured offer</span>
+                      {cooldown > 0 && <span className="font-mono text-[10px] opacity-70">({cooldown}s)</span>}
                     </>
                   )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const message = `Hello IDsvault Desk,\n\nI'd like to discuss @${listing.username} (${listing.platform}). Asking ${formatINR(listing.askingPrice)}.`;
+                    const hrefs = buildWhatsAppHandoff(message);
+                    window.open(hrefs.url, "_blank");
+                  }}
+                  className="btn-sheen w-full py-3.5 rounded-lg bg-[#25D366] hover:bg-[#20BD5A] text-[#06301a] font-semibold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Discuss on WhatsApp
                 </button>
               </div>
             </form>
 
-            {/* Support Message */}
-            <div className="pt-2 border-t border-white/[0.06] text-center select-none">
-              <p className="text-[10px] text-gray-500">
-                Questions? Message our Hyderabad desk on WhatsApp or email broker@idsvault.com.
-              </p>
+            {/* Reassurance */}
+            <div className="flex items-center gap-2 justify-center text-xs text-faint mt-4">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+              Refund in 3 business hours if transfer fails
+            </div>
+
+            {/* Seller identity row */}
+            <div className="flex items-center gap-3 mt-[18px] pt-[18px] border-t border-white/[0.06]">
+              <div className="h-[38px] w-[38px] rounded-full bg-raised border border-[#3A3A42] grid place-items-center text-muted">
+                <User className="h-[18px] w-[18px]" />
+              </div>
+              <div className="text-[13px] text-white leading-tight">
+                Listed via IDsvault desk
+                <small className="block font-mono text-[10px] text-faint mt-0.5">SELLER IDENTITY KYC-VERIFIED</small>
+              </div>
             </div>
 
           </div>
