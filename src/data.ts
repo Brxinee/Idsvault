@@ -15,8 +15,8 @@ export const initialListings: Listing[] = [
     username: "oncewrong",
     platform: Platform.Instagram,
     category: "Brandable Word",
-    askingPrice: 42000,  // Tier 5 keyword utility (9 chars) × Instagram 1.5× — 0–50 followers, pure username value
-    minPrice: 32000,
+    askingPrice: 29999,  // Standard tier (score 4) — 9 chars, generic lifestyle, India pricing
+    minPrice: 19999,
     status: DealStatus.Live,
     description: "Memorable, easy-to-recall Instagram handle suited to a content, lifestyle, or personal brand. Ownership verified and held under broker contract.",
     slug: "instagram-oncewrong",
@@ -27,8 +27,8 @@ export const initialListings: Listing[] = [
     username: "goalgrip",
     platform: Platform.Instagram,
     category: "Sports Brandable",
-    askingPrice: 125000, // Tier 4 coined compound (8 chars, sports niche) × Instagram 1.5× — 0–50 followers
-    minPrice: 95000,
+    askingPrice: 74999,  // Premium tier (score 9) — 8 chars, strong sports compound, massive Indian sports market
+    minPrice: 54999,
     status: DealStatus.Live,
     description: "Punchy sports-themed Instagram handle ideal for a football, fitness, or sports-content brand. Ownership verified and held under broker contract.",
     slug: "instagram-goalgrip",
@@ -38,9 +38,9 @@ export const initialListings: Listing[] = [
     id: "ID-1003",
     username: "offsmell",
     platform: Platform.Instagram,
-    category: "Brandable Word",
-    askingPrice: 165000, // Tier 4 creative brandable (8 chars, fragrance/lifestyle niche) × Instagram 1.5× — 0–50 followers
-    minPrice: 130000,
+    category: "Lifestyle Brandable",
+    askingPrice: 49999,  // Strong tier (score 7) — 8 chars, creative compound, lifestyle/fragrance niche
+    minPrice: 34999,
     status: DealStatus.Live,
     description: "Distinctive, brandable Instagram handle suited to a fragrance, lifestyle, or creative brand. Clean origin, held under broker contract.",
     slug: "instagram-offsmell",
@@ -51,8 +51,8 @@ export const initialListings: Listing[] = [
     username: "xbigbull",
     platform: Platform.Instagram,
     category: "Finance Brandable",
-    askingPrice: 110000, // Tier 4 finance compound (8 chars) × Instagram 1.5× — 0–50 followers
-    minPrice: 85000,
+    askingPrice: 49999,  // Strong tier (score 7) — 8 chars, finance/trading compound, active fintech market in India
+    minPrice: 34999,
     status: DealStatus.Live,
     description: "Markets-themed Instagram handle ideal for a trading, finance, or investing-content brand. Ownership verified and held under broker contract.",
     slug: "instagram-xbigbull",
@@ -63,8 +63,8 @@ export const initialListings: Listing[] = [
     username: "deshlaughs",
     platform: Platform.Instagram,
     category: "Comedy / Desi",
-    askingPrice: 38000,  // Tier 5 long-tail keyword (10 chars, desi comedy) × Instagram 1.5× — 0–50 followers
-    minPrice: 28000,
+    askingPrice: 49999,  // Strong tier (score 6) — desi comedy has massive Indian demand despite 10 chars
+    minPrice: 34999,
     status: DealStatus.Live,
     description: "Ready-made comedy Instagram handle for a desi humour or entertainment brand. Clean ownership, held under broker contract.",
     slug: "instagram-deshlaughs",
@@ -75,8 +75,8 @@ export const initialListings: Listing[] = [
     username: "apexmint",
     platform: Platform.Instagram,
     category: "Premium Brandable",
-    askingPrice: 160000, // Tier 4 premium compound (8 chars — "apex" = peak authority + "mint" = fresh/new) × Instagram 1.5× — 0–50 followers
-    minPrice: 125000,
+    askingPrice: 74999,  // Premium tier (score 9) — 8 chars, coined premium compound, finance/crypto/wellness crossover
+    minPrice: 54999,
     status: DealStatus.Live,
     description: "Premium compound Instagram handle fusing 'apex' (peak performance) with 'mint' (fresh/flawless condition). Ideal for a finance, crypto, luxury, or wellness brand. Clean origin, held under broker contract.",
     slug: "instagram-apexmint",
@@ -87,8 +87,8 @@ export const initialListings: Listing[] = [
     username: "riskpulse",
     platform: Platform.Instagram,
     category: "Fintech Brandable",
-    askingPrice: 120000, // Tier 4 finance compound (9 chars — "risk" = finance/security + "pulse" = real-time signal/monitoring) × Instagram 1.5× — 0–50 followers
-    minPrice: 90000,
+    askingPrice: 49999,  // Strong tier (score 6) — 9 chars, fintech compound, startup market in India
+    minPrice: 34999,
     status: DealStatus.Live,
     description: "Sharp fintech Instagram handle combining 'risk' (finance, security, analysis) with 'pulse' (real-time monitoring, signals). Ideal for a trading analytics, risk intelligence, or fintech brand. Clean origin, held under broker contract.",
     slug: "instagram-riskpulse",
@@ -99,8 +99,8 @@ export const initialListings: Listing[] = [
     username: "chartmap",
     platform: Platform.Instagram,
     category: "Fintech Brandable",
-    askingPrice: 135000, // Tier 4 finance compound (8 chars — "chart" = trading/data visualization + "map" = strategic overview) × Instagram 1.5× — 0–50 followers
-    minPrice: 105000,
+    askingPrice: 74999,  // Premium tier (score 8) — 8 chars, strong data/fintech compound, high startup demand
+    minPrice: 54999,
     status: DealStatus.Live,
     description: "Clean 8-char fintech Instagram handle fusing 'chart' (trading, analytics, data) with 'map' (strategy, navigation, overview). Ideal for a trading analytics, fintech, or data-visualization brand. Clean origin, held under broker contract.",
     slug: "instagram-chartmap",
