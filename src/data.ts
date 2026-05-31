@@ -93,6 +93,18 @@ export const initialListings: Listing[] = [
     description: "Sharp fintech Instagram handle combining 'risk' (finance, security, analysis) with 'pulse' (real-time monitoring, signals). Ideal for a trading analytics, risk intelligence, or fintech brand. Clean origin, held under broker contract.",
     slug: "instagram-riskpulse",
     createdTime: "2026-05-31T12:00:00Z"
+  },
+  {
+    id: "ID-1008",
+    username: "chartmap",
+    platform: Platform.Instagram,
+    category: "Fintech Brandable",
+    askingPrice: 135000, // Tier 4 finance compound (8 chars — "chart" = trading/data visualization + "map" = strategic overview) × Instagram 1.5× — 0–50 followers
+    minPrice: 105000,
+    status: DealStatus.Live,
+    description: "Clean 8-char fintech Instagram handle fusing 'chart' (trading, analytics, data) with 'map' (strategy, navigation, overview). Ideal for a trading analytics, fintech, or data-visualization brand. Clean origin, held under broker contract.",
+    slug: "instagram-chartmap",
+    createdTime: "2026-05-31T12:30:00Z"
   }
 ];
 
