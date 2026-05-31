@@ -230,7 +230,7 @@ Urgency: Standard`;
                 <Lock className="h-4 w-4 text-blue-500" />
                 <h4 className="font-bold text-white text-[11px] tracking-tight">Payment Held by Broker</h4>
                 <p className="text-[10px] text-gray-400 leading-normal font-normal">
-                  Payment is held in the broker's registered business account. Funds are released only after the transfer is confirmed.
+                  Payment is held in the broker's designated account. Funds are released only after the transfer is confirmed.
                 </p>
               </div>
 

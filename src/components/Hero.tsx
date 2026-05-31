@@ -39,7 +39,7 @@ const homepageSchema = [
     "name": "IDsvault",
     "url": "https://idsvault.com",
     "logo": "https://idsvault.com/logo.png",
-    "description": "India-based broker-advised digital identity facilitation desk for Telegram usernames, Instagram handles, X (Twitter) usernames, and brandable domains. Broker holds buyer funds in registered business account until live transfer is confirmed. Based in Hyderabad, Telangana.",
+    "description": "India-based broker-advised digital identity facilitation desk for Telegram usernames, Instagram handles, X (Twitter) usernames, and brandable domains. Broker holds buyer funds in a dedicated broker account until live transfer is confirmed. Based in Hyderabad, Telangana.",
     "areaServed": "IN",
     "address": {
       "@type": "PostalAddress",

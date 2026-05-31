@@ -51,7 +51,7 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "How payment works",
-        body: "Your payment goes to IDsvault's designated broker account — via UPI or bank transfer (NEFT/RTGS/IMPS). All payments are processed through our registered business current account. We hold the full amount, separate from our operating funds, until you confirm on the live call that you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund — no third-party claim process needed, because we hold the funds directly."
+        body: "Your payment goes to IDsvault's designated broker account — via UPI or bank transfer (NEFT/RTGS/IMPS). We hold the full amount, separate from operating funds, until you confirm on the live call that you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund — no third-party claim process needed, because we hold the funds directly."
       },
       {
         heading: "Fees and disclosure",
@@ -448,7 +448,7 @@ const faqItems = [
   },
   {
     q: "What happens if IDsvault shuts down mid-deal?",
-    a: "All funds are held in IDsvault's registered business current account, kept strictly separate from operating funds. Every deal has a signed engagement letter and broker invoice. Deal records are maintained for 7 years. If something ever goes wrong, all documentation is available to any legal authority."
+    a: "All funds are held in IDsvault's designated broker account, kept strictly separate from operating funds. Every deal has a signed engagement letter and broker invoice. Deal records are maintained. If something ever goes wrong, all documentation is available to any legal authority."
   }
 ];
 

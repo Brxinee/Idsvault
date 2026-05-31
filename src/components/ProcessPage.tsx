@@ -74,7 +74,7 @@ const steps = [
     bg: "bg-emerald-500/10 border-emerald-500/20",
     title: "Payment to Broker",
     subtitle: "You pay IDsvault — never the seller directly",
-    body: "Buyer transfers the full agreed amount to IDsvault's registered business current account via UPI, NEFT, RTGS, or IMPS. Payment is held in a designated account, separate from operating funds, until transfer is confirmed.",
+    body: "Buyer transfers the full agreed amount to IDsvault's designated broker account via UPI, NEFT, RTGS, or IMPS. Payment is held in a dedicated account, separate from operating funds, until transfer is confirmed.",
     detail: "A broker invoice is issued immediately upon receipt. No payment is ever released to the seller until the buyer confirms ownership.",
     forBuyers: true,
     forSellers: false,
