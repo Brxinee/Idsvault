@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#050505" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="author" content="Jogdhande Nikhil Patil" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
-    <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="REPLACE_WITH_SEARCH_CONSOLE_VERIFICATION_CODE" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- Base title/meta — overridden per-route by react-helmet-async -->
     <title>IDsvault — Digital Identity Advisory &amp; Transfer Desk | Hyderabad, India</title>
@@ -21,27 +21,32 @@
     <link rel="canonical" href="https://idsvault.com" />
 
     <!-- Open Graph -->
-    <meta property="og:type"        content="website" />
-    <meta property="og:title"       content="IDsvault — Digital Identity Advisory &amp; Transfer Desk" />
-    <meta property="og:description" content="Broker-advised transfer facilitation for Instagram usernames, X handles, Telegram usernames, and brandable domains. India only. Hyderabad desk." />
-    <meta property="og:url"         content="https://idsvault.com" />
-    <meta property="og:site_name"   content="IDsvault" />
-    <meta property="og:image"       content="https://idsvault.com/cover.png" />
-    <meta property="og:locale"      content="en_IN" />
+    <meta property="og:type"         content="website" />
+    <meta property="og:title"        content="IDsvault — Digital Identity Advisory &amp; Transfer Desk" />
+    <meta property="og:description"  content="Broker-advised transfer facilitation for Instagram usernames, X handles, Telegram usernames, and brandable domains. India only. Hyderabad desk." />
+    <meta property="og:url"          content="https://idsvault.com" />
+    <meta property="og:site_name"    content="IDsvault" />
+    <meta property="og:image"        content="https://idsvault.com/cover.png" />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"    content="IDsvault — Digital Identity Broker, Hyderabad India" />
+    <meta property="og:locale"       content="en_IN" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
     <meta name="twitter:title"       content="IDsvault — Digital Identity Advisory &amp; Transfer Desk" />
     <meta name="twitter:description" content="India's broker-advised desk for premium Instagram, X, Telegram handles and domains. Payment held by broker until transfer confirmed. Hyderabad, India." />
     <meta name="twitter:image"       content="https://idsvault.com/cover.png" />
-    <meta name="twitter:site"        content="@IDsvault" />
+    <meta name="twitter:image:alt"   content="IDsvault — Digital Identity Broker, Hyderabad India" />
 
-    <!-- Google Fonts — Inter (body) + Inter Tight (display) + JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&family=Inter+Tight:wght@500..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts — Inter (body) + Inter Tight (display) + JetBrains Mono — non-render-blocking -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&family=Inter+Tight:wght@500..900&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&family=Inter+Tight:wght@500..900&family=JetBrains+Mono:wght@400;500;700&display=swap" /></noscript>
 
     <!-- GA4 Analytics — consent-gated per DPDPA 2023 -->
+    <!-- Replace G-XXXXXXXXXX with your actual GA4 Measurement ID from Google Analytics -->
     <script>
       // Default consent denied until user accepts — DPDPA 2023 compliance
       window.dataLayer = window.dataLayer || [];
@@ -53,10 +58,10 @@
         'ad_personalization': 'denied'
       });
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=538771624"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-538771624"></script>
     <script>
       gtag('js', new Date());
-      gtag('config', '538771624', { 'send_page_view': true });
+      gtag('config', 'G-538771624', { 'send_page_view': true });
 
       // Call this after user grants consent
       window.grantAnalyticsConsent = function() {
@@ -77,15 +82,15 @@
       "@type": "LocalBusiness",
       "@id": "https://idsvault.com/#organization",
       "name": "IDsvault",
-      "description": "India's broker-advised digital identity facilitation desk. Buy or sell premium Instagram usernames, X (Twitter) handles, Telegram usernames, and brandable domains.",
+      "description": "India's broker-advised digital identity facilitation desk. Buy or sell premium Telegram usernames and brandable domain names. Broker-supervised live transfer, broker-held payment, full refund guarantee.",
       "url": "https://idsvault.com",
-      "logo": "https://idsvault.com/cover.png",
-      "image": "https://idsvault.com/cover.png",
       "email": "broker@idsvault.com",
+      "telephone": "+919392974031",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Hyderabad",
         "addressRegion": "Telangana",
+        "postalCode": "500081",
         "addressCountry": "IN"
       },
       "geo": {
@@ -100,11 +105,21 @@
       "currenciesAccepted": "INR",
       "paymentAccepted": "UPI, NEFT, RTGS, IMPS",
       "serviceType": ["Digital Identity Brokerage", "Username Transfer", "Handle Acquisition", "Domain Brokerage"],
-      "sameAs": [
-        "https://x.com/IDsvault",
-        "https://t.me/IDsvault",
-        "https://instagram.com/IDsvault"
-      ]
+      "founder": {
+        "@type": "Person",
+        "name": "Jogdhande Nikhil Patil",
+        "jobTitle": "Lead Identity Broker",
+        "email": "broker@idsvault.com",
+        "telephone": "+919392974031"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-93929-74031",
+        "email": "broker@idsvault.com",
+        "contactType": "customer service",
+        "availableLanguage": ["en", "te", "hi"],
+        "areaServed": "IN"
+      }
     }
     </script>
 

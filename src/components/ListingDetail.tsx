@@ -21,7 +21,7 @@ import {
 import { Listing } from "../types";
 import { buildWhatsAppHandoff, formatINR, getEstimatedRange } from "../data";
 import { motion, AnimatePresence } from "motion/react";
-import { SEO } from "./SEO";
+import { SEO, buildBreadcrumbSchema } from "./SEO";
 import { PlatformPill } from "./PlatformPill";
 
 interface ListingDetailProps {
@@ -150,7 +150,14 @@ Urgency: Standard`;
       title={`Buy @${listing.username} on ${listing.platform}`}
       description={`Premium @${listing.username} ${listing.platform} handle — ${listing.askingPrice > 0 ? `${formatINR(listing.askingPrice)} asking price. ` : ""}Broker-verified. Payment held by broker until transfer confirmed. IDsvault Hyderabad.`}
       canonical={`/asset/${listing.slug}`}
-      structuredData={listingSchema}
+      structuredData={listingSchema ? [listingSchema, buildBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Inventory", url: "/inventory" },
+        { name: `@${listing.username}`, url: `/asset/${listing.slug}` },
+      ])] : buildBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Inventory", url: "/inventory" },
+      ])}
     />
     <div className="max-w-7xl mx-auto px-6 py-12 text-left">
       

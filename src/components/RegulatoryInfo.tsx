@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ChevronDown, FileText, MessageCircle, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { SEO } from "./SEO";
+import { SEO, buildBreadcrumbSchema } from "./SEO";
 import { Link } from "react-router-dom";
 
 type Segment =
@@ -462,15 +462,21 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
           title="Frequently Asked Questions — IDsvault"
           description="Common questions about buying and selling Instagram, X, and Telegram usernames through IDsvault's broker-supervised transfer service in India."
           canonical="/faq"
-          structuredData={{
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": faqItems.map(item => ({
-              "@type": "Question",
-              "name": item.q,
-              "acceptedAnswer": { "@type": "Answer", "text": item.a }
-            }))
-          }}
+          structuredData={[
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": faqItems.map(item => ({
+                "@type": "Question",
+                "name": item.q,
+                "acceptedAnswer": { "@type": "Answer", "text": item.a }
+              }))
+            },
+            buildBreadcrumbSchema([
+              { name: "Home", url: "/" },
+              { name: "FAQ", url: "/faq" },
+            ]),
+          ]}
         />
 
         <div className="space-y-2">
@@ -536,12 +542,16 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-12 text-left space-y-8">
-      <SEO title={`${content.title} — IDsvault`} description={content.description} canonical={content.canonical} />
-
-      <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-500/5 border border-amber-500/25 text-amber-400 text-xs font-semibold">
-        <span className="shrink-0">⚠</span>
-        <span>Draft — under legal review. This document has not been reviewed by a qualified legal professional and is subject to change.</span>
-      </div>
+      <SEO
+        title={`${content.title} — IDsvault`}
+        description={content.description}
+        canonical={content.canonical}
+        structuredData={buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Policies", url: "/policy/terms" },
+          { name: content.title, url: content.canonical },
+        ])}
+      />
 
       <header className="space-y-3 pb-6 border-b border-white/[0.06]">
         <div className="flex items-center gap-3">

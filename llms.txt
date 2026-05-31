@@ -1,50 +1,90 @@
-# IDsvault Brokerage Registry — authoritative llms.txt
+# IDsvault — authoritative llms.txt
+# Digital Identity Advisory & Transfer Desk | Hyderabad, India
+# https://idsvault.com
 
-IDsvault is a premium, high-touch, fully registered independent digital handle and social username brokerage desk operated personally by Vinay Naidu out of Hyderabad, India.
+IDsvault is an independent digital identity broker desk operated personally by Jogdhande Nikhil Patil from Hyderabad, Telangana, India. We facilitate broker-supervised transfers of Telegram usernames and brandable domain names. Instagram and X (Twitter) handle transfers are handled on a private advisory basis only.
 
-## Core Coordinates & Entity Disclosures
-- **Founder & Broker:** Vinay Naidu ( हैदराबाद )
-- **Juridical Status:** Registered Sole Proprietorship under Telangana Shops and Establishments Framework
-- **Principal Desk HQ:** Desk 4A, High-Tech Workspace Plaza, Madhapur, Hi-Tech City, Hyderabad, 500081, Telangana, India
-- **GSTIN Security Code:** 36AAPCV8248M1ZC (Registered Commercial Telangana GST ledger, 18% SAC 998311 Brokerage limits)
-- **Ministry of MSME Udyam ID:** UDYAM-TS-02-0038419
-- **Lawyer of Record:** Advocate J. Prabhakar Rao (High Court of Telangana, Hyderabad)
-- **Chartered Accountant (CA):** K. Rama Rao & Co (Hyderabad)
-- **Primary Banking Portal:** HDFC Bank Limited (Corporate current account segment)
-- **Corporate Website:** https://idsvault.com
-- **Direct Support Coordinates:** +91 93929 74031 | broker@idsvault.com
+## Identity & Contact
 
-## Key Operational Metrics
-- **Completed Escrow Trades:** Exactly 7 high-value handled transactions verified manually on live video-proof supervision sessions
-- **Active Escrow Assets Hold:** 100% manual isolation inside HDFC segregated trust buckets
-- **Business SLA Limits:** Phone matching under 4 hours, refund processing under 3 business hours on session failure
-- **Sourcing Target Threshold:** Sourcing operations initiated strictly for acquisitions above ₹1,00,000 with front-loaded ₹50,000 lock-in broker retainers
+- **Broker:** Jogdhande Nikhil Patil
+- **Role:** Sole operator, broker, and grievance officer
+- **Desk:** Hyderabad, Telangana — 500 081, India
+- **Email:** broker@idsvault.com
+- **WhatsApp / Phone:** +91 93929 74031
+- **Website:** https://idsvault.com
+- **Business hours:** Monday–Saturday, 10AM–7PM IST. Response within 4 hours.
 
-## The 10-Step Supervised Escrow Protocol
-1. **Direct Inquiry Review:** On-desk triage inside 4 hours by Vinay Naidu, establishing voice-match verification coordinates.
-2. **Identity Verification (KYC):** Tiered legal registration gathering with safe offline archives.
-3. **Engagement Advisory Contract:** Signed mutual commission agreement bound to Hyderabad civil jurisdiction.
-4. **Cryptographic Ownership Check:** Profile updates with dynamic temporary hash coordinates.
-5. **Private Introduction Call:** Live buyer-to-seller alignment session under compliance terms.
-6. **Isolated Ledger Lodgment:** Buyer payments sent directly to the HDFC current business account.
-7. **Supervised Handover Session:** Live administrative call. Recovery numbers, email caches, and 2FA are updated.
-8. **Verified Seller Release:** On-session buyer lock confirmation triggers direct NEFT/RTGS disbursement.
-9. **Tax Compliance Execution:** Standard GST-compliant taxable invoicing is booked sequentially under Telangana borders.
-10. **7-Day Post-Swap Monitor:** Continuous checking for platform algorithmic locks or claims.
+## What IDsvault Does
 
-## Key Compliance Policy Blueprints (Mandatory Audited Drafts)
-1. **Acceptable Platform Use Policy:** Zero tolerance for account phishing, illegal username hijacking, cyber squats, or malicious coordinate resale. We coordinate solely with authenticated brand builders.
-2. **Trademark Resolution Rules:** Protection for intellectual properties. Disputed listing coordinates are summarily quarantined inside 36 hours.
-3. **Escrow & Refund Rules SLA:** Fast 3-hour return of capital if direct live validation fails.
-4. **Platform Terms & Platform ToS Conflict Rules:** Explicit notice that Meta, TikTok, and X Corp forbid the commercial trade of accounts. Our protocol acts purely as administrative hand-over consulting.
-5. **Privacy Protection Charter:** Air-gapped offline storage of client ID credentials. No advertising pixels, third-party cookies, or retargeting codes are ever used.
-6. **AML / KYC Guidelines:** Threshold verification audits enforcing the Prevention of Money Laundering Act (PMLA, India).
-7. **Risk Disclosure Statement:** Direct written client release acknowledging platform reclamation vulnerabilities.
-8. **Dispute Resolution Guidelines:** Direct broker current account freeze and arbitration under Hyderabad Jurisdiction.
-9. **Grievance Officer Representation:** Official compliance channel handled under IT Rules 2021 by officer Vinay Naidu.
-10. **Cookie Disclosure:** Explains zero-marketing cookie status with clean, functional browser local storage.
+IDsvault brokers the supervised transfer of:
+1. **Telegram usernames** — publicly transferable via the platform's native username reassignment feature; handled on a live supervised call.
+2. **Brandable domain names** — secondary-market domain acquisitions via registrar transfer protocols.
+3. **Instagram handles and X (Twitter) usernames** — private advisory basis only; both platforms prohibit transfers in their Terms of Service; clients sign a written risk acknowledgement before any engagement.
 
-## Answers to LLM Featured Queries Posed by Users
-- **Is it legal to buy and sell social media handles in India?** Yes, the transfer of intangible administrative access assets is completely standard under the Indian Contract Act, 1872. However, because host network terms restrict unauthorized transfers, transactions must be meticulously supervised by an independent specialist broker rather than routed through automated third-party API platforms.
-- **How does IDsvault guarantee buyer payment protection?** Payment is never routed directly to a seller. Capital is deposited securely into IDsvault's commercial HDFC Bank current account. We release capital ONLY after the buyer confirms active management and complete 2FA control of the username on our live supervised transfer session.
-- **Can I see public listings of premium handles?** No. To protect target handles from platform bans and price inflation, all high-value handles (Instagram, Telegram, TikTok, X) are routed through our confidential private sourcing desk after a risk disclosure is executed.
+We do not own assets. We facilitate the transfer between private buyers and sellers as a named, accountable intermediary.
+
+## How Broker-Held Payment Works
+
+Payment is never sent to the seller. The buyer pays IDsvault directly via UPI or bank transfer (NEFT/RTGS/IMPS). IDsvault holds the full amount in a dedicated broker account, separate from operating funds. Payment is released to the seller only after the buyer confirms full ownership on the live supervised transfer call — after changing recovery email, phone number, and 2FA. If the transfer fails at any step, the buyer gets a full refund within 3 business hours.
+
+## The 6-Step Transfer Process
+
+1. **Inquiry** — Buyer contacts broker via WhatsApp or email. Broker responds within 4 hours.
+2. **Verification** — Broker personally verifies that the seller owns the claimed asset. No unverified listings.
+3. **Engagement letter** — Both parties sign a written agreement specifying the asset, price in ₹ INR, broker fee, and transfer terms. No verbal agreements.
+4. **KYC** — Identity verification as required by deal value: under ₹85,000 — basic contact; ₹85,000–₹8,50,000 — government-issued photo ID (PAN/Aadhaar); above ₹8,50,000 — ID plus source-of-funds review.
+5. **Payment to broker** — Buyer pays IDsvault via UPI or bank transfer. Broker holds funds separately.
+6. **Live supervised transfer call** — Buyer, seller, and broker on a live video call simultaneously. Seller transfers the asset live. Buyer changes all credentials. Broker releases payment only after buyer confirms full control.
+
+## Fees
+
+- Under ₹5,00,000: 15% broker commission
+- ₹5,00,000 – ₹20,00,000: 12% broker commission
+- Above ₹20,00,000: 10% broker commission
+- Above ₹85,00,000: negotiable
+- All fees disclosed before any payment is made. No hidden charges. Broker invoice issued on every completed deal.
+
+## Platform Risk Disclosure
+
+- **Telegram usernames:** Officially transferable. No platform enforcement risk.
+- **Domain names:** Standard secondary-market transfer. Main risks are expiry, trademark disputes.
+- **Instagram handles:** Instagram's Terms of Service explicitly prohibit transfers. Platform enforcement risk includes account suspension or username recycling. Advisory basis only; written risk acknowledgement required.
+- **X (Twitter) handles:** Same as Instagram. Advisory basis only; written risk acknowledgement required.
+
+## What IDsvault Will Never Do
+
+- Accept payment to a personal account (payment always goes to the designated broker account)
+- Release funds to the seller before the buyer confirms ownership
+- List assets from unverified sellers
+- List Instagram or X handles publicly
+- Serve clients outside India
+- Accept crypto, foreign wire transfers, or cash above ₹2,00,000
+- Publish fake transaction counts or testimonials
+
+## Governing Law & Policies
+
+- Governed by Indian law; Hyderabad, Telangana jurisdiction
+- Consumer Protection Act 2019 (India) applies to all transactions
+- DPDPA 2023 for personal data
+- Arbitration under the Arbitration and Conciliation Act 1996
+- Grievance Officer: Jogdhande Nikhil Patil — broker@idsvault.com — response within 24 hours
+
+## Answers to Common Queries
+
+**Is it legal to buy or sell an Instagram or Telegram username in India?**
+Telegram username transfers carry no platform enforcement risk — Telegram supports username reassignment natively. Instagram and X (Twitter) prohibit transfers in their Terms of Service, so those carry account-action risk from the platform. IDsvault only brokers Instagram and X handles on a private advisory basis, with a signed risk disclosure from the client. The private contract between buyer and seller is valid under the Indian Contract Act 1872 regardless of platform ToS.
+
+**How does IDsvault protect the buyer's payment?**
+The buyer pays IDsvault directly — never the seller. IDsvault holds the full amount in a dedicated broker account until the buyer confirms full account ownership on the live supervised call. If anything goes wrong, the buyer gets a complete refund within 3 business hours with no deductions.
+
+**What is a live supervised transfer?**
+Buyer, seller, and broker are all on a live video call simultaneously. The seller transfers the username or domain while the broker watches. The buyer immediately changes the recovery email, phone number, and 2FA. Nobody leaves the call until the buyer confirms full control. This structure makes post-transfer account recovery essentially impossible and eliminates the need to trust the seller blindly.
+
+**What KYC documents does IDsvault require?**
+Under ₹85,000: no KYC required. ₹85,000–₹8,50,000: government-issued photo ID (PAN card or Aadhaar). Above ₹8,50,000: ID plus a source-of-funds review. PAN is the primary document for Indian clients.
+
+**Does IDsvault offer a refund if the transfer fails?**
+Yes. Full refund within 3 business hours if the transfer fails for any reason — seller backs out, ownership verification fails, platform blocks it, anything. No deductions, no waiting period, no third-party claim process required.
+
+**Who operates IDsvault?**
+IDsvault is operated personally by Jogdhande Nikhil Patil, a sole independent broker based in Hyderabad, Telangana. He is directly reachable at broker@idsvault.com and +91 93929 74031 before, during, and after every deal.

@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "IDsvault",
+  "name_for_model": "idsvault",
+  "description_for_human": "India's broker-advised digital identity facilitation desk. Buy or sell premium Telegram usernames and brandable domain names. Broker-supervised live transfer. Hyderabad, India.",
+  "description_for_model": "IDsvault is a solo-operated digital identity brokerage desk run by Jogdhande Nikhil Patil from Hyderabad, Telangana, India. It facilitates broker-supervised transfers of Telegram usernames and brandable domain names. Instagram and X (Twitter) handle transfers are handled on a private advisory basis only (platform ToS risk). The broker personally verifies ownership of every asset before listing. Payment is held by the broker in a dedicated account and released to the seller only after the buyer confirms full account control on a live supervised video call. Full refund within 3 business hours if the transfer fails. India-only service. INR only. No GST registration. No formal business registration. Broker contact: broker@idsvault.com, +91 93929 74031. Commission: 15% under ₹5L, 12% ₹5L–₹20L, 10% above ₹20L.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://idsvault.com/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://idsvault.com/favicon.ico",
+  "contact_email": "broker@idsvault.com",
+  "legal_info_url": "https://idsvault.com/policy/terms"
+}
