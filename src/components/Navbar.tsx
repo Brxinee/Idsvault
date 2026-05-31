@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
           </div>
           <div className="flex flex-col items-start leading-none gap-0.5">
             <span className="font-semibold text-[15px] text-white tracking-tight">IDsvault</span>
-            <span className="text-[8px] font-mono font-bold tracking-widest text-[#10B981] uppercase">brokerage</span>
+            <span className="text-[8px] font-mono font-bold tracking-widest text-faint uppercase">Broker-Verified</span>
           </div>
         </Link>
 
@@ -82,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactBroker }) => {
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={onContactBroker}
-            className="relative group h-9 px-4 text-xs font-semibold rounded-lg bg-accent hover:bg-accent-light text-canvas transition-all cursor-pointer select-none active:scale-95 flex items-center gap-1.5"
+            className="btn-sheen relative group h-9 px-4 text-xs font-semibold rounded-lg bg-accent hover:bg-accent-light text-canvas transition-all cursor-pointer select-none active:scale-95 flex items-center gap-1.5"
             id="nav_inquire_cta"
           >
             Inquire

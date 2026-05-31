@@ -8,12 +8,10 @@ import { Link } from "react-router-dom";
 import {
   ArrowRight,
   Lock,
-  CheckCircle2,
   ShieldCheck,
   BadgeCheck,
   Users,
   ArrowUpRight,
-  IndianRupee,
   MessageCircle,
   ChevronDown,
   ChevronUp,
@@ -26,6 +24,7 @@ import { formatINR, getBadgesForHandle } from "../data";
 import { Listing } from "../types";
 import { usePageTitle } from "../hooks/usePageTitle";
 import { SEO } from "./SEO";
+import { PlatformPill } from "./PlatformPill";
 
 interface HeroProps {
   featuredListings: Listing[];
@@ -154,12 +153,30 @@ const faqItems = [
   }
 ];
 
+/** Recently-secured ticker entries — mono prices in Indian format. */
+const securedTicker = [
+  { h: "@orbit",  p: "₹6,20,000",  t: "4 min ago" },
+  { h: "@flux",   p: "₹18,00,000", t: "1 hr ago" },
+  { h: "@echo",   p: "₹9,75,000",  t: "3 hrs ago" },
+  { h: "@haven",  p: "₹4,80,000",  t: "yesterday" },
+  { h: "@cobalt", p: "₹7,10,000",  t: "yesterday" },
+  { h: "@lumen",  p: "₹5,40,000",  t: "2 days ago" },
+];
+
+/** Cursor-follow glow: sets CSS vars consumed by the .ids-card::after gradient. */
+function handleCardGlow(e: React.MouseEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  el.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+  el.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+}
+
 export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing }) => {
   usePageTitle("Buy & Sell Premium Handles");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="relative overflow-hidden bg-canvas text-white">
+    <div className="relative overflow-hidden text-white">
 
       <SEO
         title="Buy & Sell Premium Social Media Handles"
@@ -167,6 +184,28 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
         canonical="/"
         structuredData={homepageSchema}
       />
+
+      {/* ── RECENTLY SECURED TICKER ──────────────────────── */}
+      <div className="border-b border-white/[0.06] bg-surface/55 backdrop-blur-md relative z-[40]">
+        <div className="max-w-7xl mx-auto px-6 flex items-center gap-5 h-11">
+          <span className="hidden sm:inline-flex items-center gap-2 shrink-0 font-mono text-[10px] font-extrabold uppercase tracking-[0.15em] text-emerald-400">
+            <span className="live-dot" />
+            Recently Secured
+          </span>
+          <div className="ticker ticker-mask flex-1">
+            <div className="ticker-track">
+              {[...securedTicker, ...securedTicker].map((item, i) => (
+                <span key={i} className="inline-flex items-center gap-2 text-[13px] text-muted">
+                  <span className="font-bold text-white">{item.h}</span>
+                  <span>secured</span>
+                  <span className="font-mono text-[11px] text-emerald-400 screenshot-private">{item.p}</span>
+                  <span className="text-ghost">· {item.t}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="relative max-w-7xl mx-auto px-6 pt-12 md:pt-24 pb-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -246,7 +285,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
           >
             <Link
               to="/inventory"
-              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-accent hover:bg-accent-light text-canvas text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+              className="btn-sheen group w-full sm:w-auto h-12 px-8 rounded-xl bg-accent hover:bg-accent-light text-canvas text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
               id="hero_primary_cta"
             >
               <span>Browse Handles</span>
@@ -264,73 +303,57 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
         </div>
 
-        {/* Right Column: Deal status mockup */}
-        <div className="lg:col-span-5 relative w-full flex justify-center">
-          <div className="relative w-full max-w-sm h-[380px] flex items-center justify-center">
+        {/* Right Column: floating listing mock stack */}
+        <div className="lg:col-span-5 relative w-full">
+          <div className="relative w-full h-[380px]">
 
-            {/* Active Deal Status Card */}
+            {/* Mock card — @nexus (top right) */}
             <motion.div
-              animate={{ y: [0, -10, 0] }}
+              animate={{ y: [0, -12, 0] }}
               transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="absolute top-2 w-[85%] p-5 rounded-2xl bg-raised/90 border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.5)] space-y-4 backdrop-blur-sm z-20"
+              className="absolute top-0 right-0 w-[320px] max-w-full p-[22px] rounded-2xl bg-surface border border-white/[0.10] shadow-[0_12px_40px_rgba(0,0,0,0.5)] z-20"
             >
-              <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                <div className="flex items-center gap-2">
-                  <span className="p-1 rounded bg-blue-500/10 text-blue-500">
-                    <ShieldCheck className="h-3.5 w-3.5" />
-                  </span>
-                  <span className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-widest">Deal Status</span>
-                </div>
-                <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 uppercase">Secured</span>
+              <div className="flex items-center justify-between mb-4">
+                <PlatformPill platform="instagram" />
+                <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-400 bg-emerald-500/[0.08] border border-emerald-500/20 px-2 py-1 rounded-full">
+                  <BadgeCheck className="h-[11px] w-[11px] stroke-[2.5]" />
+                  Verified
+                </span>
               </div>
-
-              <div className="flex items-center justify-between">
+              <div className="text-[26px] font-extrabold text-white tracking-[-0.02em] screenshot-private">@nexus</div>
+              <div className="flex gap-2 mt-2.5">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-muted bg-raised border border-[#26262B] px-2 py-1 rounded-full">5-letter</span>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-accent bg-accent/[0.08] border border-accent/20 px-2 py-1 rounded-full">Premium</span>
+              </div>
+              <div className="flex items-center justify-between mt-[18px] pt-4 border-t border-white/[0.06]">
                 <div>
-                  <h4 className="text-xl font-extrabold text-white tracking-tight font-mono">@apex</h4>
-                  <p className="text-[9px] text-gray-500 font-bold uppercase">Telegram Premium Handle</p>
+                  <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-faint">Asking price</div>
+                  <div className="font-mono text-[17px] font-extrabold text-emerald-400 screenshot-private">₹15,00,000</div>
                 </div>
-                <div className="text-right">
-                  <p className="text-[8px] text-gray-500 uppercase font-mono">Asking Price</p>
-                  <p className="text-base font-extrabold text-accent font-mono">₹15,00,000</p>
-                </div>
-              </div>
-
-              <div className="space-y-2 pt-2 text-[9px] text-gray-400">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                  <span>Seller ownership verified</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping mx-1" />
-                  <span className="font-semibold text-white">Payment held by broker · Transfer pending</span>
-                </div>
+                <span className="btn-sheen h-9 px-4 rounded-lg bg-ink hover:bg-white text-[#0a0a0a] text-xs font-semibold flex items-center">View &amp; Offer</span>
               </div>
             </motion.div>
 
-            {/* Broker Desk Card */}
+            {/* Mock card — @apex (bottom left) */}
             <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-6 w-[85%] p-4 rounded-xl bg-surface border border-white/[0.06] shadow-lg space-y-3 z-10 scale-[0.95]"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut", delay: 1 }}
+              className="absolute bottom-0 left-0 w-[280px] max-w-full p-[22px] rounded-2xl bg-surface border border-white/[0.10] shadow-[0_12px_40px_rgba(0,0,0,0.5)] z-10"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Users className="h-3.5 w-3.5 text-blue-400" />
-                  <span className="text-[9px] font-bold text-white uppercase tracking-wider">Hyderabad Desk</span>
-                </div>
-                <span className="text-[8px] text-[#10B981] font-mono font-semibold">Online</span>
+              <div className="flex items-center justify-between mb-4">
+                <PlatformPill platform="x" />
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-info bg-info/[0.08] border border-info/20 px-2 py-1 rounded-full">
+                  <span className="live-dot live-dot--info" style={{ width: 5, height: 5 }} />
+                  Live
+                </span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center font-bold text-xs text-blue-400">
-                  HD
+              <div className="text-[26px] font-extrabold text-white tracking-[-0.02em] screenshot-private">@apex</div>
+              <div className="flex items-center justify-between mt-[18px] pt-4 border-t border-white/[0.06]">
+                <div>
+                  <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-faint">Asking price</div>
+                  <div className="font-mono text-[17px] font-extrabold text-emerald-400 screenshot-private">₹22,00,000</div>
                 </div>
-                <div className="text-left leading-none space-y-1">
-                  <h5 className="text-[11px] font-bold text-white">IDsvault Broker</h5>
-                  <p className="text-[9px] text-gray-500 font-mono">Hyderabad Operations Desk</p>
-                </div>
-              </div>
-              <div className="bg-raised p-2.5 rounded-lg border border-white/[0.04] text-[9px] text-gray-400 text-left leading-relaxed">
-                "Seller ownership for @nexus verified. Ready to start the live transfer — both parties confirmed."
+                <span className="btn-sheen h-9 px-4 rounded-lg bg-ink hover:bg-white text-[#0a0a0a] text-xs font-semibold flex items-center">View &amp; Offer</span>
               </div>
             </motion.div>
 
@@ -454,7 +477,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
 
-            <div className="p-6 rounded-2xl bg-raised border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
+            <div className="ids-card p-6 rounded-2xl bg-raised border border-white/[0.10] space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <BadgeCheck className="h-4 w-4 text-emerald-400" />
                 Seller verified before listing
@@ -464,7 +487,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-raised border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
+            <div className="ids-card p-6 rounded-2xl bg-raised border border-white/[0.10] space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <Users className="h-4 w-4 text-blue-400" />
                 Broker on every live transfer
@@ -474,7 +497,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-raised border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
+            <div className="ids-card p-6 rounded-2xl bg-raised border border-white/[0.10] space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <Lock className="h-4 w-4 text-[#10B981]" />
                 Broker holds funds until you confirm
@@ -484,7 +507,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-raised border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-3">
+            <div className="ids-card p-6 rounded-2xl bg-raised border border-white/[0.10] space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-amber-400" />
                 Chargeback &amp; recovery protection
@@ -523,20 +546,17 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
               {featuredListings.map((item) => {
                 const badges = getBadgesForHandle(item.username, item.platform);
                 return (
-                  <motion.article
+                  <article
                     key={item.id}
-                    whileHover={{ y: -4 }}
-                    transition={{ duration: 0.2 }}
-                    className="p-5 rounded-2xl bg-canvas border border-white/[0.08] hover:border-white/[0.14] flex flex-col justify-between gap-4 group relative overflow-hidden cursor-pointer"
+                    onMouseMove={handleCardGlow}
                     onClick={() => onSelectListing(item.slug)}
+                    className="ids-card p-5 rounded-2xl bg-surface border border-white/[0.10] flex flex-col justify-between gap-4 group cursor-pointer"
                   >
-                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="ids-card__rail" />
 
-                    <div className="space-y-3">
+                    <div className="space-y-3 relative z-[2]">
                       <div className="flex items-center justify-between">
-                        <span className="text-[9px] uppercase font-mono font-extrabold text-blue-400 bg-blue-500/10 border border-blue-500/15 px-2 py-0.5 rounded-full">
-                          {item.platform}
-                        </span>
+                        <PlatformPill platform={item.platform} />
                         <span className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/15">
                           <BadgeCheck className="h-3 w-3 stroke-[2.5]" />
                           Verified
@@ -557,7 +577,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
+                    <div className="flex items-center justify-between pt-3 border-t border-white/[0.06] relative z-[2]">
                       <div>
                         <span className="text-[8px] font-bold uppercase tracking-widest text-gray-500 block">Asking Price</span>
                         <span className="text-base font-extrabold text-emerald-400 font-mono screenshot-private">
@@ -568,7 +588,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                         View <ArrowRight className="h-3 w-3" />
                       </span>
                     </div>
-                  </motion.article>
+                  </article>
                 );
               })}
             </div>
@@ -689,7 +709,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/inventory"
-              className="group w-full sm:w-auto h-12 px-8 rounded-xl bg-accent hover:bg-accent-light text-canvas text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+              className="btn-sheen group w-full sm:w-auto h-12 px-8 rounded-xl bg-accent hover:bg-accent-light text-canvas text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
             >
               Browse Handles
               <ArrowRight className="h-4 w-4 opacity-70 group-hover:translate-x-1 transition-transform" />

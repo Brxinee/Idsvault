@@ -1,0 +1,202 @@
+/* ════════════════════════════════════════════════════════════════
+   IDsvault — Premium Enhancement Layer
+   Ported from the design-system prototypes (enhancements.css + kit.js).
+   Adds: film grain, drifting ambient glow, button sheen, cursor-follow
+   card glow, live-ping dots, skeleton shimmer, recently-secured ticker.
+   These are framework-agnostic, class-driven effects applied to the
+   React components alongside Tailwind utilities.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Film grain (fixed, over everything, non-interactive) ───── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── 2. Drifting ambient glow (behind content) ─────────────────── */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ambient::before,
+.ambient::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+}
+.ambient::before {
+  width: 60vw;
+  height: 60vw;
+  top: -28vw;
+  left: 50%;
+  margin-left: -34vw;
+  background: radial-gradient(circle, rgba(201, 169, 97, 0.10), transparent 70%);
+  animation: drift1 22s ease-in-out infinite;
+}
+.ambient::after {
+  width: 48vw;
+  height: 48vw;
+  bottom: -24vw;
+  right: -10vw;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent 70%);
+  animation: drift2 28s ease-in-out infinite;
+}
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-4vw, 3vw) scale(1.08); }
+}
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(5vw, -3vw) scale(1.12); }
+}
+
+/* ── 3. Premium card depth + hover (listing & feature cards) ───── */
+.ids-card {
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0) 38%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 1px 2px rgba(0, 0, 0, 0.45);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+}
+.ids-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201, 169, 97, 0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 24px 60px -16px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(201, 169, 97, 0.12),
+    0 0 50px -10px rgba(201, 169, 97, 0.18);
+}
+
+/* Gold left-rail revealed on hover */
+.ids-card__rail {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-accent);
+  opacity: 0;
+  transition: opacity var(--duration-base);
+  z-index: 2;
+}
+.ids-card:hover .ids-card__rail { opacity: 1; }
+
+/* Cursor-follow glow (vars set inline by React onMouseMove) */
+.ids-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 0%),
+              rgba(201, 169, 97, 0.10), transparent 60%);
+  z-index: 1;
+}
+.ids-card:hover::after { opacity: 1; }
+
+/* ── 4. Button sheen sweep ─────────────────────────────────────── */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 28%, rgba(255, 255, 255, 0.45) 48%, transparent 64%);
+  transform: translateX(-130%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-sheen:hover::before { transform: translateX(130%); }
+
+/* ── 5. Live status dot (richer ping) ──────────────────────────── */
+.live-dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-success);
+  flex-shrink: 0;
+}
+.live-dot::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--color-success);
+  opacity: 0.6;
+  animation: live-ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.live-dot--info { background: var(--color-info); }
+.live-dot--info::before { border-color: var(--color-info); }
+@keyframes live-ping {
+  0%        { transform: scale(0.6); opacity: 0.7; }
+  80%, 100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ── 6. Skeleton shimmer (loading state) ───────────────────────── */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-raised);
+  border-radius: var(--radius-md);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+/* ── 7. Recently-secured ticker ────────────────────────────────── */
+.ticker {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-track {
+  display: inline-flex;
+  gap: 36px;
+  padding-left: 36px;
+  animation: ticker-scroll 38s linear infinite;
+}
+.ticker:hover .ticker-track { animation-play-state: paused; }
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+/* ── 8. Motion safety ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ambient::before, .ambient::after,
+  .ticker-track, .live-dot::before, .skeleton::after {
+    animation: none !important;
+  }
+  .ids-card:hover { transform: none; }
+}
