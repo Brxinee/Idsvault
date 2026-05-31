@@ -15,8 +15,8 @@ export const initialListings: Listing[] = [
     username: "oncewrong",
     platform: Platform.Instagram,
     category: "Brandable Word",
-    askingPrice: 22000, // ₹22,000
-    minPrice: 18000,
+    askingPrice: 42000,  // Tier 5 keyword utility (9 chars) × Instagram 1.5× — 0–50 followers, pure username value
+    minPrice: 32000,
     status: DealStatus.Live,
     description: "Memorable, easy-to-recall Instagram handle suited to a content, lifestyle, or personal brand. Ownership verified and held under broker contract.",
     slug: "instagram-oncewrong",
@@ -27,8 +27,8 @@ export const initialListings: Listing[] = [
     username: "goalgrip",
     platform: Platform.Instagram,
     category: "Sports Brandable",
-    askingPrice: 29000, // ₹29,000
-    minPrice: 23000,
+    askingPrice: 125000, // Tier 4 coined compound (8 chars, sports niche) × Instagram 1.5× — 0–50 followers
+    minPrice: 95000,
     status: DealStatus.Live,
     description: "Punchy sports-themed Instagram handle ideal for a football, fitness, or sports-content brand. Ownership verified and held under broker contract.",
     slug: "instagram-goalgrip",
@@ -39,8 +39,8 @@ export const initialListings: Listing[] = [
     username: "offsmell",
     platform: Platform.Instagram,
     category: "Brandable Word",
-    askingPrice: 40000, // ₹40,000
-    minPrice: 32000,
+    askingPrice: 165000, // Tier 4 creative brandable (8 chars, fragrance/lifestyle niche) × Instagram 1.5× — 0–50 followers
+    minPrice: 130000,
     status: DealStatus.Live,
     description: "Distinctive, brandable Instagram handle suited to a fragrance, lifestyle, or creative brand. Clean origin, held under broker contract.",
     slug: "instagram-offsmell",
@@ -51,8 +51,8 @@ export const initialListings: Listing[] = [
     username: "xbigbull",
     platform: Platform.Instagram,
     category: "Finance Brandable",
-    askingPrice: 20000, // ₹20,000
-    minPrice: 15000,
+    askingPrice: 110000, // Tier 4 finance compound (8 chars) × Instagram 1.5× — 0–50 followers
+    minPrice: 85000,
     status: DealStatus.Live,
     description: "Markets-themed Instagram handle ideal for a trading, finance, or investing-content brand. Ownership verified and held under broker contract.",
     slug: "instagram-xbigbull",
@@ -63,8 +63,8 @@ export const initialListings: Listing[] = [
     username: "deshlaughs",
     platform: Platform.Instagram,
     category: "Comedy / Desi",
-    askingPrice: 18000, // ₹18,000
-    minPrice: 12000,
+    askingPrice: 38000,  // Tier 5 long-tail keyword (10 chars, desi comedy) × Instagram 1.5× — 0–50 followers
+    minPrice: 28000,
     status: DealStatus.Live,
     description: "Ready-made comedy Instagram handle for a desi humour or entertainment brand. Clean ownership, held under broker contract.",
     slug: "instagram-deshlaughs",

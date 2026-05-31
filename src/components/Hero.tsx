@@ -305,7 +305,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
         {/* Right Column: floating listing mock stack */}
         <div className="lg:col-span-5 relative w-full">
-          <div className="relative w-full h-[380px]">
+          <div className="relative w-full h-[320px] sm:h-[380px]">
 
             {/* Mock card — @nexus (top right) */}
             <motion.div

@@ -1036,7 +1036,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
                     case "table":
                       return (
                         <div key={idx} className="overflow-x-auto rounded-xl border border-white/[0.05] bg-surface my-4 select-text">
-                          <table className="w-full text-left border-collapse text-xs">
+                          <table className="min-w-[560px] w-full text-left border-collapse text-xs">
                             <thead>
                               <tr className="border-b border-white/[0.06] bg-white/[0.02]">
                                 {sec.columns?.map((col, c_idx) => (
