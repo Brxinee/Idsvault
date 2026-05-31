@@ -5,7 +5,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO } from "./SEO";
+import { SEO, buildBreadcrumbSchema } from "./SEO";
 import { 
   Search, 
   ShieldAlert, 
@@ -20,7 +20,7 @@ import {
   Clock,
   ArrowRight
 } from "lucide-react";
-import { Listing, Platform } from "../types";
+import { Listing, Platform, DealStatus } from "../types";
 import { getBadgesForHandle, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { PlatformPill } from "./PlatformPill";
@@ -42,18 +42,45 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
   usePageTitle("Browse Handles");
   const [search, setSearch] = useState("");
 
-  const collectionSchema = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Browse Premium Handles — IDsvault",
-    "description": "Broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Broker-held payment on every deal.",
-    "url": "https://idsvault.com/inventory",
-    "provider": {
-      "@type": "Organization",
-      "name": "IDsvault",
-      "url": "https://idsvault.com"
-    }
-  };
+  const liveListings = listings.filter(l => l.status === DealStatus.Live);
+
+  const collectionSchema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Browse Premium Handles — IDsvault",
+      "description": "Broker-verified Instagram handles, X usernames, and Telegram channels available for sale. Broker-held payment on every deal.",
+      "url": "https://idsvault.com/inventory",
+      "provider": {
+        "@type": "Organization",
+        "name": "IDsvault",
+        "url": "https://idsvault.com"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Live Digital Identity Listings — IDsvault",
+      "numberOfItems": liveListings.length,
+      "itemListElement": liveListings.map((listing, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": `@${listing.username} — ${listing.platform} Handle`,
+        "url": `https://idsvault.com/asset/${listing.slug}`,
+        "description": listing.description,
+        "offers": {
+          "@type": "Offer",
+          "price": listing.askingPrice,
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock"
+        }
+      }))
+    },
+    buildBreadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Inventory", url: "/inventory" },
+    ]),
+  ];
   const [selectedPlatform, setSelectedPlatform] = useState<string>("all");
   const [selectedRarity, setSelectedRarity] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("price-asc");
@@ -171,9 +198,11 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
               }}
               className="w-full pl-10 pr-4 py-2.5 text-xs rounded-lg bg-raised border border-white/[0.08] text-white focus:border-blue-500/50 outline-none placeholder:text-gray-500 transition-colors focus:ring-1 focus:ring-blue-500/20"
               id="registry_search_input"
+              aria-label="Search listings"
             />
             {search && (
-              <button 
+              <button
+                aria-label="Clear search"
                 onClick={() => setSearch("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
               >

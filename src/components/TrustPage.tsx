@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { SEO } from "./SEO";
+import { SEO, buildBreadcrumbSchema } from "./SEO";
 import {
   Shield,
   BadgeCheck,
@@ -133,7 +133,10 @@ export const TrustPage: React.FC = () => {
         title="Trust Framework — IDsvault | How We Protect Every Transaction"
         description="How IDsvault protects buyers and sellers: named broker accountability, broker-held payment, live transfer call, verified listings, full refund commitment."
         canonical="/trust"
-        structuredData={jsonLd}
+        structuredData={[jsonLd, buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Trust Framework", url: "/trust" },
+        ])]}
       />
 
       <div className="min-h-screen bg-canvas text-white">

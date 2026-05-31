@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { SEO } from "./SEO";
+import { SEO, buildBreadcrumbSchema } from "./SEO";
 import {
   Search,
   FileText,
@@ -146,7 +146,10 @@ export const ProcessPage: React.FC = () => {
         title="How It Works — IDsvault | Broker-Supervised Transfer Process"
         description="IDsvault's 6-step verified transfer process: inquiry, ownership verification, KYC, payment to broker, live transfer call, and confirmed release. India only."
         canonical="/process"
-        structuredData={jsonLd}
+        structuredData={[jsonLd, buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "How It Works", url: "/process" },
+        ])]}
       />
 
       <div className="min-h-screen bg-canvas text-white">

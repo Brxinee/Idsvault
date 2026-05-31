@@ -182,7 +182,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
           "url": "https://idsvault.com",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://idsvault.com/public/logo.png"
+            "url": "https://idsvault.com/cover.png"
           }
         },
         "blogPost": posts.filter(p => p.status === "published").map(p => ({

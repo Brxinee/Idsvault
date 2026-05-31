@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { buildWhatsAppHandoff, SUPPORT_EMAIL } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO } from "./SEO";
+import { SEO, buildBreadcrumbSchema } from "./SEO";
 
 export const ContactView: React.FC = () => {
   const navigate = useNavigate();
@@ -77,6 +77,10 @@ Message: ${message}`;
       title="Contact Our Desk"
       description="Contact IDsvault's Hyderabad broker desk by email at broker@idsvault.com. We respond same day to buying and selling enquiries for Instagram, X, Telegram handles and domains."
       canonical="/contact"
+      structuredData={buildBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Contact", url: "/contact" },
+      ])}
     />
     <div className="max-w-4xl mx-auto px-6 py-12 text-left space-y-10">
 
@@ -186,10 +190,11 @@ Message: ${message}`;
               {/* Form fields */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
+                  <label htmlFor="contact_name" className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
                     Your Full Name
                   </label>
                   <input
+                    id="contact_name"
                     type="text"
                     required
                     placeholder="e.g. Anand Kumar"
@@ -201,10 +206,11 @@ Message: ${message}`;
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
+                    <label htmlFor="contact_email" className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
                       Email Address
                     </label>
                     <input
+                      id="contact_email"
                       type="email"
                       required
                       placeholder="e.g. anand@example.in"
@@ -215,10 +221,11 @@ Message: ${message}`;
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
+                    <label htmlFor="contact_whatsapp" className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
                       WhatsApp Number
                     </label>
                     <input
+                      id="contact_whatsapp"
                       type="tel"
                       required
                       placeholder="e.g. +91 93929 74031"
@@ -230,10 +237,11 @@ Message: ${message}`;
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
+                  <label htmlFor="contact_message" className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 font-mono">
                     Your Message
                   </label>
                   <textarea
+                    id="contact_message"
                     required
                     rows={4}
                     placeholder="Handle names, platforms, budget, or anything else..."

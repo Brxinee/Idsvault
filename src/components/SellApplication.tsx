@@ -5,7 +5,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO } from "./SEO";
+import { SEO, buildBreadcrumbSchema } from "./SEO";
 import {
   Upload,
   Mail,
@@ -155,6 +155,10 @@ WhatsApp: ${whatsapp}`;
         title="Sell Your Handle"
         description="List your premium Instagram handle, X username, Telegram channel, or brandable domain for sale. IDsvault's broker-supervised transfer process — seller verified, funds held, India-only, INR."
         canonical="/sell"
+        structuredData={buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Sell Your Handle", url: "/sell" },
+        ])}
       />
       <div className="max-w-xl mx-auto px-6 py-12 text-left">
 

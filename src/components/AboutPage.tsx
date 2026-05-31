@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO } from "./SEO";
+import { SEO, buildBreadcrumbSchema } from "./SEO";
 
 export const AboutPage: React.FC = () => {
   usePageTitle("About IDsvault — Hyderabad Broker Desk");
@@ -31,27 +31,33 @@ export const AboutPage: React.FC = () => {
         title="About IDsvault — Hyderabad Broker Desk"
         description="IDsvault is India's broker-supervised desk for buying and selling premium Instagram usernames, X handles, Telegram usernames, and brandable domains. Based in Hyderabad, Telangana. Broker: Jogdhande Nikhil Patil."
         canonical="/about"
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "AboutPage",
-          "name": "About IDsvault",
-          "description": "IDsvault is a solo-operated digital identity facilitation desk based in Hyderabad, Telangana, India.",
-          "url": "https://idsvault.com/about",
-          "mainEntity": {
-            "@type": "Organization",
-            "name": "IDsvault",
-            "description": "India-based broker-advised digital identity facilitation desk. One named broker per deal.",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Hyderabad",
-              "addressRegion": "Telangana",
-              "postalCode": "500 081",
-              "addressCountry": "IN"
-            },
-            "email": "broker@idsvault.com",
-            "telephone": "+919392974031"
-          }
-        }}
+        structuredData={[
+          {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "About IDsvault",
+            "description": "IDsvault is a solo-operated digital identity facilitation desk based in Hyderabad, Telangana, India.",
+            "url": "https://idsvault.com/about",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "IDsvault",
+              "description": "India-based broker-advised digital identity facilitation desk. One named broker per deal.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Hyderabad",
+                "addressRegion": "Telangana",
+                "postalCode": "500 081",
+                "addressCountry": "IN"
+              },
+              "email": "broker@idsvault.com",
+              "telephone": "+919392974031"
+            }
+          },
+          buildBreadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "About", url: "/about" },
+          ]),
+        ]}
       />
 
       {/* ── HERO ─────────────────────────────────────────── */}
