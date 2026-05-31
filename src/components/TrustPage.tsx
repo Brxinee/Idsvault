@@ -44,7 +44,7 @@ const pillars = [
   {
     icon: Shield,
     title: "India-registered business. Proper paperwork.",
-    body: "IDsvault is a registered business in Hyderabad, Telangana. We issue GST-compliant tax invoices on every transaction. Our registered address is published below and verifiable on Google Maps. There is no anonymity here.",
+    body: "IDsvault is a registered business in Hyderabad, Telangana. Our registered address is published below and verifiable on Google Maps. We issue a broker invoice for every transaction. There is no anonymity here.",
   },
   {
     icon: FileText,
@@ -78,11 +78,6 @@ const verifications = [
     label: "Business registration",
     value: "Hyderabad, Telangana, India",
     note: "Sole Proprietorship / OPC — registration details in footer",
-  },
-  {
-    label: "GST registration",
-    value: "GSTIN: Applied / [to be updated]",
-    note: "SAC 998311 — Management & advisory consulting",
   },
   {
     label: "Registered address",

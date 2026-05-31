@@ -51,11 +51,11 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "How payment works",
-        body: "Your payment goes to IDsvault's designated broker account — via UPI or bank transfer (NEFT/RTGS/IMPS). All payments are processed through our registered business current account with full GST-compliant tax invoicing. We hold the full amount, separate from our operating funds, until you confirm on the live call that you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund — no third-party claim process needed, because we hold the funds directly."
+        body: "Your payment goes to IDsvault's designated broker account — via UPI or bank transfer (NEFT/RTGS/IMPS). All payments are processed through our registered business current account. We hold the full amount, separate from our operating funds, until you confirm on the live call that you have full account access and have changed all credentials. Only then do we release payment to the seller. If the transfer fails at any step, you get a full refund — no third-party claim process needed, because we hold the funds directly."
       },
       {
         heading: "Fees and disclosure",
-        body: "Our commission is 15% + GST (18%) for deals under ₹5,00,000, 12% + GST for deals between ₹5,00,000 and ₹20,00,000, and 10% + GST for deals above ₹20,00,000. Deals above ₹85,00,000 are negotiable. All fees are disclosed before any payment is made. A GST-compliant tax invoice is issued for every transaction. There are no hidden charges."
+        body: "Our commission is 15% for deals under ₹5,00,000, 12% for deals between ₹5,00,000 and ₹20,00,000, and 10% for deals above ₹20,00,000. Deals above ₹85,00,000 are negotiable. All fees are disclosed before any payment is made. A broker invoice is issued for every transaction. There are no hidden charges."
       },
       {
         heading: "Governing law",
@@ -115,7 +115,7 @@ const policyContent: Record<string, PolicyDoc> = {
       },
       {
         heading: "Fees",
-        body: "If a deal is cancelled before the transfer is initiated, our brokerage fee is refunded in full. If the transfer was attempted but failed, our fee is also refunded. We only retain our commission on successfully completed deals. GST on fees follows the same refund logic."
+        body: "If a deal is cancelled before the transfer is initiated, our brokerage fee is refunded in full. If the transfer was attempted but failed, our fee is also refunded. We only retain our commission on successfully completed deals."
       }
     ]
   },
@@ -416,7 +416,7 @@ const faqItems = [
   },
   {
     q: "How much does IDsvault charge?",
-    a: "15% + 18% GST for deals under ₹5,00,000 · 12% + GST for ₹5,00,000–₹20,00,000 · 10% + GST above ₹20,00,000 · Negotiable for deals above ₹85,00,000. All fees are disclosed before any payment is made. GST-compliant tax invoice issued for every transaction."
+    a: "15% for deals under ₹5,00,000 · 12% for ₹5,00,000–₹20,00,000 · 10% above ₹20,00,000 · Negotiable for deals above ₹85,00,000. All fees are disclosed before any payment is made. Broker invoice issued for every transaction."
   },
   {
     q: "Can I buy a Telegram username through IDsvault?",
@@ -448,7 +448,7 @@ const faqItems = [
   },
   {
     q: "What happens if IDsvault shuts down mid-deal?",
-    a: "All funds are held in IDsvault's registered business current account, kept strictly separate from operating funds. Every deal has a signed engagement letter and GST invoice. Deal records are maintained for 7 years. If something ever goes wrong, all documentation is available to any legal authority."
+    a: "All funds are held in IDsvault's registered business current account, kept strictly separate from operating funds. Every deal has a signed engagement letter and broker invoice. Deal records are maintained for 7 years. If something ever goes wrong, all documentation is available to any legal authority."
   }
 ];
 

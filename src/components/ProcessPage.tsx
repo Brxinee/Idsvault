@@ -75,7 +75,7 @@ const steps = [
     title: "Payment to Broker",
     subtitle: "You pay IDsvault — never the seller directly",
     body: "Buyer transfers the full agreed amount to IDsvault's registered business current account via UPI, NEFT, RTGS, or IMPS. Payment is held in a designated account, separate from operating funds, until transfer is confirmed.",
-    detail: "A GST-compliant tax invoice is issued immediately upon receipt. No payment is ever released to the seller until the buyer confirms ownership.",
+    detail: "A broker invoice is issued immediately upon receipt. No payment is ever released to the seller until the buyer confirms ownership.",
     forBuyers: true,
     forSellers: false,
     paymentMethods: ["UPI (PhonePe, GPay, Paytm)", "NEFT / RTGS / IMPS", "Bank transfer to business current account"],
@@ -292,7 +292,7 @@ export const ProcessPage: React.FC = () => {
           <div className="max-w-3xl mx-auto space-y-8">
             <div className="space-y-2">
               <h2 className="text-2xl font-extrabold text-white">Fees</h2>
-              <p className="text-sm text-gray-400">All fees are disclosed before any payment is made. GST-compliant invoice issued on every transaction.</p>
+              <p className="text-sm text-gray-400">All fees are disclosed before any payment is made. Broker invoice issued on every transaction.</p>
             </div>
             <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
               <div className="overflow-x-auto">
@@ -301,20 +301,18 @@ export const ProcessPage: React.FC = () => {
                     <tr className="bg-surface border-b border-white/[0.06]">
                       <th className="text-left px-5 py-3.5 text-gray-400 font-semibold whitespace-nowrap">Deal value (INR)</th>
                       <th className="text-left px-5 py-3.5 text-gray-400 font-semibold whitespace-nowrap">Commission</th>
-                      <th className="text-right px-5 py-3.5 text-gray-400 font-semibold whitespace-nowrap">GST</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.04]">
                     {[
-                      { range: "Under ₹5,00,000", rate: "15%", gst: "18% on fee" },
-                      { range: "₹5,00,000 – ₹20,00,000", rate: "12%", gst: "18% on fee" },
-                      { range: "Above ₹20,00,000", rate: "10%", gst: "18% on fee" },
-                      { range: "Above ₹85,00,000", rate: "Negotiable", gst: "18% on fee" },
-                    ].map(({ range, rate, gst }) => (
+                      { range: "Under ₹5,00,000", rate: "15%" },
+                      { range: "₹5,00,000 – ₹20,00,000", rate: "12%" },
+                      { range: "Above ₹20,00,000", rate: "10%" },
+                      { range: "Above ₹85,00,000", rate: "Negotiable" },
+                    ].map(({ range, rate }) => (
                       <tr key={range} className="hover:bg-white/[0.02] transition-colors">
                         <td className="px-5 py-3.5 font-mono text-white/80 whitespace-nowrap">{range}</td>
                         <td className="px-5 py-3.5 font-bold text-accent">{rate}</td>
-                        <td className="px-5 py-3.5 text-right text-gray-400">{gst}</td>
                       </tr>
                     ))}
                   </tbody>

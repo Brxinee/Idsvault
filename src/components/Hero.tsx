@@ -87,7 +87,7 @@ const homepageSchema = [
         "name": "How much does IDsvault charge for brokering a deal?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Our commission is 15% + GST for deals under ₹5,00,000, 12% + GST for ₹5,00,000–₹20,00,000, and 10% + GST above ₹20,00,000. All fees are disclosed before any payment is made. GST invoice issued on all transactions."
+          "text": "Our commission is 15% for deals under ₹5,00,000, 12% for ₹5,00,000–₹20,00,000, and 10% above ₹20,00,000. All fees are disclosed before any payment is made."
         }
       },
       {
@@ -125,7 +125,7 @@ const faqItems = [
   },
   {
     q: "How much does IDsvault charge?",
-    a: "15% + GST for deals under ₹5,00,000 · 12% + GST for ₹5,00,000–₹20,00,000 · 10% + GST above ₹20,00,000 · Negotiable above ₹85,00,000. GST invoice issued on all fees. All charges disclosed before payment — no hidden fees."
+    a: "15% for deals under ₹5,00,000 · 12% for ₹5,00,000–₹20,00,000 · 10% above ₹20,00,000 · Negotiable above ₹85,00,000. All charges disclosed before payment — no hidden fees."
   },
   {
     q: "Can I buy a Telegram username?",
@@ -725,7 +725,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             </a>
           </div>
           <p className="text-[10px] text-gray-600 pt-2">
-            Commission: 15% (deals under ₹5L) · 12% (₹5L–₹20L) · 10% (above ₹20L) · 18% GST on fees · All charges disclosed before payment · <Link to="/policy/terms" className="underline hover:text-gray-400">Terms</Link>
+            Commission: 15% (deals under ₹5L) · 12% (₹5L–₹20L) · 10% (above ₹20L) · All charges disclosed before payment · <Link to="/policy/terms" className="underline hover:text-gray-400">Terms</Link>
           </p>
         </div>
       </section>
