@@ -81,6 +81,18 @@ export const initialListings: Listing[] = [
     description: "Premium compound Instagram handle fusing 'apex' (peak performance) with 'mint' (fresh/flawless condition). Ideal for a finance, crypto, luxury, or wellness brand. Clean origin, held under broker contract.",
     slug: "instagram-apexmint",
     createdTime: "2026-05-31T10:00:00Z"
+  },
+  {
+    id: "ID-1007",
+    username: "riskpulse",
+    platform: Platform.Instagram,
+    category: "Fintech Brandable",
+    askingPrice: 120000, // Tier 4 finance compound (9 chars — "risk" = finance/security + "pulse" = real-time signal/monitoring) × Instagram 1.5× — 0–50 followers
+    minPrice: 90000,
+    status: DealStatus.Live,
+    description: "Sharp fintech Instagram handle combining 'risk' (finance, security, analysis) with 'pulse' (real-time monitoring, signals). Ideal for a trading analytics, risk intelligence, or fintech brand. Clean origin, held under broker contract.",
+    slug: "instagram-riskpulse",
+    createdTime: "2026-05-31T12:00:00Z"
   }
 ];
 
