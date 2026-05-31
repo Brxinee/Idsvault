@@ -178,9 +178,17 @@ body::after {
 }
 .ticker-track {
   display: inline-flex;
-  gap: 36px;
-  padding-left: 36px;
+  gap: 28px;
+  padding-left: 28px;
   animation: ticker-scroll 38s linear infinite;
+  font-size: 11px;
+}
+@media (min-width: 640px) {
+  .ticker-track {
+    gap: 36px;
+    padding-left: 36px;
+    font-size: 13px;
+  }
 }
 .ticker:hover .ticker-track { animation-play-state: paused; }
 @keyframes ticker-scroll {

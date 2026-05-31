@@ -69,6 +69,18 @@ export const initialListings: Listing[] = [
     description: "Ready-made comedy Instagram handle for a desi humour or entertainment brand. Clean ownership, held under broker contract.",
     slug: "instagram-deshlaughs",
     createdTime: "2026-05-29T09:40:00Z"
+  },
+  {
+    id: "ID-1006",
+    username: "apexmint",
+    platform: Platform.Instagram,
+    category: "Premium Brandable",
+    askingPrice: 160000, // Tier 4 premium compound (8 chars — "apex" = peak authority + "mint" = fresh/new) × Instagram 1.5× — 0–50 followers
+    minPrice: 125000,
+    status: DealStatus.Live,
+    description: "Premium compound Instagram handle fusing 'apex' (peak performance) with 'mint' (fresh/flawless condition). Ideal for a finance, crypto, luxury, or wellness brand. Clean origin, held under broker contract.",
+    slug: "instagram-apexmint",
+    createdTime: "2026-05-31T10:00:00Z"
   }
 ];
 

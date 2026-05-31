@@ -208,10 +208,10 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
       </div>
 
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section className="relative max-w-7xl mx-auto px-6 pt-12 md:pt-24 pb-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <section className="relative max-w-7xl mx-auto px-6 pt-12 md:pt-24 pb-20 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
 
         {/* Left Column */}
-        <div className="lg:col-span-7 space-y-8 text-left">
+        <div className="md:col-span-7 space-y-8 text-left">
 
           {/* Status badge */}
           <motion.div
@@ -304,7 +304,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
         </div>
 
         {/* Right Column: floating listing mock stack */}
-        <div className="lg:col-span-5 relative w-full">
+        <div className="md:col-span-5 relative w-full">
           <div className="relative w-full h-[320px] sm:h-[380px]">
 
             {/* Mock card — @nexus (top right) */}
@@ -461,9 +461,9 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
 
       {/* ── WHY USE A BROKER ────────────────────────────── */}
       <section className="bg-canvas border-b border-white/[0.06] py-20 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
 
-          <div className="lg:col-span-4 space-y-4 text-left">
+          <div className="md:col-span-4 space-y-4 text-left">
             <span className="inline-block px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 text-[9px] font-extrabold uppercase tracking-widest font-mono">
               Why use a broker?
             </span>
@@ -475,7 +475,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
             </p>
           </div>
 
-          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
 
             <div className="ids-card p-6 rounded-2xl bg-raised border border-white/[0.10] space-y-3">
               <h4 className="font-bold text-xs text-white flex items-center gap-2">

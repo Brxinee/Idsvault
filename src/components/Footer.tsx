@@ -12,10 +12,10 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="border-t border-white/[0.06] bg-canvas py-16 px-6 mt-auto">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 text-sm text-gray-400">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-8 lg:gap-10 text-sm text-gray-400">
 
-        {/* Brand + Contact — takes 4 of 12 cols on lg */}
-        <div className="space-y-4 lg:col-span-4 text-left">
+        {/* Brand + Contact — spans 2 cols on mobile/tablet, 4 on lg */}
+        <div className="col-span-2 sm:col-span-3 lg:col-span-4 space-y-4 text-left">
           <Link
             to="/"
             className="flex items-center space-x-2 text-white font-bold tracking-tight hover:opacity-90 transition-opacity cursor-pointer"

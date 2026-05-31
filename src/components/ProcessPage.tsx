@@ -168,7 +168,7 @@ export const ProcessPage: React.FC = () => {
 
         {/* ── Guarantee strip ── */}
         <section className="border-b border-white/[0.06] bg-canvas py-6 px-6">
-          <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {guarantees.map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2.5 text-sm text-gray-300">
                 <Icon className="h-4 w-4 text-accent shrink-0" />
