@@ -550,7 +550,10 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                     key={item.id}
                     onMouseMove={handleCardGlow}
                     onClick={() => onSelectListing(item.slug)}
-                    className="ids-card p-5 rounded-2xl bg-surface border border-white/[0.10] flex flex-col justify-between gap-4 group cursor-pointer"
+                    aria-label={`View listing details for @${item.username} on ${item.platform}`}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelectListing(item.slug); } }}
+                    className="ids-card p-5 rounded-2xl bg-surface border border-white/[0.10] flex flex-col justify-between gap-4 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                   >
                     <span className="ids-card__rail" />
 
@@ -660,6 +663,7 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
                     className="w-full px-5 py-4 text-left flex justify-between items-center gap-4 hover:bg-white/[0.01] transition-colors cursor-pointer"
                     aria-expanded={isOpen}
+                    aria-controls={`hero-faq-answer-${idx}`}
                   >
                     <span className="text-sm font-semibold text-white leading-snug">{item.q}</span>
                     {isOpen
@@ -670,6 +674,8 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
+                        id={`hero-faq-answer-${idx}`}
+                        role="region"
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}

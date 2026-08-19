@@ -495,6 +495,7 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
                 className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.01] transition-colors cursor-pointer gap-4"
                 onClick={() => setActiveFaq(activeFaq === index ? null : index)}
                 aria-expanded={activeFaq === index}
+                aria-controls={`reg-faq-answer-${index}`}
               >
                 <span className="text-sm font-semibold text-white leading-snug">{item.q}</span>
                 <ChevronDown className={`h-4 w-4 text-gray-400 shrink-0 transition-transform ${activeFaq === index ? "rotate-180" : ""}`} />
@@ -502,6 +503,8 @@ export const RegulatoryInfo: React.FC<RegulatoryInfoProps> = ({ segment }) => {
               <AnimatePresence initial={false}>
                 {activeFaq === index && (
                   <motion.div
+                    id={`reg-faq-answer-${index}`}
+                    role="region"
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}

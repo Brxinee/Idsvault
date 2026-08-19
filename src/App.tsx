@@ -33,6 +33,8 @@ import { TrustPage } from "./components/TrustPage";
 import { KeepDesk } from "./components/KeepDesk";
 import { CookieConsent } from "./components/CookieConsent";
 import { ScreenshotGuard } from "./components/ScreenshotGuard";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { NotFoundPage } from "./components/NotFoundPage";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
 
@@ -83,7 +85,7 @@ function ListingDetailRoute({ listings, onAddProposal, onAddLog }: ListingDetail
     }
   }, [listing?.slug]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!listing) return <Navigate to="/inventory" replace />;
+  if (!listing) return <NotFoundPage />;
 
   return (
     <ListingDetail
@@ -119,7 +121,7 @@ function PolicyRoute() {
   type Seg = typeof valid[number];
 
   if (!segment || !(valid as readonly string[]).includes(segment)) {
-    return <Navigate to="/" replace />;
+    return <NotFoundPage />;
   }
 
   return <RegulatoryInfo segment={`policy-${segment as Seg}` as any} />;
@@ -304,6 +306,7 @@ export default function App() {
       <Navbar onContactBroker={handleDialBroker} />
 
       <main id="main-content" className="flex-grow pb-24 md:pb-12">
+        <ErrorBoundary>
         <Suspense fallback={
           <div className="flex items-center justify-center min-h-[40vh]">
             <div className="h-5 w-5 rounded-full border-2 border-white/10 border-t-blue-500 animate-spin" />
@@ -395,12 +398,13 @@ export default function App() {
               <Route path="/blog" element={<Navigate to="/journal" replace />} />
               <Route path="/listing/:slug" element={<BrowseSlugRedirect />} />
 
-              {/* ── Catch-all ── */}
-              <Route path="*" element={<Navigate to="/" replace />} />
+              {/* ── Catch-all 404 ── */}
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </motion.div>
         </AnimatePresence>
         </Suspense>
+        </ErrorBoundary>
       </main>
 
       <Footer />

@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SEO } from "./SEO";
+import { NotFoundPage } from "./NotFoundPage";
 import {
   BookOpen, Search, Filter, Calendar, Clock, User, Share2, Copy,
   Twitter, Facebook, ArrowLeft, ChevronRight, ChevronDown, Plus, Edit,
@@ -356,6 +357,10 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
 
   const publishedCount = useMemo(() => posts.filter(p => p.status === "published").length, [posts]);
   const categoryCount = useMemo(() => new Set(posts.map(p => p.category)).size, [posts]);
+
+  if (activeSlug && !activePost) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 relative">

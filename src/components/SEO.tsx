@@ -49,7 +49,9 @@ export const SEO: React.FC<SEOProps> = ({
   structuredData,
 }) => {
   const fullTitle     = `${title} — ${SITE_NAME}`;
-  const canonicalHref = canonical ? `${SITE_URL}${canonical}` : undefined;
+  const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+  const canonicalPath = canonical ?? currentPath;
+  const canonicalHref = `${SITE_URL}${canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`}`;
   const ogType        = pageType === "article" ? "article" : pageType === "product" ? "website" : "website";
 
   return (
