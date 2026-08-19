@@ -105,6 +105,42 @@ export const initialListings: Listing[] = [
     description: "Clean 8-char fintech Instagram handle fusing 'chart' (trading, analytics, data) with 'map' (strategy, navigation, overview). Ideal for a trading analytics, fintech, or data-visualization brand. Clean origin, held under broker contract.",
     slug: "instagram-chartmap",
     createdTime: "2026-05-31T12:30:00Z"
+  },
+  {
+    id: "ID-1009",
+    username: "y4yyo",
+    platform: Platform.Instagram,
+    category: "Influencer / Creator potential",
+    askingPrice: 49500,
+    minPrice: 20000,
+    status: DealStatus.Live,
+    description: "Established 5-letter Instagram handle suitable for creator or influencer branding. Seller reports ~5,249 followers, 28 following, 0 posts, and ~1,500 average monthly views (reported by seller — verification required upon offer). Account created in 2021 with 9 previous username changes and 1 reported past violation warning (no current active ban or restriction reported). Monetization eligibility subject to verification.",
+    slug: "instagram-y4yyo",
+    createdTime: "2026-08-19T09:00:00Z"
+  },
+  {
+    id: "ID-1010",
+    username: "9aica",
+    platform: Platform.Instagram,
+    category: "Brand / Business potential",
+    askingPrice: 20000,
+    minPrice: 15000,
+    status: DealStatus.Live,
+    description: "Short 5-character Instagram handle (@9aica) with strong brand and business naming potential. Account created in 2026 with 1 previous username change and no restrictions reported by seller (~5 followers, 0 posts). Positioned purely as a brand naming asset.",
+    slug: "instagram-9aica",
+    createdTime: "2026-08-19T09:10:00Z"
+  },
+  {
+    id: "ID-1011",
+    username: "hewrex",
+    platform: Platform.Instagram,
+    category: "Brand / Business potential",
+    askingPrice: 10000,
+    minPrice: 9000,
+    status: DealStatus.Live,
+    description: "Punchy 6-letter Instagram handle (@hewrex) suited for brand, tech, or business identity. Account created in 2026 with 1 previous username change and no restrictions reported by seller (~1 follower, 1 post). Positioned primarily as a short brandable naming asset.",
+    slug: "instagram-hewrex",
+    createdTime: "2026-08-19T09:20:00Z"
   }
 ];
 

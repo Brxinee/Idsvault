@@ -106,7 +106,7 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
   }, []);
 
   const filteredAndSortedListings = useMemo(() => {
-    let result = [...listings];
+    let result = listings.filter((l) => l.status === DealStatus.Live);
 
     // Search filter
     if (search.trim()) {
