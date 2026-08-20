@@ -2,7 +2,7 @@
 # Digital Identity Advisory & Transfer Desk | Hyderabad, India
 # https://idsvault.com
 
-# ── All crawlers (default) ──────────────────────────────────────────────────
+# ── Default crawl policy ─────────────────────────────────────────────────────
 User-agent: *
 Allow: /
 Disallow: /admin
@@ -10,7 +10,7 @@ Disallow: /keep
 Disallow: /404
 Crawl-delay: 2
 
-# ── Google ──────────────────────────────────────────────────────────────────
+# ── Google ───────────────────────────────────────────────────────────────────
 User-agent: Googlebot
 Allow: /
 Disallow: /admin
@@ -20,11 +20,16 @@ Disallow: /404
 User-agent: Googlebot-Image
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: Googlebot-Video
 Allow: /
+Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
-# ── Bing / Microsoft ────────────────────────────────────────────────────────
+# ── Bing / Microsoft ─────────────────────────────────────────────────────────
 User-agent: Bingbot
 Allow: /
 Disallow: /admin
@@ -35,98 +40,134 @@ Crawl-delay: 2
 User-agent: MSNBot
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 # ── Other major search engines ───────────────────────────────────────────────
 User-agent: DuckDuckBot
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: Slurp
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: Baiduspider
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
-# ── AI training and inference crawlers ───────────────────────────────────────
+# ── AI search / inference crawlers ───────────────────────────────────────────
 User-agent: GPTBot
 Allow: /
 Disallow: /admin
 Disallow: /keep
+Disallow: /404
 
 User-agent: ChatGPT-User
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: anthropic-ai
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: ClaudeBot
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: Claude-Web
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: PerplexityBot
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: YouBot
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: Applebot
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: Applebot-Extended
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: FacebookBot
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: Bytespider
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: cohere-ai
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
 User-agent: Google-Extended
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 
-# ── SEO and analytics crawlers ───────────────────────────────────────────────
+# ── SEO / analytics crawlers ─────────────────────────────────────────────────
 User-agent: AhrefsBot
-Allow: /journal
-Allow: /inventory
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 Crawl-delay: 5
 
 User-agent: SemrushBot
-Allow: /journal
-Allow: /inventory
 Allow: /
 Disallow: /admin
+Disallow: /keep
+Disallow: /404
 Crawl-delay: 5
 
+# Intentionally blocked crawlers.
 User-agent: MJ12bot
 Disallow: /
 
 User-agent: DotBot
 Disallow: /
 
-# ── Sitemap location ────────────────────────────────────────────────────────
+# ── Canonical sitemap ────────────────────────────────────────────────────────
 Sitemap: https://idsvault.com/sitemap.xml
