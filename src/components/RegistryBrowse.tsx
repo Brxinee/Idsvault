@@ -25,6 +25,7 @@ import { Listing, Platform, DealStatus } from "../types";
 import { getBadgesForHandle, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { PlatformPill } from "./PlatformPill";
+import { trackSearch, trackFilter } from "../lib/analytics";
 
 interface RegistryBrowseProps {
   listings: Listing[];
@@ -93,11 +94,16 @@ export const RegistryBrowse: React.FC<RegistryBrowseProps> = ({ listings, onSele
 
   const itemsPerPage = 6;
 
-  // Whenever inputs shift, trigger a quick 350ms skeleton animation
+  // Whenever inputs shift, trigger a quick 350ms skeleton animation and log analytics
   useEffect(() => {
     setIsSimulatingLoad(true);
     const timer = setTimeout(() => {
       setIsSimulatingLoad(false);
+      if (search.trim()) {
+        trackSearch(search, selectedPlatform, selectedRarity, filteredAndSortedListings.length);
+      } else if (selectedPlatform !== "all" || selectedRarity !== "all" || sortBy !== "price-asc") {
+        trackFilter(selectedPlatform, selectedRarity, undefined, undefined, sortBy);
+      }
     }, 450);
     return () => clearTimeout(timer);
   }, [search, selectedPlatform, selectedRarity, sortBy]);

@@ -11,6 +11,8 @@ import { SITE_CONFIG } from "../../lib/siteConfig";
 import { initialListings } from "../../data";
 import { ShieldCheck, MessageSquare, ArrowRight } from "lucide-react";
 
+import { Platform, DealStatus } from "../../types";
+
 const X_FAQS = [
   {
     question: "How do I buy an X (Twitter) handle in India?",
@@ -27,7 +29,7 @@ const X_FAQS = [
 ];
 
 export const XLanding: React.FC = () => {
-  const xListings = initialListings.filter(l => (l.platform === "X (Twitter)" || l.platform === "X") && l.status === "LIVE");
+  const xListings = initialListings.filter(l => l.platform === Platform.X && l.status === DealStatus.Live);
 
   const pageSchema = [
     buildBreadcrumbSchema([

@@ -19,6 +19,7 @@ import { Platform, Urgency } from "../types";
 import { buildWhatsAppHandoff, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
+import { trackFormStart, trackFormSubmit, trackAdvisorySubmission, trackError } from "../lib/analytics";
 
 interface SourcingRequestProps {
   onRegisterRequest: (
@@ -54,20 +55,27 @@ export const SourcingRequest: React.FC<SourcingRequestProps> = ({
   const isToSRiskyPlatform =
     platform === Platform.Instagram || platform === Platform.X;
 
+  React.useEffect(() => {
+    trackFormStart("buyer_advisory_form", "advisory_apply");
+  }, []);
+
   const handleNextStep = () => {
     if (!desiredUsername.trim()) {
       alert("Please enter the handle you are looking for.");
+      trackError("advisory_missing_username", "SourcingRequest", "next_step");
       return;
     }
     const budgetValue = parseFloat(budget);
     if (isNaN(budgetValue) || budgetValue <= 0) {
       alert("Please enter a valid budget in ₹.");
+      trackError("advisory_invalid_budget", "SourcingRequest", "next_step");
       return;
     }
     if (isToSRiskyPlatform && !riskAcknowledged) {
       alert(
         "Please read and acknowledge the platform risk disclosure before continuing."
       );
+      trackError("advisory_unacknowledged_risk", "SourcingRequest", "next_step");
       return;
     }
     setStep(2);
@@ -77,6 +85,7 @@ export const SourcingRequest: React.FC<SourcingRequestProps> = ({
     e.preventDefault();
     if (!whatsapp.trim() || !email.trim()) {
       alert("Please provide your WhatsApp number and email address.");
+      trackError("advisory_missing_contact", "SourcingRequest", "submit");
       return;
     }
 
@@ -92,6 +101,8 @@ export const SourcingRequest: React.FC<SourcingRequestProps> = ({
         urgency,
         alternatives
       );
+      trackFormSubmit("buyer_advisory_form", true, { platform, desired_username: desiredUsername, budget: budgetValue });
+      trackAdvisorySubmission(budgetValue, platform, urgency);
 
       const template = `Hi IDsvault, I am looking for help sourcing a handle.
 

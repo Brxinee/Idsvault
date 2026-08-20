@@ -21,6 +21,14 @@ import { buildWhatsAppHandoff, SUPPORT_EMAIL } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { usePageTitle } from "../hooks/usePageTitle";
 import { SEO, buildBreadcrumbSchema } from "./SEO";
+import {
+  trackFormStart,
+  trackFormSubmit,
+  trackWhatsAppClick,
+  trackEmailClick,
+  trackPhoneClick,
+  trackError
+} from "../lib/analytics";
 
 export const ContactView: React.FC = () => {
   const navigate = useNavigate();
@@ -33,11 +41,16 @@ export const ContactView: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successHandoff, setSuccessHandoff] = useState<{ url: string; mailto: string } | null>(null);
 
+  React.useEffect(() => {
+    trackFormStart("contact_inquiry_form", "contact");
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!name.trim() || !email.trim() || !whatsapp.trim() || !message.trim()) {
       alert("Please fill in all fields before submitting.");
+      trackError("contact_incomplete_fields", "ContactView", "submit");
       return;
     }
 
@@ -45,6 +58,8 @@ export const ContactView: React.FC = () => {
 
     setTimeout(() => {
       setIsSubmitting(false);
+
+      trackFormSubmit("contact_inquiry_form", true, { inquiry_type: inquiryType });
 
       const topicMap: Record<string, string> = {
         buy: "Buy / Acquisition Enquiry",

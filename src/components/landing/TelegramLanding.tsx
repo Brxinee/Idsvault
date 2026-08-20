@@ -10,6 +10,8 @@ import { buildBreadcrumbSchema, buildFAQSchema } from "../../lib/seo";
 import { initialListings } from "../../data";
 import { ShieldCheck, MessageSquare, ArrowRight } from "lucide-react";
 
+import { Platform, DealStatus } from "../../types";
+
 const TELEGRAM_FAQS = [
   {
     question: "Can I buy Telegram usernames in India with INR?",
@@ -26,7 +28,7 @@ const TELEGRAM_FAQS = [
 ];
 
 export const TelegramLanding: React.FC = () => {
-  const telegramListings = initialListings.filter(l => l.platform === "Telegram" && l.status === "LIVE");
+  const telegramListings = initialListings.filter(l => l.platform === Platform.Telegram && l.status === DealStatus.Live);
 
   const pageSchema = [
     buildBreadcrumbSchema([

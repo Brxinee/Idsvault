@@ -11,6 +11,8 @@ import { SITE_CONFIG } from "../../lib/siteConfig";
 import { initialListings } from "../../data";
 import { ShieldCheck, Lock, CheckCircle2, ArrowRight, MessageSquare, AlertTriangle, Layers, Building2 } from "lucide-react";
 
+import { Platform, DealStatus } from "../../types";
+
 const INSTAGRAM_FAQS = [
   {
     question: "Can I legally buy an Instagram username in India?",
@@ -31,7 +33,7 @@ const INSTAGRAM_FAQS = [
 ];
 
 export const InstagramLanding: React.FC = () => {
-  const instagramListings = initialListings.filter(l => l.platform === "Instagram" && l.status === "LIVE");
+  const instagramListings = initialListings.filter(l => l.platform === Platform.Instagram && l.status === DealStatus.Live);
 
   const pageSchema = [
     buildBreadcrumbSchema([

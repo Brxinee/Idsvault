@@ -4,6 +4,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
+import { trackError } from "../lib/analytics";
 
 interface Props {
   children: ReactNode;
@@ -26,6 +27,11 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.error("[IDsvault] Unhandled error:", error, info);
+    try {
+      trackError("unhandled_react_error", "ErrorBoundary", "component_catch", error.message);
+    } catch {
+      // Ignore fallback failures
+    }
   }
 
   render() {

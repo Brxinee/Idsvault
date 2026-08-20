@@ -23,6 +23,15 @@ import { buildWhatsAppHandoff, formatINR, getEstimatedRange } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { SEO, buildBreadcrumbSchema } from "./SEO";
 import { PlatformPill } from "./PlatformPill";
+import {
+  trackListingView,
+  trackFormStart,
+  trackFormSubmit,
+  trackLead,
+  trackWhatsAppClick,
+  trackEmailClick,
+  trackError
+} from "../lib/analytics";
 
 interface ListingDetailProps {
   listing: Listing;
@@ -44,6 +53,18 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successOverlay, setSuccessOverlay] = useState<{ active: boolean; whatsappUrl: string; mailto: string } | null>(null);
 
+  const [hasStartedForm, setHasStartedForm] = useState(false);
+
+  useEffect(() => {
+    trackListingView({
+      slug: listing.slug,
+      username: listing.username,
+      platform: listing.platform,
+      askingPrice: listing.askingPrice,
+      category: listing.category
+    });
+  }, [listing.slug, listing.username, listing.platform, listing.askingPrice, listing.category]);
+
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (cooldown > 0) {
@@ -54,6 +75,13 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
     return () => clearInterval(interval);
   }, [cooldown]);
 
+  const handleInputFocus = () => {
+    if (!hasStartedForm) {
+      setHasStartedForm(true);
+      trackFormStart("buyer_offer_form", "listing_detail");
+    }
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -61,6 +89,7 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
     if (honeypot) {
       console.warn("Anti-bot defense triggered: Honeypot check detected input.");
       alert("Submission blocked. Automated request signature detected.");
+      trackError("honeypot_triggered", "ListingDetail", "submit_offer", "Bot honeypot filled");
       return;
     }
 
@@ -73,6 +102,7 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
     const numericOffer = parseFloat(offer);
     if (isNaN(numericOffer) || numericOffer <= 0) {
       alert("Please provide a valid, positive INR offer valuation.");
+      trackError("invalid_offer_value", "ListingDetail", "submit_offer", "Offer was <= 0 or NaN");
       return;
     }
 
@@ -94,6 +124,10 @@ Urgency: Standard`;
       
       // Submit back up to main app state ledger record
       onSubmitProposal(numericOffer, name, email, whatsapp);
+
+      // Track form submission & lead analytics
+      trackFormSubmit("buyer_offer_form", true, { listing_slug: listing.slug, offer_value: numericOffer });
+      trackLead("buyer_offer", listing.slug, listing.platform, numericOffer);
 
       // Save a local 30 second submission cooldown block
       setCooldown(30);

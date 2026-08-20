@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { SEO } from "../SEO";
 import { buildBreadcrumbSchema, buildFAQSchema } from "../../lib/seo";
 import { ShieldCheck, Calculator, ArrowRight, MessageSquare, Sparkles } from "lucide-react";
+import { trackValuationSubmission } from "../../lib/analytics";
 
 const VALUATION_FAQS = [
   {
@@ -24,6 +25,10 @@ export const ValuationLanding: React.FC = () => {
   const [length, setLength] = useState<string>("short");
   const [platform, setPlatform] = useState<string>("Instagram");
   const [type, setType] = useState<string>("dictionary");
+
+  React.useEffect(() => {
+    trackValuationSubmission(platform, `${length}_${type}`);
+  }, [platform, length, type]);
 
   const getEstimatedRange = () => {
     if (platform === "Instagram") {

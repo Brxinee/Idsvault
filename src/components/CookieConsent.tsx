@@ -12,6 +12,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Cookie, X } from "lucide-react";
+import { setConsentGranted, setConsentDenied } from "../lib/analytics";
 
 const STORAGE_KEY = "cookie_consent";
 
@@ -26,21 +27,18 @@ export const CookieConsent: React.FC = () => {
       return () => clearTimeout(t);
     }
     // If previously granted, re-apply so SPA reloads honour the choice
-    if (stored === "granted" && typeof window.grantAnalyticsConsent === "function") {
-      window.grantAnalyticsConsent();
+    if (stored === "granted") {
+      setConsentGranted();
     }
   }, []);
 
   const handleAllow = () => {
-    localStorage.setItem(STORAGE_KEY, "granted");
-    if (typeof window.grantAnalyticsConsent === "function") {
-      window.grantAnalyticsConsent();
-    }
+    setConsentGranted();
     setVisible(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem(STORAGE_KEY, "denied");
+    setConsentDenied();
     setVisible(false);
   };
 

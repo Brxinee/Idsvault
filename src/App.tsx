@@ -33,6 +33,15 @@ const ValuationLanding        = lazy(() => import("./components/landing/Valuatio
 const BrokerLanding           = lazy(() => import("./components/landing/BrokerLanding").then(m => ({ default: m.BrokerLanding })));
 const PremiumUsernamesLanding = lazy(() => import("./components/landing/PremiumUsernamesLanding").then(m => ({ default: m.PremiumUsernamesLanding })));
 import { RegulatoryInfo } from "./components/RegulatoryInfo";
+import {
+  initAnalytics,
+  trackPageView,
+  trackListingView,
+  trackLead,
+  trackSellerSubmission,
+  trackAdvisorySubmission,
+  trackWhatsAppClick
+} from "./lib/analytics";
 import { AboutPage } from "./components/AboutPage";
 import { ContactView } from "./components/ContactView";
 import { ProcessPage } from "./components/ProcessPage";
@@ -149,15 +158,15 @@ export default function App() {
   // Auth
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
 
+  // Initialize central analytics engine
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
   // Analytics / logging on route changes
   useEffect(() => {
     addLog("NAVIGATION", `Route: ${location.pathname}`);
-    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("page_view", {
-        page_title: location.pathname,
-        page_location: window.location.href,
-      });
-    }
+    trackPageView(location.pathname);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -199,8 +208,9 @@ export default function App() {
   const handleSelectListing = (slug: string) => {
     navigate(`/asset/${slug}`);
     addLog("LISTING_VIEW", `Viewed listing: @${slug}`);
-    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("view_item", { item_id: slug, item_category: "username" });
+    const found = listings.find((l) => l.slug === slug);
+    if (found) {
+      trackListingView(found);
     }
   };
 
@@ -226,10 +236,7 @@ export default function App() {
       prev.map((item) => item.slug === slug ? { ...item, status: DealStatus.OfferPending } : item)
     );
     addLog("OFFER_SUBMITTED", `Offer of ${formatINR(offer)} for @${slug} from: ${name}`);
-
-    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("generate_lead", { item_id: slug, value: offer, currency: "INR" });
-    }
+    trackLead("buyer_offer", slug, undefined, offer);
   };
 
   const handleRegisterListing = (username: string, platform: Platform, asking: number, min: number) => {
@@ -248,9 +255,7 @@ export default function App() {
     };
     setListings((prev) => [newListing, ...prev]);
     addLog("LISTING_SUBMITTED", `Listing application: @${username} on ${platform} asking ${formatINR(asking)}`);
-    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("submit_listing", { username, platform, asking_price: asking });
-    }
+    trackSellerSubmission(platform, username, asking);
   };
 
   const handleRegisterSourcing = (
@@ -273,9 +278,7 @@ export default function App() {
     };
     setRequests((prev) => [newReq, ...prev]);
     addLog("SOURCING_SUBMITTED", `Sourcing request: @${desiredUsername} on ${platform}, budget ${formatINR(budget)}`);
-    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("submit_sourcing", { username: desiredUsername, platform, budget });
-    }
+    trackAdvisorySubmission(budget, platform, urgency);
   };
 
   const handleUpdateListingStatus = (slug: string, status: DealStatus) => {
@@ -287,9 +290,7 @@ export default function App() {
     const launch = buildWhatsAppHandoff(phrase);
     window.open(launch.url, "_blank");
     addLog("WHATSAPP_CTA", "WhatsApp CTA tapped from mobile sticky bar.");
-    if (typeof window !== "undefined" && (window as any).trackIDsVaultEvent) {
-      (window as any).trackIDsVaultEvent("contact_whatsapp", { context: "sticky_mobile_cta" });
-    }
+    trackWhatsAppClick("sticky_mobile_cta", "global", undefined, undefined, "talk_to_broker");
   };
 
   const featuredListings = listings.filter((l) => l.status === DealStatus.Live).slice(0, 4);

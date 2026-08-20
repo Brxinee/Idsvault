@@ -21,6 +21,7 @@ import { Platform } from "../types";
 import { buildWhatsAppHandoff, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
+import { trackFormStart, trackFormSubmit, trackSellerSubmission, trackError } from "../lib/analytics";
 
 interface SellApplicationProps {
   onRegisterListing: (
@@ -97,19 +98,26 @@ export const SellApplication: React.FC<SellApplicationProps> = ({
     if (e.target.files?.[0]) setFile(e.target.files[0]);
   };
 
+  useEffect(() => {
+    trackFormStart("seller_listing_form", "sell_apply");
+  }, []);
+
   const handleNextStep = () => {
     if (!username.trim() || usernameError) {
       alert("Please enter a valid handle.");
+      trackError("seller_invalid_handle", "SellApplication", "next_step");
       return;
     }
     const ask = parseFloat(askingPrice);
     const min = parseFloat(minPrice);
     if (isNaN(ask) || isNaN(min) || ask <= 0 || min <= 0) {
       alert("Please enter valid asking and reserve prices in ₹.");
+      trackError("seller_invalid_pricing", "SellApplication", "next_step");
       return;
     }
     if (pricingError) {
       alert(pricingError);
+      trackError("seller_pricing_error", "SellApplication", "next_step");
       return;
     }
     setStep(2);
@@ -121,10 +129,12 @@ export const SellApplication: React.FC<SellApplicationProps> = ({
     e.preventDefault();
     if (!fullName.trim() || !whatsapp.trim()) {
       alert("Please provide your name and WhatsApp number.");
+      trackError("seller_missing_contact", "SellApplication", "submit");
       return;
     }
     if (!allCheckboxesTicked) {
       alert("Please confirm all three declarations before submitting.");
+      trackError("seller_unconfirmed_declarations", "SellApplication", "submit");
       return;
     }
 
@@ -135,6 +145,8 @@ export const SellApplication: React.FC<SellApplicationProps> = ({
     setTimeout(() => {
       setIsSubmitting(false);
       onRegisterListing(username, platform, ask, min);
+      trackFormSubmit("seller_listing_form", true, { platform, username, asking_price: ask });
+      trackSellerSubmission(platform, username, ask);
 
       const msg = `Hi IDsvault, I want to list my handle for sale.
 
