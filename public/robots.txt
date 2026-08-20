@@ -7,6 +7,7 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /keep
+Disallow: /404
 Crawl-delay: 2
 
 # ── Google ──────────────────────────────────────────────────────────────────
@@ -14,6 +15,7 @@ User-agent: Googlebot
 Allow: /
 Disallow: /admin
 Disallow: /keep
+Disallow: /404
 
 User-agent: Googlebot-Image
 Allow: /
@@ -27,6 +29,7 @@ User-agent: Bingbot
 Allow: /
 Disallow: /admin
 Disallow: /keep
+Disallow: /404
 Crawl-delay: 2
 
 User-agent: MSNBot
@@ -47,9 +50,6 @@ Allow: /
 Disallow: /admin
 
 # ── AI training and inference crawlers ───────────────────────────────────────
-# These crawlers power ChatGPT, Perplexity, Claude, Gemini, and similar AI
-# assistants. Allowing them helps IDsvault appear in AI-generated answers.
-
 User-agent: GPTBot
 Allow: /
 Disallow: /admin
@@ -128,5 +128,5 @@ Disallow: /
 User-agent: DotBot
 Disallow: /
 
-# ── Sitemap locations ────────────────────────────────────────────────────────
+# ── Sitemap location ────────────────────────────────────────────────────────
 Sitemap: https://idsvault.com/sitemap.xml

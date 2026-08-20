@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { SEO } from "./SEO";
 import { 
   Shield, 
   Pin, 
@@ -328,6 +329,12 @@ export const KeepDesk: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#050505] py-10 px-4 sm:px-6 font-sans text-white select-none relative overflow-hidden" id="idsvault_keep_desk">
+      <SEO
+        title="Keep Vault Desk"
+        description="Private broker workspace utilities."
+        canonical="/keep"
+        noindex={true}
+      />
       
       {/* Background elegant gradient overlays */}
       <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[#D4AF37]/5 blur-3xl pointer-events-none" />

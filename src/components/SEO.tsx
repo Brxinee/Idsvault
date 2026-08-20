@@ -5,81 +5,76 @@
 
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { SITE_CONFIG } from "../lib/siteConfig";
+export { buildBreadcrumbSchema } from "../lib/seo";
 
-type PageType = "website" | "article" | "product";
-
-interface BreadcrumbItem {
-  name: string;
-  url: string;
-}
-
-interface SEOProps {
+export interface SEOProps {
   title: string;
   description?: string;
   canonical?: string;
-  pageType?: PageType;
+  pageType?: "website" | "article" | "product";
+  noindex?: boolean;
   /** Optional JSON-LD structured data — a single schema object or an array of them */
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
-}
-
-const SITE_NAME = "IDsvault";
-const SITE_URL  = "https://idsvault.com";
-const OG_IMAGE  = `${SITE_URL}/cover.png`;
-const OG_ALT    = "IDsvault — Digital Identity Broker, Hyderabad India";
-
-/** Build a BreadcrumbList JSON-LD object for any inner page. */
-export function buildBreadcrumbSchema(items: BreadcrumbItem[]): Record<string, unknown> {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": items.map((item, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "name": item.name,
-      "item": `${SITE_URL}${item.url}`,
-    })),
-  };
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
 export const SEO: React.FC<SEOProps> = ({
   title,
-  description,
+  description = SITE_CONFIG.description,
   canonical,
   pageType = "website",
+  noindex = false,
   structuredData,
+  ogImage = SITE_CONFIG.defaultOgImage,
+  ogImageAlt = SITE_CONFIG.defaultOgImageAlt,
 }) => {
-  const fullTitle     = `${title} — ${SITE_NAME}`;
+  // Always format title cleanly with business name appended if not already present
+  const fullTitle = title.includes(SITE_CONFIG.name)
+    ? title
+    : `${title} — ${SITE_CONFIG.name}`;
+
   const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
   const canonicalPath = canonical ?? currentPath;
-  const canonicalHref = `${SITE_URL}${canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`}`;
-  const ogType        = pageType === "article" ? "article" : pageType === "product" ? "website" : "website";
+  const cleanCanonicalPath = canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`;
+  const canonicalHref = `${SITE_CONFIG.canonicalOrigin}${cleanCanonicalPath}`;
+
+  const ogType = pageType === "article" ? "article" : "website";
 
   return (
     <Helmet>
       <title>{fullTitle}</title>
       {description && <meta name="description" content={description} />}
-      {canonicalHref && <link rel="canonical" href={canonicalHref} />}
+      <link rel="canonical" href={canonicalHref} />
+
+      {/* Robots indexation rule */}
+      {noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      )}
 
       {/* Open Graph */}
-      <meta property="og:type"         content={ogType} />
-      <meta property="og:title"        content={fullTitle} />
+      <meta property="og:type" content={ogType} />
+      <meta property="og:title" content={fullTitle} />
       {description && <meta property="og:description" content={description} />}
-      {canonicalHref && <meta property="og:url" content={canonicalHref} />}
-      <meta property="og:site_name"    content={SITE_NAME} />
-      <meta property="og:image"        content={OG_IMAGE} />
-      <meta property="og:image:width"  content="1200" />
+      <meta property="og:url" content={canonicalHref} />
+      <meta property="og:site_name" content={SITE_CONFIG.name} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt"    content={OG_ALT} />
-      <meta property="og:locale"       content="en_IN" />
+      <meta property="og:image:alt" content={ogImageAlt} />
+      <meta property="og:locale" content={SITE_CONFIG.locale} />
 
-      {/* Twitter */}
-      <meta name="twitter:card"        content="summary_large_image" />
-      <meta name="twitter:title"       content={fullTitle} />
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={fullTitle} />
       {description && <meta name="twitter:description" content={description} />}
-      <meta name="twitter:image"       content={OG_IMAGE} />
-      <meta name="twitter:image:alt"   content={OG_ALT} />
+      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image:alt" content={ogImageAlt} />
 
-      {/* JSON-LD */}
+      {/* JSON-LD Structured Data */}
       {structuredData && (
         <script type="application/ld+json">
           {JSON.stringify(

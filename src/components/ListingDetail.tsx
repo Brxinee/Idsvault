@@ -44,16 +44,6 @@ export const ListingDetail: React.FC<ListingDetailProps> = ({ listing, onSubmitP
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successOverlay, setSuccessOverlay] = useState<{ active: boolean; whatsappUrl: string; mailto: string } | null>(null);
 
-  // Live watcher count — drifts gently to feel alive (4–12 range)
-  const [watchers, setWatchers] = useState(7);
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setInterval(() => {
-      setWatchers((n) => Math.max(4, Math.min(12, n + (Math.random() < 0.5 ? -1 : 1))));
-    }, 4200);
-    return () => clearInterval(id);
-  }, []);
-
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (cooldown > 0) {
@@ -269,13 +259,6 @@ Urgency: Standard`;
               <ShieldCheck className="h-3 w-3" />
               Funds held in vetted custody
             </span>
-
-            {/* Live watchers strip */}
-            <div className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.04em] text-muted mb-3.5">
-              <span className="live-dot live-dot--info" />
-              <b className="text-info font-bold tabular-nums">{watchers}</b>
-              <span>buyers watching this handle now</span>
-            </div>
 
             <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint mb-1.5">Asking price</div>
             <div className="font-mono text-[34px] font-extrabold text-emerald-400 tracking-[-0.01em] leading-none screenshot-private">

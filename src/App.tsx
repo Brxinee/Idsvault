@@ -23,8 +23,15 @@ import { ListingDetail } from "./components/ListingDetail";
 import { SellApplication } from "./components/SellApplication";
 import { SourcingRequest as SourcingRequestView } from "./components/SourcingRequest";
 // Heavy components lazy-loaded to reduce initial bundle
-const AdminDashboard = lazy(() => import("./components/AdminDashboard").then(m => ({ default: m.AdminDashboard })));
-const BlogView       = lazy(() => import("./components/BlogView").then(m => ({ default: m.BlogView })));
+const AdminDashboard          = lazy(() => import("./components/AdminDashboard").then(m => ({ default: m.AdminDashboard })));
+const BlogView                = lazy(() => import("./components/BlogView").then(m => ({ default: m.BlogView })));
+const InstagramLanding        = lazy(() => import("./components/landing/InstagramLanding").then(m => ({ default: m.InstagramLanding })));
+const XLanding                = lazy(() => import("./components/landing/XLanding").then(m => ({ default: m.XLanding })));
+const TelegramLanding         = lazy(() => import("./components/landing/TelegramLanding").then(m => ({ default: m.TelegramLanding })));
+const SellInstagramLanding    = lazy(() => import("./components/landing/SellInstagramLanding").then(m => ({ default: m.SellInstagramLanding })));
+const ValuationLanding        = lazy(() => import("./components/landing/ValuationLanding").then(m => ({ default: m.ValuationLanding })));
+const BrokerLanding           = lazy(() => import("./components/landing/BrokerLanding").then(m => ({ default: m.BrokerLanding })));
+const PremiumUsernamesLanding = lazy(() => import("./components/landing/PremiumUsernamesLanding").then(m => ({ default: m.PremiumUsernamesLanding })));
 import { RegulatoryInfo } from "./components/RegulatoryInfo";
 import { AboutPage } from "./components/AboutPage";
 import { ContactView } from "./components/ContactView";
@@ -368,6 +375,19 @@ export default function App() {
                   />
                 }
               />
+              {/* ── Commercial Intent Landing Pages ── */}
+              <Route path="/instagram-usernames" element={<InstagramLanding />} />
+              <Route path="/buy-instagram-username-india" element={<InstagramLanding />} />
+              <Route path="/x-usernames" element={<XLanding />} />
+              <Route path="/buy-x-username-india" element={<XLanding />} />
+              <Route path="/telegram-usernames" element={<TelegramLanding />} />
+              <Route path="/buy-telegram-username-india" element={<TelegramLanding />} />
+              <Route path="/sell-instagram-username-india" element={<SellInstagramLanding />} />
+              <Route path="/username-valuation" element={<ValuationLanding />} />
+              <Route path="/digital-identity-broker" element={<BrokerLanding />} />
+              <Route path="/premium-usernames" element={<PremiumUsernamesLanding />} />
+              <Route path="/brandable-usernames" element={<PremiumUsernamesLanding />} />
+
               <Route path="/contact" element={<ContactView />} />
               <Route path="/admin"
                 element={

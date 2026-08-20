@@ -5,7 +5,8 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { usePageTitle } from "../hooks/usePageTitle";
-import { SEO, buildBreadcrumbSchema } from "./SEO";
+import { SEO } from "./SEO";
+import { buildBreadcrumbSchema } from "../lib/seo";
 import { 
   Search, 
   ShieldAlert, 

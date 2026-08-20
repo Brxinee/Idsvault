@@ -23,6 +23,7 @@ import { User } from "@supabase/supabase-js";
 import { Listing, Lead, SourcingRequest, SystemLog, DealStatus } from "../types";
 import { formatINR } from "../data";
 import { motion } from "motion/react";
+import { SEO } from "./SEO";
 import { supabase, isSupabaseConfigured } from "../lib/supabase";
 
 interface AdminDashboardProps {
@@ -295,6 +296,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   if (!isAuthenticated) {
     return (
       <div className="max-w-md mx-auto px-6 py-24 select-none">
+        <SEO title="Admin Desk" description="Private admin desk." canonical="/admin" noindex={true} />
         <motion.article 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -374,6 +376,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-8 text-left">
+      <SEO title="Admin Desk" description="Private admin desk." canonical="/admin" noindex={true} />
       
       {/* Executive Header */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/[0.06] pb-6 font-sans">

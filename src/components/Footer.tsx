@@ -62,8 +62,22 @@ export const Footer: React.FC = () => {
           <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Services</h4>
           <ul className="space-y-2 text-xs">
             <li><Link to="/inventory" className="hover:text-white transition-colors">Browse Inventory</Link></li>
-            <li><Link to="/sell"      className="hover:text-white transition-colors">Submit an Asset</Link></li>
-            <li><Link to="/advisory"  className="hover:text-white transition-colors">Private Advisory</Link></li>
+            <li><Link to="/sell" className="hover:text-white transition-colors">Submit an Asset</Link></li>
+            <li><Link to="/advisory" className="hover:text-white transition-colors">Private Advisory</Link></li>
+            <li><Link to="/username-valuation" className="hover:text-white transition-colors">Username Valuation</Link></li>
+            <li><Link to="/digital-identity-broker" className="hover:text-white transition-colors">Identity Broker Desk</Link></li>
+          </ul>
+        </div>
+
+        {/* Categories — 2 of 12 cols */}
+        <div className="space-y-3 lg:col-span-2 text-left">
+          <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Categories</h4>
+          <ul className="space-y-2 text-xs">
+            <li><Link to="/instagram-usernames" className="hover:text-white transition-colors">Instagram Handles</Link></li>
+            <li><Link to="/x-usernames" className="hover:text-white transition-colors">X (Twitter) Handles</Link></li>
+            <li><Link to="/telegram-usernames" className="hover:text-white transition-colors">Telegram Usernames</Link></li>
+            <li><Link to="/sell-instagram-username-india" className="hover:text-white transition-colors">Sell Instagram Handle</Link></li>
+            <li><Link to="/premium-usernames" className="hover:text-white transition-colors">Premium Directory</Link></li>
           </ul>
         </div>
 

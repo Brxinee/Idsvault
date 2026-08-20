@@ -153,14 +153,14 @@ const faqItems = [
   }
 ];
 
-/** Recently-secured ticker entries — mono prices in Indian format. */
-const securedTicker = [
-  { h: "@orbit",  p: "₹6,20,000",  t: "4 min ago" },
-  { h: "@flux",   p: "₹18,00,000", t: "1 hr ago" },
-  { h: "@echo",   p: "₹9,75,000",  t: "3 hrs ago" },
-  { h: "@haven",  p: "₹4,80,000",  t: "yesterday" },
-  { h: "@cobalt", p: "₹7,10,000",  t: "yesterday" },
-  { h: "@lumen",  p: "₹5,40,000",  t: "2 days ago" },
+/** Operational desk guarantees and asset categories. */
+const deskHighlights = [
+  { label: "Telegram Usernames", detail: "Live Supervised Transfer" },
+  { label: "Instagram & X Handles", detail: "Private Advisory Basis" },
+  { label: "Brandable Domains", detail: "Escrow & Handover Protocol" },
+  { label: "Broker Desk", detail: "Hyderabad, Telangana" },
+  { label: "Payment Safety", detail: "Held in Broker Account until Transfer" },
+  { label: "Refund Guarantee", detail: "Full Refund if Transfer Fails" },
 ];
 
 /** Cursor-follow glow: sets CSS vars consumed by the .ids-card::after gradient. */
@@ -185,21 +185,20 @@ export const Hero: React.FC<HeroProps> = ({ featuredListings, onSelectListing })
         structuredData={homepageSchema}
       />
 
-      {/* ── RECENTLY SECURED TICKER ──────────────────────── */}
+      {/* ── DESK OPERATIONAL TICKER ──────────────────────── */}
       <div className="border-b border-white/[0.06] bg-surface/55 backdrop-blur-md relative z-[40]">
         <div className="max-w-7xl mx-auto px-6 flex items-center gap-5 h-11">
           <span className="hidden sm:inline-flex items-center gap-2 shrink-0 font-mono text-[10px] font-extrabold uppercase tracking-[0.15em] text-emerald-400">
             <span className="live-dot" />
-            Recently Secured
+            Desk Highlights
           </span>
           <div className="ticker ticker-mask flex-1">
             <div className="ticker-track">
-              {[...securedTicker, ...securedTicker].map((item, i) => (
+              {[...deskHighlights, ...deskHighlights].map((item, i) => (
                 <span key={i} className="inline-flex items-center gap-2 text-[13px] text-muted">
-                  <span className="font-bold text-white">{item.h}</span>
-                  <span>secured</span>
-                  <span className="font-mono text-[11px] text-emerald-400 screenshot-private">{item.p}</span>
-                  <span className="text-ghost">· {item.t}</span>
+                  <span className="font-bold text-white">{item.label}</span>
+                  <span className="text-emerald-400 font-mono text-[11px]">{item.detail}</span>
+                  <span className="text-ghost">· Verified Desk</span>
                 </span>
               ))}
             </div>

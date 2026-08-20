@@ -17,6 +17,7 @@ export const NotFoundPage: React.FC = () => {
         title="Page Not Found (404)"
         description="The requested digital identity resource or page could not be found on IDsvault."
         canonical="/404"
+        noindex={true}
       />
 
       <div className="max-w-lg w-full text-center space-y-8 bg-surface border border-white/[0.08] p-8 md:p-12 rounded-2xl shadow-2xl relative overflow-hidden">
