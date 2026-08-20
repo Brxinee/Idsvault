@@ -132,7 +132,9 @@ function PolicyRoute() {
     "dmca",
     "grievance",
     "accessibility",
-    "imprint"
+    "imprint",
+    "acceptable-use",
+    "trademark"
   ] as const;
   type Seg = typeof valid[number];
 

@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "node scripts/generate-sitemap.mjs && vite build && node scripts/prerender.mjs && node scripts/generate-sitemap.mjs",
+    "build": "vite build && tsx scripts/prerender.ts && tsx scripts/generate-sitemap.ts && tsx scripts/seo-audit.ts",
     "preview": "vite preview",
-    "seo:audit": "node scripts/seo-audit.mjs",
+    "seo:audit": "tsx scripts/seo-audit.ts",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },
