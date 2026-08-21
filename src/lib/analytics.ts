@@ -129,8 +129,7 @@ export function setConsentGranted(): void {
 
   if (typeof window !== "undefined" && typeof window.gtag === "function") {
     window.gtag("consent", "update", {
-      analytics_storage: "granted",
-      ad_storage: "granted",
+      analytics_storage: "granted"
     });
   }
 }
@@ -148,8 +147,7 @@ export function setConsentDenied(): void {
 
   if (typeof window !== "undefined" && typeof window.gtag === "function") {
     window.gtag("consent", "update", {
-      analytics_storage: "denied",
-      ad_storage: "denied",
+      analytics_storage: "denied"
     });
   }
 }
