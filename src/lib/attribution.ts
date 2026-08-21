@@ -33,6 +33,9 @@ export interface AttributionData {
   utm_campaign?: string;
   utm_term?: string;
   utm_content?: string;
+
+  // AI referrals
+  ai_source?: string;
 }
 
 const STORAGE_KEY_FIRST = "idsvault_attr_first";
@@ -62,7 +65,7 @@ function safeSetStorage(key: string, value: string): void {
 /**
  * Detects referrer category when UTM parameters are not explicitly present.
  */
-function parseReferrer(referrerUrl: string): { source: string; medium: string } {
+function parseReferrer(referrerUrl: string): { source: string; medium: string; ai_source?: string } {
   if (!referrerUrl) {
     return { source: "direct", medium: "none" };
   }
@@ -96,6 +99,13 @@ function parseReferrer(referrerUrl: string): { source: string; medium: string } 
     if (host.includes("facebook.com") || host.includes("m.facebook.com")) return { source: "facebook", medium: "social" };
     if (host.includes("youtube.com") || host.includes("youtu.be")) return { source: "youtube", medium: "social" };
     if (host.includes("reddit.com")) return { source: "reddit", medium: "social" };
+
+    // AI Platforms
+    if (host.includes("chatgpt.com") || host.includes("openai.com")) return { source: "chatgpt", medium: "referral", ai_source: "chatgpt" };
+    if (host.includes("perplexity.ai")) return { source: "perplexity", medium: "referral", ai_source: "perplexity" };
+    if (host.includes("claude.ai") || host.includes("anthropic.com")) return { source: "claude", medium: "referral", ai_source: "claude" };
+    if (host.includes("copilot.microsoft.com")) return { source: "copilot", medium: "referral", ai_source: "copilot" };
+    if (host.includes("gemini.google.com")) return { source: "gemini", medium: "referral", ai_source: "gemini" };
 
     return { source: host, medium: "referral" };
   } catch {
@@ -183,6 +193,7 @@ export function captureAttribution(): AttributionData {
     utm_campaign: utmCampaign || undefined,
     utm_term: utmTerm || undefined,
     utm_content: utmContent || undefined,
+    ai_source: refParsed.ai_source || undefined,
   };
 }
 

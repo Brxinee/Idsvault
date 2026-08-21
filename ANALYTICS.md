@@ -28,7 +28,7 @@ This document describes the production-grade measurement framework implemented f
         ┌────────┴────────┐
         ▼                 ▼
   [Granted]          [Denied]
-    gtag()             Buffer / Drop
+    gtag()           Cookieless Ping (Advanced Consent Mode)
 ```
 
 ### Key Components
@@ -96,7 +96,17 @@ In accordance with global privacy standards and DPDPA 2023:
 
 ---
 
-## 5. Exclusions & Filtering
+## 5. Enhanced Measurement Settings (GA4 UI)
+Since `idsvault.com` is a Single Page Application (SPA) using React Router, we explicitly manage route changes through the centralized `trackPageView` function.
+**IMPORTANT:** To avoid duplicate `page_view` events, the GA4 Property must be configured properly in the GA4 Dashboard:
+1. Go to **Admin** > **Data Streams** > Select the Web Stream.
+2. Under **Enhanced measurement**, click the gear icon to configure.
+3. Under **Page views**, ensure **Page changes based on browser history events** is **DISABLED** (unchecked).
+4. (Optional) Keep Scrolls, Outbound clicks, and Site search enabled as they do not conflict with the manual tracker.
+
+---
+
+## 6. Exclusions & Filtering
 
 To preserve analytics integrity, events are automatically suppressed under the following conditions:
 

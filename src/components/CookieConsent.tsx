@@ -99,6 +99,5 @@ export const CookieConsent: React.FC = () => {
 declare global {
   interface Window {
     grantAnalyticsConsent?: () => void;
-    trackIDsVaultEvent?: (name: string, params?: Record<string, unknown>) => void;
   }
 }

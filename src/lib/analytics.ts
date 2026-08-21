@@ -20,7 +20,6 @@ declare global {
     gtag?: (...args: unknown[]) => void;
     dataLayer?: unknown[];
     grantAnalyticsConsent?: () => void;
-    trackIDsVaultEvent?: (eventName: string, eventParams?: Record<string, unknown>) => void;
   }
 }
 
@@ -110,11 +109,6 @@ export function initAnalytics(): void {
   } catch {
     // localStorage blocked
   }
-
-  // Register global helper window.trackIDsVaultEvent
-  window.trackIDsVaultEvent = (eventName: string, eventParams?: Record<string, unknown>) => {
-    trackEvent(eventName as IDsvaultEvent, eventParams || {});
-  };
 
   // Register window.grantAnalyticsConsent
   window.grantAnalyticsConsent = () => {

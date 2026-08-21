@@ -66,12 +66,6 @@
       window.grantAnalyticsConsent = function() {
         gtag('consent', 'update', { 'analytics_storage': 'granted' });
       };
-
-      window.trackIDsVaultEvent = function(eventName, eventParams) {
-        if (typeof gtag === 'function') {
-          gtag('event', eventName, eventParams || {});
-        }
-      };
     </script>
 
     <!-- Base JSON-LD Organization schema — per-route schemas injected by react-helmet-async -->
