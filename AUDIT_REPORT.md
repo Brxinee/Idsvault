@@ -10,11 +10,11 @@
 ## A — index.html
 
 ### A1 — Duplicate GA4 tag [P1]
-**Finding:** index.html contains TWO separate Google Analytics gtag.js script blocks — one with ID `G-Q0MWNQ7TSQ` (lines 5-12) and another with ID `G-8L9EQTY2P3` (lines 38-50). The first script fires unconditionally before consent, violating GDPR/DPDPA and wasting events.  
-**Fix:** Remove the first (unconsented) GA block entirely. Keep only the second block (`G-8L9EQTY2P3`) which has the consent-aware `trackIDsVaultEvent` wrapper. Confirm the correct GA4 property ID and keep only one.
+**Finding:** index.html contains TWO separate Google Analytics gtag.js script blocks — one with ID `G-Q0MWNQ7TSQ` (lines 5-12) and another with ID `G-Q0MWNQ7TSQ` (lines 38-50). The first script fires unconditionally before consent, violating GDPR/DPDPA and wasting events.  
+**Fix:** Remove the first (unconsented) GA block entirely. Keep only the second block (`G-Q0MWNQ7TSQ`) which has the consent-aware `trackIDsVaultEvent` wrapper. Confirm the correct GA4 property ID and keep only one.
 
 ### A2 — GA4 fires before consent [P1]
-**Finding:** Even the remaining GA4 block (`G-8L9EQTY2P3`) loads unconditionally on page load. The consent banner appears after JS hydration, but GA fires immediately. This violates India's DPDPA 2023 requirement for prior consent before analytics tracking.  
+**Finding:** Even the remaining GA4 block (`G-Q0MWNQ7TSQ`) loads unconditionally on page load. The consent banner appears after JS hydration, but GA fires immediately. This violates India's DPDPA 2023 requirement for prior consent before analytics tracking.  
 **Fix:** Gate the gtag script load behind consent. Use `gtag('consent', 'default', { analytics_storage: 'denied' })` before config, and update to 'granted' only when the user clicks Allow.
 
 ### A3 — Meta description mentions "escrow" and "marketplace" framing [P2]

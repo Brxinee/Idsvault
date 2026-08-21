@@ -19,7 +19,7 @@ import { Platform, Urgency } from "../types";
 import { buildWhatsAppHandoff, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
-import { trackFormStart, trackFormSubmit, trackAdvisorySubmission, trackError } from "../lib/analytics";
+import { trackAdvisoryStart, trackFormSubmit, trackAdvisorySubmission, trackError } from "../lib/analytics";
 
 interface SourcingRequestProps {
   onRegisterRequest: (
@@ -56,7 +56,7 @@ export const SourcingRequest: React.FC<SourcingRequestProps> = ({
     platform === Platform.Instagram || platform === Platform.X;
 
   React.useEffect(() => {
-    trackFormStart("buyer_advisory_form", "advisory_apply");
+    trackAdvisoryStart();
   }, []);
 
   const handleNextStep = () => {

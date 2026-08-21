@@ -1,6 +1,6 @@
 # IDsvault Production Analytics Measurement Engine & Taxonomy
 
-This document describes the production-grade measurement framework implemented for **IDsvault** (`https://idsvault.com`). The analytics stack is built on Google Analytics 4 (GA4 ID: `G-538771624`) with strict DPDPA 2023 compliance, custom attribution modeling, zero-PII sanitization, and SPA pageview deduplication.
+This document describes the production-grade measurement framework implemented for **IDsvault** (`https://idsvault.com`). The analytics stack is built on Google Analytics 4 (GA4 ID: `G-Q0MWNQ7TSQ`) with strict DPDPA 2023 compliance, custom attribution modeling, zero-PII sanitization, and SPA pageview deduplication.
 
 ---
 

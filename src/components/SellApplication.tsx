@@ -21,7 +21,7 @@ import { Platform } from "../types";
 import { buildWhatsAppHandoff, formatINR } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
-import { trackFormStart, trackFormSubmit, trackSellerSubmission, trackError } from "../lib/analytics";
+import { trackSellerStart, trackFormSubmit, trackSellerSubmission, trackError } from "../lib/analytics";
 
 interface SellApplicationProps {
   onRegisterListing: (
@@ -99,7 +99,7 @@ export const SellApplication: React.FC<SellApplicationProps> = ({
   };
 
   useEffect(() => {
-    trackFormStart("seller_listing_form", "sell_apply");
+    trackSellerStart();
   }, []);
 
   const handleNextStep = () => {

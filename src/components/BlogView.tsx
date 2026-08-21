@@ -16,7 +16,7 @@ import {
 import { BlogPost, BlogSection, BlogFAQ } from "../types";
 import { initialBlogPosts } from "../data/blogs";
 import { motion, AnimatePresence } from "motion/react";
-import { trackArticleView } from "../lib/analytics";
+import { trackArticleView, trackArticleEngagement } from "../lib/analytics";
 
 // Per-category colour tokens — drives card accents, badges, and article header
 const CATEGORY_STYLES: Record<string, { gradient: string; text: string; bg: string; border: string; glow: string }> = {
@@ -147,6 +147,14 @@ export const BlogView: React.FC<BlogViewProps> = ({ onBrowseListing, isAdmin = f
     if (activePost) {
       trackArticleView(activePost.slug, activePost.category, "journal");
     }
+  }, [activePost]);
+
+  useEffect(() => {
+    if (!activePost) return;
+    const timer = setTimeout(() => {
+      trackArticleEngagement(activePost.slug, activePost.category, "read_15s");
+    }, 15000);
+    return () => clearTimeout(timer);
   }, [activePost]);
 
   useEffect(() => {

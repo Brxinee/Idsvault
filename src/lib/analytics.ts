@@ -24,7 +24,7 @@ declare global {
   }
 }
 
-const GA_MEASUREMENT_ID = "G-538771624";
+const GA_MEASUREMENT_ID = "G-Q0MWNQ7TSQ";
 const CONSENT_STORAGE_KEY = "cookie_consent";
 
 let consentGranted = false;
@@ -264,6 +264,17 @@ export function trackListingView(listing: { slug: string; username: string; plat
 }
 
 export function trackSearch(searchTerm: string, platform?: string, category?: string, resultCount?: number): void {
+  const isZeroResults = resultCount === 0;
+  
+  if (isZeroResults) {
+    trackEvent("search_zero_results", {
+      search_term_category: "redacted", // avoided raw user entered text when no results
+      platform: platform || "ALL",
+      result_count: 0,
+    });
+    return;
+  }
+
   trackEvent("listing_search", {
     search_term: searchTerm,
     search_platform: platform || "ALL",
@@ -367,6 +378,18 @@ export function trackArticleView(articleSlug: string, articleCategory: string, c
   });
 }
 
+export function trackArticleEngagement(articleSlug: string, articleCategory: string, engagementType: string): void {
+  trackEvent("article_engagement", {
+    article_slug: articleSlug,
+    article_category: articleCategory,
+    engagement_type: engagementType,
+  });
+}
+
+export function trackSellerStart(): void {
+  trackEvent("seller_listing_start", {});
+}
+
 export function trackSellerSubmission(platform: string, username: string, askingPrice: number): void {
   trackEvent("seller_listing_submit", {
     platform,
@@ -377,6 +400,10 @@ export function trackSellerSubmission(platform: string, username: string, asking
   trackLead("seller_submission", undefined, platform, askingPrice);
 }
 
+export function trackAdvisoryStart(): void {
+  trackEvent("buyer_request_start", {});
+}
+
 export function trackAdvisorySubmission(budget: number, platform: string, urgency: string): void {
   trackEvent("buyer_request_submit", {
     budget,
@@ -385,6 +412,19 @@ export function trackAdvisorySubmission(budget: number, platform: string, urgenc
   });
 
   trackLead("advisory_submission", undefined, platform, budget);
+}
+
+export function trackValuationStart(): void {
+  trackEvent("valuation_start", {});
+}
+
+export function trackValuationResultView(platform: string, category: string, valuationBand: string): void {
+  trackEvent("valuation_result_view", {
+    platform,
+    category,
+    valuation_band: valuationBand,
+    result_type: "estimated",
+  });
 }
 
 export function trackValuationSubmission(platform: string, username: string, estimatedValuation?: number): void {

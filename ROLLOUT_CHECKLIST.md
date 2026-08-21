@@ -15,7 +15,7 @@ Before launching traffic, ensure intermediate parameters are fully configured.
   - Verify linking of Indian domestic UPI identifiers and IMPS/NEFT bank coordinates matching trade name records.
   - Link the verified support channel to WhatsApp business accounts using the `+919392974031` gateway key.
 - [ ] **GA4 & Google Search Console Validation**
-  - Confirm GA4 Measurement ID (`G-8L9EQTY2P3`) starts receiving active events (`submit_sourcing`, `contact_whatsapp`).
+  - Confirm GA4 Measurement ID (`G-Q0MWNQ7TSQ`) starts receiving active events (`submit_sourcing`, `contact_whatsapp`).
   - Import the dynamic sitemap index into Google Search Console for instant discovery.
 
 ---
