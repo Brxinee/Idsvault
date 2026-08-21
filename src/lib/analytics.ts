@@ -10,10 +10,7 @@
  */
 
 import { getActiveAttribution } from "./attribution";
-import {
-  IDsvaultEvent,
-  sanitizePayload,
-} from "./analyticsEvents";
+import { IDsvaultEvent, sanitizePayload } from "./analyticsEvents";
 
 declare global {
   interface Window {
@@ -23,7 +20,6 @@ declare global {
   }
 }
 
-const GA_MEASUREMENT_ID = "G-Q0MWNQ7TSQ";
 const CONSENT_STORAGE_KEY = "cookie_consent";
 
 let consentGranted = false;
@@ -40,21 +36,14 @@ function isExcludedEnvironment(pathname?: string): boolean {
   const host = window.location.hostname.toLowerCase();
   const currentPath = pathname || window.location.pathname.toLowerCase();
 
-  // 1. Local or development environment
-  if (
-    host === "localhost" ||
-    host === "127.0.0.1" ||
-    host.endsWith(".local")
-  ) {
+  if (host === "localhost" || host === "127.0.0.1" || host.endsWith(".local")) {
     return true;
   }
 
-  // 2. Automated test runner
   if (navigator.webdriver) {
     return true;
   }
 
-  // 3. Admin / Private internal routes
   if (currentPath.startsWith("/admin") || currentPath.startsWith("/keep")) {
     return true;
   }
@@ -63,9 +52,13 @@ function isExcludedEnvironment(pathname?: string): boolean {
 }
 
 /**
- * Derives structured page_type and content_cluster from URL path.
+ * Derives structured page context from the URL path.
  */
-export function getPageContext(pathname: string): { pageType: string; contentCluster: string; contentGroup: string } {
+export function getPageContext(pathname: string): {
+  pageType: string;
+  contentCluster: string;
+  contentGroup: string;
+} {
   const path = pathname.toLowerCase();
 
   if (path === "/") return { pageType: "home", contentCluster: "landing", contentGroup: "core" };
@@ -93,34 +86,31 @@ export function getPageContext(pathname: string): { pageType: string; contentClu
 }
 
 /**
- * Initializes analytics consent and window bindings.
+ * Initializes analytics and restores an existing consent decision.
  */
 export function initAnalytics(): void {
   if (typeof window === "undefined" || initialized) return;
 
   initialized = true;
 
-  // Check stored consent choice
   try {
     const storedConsent = localStorage.getItem(CONSENT_STORAGE_KEY);
-    if (storedConsent === "granted") {
-      consentGranted = true;
-    }
+    consentGranted = storedConsent === "granted";
   } catch {
-    // localStorage blocked
+    consentGranted = false;
   }
 
-  // Register window.grantAnalyticsConsent
-  window.grantAnalyticsConsent = () => {
-    setConsentGranted();
-  };
+  // Keep consent control inside the central analytics module.
+  window.grantAnalyticsConsent = setConsentGranted;
 }
 
 /**
- * Updates consent state to granted and updates GA4 consent mode.
+ * Updates consent state to granted.
+ * Analytics storage is the only category enabled by this site.
  */
 export function setConsentGranted(): void {
   consentGranted = true;
+
   try {
     localStorage.setItem(CONSENT_STORAGE_KEY, "granted");
   } catch {
@@ -129,7 +119,7 @@ export function setConsentGranted(): void {
 
   if (typeof window !== "undefined" && typeof window.gtag === "function") {
     window.gtag("consent", "update", {
-      analytics_storage: "granted"
+      analytics_storage: "granted",
     });
   }
 }
@@ -139,6 +129,7 @@ export function setConsentGranted(): void {
  */
 export function setConsentDenied(): void {
   consentGranted = false;
+
   try {
     localStorage.setItem(CONSENT_STORAGE_KEY, "denied");
   } catch {
@@ -147,13 +138,15 @@ export function setConsentDenied(): void {
 
   if (typeof window !== "undefined" && typeof window.gtag === "function") {
     window.gtag("consent", "update", {
-      analytics_storage: "denied"
+      analytics_storage: "denied",
     });
   }
 }
 
 /**
  * Central event dispatcher.
+ * Every event passes through environment checks, consent checks,
+ * attribution enrichment and recursive PII sanitization.
  */
 export function trackEvent(
   eventName: IDsvaultEvent,
@@ -162,11 +155,13 @@ export function trackEvent(
   if (typeof window === "undefined") return;
 
   const pathname = window.location.pathname;
-
-  // 1. Exclude admin / keep / test / dev environments
   const excluded = isExcludedEnvironment(pathname);
 
-  // 2. Enrich with page context & attribution
+  // Never dispatch analytics events until the user has granted analytics consent.
+  if (excluded || !consentGranted || typeof window.gtag !== "function") {
+    return;
+  }
+
   const ctx = getPageContext(pathname);
   const attribution = getActiveAttribution();
 
@@ -177,15 +172,11 @@ export function trackEvent(
     content_group: ctx.contentGroup,
     page_path: pathname,
     page_title: document.title,
-    page_location: window.location.href,
     ...attribution,
-    timestamp: new Date().toISOString(),
   };
 
-  // 3. Sanitize payload to enforce zero PII
   const cleanPayload = sanitizePayload(fullPayload);
 
-  // 4. Debug output in development or when debug mode flag is set
   const isDebug =
     import.meta.env.DEV ||
     (typeof localStorage !== "undefined" && localStorage.getItem("analytics_debug") === "true");
@@ -199,14 +190,12 @@ export function trackEvent(
     });
   }
 
-  // 5. Fire to GA4 if not excluded and consent is granted
-  if (!excluded && typeof window.gtag === "function") {
-    window.gtag("event", eventName, cleanPayload);
-  }
+  window.gtag("event", eventName, cleanPayload);
 }
 
 /**
- * Tracks SPA route pageviews with strict deduplication against React StrictMode & initial load races.
+ * Tracks SPA route pageviews with strict deduplication against React StrictMode
+ * and initial-load races.
  */
 export function trackPageView(customPath?: string, customTitle?: string): void {
   if (typeof window === "undefined") return;
@@ -214,7 +203,6 @@ export function trackPageView(customPath?: string, customTitle?: string): void {
   const currentPath = customPath || window.location.pathname;
   const now = Date.now();
 
-  // Deduplicate identical route pageviews within 1000ms
   if (currentPath === lastTrackedPath && now - lastTrackedTime < 1000) {
     return;
   }
@@ -236,7 +224,13 @@ export function trackPageView(customPath?: string, customTitle?: string): void {
 
 // ─── Domain Specific Measurement Helpers ────────────────────────────────────
 
-export function trackListingView(listing: { slug: string; username: string; platform: string; askingPrice: number; category: string }): void {
+export function trackListingView(listing: {
+  slug: string;
+  username: string;
+  platform: string;
+  askingPrice: number;
+  category: string;
+}): void {
   trackEvent("view_listing", {
     listing_slug: listing.slug,
     username: listing.username,
@@ -245,7 +239,6 @@ export function trackListingView(listing: { slug: string; username: string; plat
     listing_category: listing.category,
   });
 
-  // Also dispatch standard GA4 view_item
   trackEvent("view_item", {
     item_id: listing.slug,
     item_name: `@${listing.username} on ${listing.platform}`,
@@ -255,12 +248,17 @@ export function trackListingView(listing: { slug: string; username: string; plat
   });
 }
 
-export function trackSearch(searchTerm: string, platform?: string, category?: string, resultCount?: number): void {
+export function trackSearch(
+  searchTerm: string,
+  platform?: string,
+  category?: string,
+  resultCount?: number
+): void {
   const isZeroResults = resultCount === 0;
-  
+
   if (isZeroResults) {
     trackEvent("search_zero_results", {
-      search_term_category: "redacted", // avoided raw user entered text when no results
+      search_term_category: "redacted",
       platform: platform || "ALL",
       result_count: 0,
     });
@@ -279,7 +277,13 @@ export function trackSearch(searchTerm: string, platform?: string, category?: st
   });
 }
 
-export function trackFilter(platform: string, category: string, priceMin?: number, priceMax?: number, sortMethod?: string): void {
+export function trackFilter(
+  platform: string,
+  category: string,
+  priceMin?: number,
+  priceMax?: number,
+  sortMethod?: string
+): void {
   trackEvent("listing_filter", {
     filter_platform: platform,
     filter_category: category,
@@ -304,7 +308,11 @@ export function trackFormStart(formName: string, pageType?: string): void {
   });
 }
 
-export function trackFormSubmit(formName: string, success: boolean, metadata?: Record<string, unknown>): void {
+export function trackFormSubmit(
+  formName: string,
+  success: boolean,
+  metadata?: Record<string, unknown>
+): void {
   trackEvent("form_submit", {
     form_name: formName,
     success,
@@ -312,7 +320,12 @@ export function trackFormSubmit(formName: string, success: boolean, metadata?: R
   });
 }
 
-export function trackLead(leadType: string, listingSlug?: string, platform?: string, offerValue?: number): void {
+export function trackLead(
+  leadType: string,
+  listingSlug?: string,
+  platform?: string,
+  offerValue?: number
+): void {
   trackEvent("generate_lead", {
     lead_type: leadType,
     listing_slug: listingSlug || "",
@@ -323,7 +336,13 @@ export function trackLead(leadType: string, listingSlug?: string, platform?: str
   });
 }
 
-export function trackWhatsAppClick(ctaLocation: string, pageType?: string, listingSlug?: string, platform?: string, intent?: string): void {
+export function trackWhatsAppClick(
+  ctaLocation: string,
+  pageType?: string,
+  listingSlug?: string,
+  platform?: string,
+  intent?: string
+): void {
   trackEvent("whatsapp_click", {
     cta_location: ctaLocation,
     page_type: pageType || getPageContext(window.location.pathname).pageType,
@@ -362,7 +381,11 @@ export function trackPhoneClick(ctaLocation: string, pageType?: string): void {
   });
 }
 
-export function trackArticleView(articleSlug: string, articleCategory: string, contentCluster?: string): void {
+export function trackArticleView(
+  articleSlug: string,
+  articleCategory: string,
+  contentCluster?: string
+): void {
   trackEvent("view_article", {
     article_slug: articleSlug,
     article_category: articleCategory,
@@ -370,7 +393,11 @@ export function trackArticleView(articleSlug: string, articleCategory: string, c
   });
 }
 
-export function trackArticleEngagement(articleSlug: string, articleCategory: string, engagementType: string): void {
+export function trackArticleEngagement(
+  articleSlug: string,
+  articleCategory: string,
+  engagementType: string
+): void {
   trackEvent("article_engagement", {
     article_slug: articleSlug,
     article_category: articleCategory,
@@ -382,7 +409,11 @@ export function trackSellerStart(): void {
   trackEvent("seller_listing_start", {});
 }
 
-export function trackSellerSubmission(platform: string, username: string, askingPrice: number): void {
+export function trackSellerSubmission(
+  platform: string,
+  username: string,
+  askingPrice: number
+): void {
   trackEvent("seller_listing_submit", {
     platform,
     username,
@@ -396,7 +427,11 @@ export function trackAdvisoryStart(): void {
   trackEvent("buyer_request_start", {});
 }
 
-export function trackAdvisorySubmission(budget: number, platform: string, urgency: string): void {
+export function trackAdvisorySubmission(
+  budget: number,
+  platform: string,
+  urgency: string
+): void {
   trackEvent("buyer_request_submit", {
     budget,
     platform,
@@ -410,7 +445,11 @@ export function trackValuationStart(): void {
   trackEvent("valuation_start", {});
 }
 
-export function trackValuationResultView(platform: string, category: string, valuationBand: string): void {
+export function trackValuationResultView(
+  platform: string,
+  category: string,
+  valuationBand: string
+): void {
   trackEvent("valuation_result_view", {
     platform,
     category,
@@ -419,7 +458,11 @@ export function trackValuationResultView(platform: string, category: string, val
   });
 }
 
-export function trackValuationSubmission(platform: string, username: string, estimatedValuation?: number): void {
+export function trackValuationSubmission(
+  platform: string,
+  username: string,
+  estimatedValuation?: number
+): void {
   trackEvent("valuation_submit", {
     platform,
     username,
@@ -427,7 +470,12 @@ export function trackValuationSubmission(platform: string, username: string, est
   });
 }
 
-export function trackError(errorType: string, component: string, action?: string, message?: string): void {
+export function trackError(
+  errorType: string,
+  component: string,
+  action?: string,
+  message?: string
+): void {
   trackEvent("form_validation_error", {
     error_type: errorType,
     component,
