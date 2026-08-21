@@ -46,22 +46,15 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&family=Inter+Tight:wght@500..900&family=JetBrains+Mono:wght@400;500;700&display=swap" /></noscript>
 
     <!-- GA4 Analytics — consent-gated per DPDPA 2023 -->
-    <script>
-      // Default consent denied until user accepts — DPDPA 2023 compliance
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('consent', 'default', {
-        'analytics_storage': 'denied',
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied'
-      });
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0MWNQ7TSQ"></script>
-    <script>
-      gtag('js', new Date());
-      gtag('config', 'G-Q0MWNQ7TSQ', { 'send_page_view': false });
-    </script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0MWNQ7TSQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Q0MWNQ7TSQ');
+</script>
 
     <!-- Base JSON-LD Organization schema — per-route schemas injected by react-helmet-async -->
     <script type="application/ld+json">
