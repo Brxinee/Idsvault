@@ -2,6 +2,29 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.idsvault.com" }],
+      "destination": "https://idsvault.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/buy-instagram-username-india",
+      "destination": "/instagram-usernames",
+      "permanent": true
+    },
+    {
+      "source": "/buy-x-username-india",
+      "destination": "/x-usernames",
+      "permanent": true
+    },
+    {
+      "source": "/buy-telegram-username-india",
+      "destination": "/telegram-usernames",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
