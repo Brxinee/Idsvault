@@ -65,7 +65,7 @@ for (const child of childSitemaps) {
     const locs = extractMatches(/<loc>(.*?)<\/loc>/g, childContent);
     const nonCanonicalUrls = locs.filter(url => !url.startsWith(`${BASE_URL}/`) && url !== BASE_URL);
     check(`${child} URLs use canonical origin`, nonCanonicalUrls.length === 0, `Non-canonical URLs: ${nonCanonicalUrls.join(", ")}`);
-    
+
     const trailingSlashes = locs.filter(url => url !== BASE_URL && url !== `${BASE_URL}/` && url.endsWith("/"));
     check(`${child} URLs have no trailing slash`, trailingSlashes.length === 0, `Trailing slash found: ${trailingSlashes.join(", ")}`);
 
@@ -80,20 +80,31 @@ for (const child of childSitemaps) {
   }
 }
 
-// Ensure static public inventory match
+// Routes intentionally excluded from the canonical sitemap because they redirect.
+const redirectOnlyRoutes = [
+  "/buy-instagram-username-india",
+  "/buy-x-username-india",
+  "/buy-telegram-username-india",
+  "/brandable-usernames"
+];
+
+for (const route of redirectOnlyRoutes) {
+  const expectedUrl = `${BASE_URL}${route}`;
+  check(`Redirect-only route excluded from sitemap: ${route}`, !allUrls.includes(expectedUrl), `Redirect alias is still present in sitemap: ${expectedUrl}`);
+}
+
+// 2. Ensure the canonical indexable inventory matches the sitemap.
 const coreRoutes = [
-  "/", "/inventory", "/sell", "/advisory", "/journal", "/faq", 
+  "/", "/inventory", "/sell", "/advisory", "/journal", "/faq",
   "/process", "/trust", "/about", "/contact",
-  "/instagram-usernames", "/buy-instagram-username-india",
-  "/x-usernames", "/buy-x-username-india",
-  "/telegram-usernames", "/buy-telegram-username-india",
+  "/instagram-usernames", "/x-usernames", "/telegram-usernames",
   "/sell-instagram-username-india", "/username-valuation",
-  "/digital-identity-broker", "/premium-usernames", "/brandable-usernames"
+  "/digital-identity-broker", "/premium-usernames"
 ];
 
 for (const route of coreRoutes) {
   const expectedUrl = `${BASE_URL}${route}`;
-  check(`Core route in sitemap: ${route}`, allUrls.includes(expectedUrl), `Missing from sitemaps: ${expectedUrl}`);
+  check(`Canonical route in sitemap: ${route}`, allUrls.includes(expectedUrl), `Missing from sitemaps: ${expectedUrl}`);
 }
 
 // Audit generated HTML files
@@ -107,39 +118,38 @@ let notFoundPages = 0;
 console.log("\n🔍 Checking prerendered static HTML assets...");
 
 for (const url of allUrls) {
-  // Convert URL to local path
   let relativePath = url.replace(BASE_URL, "");
   if (relativePath === "" || relativePath === "/") {
     relativePath = "/index.html";
   } else {
     relativePath = `${relativePath}/index.html`;
   }
-  
+
   const htmlPath = path.join(DIST_DIR, relativePath);
-  
+
   if (!fs.existsSync(htmlPath)) {
     missingHtmlFiles++;
     errors.push(`Missing HTML file for sitemap URL: ${url} (Expected: ${htmlPath})`);
     continue;
   }
-  
+
   const htmlContent = fs.readFileSync(htmlPath, "utf-8");
-  
+
   if (htmlContent.includes("404 - Not Found") || htmlContent.includes('<title>404</title>')) {
     notFoundPages++;
     errors.push(`Sitemap URL resolves to 404 page: ${url}`);
   }
-  
+
   if (!htmlContent.includes("<title>") || htmlContent.includes("<title></title>")) {
     missingTitles++;
     errors.push(`Missing title: ${url}`);
   }
-  
+
   if (!htmlContent.includes('name="description"')) {
     missingDescriptions++;
     errors.push(`Missing meta description: ${url}`);
   }
-  
+
   const canonicalMatch = htmlContent.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/);
   if (!canonicalMatch) {
     canonicalMismatches++;
@@ -148,7 +158,7 @@ for (const url of allUrls) {
     canonicalMismatches++;
     errors.push(`Canonical mismatch for ${url}. Sitemap says ${url}, page says ${canonicalMatch[1]}`);
   }
-  
+
   if (htmlContent.includes('content="noindex"') || htmlContent.includes('content="none"')) {
     noindexConflicts++;
     errors.push(`Noindex conflict: ${url} is in sitemap but contains noindex directive`);
@@ -176,6 +186,11 @@ console.log(`Canonical mismatches: ${canonicalMismatches}`);
 console.log(`Missing titles: ${missingTitles}`);
 console.log(`Missing descriptions: ${missingDescriptions}`);
 console.log(`Total tests passed: ${passes.length}`);
+
+if (warnings.length > 0) {
+  console.log(`\n⚠️ Warnings (${warnings.length}):`);
+  warnings.forEach(w => console.log(`   - ${w}`));
+}
 
 if (errors.length > 0) {
   console.log(`\n❌ Critical Errors (${errors.length}):`);
