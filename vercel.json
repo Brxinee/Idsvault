@@ -4,9 +4,9 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [{ "type": "host", "value": "www.idsvault.com" }],
-      "destination": "https://idsvault.com/$1",
+      "destination": "https://idsvault.com/:path*",
       "permanent": true
     },
     {
@@ -22,6 +22,11 @@
     {
       "source": "/buy-telegram-username-india",
       "destination": "/telegram-usernames",
+      "permanent": true
+    },
+    {
+      "source": "/brandable-usernames",
+      "destination": "/premium-usernames",
       "permanent": true
     }
   ],
