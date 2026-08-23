@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && tsx scripts/prerender.ts && tsx scripts/postbuild-seo.ts && tsx scripts/generate-sitemap.ts && tsx scripts/seo-audit.ts",
+    "build": "vite build && tsx scripts/prerender.ts && tsx scripts/postbuild-seo.ts && tsx scripts/generate-sitemap.ts && tsx scripts/normalize-sitemap.ts && tsx scripts/seo-audit.ts",
     "preview": "vite preview",
     "seo:audit": "tsx scripts/seo-audit.ts",
     "clean": "rm -rf dist server.js",
@@ -21,7 +21,7 @@
     "lucide-react": "0.546.0",
     "motion": "^12.23.24",
     "react": "^19.0.1",
-    "react-dom": "^19.0.1",
+    "react-dom": "^19.0.0",
     "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.15.1",
     "vite": "^6.2.3"
