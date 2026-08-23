@@ -5,10 +5,13 @@ const BASE_URL = "https://idsvault.com";
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const DIST_DIR = path.join(process.cwd(), "dist");
 
+// Routes that intentionally resolve elsewhere and must never be submitted
+// to Google as independent canonical URLs.
 const aliasRoutes = new Set([
   "/buy-instagram-username-india",
   "/buy-x-username-india",
-  "/buy-telegram-username-india"
+  "/buy-telegram-username-india",
+  "/brandable-usernames"
 ]);
 
 const policyPrefixes = ["/policy/"];
